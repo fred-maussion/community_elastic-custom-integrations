@@ -45,6 +45,6 @@ deploy:
   - chmod 644 ~/.ssh/known_hosts
   script:
   # - ssh $SSH_USER@$VM_IPADDRESS "hostname && echo 'Welcome!!!' > welcome.txt"
-  - scp -r build/packages/* $SSH_USER@$EPR_ADDRESS:/var/packages-registry/packages/
+  - scp -r build/packages/* $SSH_USER@$EPR_ADDRESS:/var/package-registry/packages
   dependencies:
     - build_packages
