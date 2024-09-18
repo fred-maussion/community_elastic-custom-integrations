@@ -1,10 +1,11 @@
 stages:
+  - requirements
   - build
   - deploy
 
 build_container:
   image: docker:27
-  stage: build
+  stage: requirements
   services:
     - docker:27-dind
   variables:
@@ -29,8 +30,6 @@ build_packages:
     paths:
       - build/*
     expire_in: 1 day
-  needs:
-    - build_container
 
 deploy:
   image: alpine
