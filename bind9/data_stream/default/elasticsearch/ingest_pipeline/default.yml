@@ -1,0 +1,35 @@
+---
+description: "Pipeline to parse and map default Bind9 log lines to ECS format"
+processors:
+  - grok:
+      field: "message"
+      patterns:
+        - "%{BIND9_TIMESTAMP:timestamp}.%{INT:millisecond} %{GREEDYDATA:category}: %{LOGLEVEL:log.level}: %{GREEDYDATA:event.reason} '%{HOSTNAME:dns.question.name}/%{WORD:dns.question.type}/%{WORD:dns.question.class}': %{IP:source.address}#%{NUMBER:source.port}"
+  - set:
+      field: "timestamp"
+      value: "{{timestamp}}.{{millisecond}}Z"
+      ignore_failure: true
+  - date:
+      field: "timestamp"
+      target_field: "@timestamp"
+      formats:
+        - "dd-MMM-yyyy HH:mm:ss.SSS'Z'"
+      timezone: "UTC"
+  - set:
+      field: "event.category"
+      value: "network"
+  - set:
+      field: "event.kind"
+      value: "event"
+  - set:
+      field: "event.type"
+      value: "info"
+  - remove:
+      field: "millisecond"
+  - remove:
+      field: "timestamp"
+
+on_failure:
+  - set:
+      field: "error.message"
+      value: "{{ _ingest.on_failure_message }}"
