@@ -21,11 +21,10 @@ build_container:
 build_packages:
   stage: build
   image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-  # before_script:
-  #   - go install github.com/elastic/elastic-package@latest
   script:
     - cd bind9
     - elastic-package check # lint and build the package
+  retry: 2
   artifacts:
     paths:
       - build/*
