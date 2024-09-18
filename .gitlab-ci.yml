@@ -17,7 +17,7 @@ build_container:
     changes:
       - Dockerfile
 
-build:
+build_packages:
   stage: build
   image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   # before_script:
@@ -29,6 +29,8 @@ build:
     paths:
       - build/*
     expire_in: 1 day
+  needs:
+    - build_container
 
 deploy:
   image: alpine
@@ -36,6 +38,7 @@ deploy:
   before_script:
   - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
   - eval $(ssh-agent -s)
+  - chmod 400 "$SSH_PRIVATE_KEY"
   - ssh-add $SSH_PRIVATE_KEY
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
@@ -45,4 +48,4 @@ deploy:
   # - ssh $SSH_USER@$VM_IPADDRESS "hostname && echo 'Welcome!!!' > welcome.txt"
   - scp -r build/packages/* $SSH_USER@$EPR_ADDRESS:/var/packages-registry/packages/
   dependencies:
-    - build
+    - build_packages
