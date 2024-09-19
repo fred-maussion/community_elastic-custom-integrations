@@ -6,8 +6,11 @@ stages:
 build_container:
   image: docker:27
   stage: requirements
+  tags:
+    - docker
   services:
     - docker:27-dind
+  retry: 2
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   script:
@@ -21,6 +24,8 @@ build_container:
 build_packages:
   stage: build
   image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  tags:
+    - docker
   script:
     - cd bind9
     - elastic-package check # lint and build the package
@@ -33,6 +38,8 @@ build_packages:
 deploy:
   image: alpine
   stage: deploy
+  tags:
+    - docker
   before_script:
   - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
   - eval $(ssh-agent -s)
