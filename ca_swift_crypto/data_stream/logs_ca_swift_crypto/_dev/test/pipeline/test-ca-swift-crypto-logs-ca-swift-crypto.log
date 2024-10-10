@@ -1,4 +1,0 @@
-{"timestamp":"2023-10-01T12:00:00Z","user_id":"john_doe","action":"login","status":"success","ip_address":"192.168.1.10","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36","page":"login","url":"/login","logger":"auth_service"}
-{"timestamp":"2023-10-01T12:01:00Z","user_id":"john_doe","action":"view_balance","status":"success","account_id":"acc456","balance":1500.75,"page":"account_summary","url":"/account/acc456/summary","logger":"account_service"}
-{"timestamp":"2023-10-01T12:03:00Z","user_id":"john_doe","action":"logout","status":"success","page":"logout","url":"/logout","logger":"auth_service"}
-{"timestamp":"2023-10-01T12:02:00Z","user_id":"john_doe","action":"transfer_funds","status":"success","from_account":"acc456","to_account":"acc789","amount":500,"transaction_id":"tx12345","page":"transfer","url":"/transfer","logger":"transaction_service"}
