@@ -1,7 +1,7 @@
 format_version: 3.1.4
 name: bind9
 title: "Bind9"
-version: 0.0.10
+version: 1.0.0
 source:
   license: "Elastic-2.0"
 description: "Collect logs from Bind9 with Elastic Agent."
