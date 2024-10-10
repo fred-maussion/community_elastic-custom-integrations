@@ -27,7 +27,7 @@ build_packages:
   tags:
     - docker
   script:
-    - cd bind9
+    - cd ca_swift_crypto
     - elastic-package check # lint and build the package
   retry: 2
   artifacts:

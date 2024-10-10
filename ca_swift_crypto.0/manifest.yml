@@ -1,0 +1,28 @@
+format_version: 3.1.4
+name: ca_swift_crypto
+title: CA Swift Crypto
+version: 1.0.0
+description: CA Swift Crypto Logs
+type: integration
+categories:
+  - security
+  - iam
+conditions:
+  kibana:
+    version: ^8.13.0
+policy_templates:
+  - name: ca_swift_crypto
+    title: CA Swift Crypto
+    description: CA Swift Crypto Logs
+    inputs:
+      - type: filestream
+        title: 'logs_ca_swift_crypto : filestream'
+        description: ca_swift_crypto Logs
+owner:
+  github: '@elastic/custom-integrations'
+  type: community
+icons:
+  src: /img/logo.svg
+  title: CA Swift Crypto Logo
+  size: 32x32
+  type: image/svg+xml

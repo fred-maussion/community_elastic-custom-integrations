@@ -1,0 +1,12 @@
+- name: ca_swift_crypto
+  type: group
+  fields:
+    - name: logs_ca_swift_crypto
+      type: group
+      fields:
+        - name: page
+          type: keyword
+        - name: timestamp
+          type: keyword
+        - name: amount
+          type: long
