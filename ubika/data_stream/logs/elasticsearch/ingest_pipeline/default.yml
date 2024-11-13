@@ -1,0 +1,74 @@
+---
+description: "Pipeline to ingest Ubika WAAP logs and map to ECS format"
+processors:
+  - json:
+      field: "message"
+      target_field: "ubika"
+  - set:
+      field: "event.category"
+      value: "web"
+  - set:
+      field: "event.type"
+      value: "access"
+  - set:
+      field: "event.dataset"
+      value: "ubika.waap"
+  - rename:
+      field: "ubika.timestamp"
+      target_field: "@timestamp"
+      ignore_missing: true
+  - set:
+      field: "host.name"
+      value: "{{ubika.context.applianceName}}"
+  - rename:
+      field: "ubika.request.ipSrc"
+      target_field: "client.ip"
+      ignore_missing: true
+  - rename:
+      field: "ubika.request.ipDst"
+      target_field: "destination.ip"
+      ignore_missing: true
+  - rename:
+      field: "ubika.request.method"
+      target_field: "http.request.method"
+      ignore_missing: true
+  - rename:
+      field: "ubika.request.path"
+      target_field: "url.path"
+      ignore_missing: true
+  - rename:
+      field: "ubika.request.portDst"
+      target_field: "destination.port"
+      ignore_missing: true
+  - rename:
+      field: "ubika.request.hostname"
+      target_field: "url.domain"
+      ignore_missing: true
+  - rename:
+      field: "ubika.events[0].tokens.riskLevel"
+      target_field: "event.risk_score"
+      ignore_missing: true
+  - rename:
+      field: "ubika.events[0].tokens.eventType"
+      target_field: "event.kind"
+      ignore_missing: true
+  - rename:
+      field: "ubika.events[0].tokens.severity"
+      target_field: "event.severity"
+      ignore_missing: true
+  - rename:
+      field: "ubika.events[0].tokens.reason"
+      target_field: "event.reason"
+      ignore_missing: true
+  - rename:
+      field: "ubika.request.headers"
+      target_field: "http.request.headers"
+      ignore_missing: true
+  - remove:
+      field: "ubika"
+      ignore_missing: true
+
+on_failure:
+  - set:
+      field: "error.message"
+      value: "{{ _ingest.on_failure_message }}"

@@ -1,0 +1,36 @@
+format_version: 3.3.0
+name: ubika
+title: "Ubika Application Security"
+version: 0.0.2
+source:
+  license: "Apache-2.0"
+description: "UBIKA offers advanced solutions to detect, prevent, and respond to threats in real time, helping businesses ensure secure digital operations."
+type: integration
+categories:
+  - security
+conditions:
+  kibana:
+    version: "^8.15.3"
+  elastic:
+    subscription: "basic"
+screenshots:
+  - src: /img/sample-screenshot.png
+    title: Sample screenshot
+    size: 600x600
+    type: image/png
+icons:
+  - src: /img/logo.svg
+    title: Ubika logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: sample
+    title: Sample logs
+    description: Collect sample logs
+    inputs:
+      - type: logfile
+        title: Collect sample logs from instances
+        description: Collecting sample logs
+owner:
+  github: fred-maussion/custom-integrations
+  type: community
