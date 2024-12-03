@@ -54,7 +54,7 @@ jobs:
       
           # Pull and run the Docker image
           docker pull $IMAGE_PATH:latest
-          docker run --rm -v $PWD:/workspace -w /workspace $IMAGE_PATH:latest bash -c "
+          docker run --rm -v $PWD:/workspace -w /workspace $IMAGE_PATH:latest sh -c "
           echo 'Building application ${{ matrix.app }}';
           cd ${{ matrix.app }};
           elastic-package lint
