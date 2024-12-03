@@ -2,12 +2,13 @@ name: Release
 
 permissions:
   contents: write
+  packages: read
 
 on:
   push:
     paths:
       - 'sensu/**'
-      # - 'ubika/**'
+      - 'ubika/**'
       # - 'bind9/**'
 
 jobs:
@@ -45,9 +46,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Lint & Build Application with Docker
+      - name: Build Packages
         run: |
           IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
+          # Authenticate with GitHub Container Registry
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      
+          # Pull and run the Docker image
           docker pull $IMAGE_PATH:latest
           docker run --rm -v $PWD:/workspace -w /workspace $IMAGE_PATH:latest bash -c "
           echo 'Building application ${{ matrix.app }}';
