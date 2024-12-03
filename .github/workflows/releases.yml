@@ -167,6 +167,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/packages/${{ matrix.app }}-*.zip
+          asset_path: build/packages/${{ matrix.app }}-${{ env.version }}.zip
           asset_name: ${{ matrix.app }}-${{ env.version }}.zip
           asset_content_type: application/zip
