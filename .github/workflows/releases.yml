@@ -81,11 +81,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
           
-      - name: Download Build Artifacts
+      - name: Download Build Artifact
         uses: actions/download-artifact@v4
         with:
-          name: build-artifact-sensu
+          name: build-artifact-${{ matrix.app }}
           path: build/packages
+  
+      - name: Verify Downloaded Artifact
+        run: |
+          ls -al build/packages
+          echo "Verifying artifact for ${{ matrix.app }}"
+          if [ ! -f build/packages/${{ matrix.app }}-*.zip ]; then
+            echo "Error: Artifact not found for ${{ matrix.app }}" >&2
+            exit 1
+          fi
 
       - name: Get Current Version
         id: get_version
