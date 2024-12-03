@@ -63,10 +63,20 @@ jobs:
               exit 1
             fi
 
-            # Sanitize the ENTRY to make it compatible with environment variables
-            ENTRY=$(echo "$ENTRY" | sed 's/"/\\"/g' | tr '\n' ' ')
+            # Format the changelog entry into Markdown
+            MD_CHANGELOG=$(echo "$ENTRY" | awk '
+              BEGIN { print "### Changelog for version '"$VERSION"':\n" }
+              /- version:/ { next }
+              /  changes:/ { next }
+              /    - description:/ { sub("    - description:", "- **Description:**", $0); print $0 }
+              /      type:/ { sub("      type:", "- **Type:**", $0); print $0 }
+              /      link:/ { sub("      link:", "- **Link:**", $0); print $0 }
+            ')
 
-            echo "changelog=$ENTRY" >> $GITHUB_ENV
+            # Write the formatted changelog to the environment variable
+            echo "changelog<<EOF" >> $GITHUB_ENV
+            echo "$MD_CHANGELOG" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
           else
             echo "Changelog file not found for $APP" >&2
             exit 1
