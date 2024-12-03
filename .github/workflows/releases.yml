@@ -46,6 +46,26 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Extract Changelog Entry
+        id: extract_changelog
+        run: |
+          # Extract the changelog entry for the current version
+          VERSION="${{ env.version }}"
+          APP="${{ matrix.app }}"
+          CHANGELOG_FILE="${APP}/changelog.yml"
+          
+          if [ -f "$CHANGELOG_FILE" ]; then
+            ENTRY=$(awk "/- version: \\\"$VERSION\\\"/,/- version: \\\"/" "$CHANGELOG_FILE" | head -n -1)
+            if [ -z "$ENTRY" ]; then
+              echo "No changelog entry found for version $VERSION" >&2
+              exit 1
+            fi
+            echo "changelog=$ENTRY" >> $GITHUB_ENV
+          else
+            echo "Changelog file not found for $APP" >&2
+            exit 1
+          fi
+
       - name: Create Release Tag
         id: create_tag
         run: |
@@ -60,6 +80,10 @@ jobs:
         with:
           tag_name: "${{ matrix.app }}-v${{ env.version }}"
           release_name: "Release ${{ matrix.app }} v${{ env.version }}"
+          body: |
+            Changelog for version ${{ env.version }}:
+
+            ${{ env.changelog }}
           draft: false
           prerelease: false
         env:
