@@ -34,7 +34,7 @@ jobs:
         id: get_version
         run: |
           # Read version from a file in the app folder, e.g., `manifest.yml`
-          VERSION=$(egrep -w version ${{ matrix.app }}/manifest.yml | head -1 | awk '{print $2}'
+          VERSION=$(egrep -w version ${{ matrix.app }}/manifest.yml | head -1 | awk '{print $2}')
           echo "version=$VERSION" >> $GITHUB_ENV
 
       - name: Create Release Tag
