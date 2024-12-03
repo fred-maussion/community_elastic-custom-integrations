@@ -7,7 +7,6 @@ source:
 description: "Sensu Observability Pipeline Logs"
 type: integration
 categories:
-  - custom
   - monitoring
 conditions:
   kibana:
