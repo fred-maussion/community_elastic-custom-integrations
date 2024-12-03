@@ -55,7 +55,7 @@ jobs:
           CHANGELOG_FILE="${APP}/changelog.yml"
           
           if [ -f "$CHANGELOG_FILE" ]; then
-            ENTRY=$(awk "/- version: \\\"$VERSION\\\"/,/- version: \\\"/" "$CHANGELOG_FILE" | head -n -1)
+            ENTRY=$(awk '/- version: "'$VERSION'"/,/- version: "/' "$CHANGELOG_FILE" | head -n -1)
             if [ -z "$ENTRY" ]; then
               echo "No changelog entry found for version $VERSION" >&2
               exit 1
