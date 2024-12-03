@@ -1,4 +1,4 @@
-name: Build and Push Docker Container
+name: Building and Push Elastic-Package Container
 
 on:
   push:
