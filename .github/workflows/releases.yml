@@ -61,6 +61,24 @@ jobs:
           elastic-package build
           "
 
+      - name: Find Build Artifact Path
+        id: find_artifact
+        run: |
+          ARTIFACT_PATH="/workspace/build/packages/${{ matrix.app }}-${{ env.version }}.zip"
+          if [ ! -f "$ARTIFACT_PATH" ]; then
+            echo "Error: Artifact not found: $ARTIFACT_PATH" >&2
+            exit 1
+          fi
+          echo "artifact_path=$ARTIFACT_PATH" >> $GITHUB_ENV
+
+      - name: Upload Build Artifact to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.artifact_path }}
+          asset_name: ${{ matrix.app }}-${{ env.version }}.zip
+          asset_content_type: application/zip
+
       - name: Extract Changelog Entry
         id: extract_changelog
         run: |
@@ -107,6 +125,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release
+        id: create_release
         uses: actions/create-release@v1
         with:
           tag_name: "${{ matrix.app }}-v${{ env.version }}"
