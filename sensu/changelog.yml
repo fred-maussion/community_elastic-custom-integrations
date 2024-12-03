@@ -1,6 +1,6 @@
 - version: "0.0.2"
   changes:
-    - description: Adding mapping.
+    - description: Adding mapping
       type: enhancement
       link: https://github.com/elastic/integrations/pull/1 # FIXME Replace with the real PR link
 
