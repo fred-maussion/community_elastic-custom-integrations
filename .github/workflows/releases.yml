@@ -62,3 +62,5 @@ jobs:
           release_name: "Release ${{ matrix.app }} v${{ env.version }}"
           draft: false
           prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
