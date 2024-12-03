@@ -1,0 +1,34 @@
+name: Build and Push Docker Container
+
+on:
+  push:
+    paths:
+      - Dockerfile  # Trigger only on changes to the Dockerfile
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  build:
+    name: Build Docker Container
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write  # Required for pushing to ghcr.io
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and Tag Docker Image
+        run: |
+          IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
+          docker build -t $IMAGE_PATH:latest .
+          echo "Built image: $IMAGE_PATH:latest"
+
+      - name: Push Docker Image
+        run: |
+          IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
+          docker push $IMAGE_PATH:latest
+          echo "Pushed image: $IMAGE_PATH:latest"

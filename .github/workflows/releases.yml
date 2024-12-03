@@ -8,8 +8,8 @@ on:
   push:
     paths:
       - 'sensu/**'
-      - 'ubika/**'
-      - 'bind9/**'
+      # - 'ubika/**'
+      # - 'bind9/**'
 
 jobs:
   release:
@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        app: [sensu, ubika, bind9]
+        app: [sensu]
 
     steps:
       - name: Checkout Repository
