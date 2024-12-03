@@ -73,6 +73,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        app: [sensu, ubika]
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -82,6 +86,13 @@ jobs:
         with:
           name: build-artifact-sensu
           path: build/packages
+
+      - name: Get Current Version
+        id: get_version
+        run: |
+          # Read version from a file in the app folder, e.g., `manifest.yml`
+          VERSION=$(egrep -w version ${{ matrix.app }}/manifest.yml | head -1 | awk '{print $2}')
+          echo "version=$VERSION" >> $GITHUB_ENV
 
       - name: Extract Changelog Entry
         id: extract_changelog
