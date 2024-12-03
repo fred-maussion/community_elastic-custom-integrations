@@ -1,0 +1,52 @@
+name: Release
+
+on:
+  push:
+    paths:
+      - 'sensu/**'
+      - 'ubika/**'
+      - 'bind9/**'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        app: [sensu, ubika, bind9]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Determine Changed Application
+        id: check_changes
+        run: |
+          CHANGED=$(git diff --name-only HEAD^ HEAD | grep "^${{ matrix.app }}/" || true)
+          if [ -n "$CHANGED" ]; then
+            echo "app=${{ matrix.app }}" >> $GITHUB_ENV
+          else
+            echo "No changes detected in ${{ matrix.app }}"
+            exit 0
+          fi
+
+      - name: Get Current Version
+        id: get_version
+        run: |
+          # Read version from a file in the app folder, e.g., `manifest.yml`
+          VERSION=$(egrep -w version ${{ matrix.app }}/manifest.yml | head -1 | awk '{print $2}'
+          echo "version=$VERSION" >> $GITHUB_ENV
+
+      - name: Create Release Tag
+        id: create_tag
+        run: |
+          git tag "${{ matrix.app }}-v${{ env.version }}"
+          git push origin "${{ matrix.app }}-v${{ env.version }}"
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: "${{ matrix.app }}-v${{ env.version }}"
+          release_name: "Release ${{ matrix.app }} v${{ env.version }}"
+          draft: false
+          prerelease: false

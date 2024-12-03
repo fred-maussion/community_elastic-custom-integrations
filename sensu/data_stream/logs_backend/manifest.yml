@@ -1,0 +1,18 @@
+title: "Sensu Backend Logs"
+type: logs
+streams:
+  - input: logfile
+    title: Sensu Backend log file
+    description: Collect Sensu backend log file
+    vars:
+      - name: paths
+        type: text
+        title: Paths
+        multi: true
+        default:
+          - /tmp/service_logs/sensu-backend.log
+          - /var/log/sensu-backend.log
+elasticsearch:
+  index_template:
+    mappings:
+      subobjects: false

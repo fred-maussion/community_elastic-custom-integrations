@@ -1,0 +1,150 @@
+- name: '@timestamp'
+  type: date
+  description: Event timestamp.
+- name: data_stream.type
+  type: constant_keyword
+  description: Data stream type.
+- name: data_stream.dataset
+  type: constant_keyword
+  description: Data stream dataset.
+- name: data_stream.namespace
+  type: constant_keyword
+  description: Data stream namespace.
+- name: ecs.version
+  type: keyword
+  description: ECS version.
+- name: event.action
+  type: keyword
+  description: Action captured in the event.
+- name: event.category
+  type: keyword
+  description: Event category (e.g., network, application).
+- name: event.created
+  type: date
+  description: Time when the event was created.
+- name: event.dataset
+  type: keyword
+  description: Event dataset name.
+- name: event.kind
+  type: keyword
+  description: The kind of event (e.g., event, state, metric).
+- name: event.reason
+  type: text
+  description: Reason or message for the event.
+- name: event.type
+  type: keyword
+  description: Event type (e.g., info, error, warning).
+- name: event.agent_id_status
+  type: keyword
+  description: Status of the agent ID verification.
+- name: event.ingested
+  type: date
+  description: Timestamp when the event was ingested.
+- name: event.timezone
+  type: keyword
+  description: Timezone of the event.
+- name: observer.vendor
+  type: keyword
+  description: Vendor of the observer.
+- name: observer.product
+  type: keyword
+  description: Product of the observer.
+- name: observer.type
+  type: keyword
+  description: Type of observer (e.g., observability).
+- name: agent.name
+  type: keyword
+  description: Name of the agent.
+- name: agent.id
+  type: keyword
+  description: Unique ID of the agent.
+- name: agent.ephemeral_id
+  type: keyword
+  description: Ephemeral ID of the agent.
+- name: agent.type
+  type: keyword
+  description: Type of the agent (e.g., filebeat, metricbeat).
+- name: agent.version
+  type: keyword
+  description: Version of the agent.
+- name: elastic_agent.id
+  type: keyword
+  description: ID of the Elastic Agent.
+- name: elastic_agent.version
+  type: keyword
+  description: Version of the Elastic Agent.
+- name: elastic_agent.snapshot
+  type: boolean
+  description: Whether the Elastic Agent is a snapshot build.
+- name: log.level
+  type: keyword
+  description: Log level (e.g., info, error, debug).
+- name: log.offset
+  type: long
+  description: Log offset in the file.
+- name: log.file.path
+  type: keyword
+  description: Path to the log file.
+- name: process.name
+  type: keyword
+  description: Name of the process.
+- name: process.pid
+  type: long
+  description: Process ID.
+- name: process.component
+  type: keyword
+  description: Component of the process.
+- name: host.name
+  type: keyword
+  description: Host name of the source.
+- name: host.hostname
+  type: keyword
+  description: Hostname of the system.
+- name: host.os.kernel
+  type: keyword
+  description: Kernel version of the operating system.
+- name: host.os.codename
+  type: keyword
+  description: Codename of the operating system.
+- name: host.os.name
+  type: keyword
+  description: Operating system name.
+- name: host.os.family
+  type: keyword
+  description: Operating system family (e.g., debian, redhat).
+- name: host.os.type
+  type: keyword
+  description: Operating system type (e.g., linux, windows).
+- name: host.os.version
+  type: keyword
+  description: Operating system version.
+- name: host.os.platform
+  type: keyword
+  description: Platform of the operating system.
+- name: host.architecture
+  type: keyword
+  description: Host architecture (e.g., x86_64).
+- name: host.containerized
+  type: boolean
+  description: Whether the host is containerized.
+- name: host.id
+  type: keyword
+  description: Unique ID of the host.
+- name: host.mac
+  type: keyword
+  description: MAC address of the host.
+- name: host.ip
+  type: ip
+  description: IP address of the host.
+- name: input.type
+  type: keyword
+  description: Type of input (e.g., log, metrics).
+- name: message
+  type: text
+  description: Original message of the log entry.
+- name: error.message
+  type: text
+  description: Error message captured during processing.
+- name: com.gca.entite.name
+  type: keyword
+  description: Custom entity name from the log.
