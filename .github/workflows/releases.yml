@@ -55,11 +55,17 @@ jobs:
           CHANGELOG_FILE="${APP}/changelog.yml"
           
           if [ -f "$CHANGELOG_FILE" ]; then
+            # Match lines starting from the specified version to the next `- version:` or EOF
             ENTRY=$(awk '/^- version: "'$VERSION'"/ {found=1} found && (/^- version: / && $0 !~ "'$VERSION'") {exit} found' "$CHANGELOG_FILE")
+
             if [ -z "$ENTRY" ]; then
               echo "No changelog entry found for version $VERSION" >&2
               exit 1
             fi
+
+            # Sanitize the ENTRY to make it compatible with environment variables
+            ENTRY=$(echo "$ENTRY" | sed 's/"/\\"/g' | tr '\n' ' ')
+
             echo "changelog=$ENTRY" >> $GITHUB_ENV
           else
             echo "Changelog file not found for $APP" >&2
