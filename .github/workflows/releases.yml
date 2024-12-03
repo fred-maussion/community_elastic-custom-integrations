@@ -37,11 +37,19 @@ jobs:
           VERSION=$(egrep -w version ${{ matrix.app }}/manifest.yml | head -1 | awk '{print $2}')
           echo "version=$VERSION" >> $GITHUB_ENV
 
+      - name: Configure Git for GitHub Actions
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Create Release Tag
         id: create_tag
         run: |
-          git tag "${{ matrix.app }}-v${{ env.version }}"
-          git push origin "${{ matrix.app }}-v${{ env.version }}"
+          TAG="${{ matrix.app }}-v${{ env.version }}"
+          git tag "$TAG"
+          git push origin "$TAG"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release
         uses: actions/create-release@v1
