@@ -1,0 +1,85 @@
+---
+description: 'Ingest pipeline for Sensu logs'
+processors:
+  - set:
+      field: 'ecs.version'
+      value: '8.11.0'
+  - set:
+      field: 'event.original'
+      copy_from: 'message'
+  - set:
+      field: 'event.kind'
+      value: 'event'
+  - set:
+      field: 'event.category'
+      value: 'network'
+  - set:
+      field: 'observer.vendor'
+      value: 'Sumo Logic'
+  - set:
+      field: 'observer.product'
+      value: 'Sensu'
+  - set:
+      field: 'observer.type'
+      value: 'observability'
+  - dissect:
+      field: 'message'
+      pattern: '%{month} %{date} %{hour} %{host.name} %{process.name}[%{process.pid}]: %{sensu.raw_json}'
+  - set:
+      field: 'contact_timestamp'
+      value: '{{ month }} {{ date }} {{ hour }}'
+  - date:
+      field: 'contact_timestamp'
+      formats:
+        - 'MMM dd HH:mm:ss'
+      target_field: '@timestamp'
+  - json:
+      field: 'sensu.raw_json'
+      target_field: 'sensu'
+  - rename:
+      field: 'sensu.check'
+      target_field: 'event.action'
+  - rename:
+      field: 'sensu.component'
+      target_field: 'process.component'
+  - rename:
+      field: 'sensu.error'
+      target_field: 'error.message'
+      ignore_missing: true
+  - rename:
+      field: 'sensu.level'
+      target_field: 'log.level'
+      ignore_missing: true
+  - rename:
+      field: 'sensu.time'
+      target_field: 'event.created'
+  - rename:
+      field: 'sensu.msg'
+      target_field: 'event.reason'
+  - rename:
+      field: 'sensu.entity'
+      target_field: 'com.gca.entite.name'
+      ignore_missing: true
+  - set:
+      field: 'process.name'
+      value: 'sensu-backend'
+  - set:
+      field: 'event.type'
+      value: 'info'
+  - set:
+      field: 'event.type'
+      copy_from: 'log.level'
+  - set:
+      field: 'process.pid'
+      value: '{{ process.pid }}'
+  - remove:
+      field:
+        - 'hour'
+        - 'date'
+        - 'month'
+        - 'contact_timestamp'
+        - 'sensu.level'
+on_failure:
+  - set:
+      field: 'error.message'
+      value: '{{ _ingest.on_failure_message }}'
