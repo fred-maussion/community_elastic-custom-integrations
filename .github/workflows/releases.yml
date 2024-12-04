@@ -12,6 +12,48 @@ on:
       # - 'bind9/**'
 
 jobs:
+  # test:
+  #   name: Test Package
+  #   runs-on: ubuntu-latest
+
+  #   strategy:
+  #     matrix:
+  #       app: [sensu, ubika]
+
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v3
+
+  #     - name: Determine Changed Application
+  #       id: check_changes
+  #       run: |
+  #         CHANGED=$(git diff --name-only HEAD^ HEAD | grep "^${{ matrix.app }}/" || true)
+  #         if [ -n "$CHANGED" ]; then
+  #           echo "app=${{ matrix.app }}" >> $GITHUB_ENV
+  #         else
+  #           echo "No changes detected in ${{ matrix.app }}"
+  #           exit 0
+  #         fi
+
+  #     - name: Configure Git for GitHub Actions
+  #       run: |
+  #         git config user.name "github-actions[bot]"
+  #         git config user.email "github-actions[bot]@users.noreply.github.com"
+
+  #     - name: Test Packages
+  #       run: |
+  #         IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
+  #         # Authenticate with GitHub Container Registry
+  #         echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      
+  #         # Pull and run the Docker image
+  #         docker pull $IMAGE_PATH:latest
+  #         docker run --rm -v $PWD:/workspace -w /workspace $IMAGE_PATH:latest sh -c "
+  #         echo 'Building application ${{ matrix.app }}';
+  #         cd ${{ matrix.app }};
+  #         elastic-package test
+  #         "
+        
   build: 
     name: Build Package
     runs-on: ubuntu-latest
@@ -158,7 +200,7 @@ jobs:
             Changelog for version ${{ env.version }}:
 
             ${{ env.changelog }}
-          draft: true
+          draft: false
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
