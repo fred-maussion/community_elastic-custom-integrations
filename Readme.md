@@ -581,15 +581,6 @@ gitGraph
 
 You'll find two example a for both _gitlab-ci_ and _github-action_ at the root of the project and _.github_ folder.
 
-## Expose them
-
-TODO : Explain EPR architecuture and best practice to expose them
-
-## TODO
-
-1. Create workshop to create a ready to use integration
-
-
 ## Usefull links
 1. https://www.elastic.co/guide/en/integrations-developer/current/quick-start.html
 2. [Elastic package](https://github.com/elastic/elastic-package)
