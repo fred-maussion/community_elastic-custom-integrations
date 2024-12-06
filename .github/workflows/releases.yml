@@ -226,15 +226,19 @@ jobs:
         with:
           path: build/packages
 
+      - name: Prepare deployment folder
+        run: |
+          mkdir -p ./deploy
+          find ./build/packages -type f -name '*.zip' -exec mv {} ./deploy/ \;
+
       - name: Deploy to EPR
         uses: easingthemes/ssh-deploy@v5.1.0
         with:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: "-avz --include='*/' --include='*.zip' --exclude='*'"
-          SOURCE: build/packages
-          TARGET: /var/package-registry/packages/
+          SOURCE: "./deploy/"
+          TARGET: /var/package-registry/packages
           SCRIPT_AFTER: systemctl restart package-registry
 
       
