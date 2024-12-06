@@ -216,7 +216,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
 
-      - name: print out example job
+      - name: Upload Artifact
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.REMOTE_HOST }}
@@ -225,24 +225,8 @@ jobs:
           port: 22
           command_timeout: 30m
           script: | 
+            scp build/packages/${{ matrix.app }}-${{ env.version }}.zip ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/var/package-registry/packages/
+            ssh ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "systemctl restart package-registry"
             echo "User : ${{secrets.REMOTE_USER}}"
             echo "Host : ${{secrets.REMOTE_HOST}}"
             echo "Nice Job!!!"
-
-      # - name: Set up SSH key & Upload Artifact
-      #   run: |
-      #     mkdir -p ~/.ssh
-      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa_github
-      #     echo ~/.ssh/id_rsa_github
-      #     chmod 600 ~/.ssh/id_rsa_github
-      #     ls -lh ~/.ssh/id_rsa_github
-      #     ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
-      #     cat ~/.ssh/known_hosts
-      #     ssh -vvv -o HostKeyAlgorithms=ssh-ed25519  -i ~/.ssh/id_rsa_github ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "systemctl restart package-registry"
-      #     scp -i ~/.ssh/id_rsa_github build/packages/${{ matrix.app }}-${{ env.version }}.zip ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/var/package-registry/packages/
-      
-      # - name: Clean up SSH Key
-      #   if: always()
-      #   run: |
-      #     rm -f ~/.ssh/id_rsa_github
-
