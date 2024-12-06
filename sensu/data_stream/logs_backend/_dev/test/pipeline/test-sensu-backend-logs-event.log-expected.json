@@ -1,0 +1,85 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2024-11-28T14:30:01.000Z",
+            "com": {
+                "gca": {
+                    "entite": {
+                        "name": "ENTITY-ENVIRONMENT-PERIMETER"
+                    }
+                }
+            },
+            "ecs": {
+                "version": "8.11.0"
+            },
+            "error": {
+                "message": "command: unmatched token: template: command:1:167: executing \"command\" at <.labels.gateway_variable_Token_Url>: map has no entry for key \"gateway_variable_Token_Url\""
+            },
+            "event": {
+                "action": "consume_api_gateway_variable",
+                "category": "network",
+                "created": "2024-11-28T14:30:01Z",
+                "kind": "event",
+                "original": "Nov 28 14:30:01 host1 sensu-backend[22907]: {\"check\":\"consume_api_gateway_variable\",\"component\":\"schedulerd\",\"entity\":\"ENTITY-ENVIRONMENT-PERIMETER\",\"error\":\"command: unmatched token: template: command:1:167: executing \\\"command\\\" at \\u003c.labels.gateway_variable_Token_Url\\u003e: map has no entry for key \\\"gateway_variable_Token_Url\\\"\",\"level\":\"error\",\"msg\":\"unable to substitute tokens\",\"time\":\"2024-11-28T14:30:01Z\"}",
+                "reason": "unable to substitute tokens",
+                "type": "error"
+            },
+            "host": {
+                "name": "host1"
+            },
+            "log": {
+                "level": "error"
+            },
+            "message": "Nov 28 14:30:01 host1 sensu-backend[22907]: {\"check\":\"consume_api_gateway_variable\",\"component\":\"schedulerd\",\"entity\":\"ENTITY-ENVIRONMENT-PERIMETER\",\"error\":\"command: unmatched token: template: command:1:167: executing \\\"command\\\" at \\u003c.labels.gateway_variable_Token_Url\\u003e: map has no entry for key \\\"gateway_variable_Token_Url\\\"\",\"level\":\"error\",\"msg\":\"unable to substitute tokens\",\"time\":\"2024-11-28T14:30:01Z\"}",
+            "observer": {
+                "product": "Sensu",
+                "type": "observability",
+                "vendor": "Sumo Logic"
+            },
+            "process": {
+                "component": "schedulerd",
+                "name": "sensu-backend",
+                "pid": "22907"
+            },
+            "sensu": {}
+        },
+        {
+            "@timestamp": "2024-11-28T14:30:01.000Z",
+            "ecs": {
+                "version": "8.11.0"
+            },
+            "error": {
+                "message": "command: unmatched token: template: command:1:167: executing \"command\" at <.labels.gateway_variable_Token_Url>: map has no entry for key \"gateway_variable_Token_Url\""
+            },
+            "event": {
+                "action": "consume_api_gateway_variable",
+                "category": "network",
+                "created": "2024-11-28T14:30:01Z",
+                "kind": "event",
+                "original": "Nov 28 14:30:01 host1 sensu-backend[22907]: {\"check\":\"consume_api_gateway_variable\",\"component\":\"schedulerd\",\"error\":\"command: unmatched token: template: command:1:167: executing \\\"command\\\" at \\u003c.labels.gateway_variable_Token_Url\\u003e: map has no entry for key \\\"gateway_variable_Token_Url\\\"\",\"level\":\"error\",\"msg\":\"could not substitute tokens for proxy entity \\\"ENTITY-ENVIRONMENT-PERIMETER\\\"\",\"namespace\":\"NAMESPACE\",\"time\":\"2024-11-28T14:30:01Z\"}",
+                "reason": "could not substitute tokens for proxy entity \"ENTITY-ENVIRONMENT-PERIMETER\"",
+                "type": "error"
+            },
+            "host": {
+                "name": "host1"
+            },
+            "log": {
+                "level": "error"
+            },
+            "message": "Nov 28 14:30:01 host1 sensu-backend[22907]: {\"check\":\"consume_api_gateway_variable\",\"component\":\"schedulerd\",\"error\":\"command: unmatched token: template: command:1:167: executing \\\"command\\\" at \\u003c.labels.gateway_variable_Token_Url\\u003e: map has no entry for key \\\"gateway_variable_Token_Url\\\"\",\"level\":\"error\",\"msg\":\"could not substitute tokens for proxy entity \\\"ENTITY-ENVIRONMENT-PERIMETER\\\"\",\"namespace\":\"NAMESPACE\",\"time\":\"2024-11-28T14:30:01Z\"}",
+            "observer": {
+                "product": "Sensu",
+                "type": "observability",
+                "vendor": "Sumo Logic"
+            },
+            "process": {
+                "component": "schedulerd",
+                "name": "sensu-backend",
+                "pid": "22907"
+            },
+            "sensu": {
+                "namespace": "NAMESPACE"
+            }
+        }
+    ]
+}

@@ -240,26 +240,3 @@ jobs:
           SOURCE: "./deploy/"
           TARGET: /var/package-registry/packages
           SCRIPT_AFTER: systemctl restart package-registry
-
-      
-      # - name: Post Deploy
-      #   uses: appleboy/ssh-action@v1.2.0
-      #   with:
-      #       host: ${{ secrets.SSH_HOST_DEV }}
-      #       username: ${{ secrets.USERNAME_DEV }}
-      #       key: ${{ secrets.SSH_PRIVATE_KEY_DEV }}
-      #       port: 22
-      #       script: |
-      #         sudo systemctl restart cp-backend
-
-      # - name: Post Deploy
-      #   uses: appleboy/ssh-action@v1.2.0
-      #   with:
-      #     host: ${{ secrets.REMOTE_HOST }}
-      #     username: ${{ secrets.REMOTE_USER }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     port: 22
-      #     command_timeout: 30m
-      #     script: | 
-      #       scp build/packages/${{ matrix.app }}-${{ env.version }}.zip ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/var/package-registry/packages/
-      #       systemctl restart package-registry
