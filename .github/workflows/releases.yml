@@ -214,3 +214,52 @@ jobs:
           asset_content_type: application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+
+  deploy:
+    needs: release
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          path: build/packages
+
+      - name: Prepare deployment folder
+        run: |
+          mkdir -p ./deploy
+          find ./build/packages -type f -name '*.zip' -exec mv {} ./deploy/ \;
+
+      - name: Deploy to EPR
+        uses: easingthemes/ssh-deploy@v5.1.0
+        with:
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SOURCE: "./deploy/"
+          TARGET: /var/package-registry/packages
+          SCRIPT_AFTER: systemctl restart package-registry
+
+      
+      # - name: Post Deploy
+      #   uses: appleboy/ssh-action@v1.2.0
+      #   with:
+      #       host: ${{ secrets.SSH_HOST_DEV }}
+      #       username: ${{ secrets.USERNAME_DEV }}
+      #       key: ${{ secrets.SSH_PRIVATE_KEY_DEV }}
+      #       port: 22
+      #       script: |
+      #         sudo systemctl restart cp-backend
+
+      # - name: Post Deploy
+      #   uses: appleboy/ssh-action@v1.2.0
+      #   with:
+      #     host: ${{ secrets.REMOTE_HOST }}
+      #     username: ${{ secrets.REMOTE_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     port: 22
+      #     command_timeout: 30m
+      #     script: | 
+      #       scp build/packages/${{ matrix.app }}-${{ env.version }}.zip ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/var/package-registry/packages/
+      #       systemctl restart package-registry
