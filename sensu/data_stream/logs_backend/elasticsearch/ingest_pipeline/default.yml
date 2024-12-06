@@ -50,6 +50,7 @@ processors:
       field: 'sensu.level'
       target_field: 'log.level'
       ignore_missing: true
+      ignore_failure: true
   - rename:
       field: 'sensu.time'
       target_field: 'event.created'
@@ -69,6 +70,7 @@ processors:
   - set:
       field: 'event.type'
       copy_from: 'log.level'
+      ignore_failure: true
   - set:
       field: 'process.pid'
       value: '{{ process.pid }}'
@@ -79,6 +81,7 @@ processors:
         - 'month'
         - 'contact_timestamp'
         - 'sensu.level'
+      ignore_failure: true   
 on_failure:
   - set:
       field: 'error.message'
