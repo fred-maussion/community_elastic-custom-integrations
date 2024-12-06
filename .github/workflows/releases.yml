@@ -224,7 +224,7 @@ jobs:
           ls -lh ~/.ssh/id_rsa_github
           ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts
-          ssh -i ~/.ssh/id_rsa_github ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "systemctl restart package-registry"
+          ssh -vvv -i ~/.ssh/id_rsa_github ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "systemctl restart package-registry"
           scp -i ~/.ssh/id_rsa_github build/packages/${{ matrix.app }}-${{ env.version }}.zip ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/var/package-registry/packages/
       
       - name: Clean up SSH Key
