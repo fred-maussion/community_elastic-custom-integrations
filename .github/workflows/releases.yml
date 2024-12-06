@@ -217,7 +217,7 @@ jobs:
         
 
       - name: print out example job
-        uses: appleboy/ssh-action@v0.1.10
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
@@ -225,6 +225,8 @@ jobs:
           port: 22
           command_timeout: 30m
           script: | 
+            echo "User : ${{secrets.REMOTE_USER}}"
+            echo "Host : ${{secrets.REMOTE_HOST}}"
             echo "Nice Job!!!"
 
       # - name: Set up SSH key & Upload Artifact
