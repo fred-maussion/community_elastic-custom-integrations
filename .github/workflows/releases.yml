@@ -228,7 +228,7 @@ jobs:
           path: build/packages
 
       - name: Deploy to EPR
-        uses: easingthemes/ssh-deployv5.1.0
+        uses: easingthemes/ssh-deploy@v5.1.0
         with:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
