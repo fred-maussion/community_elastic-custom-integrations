@@ -215,25 +215,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up SSH key
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      - name: Set up SSH key & Upload Artifact
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa_github
+          chmod 600 ~/.ssh/id_rsa_github
           ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null	
-          ssh-add ~/.ssh/id_rsa
-  
-      - name: Upload Artifact to External Server
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        run: |
-          scp build/packages/${{ matrix.app }}-${{ env.version }}.zip ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/var/package-registry/packages/
-          ssh ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "systemctl restart package-registry"
+          scp -i ~/.ssh/id_rsa_github build/packages/${{ matrix.app }}-${{ env.version }}.zip ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/var/package-registry/packages/
+          ssh -i ~/.ssh/id_rsa_github ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "systemctl restart package-registry"
       
       - name: Clean up SSH Key
         if: always()
         run: |
-          rm -f ~/.ssh/id_rsa
+          rm -f ~/.ssh/id_rsa_github
