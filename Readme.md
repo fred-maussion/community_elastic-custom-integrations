@@ -93,8 +93,8 @@ elastic-package is written in go and needs a specific version to use it. As a ma
 
 ```bash
 # Linux Example (assumes ~/bin is in PATH).
-curl -sL -o ~/bin/gvm https://github.com/andrewkroh/gvm/releases/download/v0.5.2/gvm-linux-amd64
-chmod +x ~/bin/gvm
+curl -sL -o /usr/local/bin/gvm https://github.com/andrewkroh/gvm/releases/download/v0.5.2/gvm-linux-amd64
+chmod +x /usr/local/bin/gvm
 eval "$(gvm 1.23.2)"
 go version
 ```
@@ -103,8 +103,8 @@ go version
 
 ```bash
 # Linux Example (assumes ~/bin is in PATH).
-curl -sL -o ~/bin/gvm https://github.com/andrewkroh/gvm/releases/download/v0.5.2/gvm-linux-arm64
-chmod +x ~/bin/gvm
+curl -sL -o /usr/local/bin/gvm https://github.com/andrewkroh/gvm/releases/download/v0.5.2/gvm-linux-arm64
+chmod +x /usr/local/bin/gvm
 eval "$(gvm 1.23.2)"
 go version
 ```
@@ -496,28 +496,56 @@ Ubika
 
 Now the folder exist you can add the test files (raw or event). In the case of this example we are going to add raw log files from the application.
 
-
+ The naming 
 for more information 
 
+test
+expected 
 
 
 
 ##### Validate that it's working
 
+Now the in
 
+```bash
+elastic-package 
+```
 
 
 ##### Build the intgration
 
+Finally if all the test are working you can build the integration by running the following command : 
 
+```bash
+elastic-package build
+```
+
+The generated zip archive will be available at the root of the project under _build/packages/_
+
+If you want to see the output in the elastic stack, you can spin up the stack using the following command who will integrate the generated package to the local EPR and serve it within Kibana under the integration sub menu.
+
+```bash
+elastic-package stack up -d --services package-registry
+```
 
 ## CI/CD
 
-### Github
+In today's fast-paced development landscape, ensuring the quality and reliability of software integrations is crucial. One effective way to achieve this is by leveraging Continuous Integration/Continuous Deployment (CI/CD) pipelines. This approach automates the integration and deployment process, reducing errors and increasing efficiency.
 
+In this context, we'll explore how to deploy an integration using CI/CD on the Elastic Package Registry (EPR), while ensuring the quality of the integration through the use of the Elastic-Package Testing Framework. We'll see the benefits of this approach, including:
 
-### Gitlab
+* Automated testing and deployment: Streamlining the process to ensure faster time-to-market
+* Reduced errors: Catching issues early on in the development cycle
+* Increased confidence: Ensuring the integrity of the integration
 
+By combining CI/CD with Elastic-Package Testing Framework, we'll see how to create a robust and reliable integration that meets the demands of modern software development. In the next section, we'll dive deeper into the specifics of this approach, including configuration, testing, and deployment best practices.
+
+### Github / Gitlab
+
+In this repository we're going to apply a simple CI scenario where every time a integration version is available it will trigger the CI/CD pipeline and generate a new package version containing the changelog and the archive.
+
+We strongly suggest you adapt it to your needs on your production environment to something like :
 
 ```mermaid
 ---
@@ -551,7 +579,7 @@ gitGraph
    commit id: "push to EPR int.2"  type: HIGHLIGHT
 ```
 
-
+You'll find two example a for both _gitlab-ci_ and _github-action_ at the root of the project and _.github_ folder.
 
 ## Expose them
 
@@ -565,6 +593,3 @@ TODO : Explain EPR architecuture and best practice to expose them
 ## Usefull links
 1. https://www.elastic.co/guide/en/integrations-developer/current/quick-start.html
 2. [Elastic package](https://github.com/elastic/elastic-package)
-
-
-docker run -it -p 8080:8080 -v `pwd`:/packages/package-registry $(docker images -q docker.elastic.co/package-registry/package-registry:main)
