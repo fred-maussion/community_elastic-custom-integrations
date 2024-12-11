@@ -46,6 +46,9 @@
 - name: observer.vendor
   type: keyword
   description: Vendor of the observer.
+- name: observer.version
+  type: keyword
+  description: Observer version.
 - name: observer.product
   type: keyword
   description: Product of the observer.
@@ -145,6 +148,9 @@
 - name: error.message
   type: text
   description: Error message captured during processing.
+- name: orchestrator.namespace
+  type: keyword
+  description: Namespace in which the action is taking place.
 - name: com.gca.entite.name
   type: keyword
   description: Custom entity name from the log.

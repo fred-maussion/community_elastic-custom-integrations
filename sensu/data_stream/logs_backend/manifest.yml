@@ -10,8 +10,7 @@ streams:
         title: Paths
         multi: true
         default:
-          - /tmp/service_logs/sensu-backend.log
-          - /var/log/sensu-backend.log
+          - /var/log/sensu/sensu-backend.log
 elasticsearch:
   index_template:
     mappings:

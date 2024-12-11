@@ -1,3 +1,8 @@
+- version: "0.0.3"
+  changes:
+    - description: Adding mapping, fix dissect contact_timestamp and modify default path log.
+      type: enhancement
+      link: https://github.com/elastic/integrations/pull/1 # FIXME Replace with the real PR link
 - version: "0.0.2"
   changes:
     - description: Adding mapping.

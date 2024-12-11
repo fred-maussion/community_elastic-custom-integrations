@@ -1,7 +1,7 @@
 format_version: 3.3.0
 name: sensu
 title: "Sensu"
-version: 0.0.2
+version: 0.0.3
 source:
   license: "Apache-2.0"
 description: "Sensu Observability Pipeline Logs"
