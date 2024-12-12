@@ -21,13 +21,16 @@ processors:
       value: 'Sensu'
   - set:
       field: 'observer.type'
-      value: 'observability'
+      value: 'alerting'
+  - set:
+      field: 'observer.version'
+      value: '6.10.0'
   - dissect:
       field: 'message'
-      pattern: '%{month} %{date} %{hour} %{host.name} %{process.name}[%{process.pid}]: %{sensu.raw_json}'
+      pattern: '%{month} %{day} %{time} %{host.name} %{process.name}[%{process.pid}]: %{sensu.raw_json}'
   - set:
       field: 'contact_timestamp'
-      value: '{{ month }} {{ date }} {{ hour }}'
+      value: '{{ month }} {{ day }} {{ time }}'
   - date:
       field: 'contact_timestamp'
       formats:
@@ -60,6 +63,10 @@ processors:
   - rename:
       field: 'sensu.entity'
       target_field: 'com.gca.entite.name'
+      ignore_missing: true
+  - rename:
+      field: 'sensu.namespace'
+      target_field: 'orchestrator.namespace'
       ignore_missing: true
   - set:
       field: 'process.name'
