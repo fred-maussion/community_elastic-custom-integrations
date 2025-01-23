@@ -1,7 +1,7 @@
 format_version: 3.3.0
 name: sg_input2
 title: "Demo Package "
-version: 0.0.1
+version: 0.0.2
 source:
   license: "Apache-2.0"
 description: "This is a new package."
