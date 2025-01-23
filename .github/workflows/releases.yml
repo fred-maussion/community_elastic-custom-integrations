@@ -10,6 +10,7 @@ on:
       - 'sensu/**'
       - 'ubika/**'
       - 'sg_input/**'
+      - 'sg_input2/**'
       # - 'bind9/**'
 
 jobs:
@@ -61,7 +62,7 @@ jobs:
 
     strategy:
       matrix:
-        app: [sensu, ubika, sg_input]
+        app: [sensu, ubika, sg_input, sg_input2]
 
     steps:
       - name: Checkout Repository
@@ -118,7 +119,7 @@ jobs:
 
     strategy:
       matrix:
-        app: [sensu, ubika, sg_input]
+        app: [sensu, ubika, sg_input, sg_input2]
 
     steps:
       - name: Checkout Repository
