@@ -61,7 +61,7 @@ jobs:
 
     strategy:
       matrix:
-        app: [sensu, ubika]
+        app: [sensu, ubika, sg_input]
 
     steps:
       - name: Checkout Repository
@@ -118,7 +118,7 @@ jobs:
 
     strategy:
       matrix:
-        app: [sensu, ubika]
+        app: [sensu, ubika, sg_input]
 
     steps:
       - name: Checkout Repository
