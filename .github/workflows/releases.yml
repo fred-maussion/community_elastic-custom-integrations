@@ -9,6 +9,7 @@ on:
     paths:
       - 'sensu/**'
       - 'ubika/**'
+      - 'sg_input/**'
       # - 'bind9/**'
 
 jobs:
