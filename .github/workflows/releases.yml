@@ -1,89 +1,71 @@
 name: Release
 
+on:
+  push:
+    branches:
+      - main
 permissions:
   contents: write
   packages: read
 
-on:
-  push:
-    paths:
-      - 'sensu/**'
-      - 'ubika/**'
-      - 'sg_input/**'
-      - 'sg_input2/**'
-      # - 'bind9/**'
-
 jobs:
-  # test:
-  #   name: Test Package
-  #   runs-on: ubuntu-latest
-
-  #   strategy:
-  #     matrix:
-  #       app: [sensu, ubika]
-
-  #   steps:
-  #     - name: Checkout Repository
-  #       uses: actions/checkout@v3
-
-  #     - name: Determine Changed Application
-  #       id: check_changes
-  #       run: |
-  #         CHANGED=$(git diff --name-only HEAD^ HEAD | grep "^${{ matrix.app }}/" || true)
-  #         if [ -n "$CHANGED" ]; then
-  #           echo "app=${{ matrix.app }}" >> $GITHUB_ENV
-  #         else
-  #           echo "No changes detected in ${{ matrix.app }}"
-  #           exit 0
-  #         fi
-
-  #     - name: Configure Git for GitHub Actions
-  #       run: |
-  #         git config user.name "github-actions[bot]"
-  #         git config user.email "github-actions[bot]@users.noreply.github.com"
-
-  #     - name: Test Packages
-  #       run: |
-  #         IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
-  #         # Authenticate with GitHub Container Registry
-  #         echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-      
-  #         # Pull and run the Docker image
-  #         docker pull $IMAGE_PATH:latest
-  #         docker run --rm -v $PWD:/workspace -w /workspace $IMAGE_PATH:latest sh -c "
-  #         echo 'Building application ${{ matrix.app }}';
-  #         cd ${{ matrix.app }};
-  #         elastic-package test
-  #         "
-        
-  build: 
-    name: Build Package
+  detect:
+    name: Detect Changed Packages
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        app: [sensu, ubika, sg_input, sg_input2]
+    outputs:
+      list: ${{ steps.set.outputs.packages }}
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Determine Changed Application
-        id: check_changes
+      - name: Detect Changed Packages
+        id: set
         run: |
-          CHANGED=$(git diff --name-only HEAD^ HEAD | grep "^${{ matrix.app }}/" || true)
-          if [ -n "$CHANGED" ]; then
-            echo "app=${{ matrix.app }}" >> $GITHUB_ENV
+          echo "Detecting changed packages..."
+
+          # Safe fallback for orphan commits or first pushes
+          if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+            CHANGED=$(git diff --name-only HEAD^ HEAD | awk -F/ '{print $1}' | sort -u | uniq)
           else
-            echo "No changes detected in ${{ matrix.app }}"
-            exit 0
+            CHANGED=$(git ls-files | awk -F/ '{print $1}' | sort -u | uniq)
           fi
+
+          echo "All changed top-level folders: $CHANGED"
+
+          # Keep only valid integration folders (those with a manifest.yml)
+          VALID_PKGS=()
+          for dir in $CHANGED; do
+            if [ -f "$dir/manifest.yml" ]; then
+              VALID_PKGS+=("$dir")
+            fi
+          done
+
+          echo "Valid integration packages: ${VALID_PKGS[*]}"
+
+          # Convert to clean JSON array (no escaping!)
+          JSON=$(printf '%s\n' "${VALID_PKGS[@]}" | jq -R . | jq -cs .)
+          echo "JSON result: $JSON"
+
+          # Write directly to GitHub output (NO escaping)
+          echo "packages=$JSON" >> $GITHUB_OUTPUT
+
+  build:
+    name: Build Packages
+    needs: detect
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: ${{ fromJson(needs.detect.outputs.list) }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
       - name: Get Current Version
         id: get_version
         run: |
-          # Read version from a file in the app folder, e.g., `manifest.yml`
-          VERSION=$(egrep -w version ${{ matrix.app }}/manifest.yml | head -1 | awk '{print $2}')
+          VERSION=$(egrep -w version ${{ matrix.app }}/manifest.yml | head -1 | awk '{print $2}' | tr -d '"')
+          echo "Extracted version: $VERSION"
           echo "version=$VERSION" >> $GITHUB_ENV
 
       - name: Configure Git for GitHub Actions
@@ -91,50 +73,45 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Build Packages
+      - name: Build Package
         run: |
           IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
-          # Authenticate with GitHub Container Registry
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-      
-          # Pull and run the Docker image
           docker pull $IMAGE_PATH:latest
-          docker run --rm -v $PWD:/workspace -w /workspace $IMAGE_PATH:latest sh -c "
-          echo 'Building application ${{ matrix.app }}';
-          cd ${{ matrix.app }};
-          elastic-package lint
-          elastic-package build
-          "
 
-      - name: Upload Build Artifact
+          docker run --rm -v $PWD:/workspace -w /workspace/${{ matrix.app }} $IMAGE_PATH:latest sh -c "
+            elastic-package lint;
+            elastic-package build;
+          "
+          
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-artifact-${{ matrix.app }}
           path: build/packages/${{ matrix.app }}-*.zip
-  
-  release:
-    name: Release Package
-    needs: build
-    runs-on: ubuntu-latest
 
+  release:
+    name: Release Packages
+    needs: [build,detect]
+    if: needs.detect.outputs.list != '[]'
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        app: [sensu, ubika, sg_input, sg_input2]
-
+        app: ${{ fromJson(needs.detect.outputs.list) }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-          
+
       - name: Download Build Artifact
         uses: actions/download-artifact@v4
         with:
           name: build-artifact-${{ matrix.app }}
           path: build/packages
-  
+
       - name: Verify Downloaded Artifact
         run: |
-          ls -al build/packages
           echo "Verifying artifact for ${{ matrix.app }}"
+          ls -al build/packages
           if [ ! -f build/packages/${{ matrix.app }}-*.zip ]; then
             echo "Error: Artifact not found for ${{ matrix.app }}" >&2
             exit 1
@@ -143,20 +120,17 @@ jobs:
       - name: Get Current Version
         id: get_version
         run: |
-          # Read version from a file in the app folder, e.g., `manifest.yml`
           VERSION=$(egrep -w version ${{ matrix.app }}/manifest.yml | head -1 | awk '{print $2}')
           echo "version=$VERSION" >> $GITHUB_ENV
 
       - name: Extract Changelog Entry
         id: extract_changelog
         run: |
-          # Extract the changelog entry for the current version
           VERSION="${{ env.version }}"
           APP="${{ matrix.app }}"
           CHANGELOG_FILE="${APP}/changelog.yml"
-          
+
           if [ -f "$CHANGELOG_FILE" ]; then
-            # Match lines starting from the specified version to the next `- version:` or EOF
             ENTRY=$(awk '/^- version: "'$VERSION'"/ {found=1} found && (/^- version: / && $0 !~ "'$VERSION'") {exit} found' "$CHANGELOG_FILE")
 
             if [ -z "$ENTRY" ]; then
@@ -164,7 +138,6 @@ jobs:
               exit 1
             fi
 
-            # Format the changelog entry into Markdown
             MD_CHANGELOG=$(echo "$ENTRY" | awk '
               BEGIN { print "### Changelog for version '"$VERSION"':\n" }
               /- version:/ { next }
@@ -174,7 +147,6 @@ jobs:
               /      link:/ { sub("      link:", "- **Link:**", $0); print $0 }
             ')
 
-            # Write the formatted changelog to the environment variable
             echo "changelog<<EOF" >> $GITHUB_ENV
             echo "$MD_CHANGELOG" >> $GITHUB_ENV
             echo "EOF" >> $GITHUB_ENV
@@ -216,8 +188,6 @@ jobs:
           asset_content_type: application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-
   deploy:
     needs: release
     name: Deploy
