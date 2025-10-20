@@ -1,0 +1,56 @@
+title: "Red Flag Domains Feed"
+type: logs
+streams:
+  - input: cel
+    title: "Red Flag Domains Feed"
+    description: |-
+      Collects suspicious newly registered domains from the Red Flag Domains feed.
+    template_path: cel.yml.hbs
+    vars:
+      - name: data_stream.dataset
+        type: text
+        title: "Dataset name"
+        description: "Internal setting for the data stream dataset."
+        required: true
+        show_user: false
+        secret: false
+        default: redflag.domains
+
+      - name: url
+        type: text
+        title: "Feed URL"
+        description: "The URL for the Red Flag Domains text file feed."
+        required: true
+        show_user: false
+        secret: false
+        default: https://dl.red.flag.domains/red.flag.domains.txt
+
+      - name: interval
+        type: text
+        title: "Polling Interval"
+        description: |-
+          How often the feed URL is checked for updates. The feed is updated daily.
+        required: true
+        show_user: true
+        default: 12h
+      
+      - name: tags
+        type: text
+        title: "Tags"
+        description: "Tags to add to each event."
+        multi: true
+        show_user: true
+        default:
+          - red-flag-domains
+          - forwarded
+
+      - name: timeout
+        type: text
+        title: "Timeout"
+        description: "Duration to wait for the HTTP request to complete before timing out."
+        default: "30s"
+
+      - name: proxy_url
+        type: text
+        title: "Proxy URL"
+        description: "Proxy URL for making the HTTP request."

@@ -1,0 +1,58 @@
+{
+    "input": {
+      "type": "cel"
+    },
+    "agent": {
+      "name": "docker-fleet-agent",
+      "id": "59eba658-ff10-477b-83f8-2ad6322eaf19",
+      "type": "filebeat",
+      "ephemeral_id": "9547f0a3-8332-4f9d-b8f2-b36b85a15248",
+      "version": "8.15.4"
+    },
+    "@timestamp": "2025-10-20T10:33:26.348Z",
+    "ecs": {
+      "version": "8.11.0"
+    },
+    "data_stream": {
+      "namespace": "default",
+      "type": "logs",
+      "dataset": "ti_redflag.domains"
+    },
+    "host": {
+      "name": "docker-fleet-agent"
+    },
+    "elastic_agent": {
+      "id": "59eba658-ff10-477b-83f8-2ad6322eaf19",
+      "version": "8.15.4",
+      "snapshot": false
+    },
+    "threat": {
+      "indicator": {
+        "confidence": "High",
+        "name": "zotero.fr",
+        "type": "domain-name",
+        "url": {
+          "domain": "zotero.fr"
+        }
+      },
+      "feed": {
+        "name": "Red Flag Domains"
+      }
+    },
+    "event": {
+      "agent_id_status": "verified",
+      "ingested": "2025-10-20T10:33:31Z",
+      "kind": "enrichment",
+      "category": [
+        "threat"
+      ],
+      "type": [
+        "indicator"
+      ],
+      "dataset": "ti_redflag.domains"
+    },
+    "tags": [
+      "red-flag-domains",
+      "forwarded"
+    ]
+}
