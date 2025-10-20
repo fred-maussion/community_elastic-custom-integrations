@@ -1,0 +1,55 @@
+---
+description: Pipeline for ingesting Red Flag Domains as ECS-compliant threat intelligence indicators.
+processors:
+  - drop:
+      description: "Ignore comments or header lines from the feed"
+      if: "ctx.message.startsWith('#')"
+  - script:
+      description: "Remove leading/trailing whitespace from the domain name"
+      lang: painless
+      source: "ctx.message = ctx.message.trim()"
+  - drop:
+      description: "Drop any empty lines that remain after trimming"
+      if: "ctx.message.isEmpty()"
+  - set:
+      field: ecs.version
+      value: '8.11.0'
+  - set:
+      field: event.kind
+      value: enrichment
+  - set:
+      field: event.category
+      value:
+        - threat
+  - set:
+      field: event.type
+      value:
+        - indicator
+  - set:
+      field: event.dataset
+      value: "ti_redflag.domains"
+  - set:
+      field: threat.feed.name
+      value: "Red Flag Domains"
+  - set:
+      field: threat.indicator.type
+      value: "domain-name"
+  - set:
+      field: threat.indicator.name
+      value: "{{{message}}}"
+  - set:
+      field: threat.indicator.url.domain
+      value: "{{{message}}}"
+  - set:
+      field: threat.indicator.confidence
+      value: "High"
+  - remove:
+      field: message
+
+on_failure:
+  - set:
+      field: event.kind
+      value: pipeline_error
+  - append:
+      field: error.message
+      value: "Failed to process Red Flag Domains indicator in ingest pipeline."

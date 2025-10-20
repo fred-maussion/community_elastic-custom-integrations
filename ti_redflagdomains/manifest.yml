@@ -1,0 +1,45 @@
+format_version: 3.5.0
+name: ti_redflag
+title: "Red Flag Domains"
+version: 0.0.1
+source:
+  license: "Apache-2.0"
+description: "Ingest threat intelligence indicators from red.flag.domains feeds with Elastic Agent."
+type: integration
+categories:
+  - security
+  - threat_intel
+conditions:
+  kibana:
+    version: "^8.14.0 || ^9.0.0"
+  elastic:
+    subscription: "basic"
+screenshots:
+  - src: /img/logo.svg
+    title: Sample screenshot
+    size: 600x600
+    type: image/svg+xml
+icons:
+  - src: /img/logo.svg
+    title: Red Flag Logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: redflag_domains
+    title: Red Flag Domains Feed
+    description: "Default configuration to collect threat intelligence from the Red Flag Domains feed."
+    inputs:
+      - type: cel
+        title: "Red Flag Domains Feed"
+        description: "Ingests the list of suspicious domains from red.flag.domains."
+        vars:
+          - name: data_stream.dataset
+            type: text
+            title: Dataset
+            show_user: false
+            secret: false
+            default: "redflag.domains"
+
+owner:
+  github: fred-maussion/custom_integrations
+  type: community

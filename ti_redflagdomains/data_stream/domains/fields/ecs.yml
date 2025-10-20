@@ -1,0 +1,39 @@
+- name: ecs.version
+  external: ecs
+- name: error.message
+  external: ecs
+- name: event.category
+  external: ecs
+- name: event.id
+  external: ecs
+- name: event.ingested
+  external: ecs
+- name: event.kind
+  external: ecs
+- name: event.type
+  external: ecs
+- name: event.dataset
+  external: ecs
+- name: tags
+  external: ecs
+- name: threat.feed.description
+  type: constant_keyword
+  value: "Red Flag Domains lists of very recently registered probably malicious domain names in french TLDs"
+- name: threat.feed.name
+  type: constant_keyword
+  description: Display friendly feed name.
+  value: "Red Flag Domains"
+- name: threat.feed.reference
+  type: constant_keyword
+  description: Display the feed reference.
+  value: "https://red.flag.domains/"
+- name: threat.indicator.type
+  type: constant_keyword
+  description: The type of the threat indicator.
+  value: "domain-name"
+- name: threat.indicator.name
+  type: keyword
+- name: threat.indicator.url.domain
+  type: keyword
+- name: threat.indicator.confidence
+  type: constant_keyword

@@ -1,0 +1,61 @@
+{
+    "expected": [
+        null,
+        {
+            "ecs": {
+                "version": "8.11.0"
+            },
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "dataset": "ti_redflag.domains",
+                "kind": "enrichment",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "threat": {
+                "feed": {
+                    "name": "Red Flag Domains"
+                },
+                "indicator": {
+                    "confidence": "High",
+                    "name": "000webhostapp.fr",
+                    "type": "domain-name",
+                    "url": {
+                        "domain": "000webhostapp.fr"
+                    }
+                }
+            }
+        },
+        {
+            "ecs": {
+                "version": "8.11.0"
+            },
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "dataset": "ti_redflag.domains",
+                "kind": "enrichment",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "threat": {
+                "feed": {
+                    "name": "Red Flag Domains"
+                },
+                "indicator": {
+                    "confidence": "High",
+                    "name": "000webhost.fr",
+                    "type": "domain-name",
+                    "url": {
+                        "domain": "000webhost.fr"
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: read
+  checks: write
+  packages: read
 
 jobs:
   pr-tests:
@@ -63,6 +65,13 @@ jobs:
             docker run --rm -v $PWD:/workspace -w /workspace $IMAGE_PATH:latest sh -c "
               cd $app;
               elastic-package lint;
-              elastic-package test;
+              elastic-package test static  --report-format xUnit --report-output file;
             "
           done
+      - name: Publish xUnit test results to GitHub summary
+        uses: dorny/test-reporter@v1
+        with:
+          name: Elastic Package Tests
+          path: 'build/test-results/*.xml'
+          reporter: swift-xunit
+          token: ${{ secrets.GITHUB_TOKEN }}
