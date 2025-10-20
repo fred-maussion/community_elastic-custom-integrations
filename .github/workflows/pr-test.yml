@@ -72,3 +72,4 @@ jobs:
           name: Elastic Package Tests
           path: 'build/test-results/*.xml'
           reporter: swift-xunit
+          token: ${{ secrets.GITHUB_TOKEN }}
