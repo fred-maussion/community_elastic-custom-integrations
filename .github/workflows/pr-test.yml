@@ -63,6 +63,7 @@ jobs:
             docker run --rm -v $PWD:/workspace -w /workspace $IMAGE_PATH:latest sh -c "
               cd $app;
               elastic-package lint;
-              elastic-package test;
+              elastic-package test pipeline;
+              elastic-package test static;
             "
           done
