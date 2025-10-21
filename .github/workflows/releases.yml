@@ -119,19 +119,19 @@ jobs:
           name: build-artifact-${{ matrix.app }}
           path: build/packages
 
-      - name: Verify Downloaded Artifact
+      - name: Verify Artifact
         run: |
           echo "Verifying artifact for ${{ matrix.app }}"
           ls -al build/packages
           if [ ! -f build/packages/${{ matrix.app }}-*.zip ]; then
-            echo "Error: Artifact not found for ${{ matrix.app }}" >&2
+            echo "Artifact not found for ${{ matrix.app }}" >&2
             exit 1
           fi
 
-      - name: Get Current Version
+      - name: Extract Version
         id: get_version
         run: |
-          VERSION=$(egrep -w version ${{ matrix.app }}/manifest.yml | head -1 | awk '{print $2}')
+          VERSION=$(grep -E '^version:' ${{ matrix.app }}/manifest.yml | awk '{print $2}' | tr -d '"')
           echo "version=$VERSION" >> $GITHUB_ENV
 
       - name: Extract Changelog Entry
