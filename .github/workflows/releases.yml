@@ -61,19 +61,39 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Get Current Version
-        id: get_version
+      - name: Get Package Metadata
+        id: get_metadata
         run: |
           VERSION=$(egrep -w version ${{ matrix.app }}/manifest.yml | head -1 | awk '{print $2}' | tr -d '"')
           echo "Extracted version: $VERSION"
           echo "version=$VERSION" >> $GITHUB_ENV
+
+      - name: Check if version already released
+        id: check_release
+        run: |
+          TAG="${{ env.name }}-v${{ env.version }}"
+          echo "Checking if release $TAG already exists..."
+
+          # Query GitHub releases API
+          RESPONSE=$(curl -s -H "Accept: application/vnd.github+json" \
+                         -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                         https://api.github.com/repos/${{ github.repository }}/releases/tags/$TAG)
+
+          if echo "$RESPONSE" | grep -q '"tag_name"'; then
+            echo "Release $TAG already exists. Skipping build."
+            echo "skip_build=true" >> $GITHUB_ENV
+          else
+            echo "No existing release found for $TAG. Proceeding with build."
+            echo "skip_build=false" >> $GITHUB_ENV
+          fi
 
       - name: Configure Git for GitHub Actions
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Build Package
+      - name: Build Packag
+        if: env.skip_build == 'false'
         run: |
           IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
