@@ -41,5 +41,5 @@ policy_templates:
             default: "redflag.domains"
 
 owner:
-  github: fred-maussion/custom_integrations
+  github: fred-maussion/community_elastic-custom-integrations
   type: community
