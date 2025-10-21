@@ -64,8 +64,11 @@ jobs:
       - name: Get Package Metadata
         id: get_metadata
         run: |
+          NAME=$(grep -E '^name:' ${{ matrix.app }}/manifest.yml | awk '{print $2}' | tr -d '"')
           VERSION=$(egrep -w version ${{ matrix.app }}/manifest.yml | head -1 | awk '{print $2}' | tr -d '"')
+          echo "Extracted name: $NAME"
           echo "Extracted version: $VERSION"
+          echo "name=$NAME" >> $GITHUB_ENV
           echo "version=$VERSION" >> $GITHUB_ENV
 
       - name: Check if version already released
@@ -74,17 +77,16 @@ jobs:
           TAG="${{ env.name }}-v${{ env.version }}"
           echo "Checking if release $TAG already exists..."
 
-          # Query GitHub releases API
           RESPONSE=$(curl -s -H "Accept: application/vnd.github+json" \
-                         -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-                         https://api.github.com/repos/${{ github.repository }}/releases/tags/$TAG)
+                        -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                        https://api.github.com/repos/${{ github.repository }}/releases/tags/$TAG)
 
           if echo "$RESPONSE" | grep -q '"tag_name"'; then
             echo "Release $TAG already exists. Skipping build."
-            echo "skip_build=true" >> $GITHUB_ENV
+            echo "skip_build=true" >> $GITHUB_OUTPUT
           else
             echo "No existing release found for $TAG. Proceeding with build."
-            echo "skip_build=false" >> $GITHUB_ENV
+            echo "skip_build=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Configure Git for GitHub Actions
@@ -92,8 +94,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Build Packag
-        if: env.skip_build == 'false'
+      - name: Build Package
+        if: steps.check_release.outputs.skip_build == 'false'
         run: |
           IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -105,6 +107,7 @@ jobs:
           "
           
       - name: Upload Artifact
+        if: steps.check_release.outputs.skip_build == 'false'
         uses: actions/upload-artifact@v4
         with:
           name: build-artifact-${{ matrix.app }}
