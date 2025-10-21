@@ -24,30 +24,41 @@ jobs:
         run: |
           echo "Detecting changed packages..."
 
-          # Safe fallback for orphan commits or first pushes
           if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
             CHANGED=$(git diff --name-only HEAD^ HEAD | awk -F/ '{print $1}' | sort -u | uniq)
           else
             CHANGED=$(git ls-files | awk -F/ '{print $1}' | sort -u | uniq)
           fi
 
-          echo "All changed top-level folders: $CHANGED"
+          echo "Changed top-level folders: $CHANGED"
 
-          # Keep only valid integration folders (those with a manifest.yml)
           VALID_PKGS=()
           for dir in $CHANGED; do
             if [ -f "$dir/manifest.yml" ]; then
-              VALID_PKGS+=("$dir")
+              NAME=$(grep -E '^name:' "$dir/manifest.yml" | awk '{print $2}' | tr -d '"')
+              VERSION=$(grep -E '^version:' "$dir/manifest.yml" | awk '{print $2}' | tr -d '"')
+              TAG="${NAME}-v${VERSION}"
+
+              echo "Checking if release $TAG exists..."
+
+              RESPONSE=$(curl -s -H "Accept: application/vnd.github+json" \
+                              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                              https://api.github.com/repos/${{ github.repository }}/releases/tags/$TAG)
+
+              if echo "$RESPONSE" | grep -q '"tag_name"'; then
+                echo "Skipping $dir — already released as $TAG"
+              else
+                echo "Keeping $dir — not released yet"
+                VALID_PKGS+=("$dir")
+              fi
             fi
           done
 
-          echo "Valid integration packages: ${VALID_PKGS[*]}"
+          echo "Valid packages to build: ${VALID_PKGS[*]}"
 
-          # Convert to clean JSON array (no escaping!)
           JSON=$(printf '%s\n' "${VALID_PKGS[@]}" | jq -R . | jq -cs .)
           echo "JSON result: $JSON"
 
-          # Write directly to GitHub output (NO escaping)
           echo "packages=$JSON" >> $GITHUB_OUTPUT
 
   build:
@@ -61,33 +72,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Get Package Metadata
+      - name: Extract Version
         id: get_metadata
         run: |
-          NAME=$(grep -E '^name:' ${{ matrix.app }}/manifest.yml | awk '{print $2}' | tr -d '"')
-          VERSION=$(egrep -w version ${{ matrix.app }}/manifest.yml | head -1 | awk '{print $2}' | tr -d '"')
-          echo "Extracted name: $NAME"
+          VERSION=$(grep -E '^version:' ${{ matrix.app }}/manifest.yml | awk '{print $2}' | tr -d '"')
           echo "Extracted version: $VERSION"
-          echo "name=$NAME" >> $GITHUB_ENV
           echo "version=$VERSION" >> $GITHUB_ENV
-
-      - name: Check if version already released
-        id: check_release
-        run: |
-          TAG="${{ env.name }}-v${{ env.version }}"
-          echo "Checking if release $TAG already exists..."
-
-          RESPONSE=$(curl -s -H "Accept: application/vnd.github+json" \
-                        -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-                        https://api.github.com/repos/${{ github.repository }}/releases/tags/$TAG)
-
-          if echo "$RESPONSE" | grep -q '"tag_name"'; then
-            echo "Release $TAG already exists. Skipping build."
-            echo "skip_build=true" >> $GITHUB_OUTPUT
-          else
-            echo "No existing release found for $TAG. Proceeding with build."
-            echo "skip_build=false" >> $GITHUB_OUTPUT
-          fi
 
       - name: Configure Git for GitHub Actions
         run: |
@@ -95,7 +85,6 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Build Package
-        if: steps.check_release.outputs.skip_build == 'false'
         run: |
           IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -104,8 +93,7 @@ jobs:
           docker run --rm -v $PWD:/workspace -w /workspace/${{ matrix.app }} $IMAGE_PATH:latest sh -c "
             elastic-package lint;
             elastic-package build;
-          "
-          
+          "     
       - name: Upload Artifact
         if: steps.check_release.outputs.skip_build == 'false'
         uses: actions/upload-artifact@v4
