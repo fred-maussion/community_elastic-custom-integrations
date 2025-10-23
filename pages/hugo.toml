@@ -1,3 +1,4 @@
 languageCode = 'en-us'
 title = 'Elastic Custom Integrations'
 baseURL = "https://fred-maussion.github.io/community_elastic-custom-integrations"
+canonifyURLs = true
