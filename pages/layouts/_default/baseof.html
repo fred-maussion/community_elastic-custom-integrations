@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }} | Elastic Integrations</title>
+    
+    <!-- Google Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Link to our new stylesheet -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- NEW: Add Marked.js library for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">
+                <img src="/images/elastic_logo.svg" alt="Elastic Logo" class="header-logo-img">
+                <span>Elastic Integrations</span>
+            </a>
+            <div class="header-controls">
+                <!-- Kibana Version Filter -->
+                <div class="filter-container">
+                    <label for="kibana-version-selector">Kibana:</label>
+                    <select id="kibana-version-selector">
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+                <form action="/search" method="get" id="search-form">
+                    <input type="search" name="q" placeholder="Search integrations..." required>
+                    <button type="submit" aria-label="Search">🔍</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- This is where your page content will be injected -->
+        {{ block "main" . }}{{ end }}
+    </main>
+
+    <footer>
+        <!-- You can style this later in style.css if you want -->
+    </footer>
+
+    <!-- Your app.js file (which is correct) -->
+    <script src="/js/app.js"></script>
+</body>
+</html>
