@@ -13,6 +13,11 @@
     <!-- Link to our new stylesheet -->
     <link rel="stylesheet" href="/css/style.css">
 
+    <!-- NEW: Global JS variable for the site's base URL -->
+    <script>
+        const SITE_BASE_URL = "{{ .Site.BaseURL }}";
+    </script>
+
     <!-- NEW: Add Marked.js library for Markdown rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
