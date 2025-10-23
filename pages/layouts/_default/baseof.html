@@ -13,6 +13,23 @@
     <!-- Link to our new stylesheet -->
     <link rel="stylesheet" href="/css/style.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- NEW: Elastic RUM Agent -->
+        {{ with .Site.Params.rum }}
+        {{ if .enabled }}
+            <script src="https://unpkg.com/@elastic/apm-rum@5/dist/bundles/elastic-apm-rum.umd.min.js" crossorigin></script>
+            <script>
+            elasticApm.init({
+                serviceName: '{{ .serviceName }}',
+                serverUrl: '{{ .serverUrl }}',
+                serviceVersion: '{{ .serviceVersion }}'
+            })
+            </script>
+        {{ end }}
+        {{ end }}
+    </head>
+    
     <!-- NEW: Global JS variable for the site's base URL -->
     <script>
         const SITE_BASE_URL = "{{ .Site.BaseURL }}";
