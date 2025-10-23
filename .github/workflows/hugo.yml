@@ -53,14 +53,14 @@ jobs:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production
         run: |
-          cd pages
+          cd elastic-integrations
           hugo \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./pages/public
+          path: ./elastic-integrations/docs
 
   # Deployment job
   deploy:
