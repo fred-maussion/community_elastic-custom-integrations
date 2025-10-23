@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function createIntegrationCard(pkg, kibanaVersion) {
     // Construct the URL with the Kibana version
-    const detailUrl = `integration?pkg=${pkg.name}${kibanaVersion ? `&kibana_version=${kibanaVersion}` : ''}`;
+    const detailUrl = `/integration?pkg=${pkg.name}${kibanaVersion ? `&kibana_version=${kibanaVersion}` : ''}`;
 
     return `
         <div class="integration-card">
