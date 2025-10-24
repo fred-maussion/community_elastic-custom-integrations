@@ -3,9 +3,14 @@ title = 'Elastic Custom Integrations'
 baseURL = "https://fred-maussion.github.io/community_elastic-custom-integrations"
 canonifyURLs = true
 
+[params]
+  eprUrlElastic = "https://epr.elastic.co"
+  eprUrl = "http://34.159.102.188:8080"
+
 [params.rum]
   enabled = true
   serviceName = "Custom Integration Website"
   serverUrl = "https://b540b89995d141d5bd1f12beaccf3379.apm.europe-west3.gcp.cloud.es.io:443"
-  serviceVersion = "1.0.0"
+  serviceVersion = "2.0.0"
   environment = "production"
+  eprUrl = ""

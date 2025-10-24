@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div class="container browse-container">
+    <aside class="browse-sidebar">
+        <h2>Filters</h2>
+        <div class="filter-group">
+            <label for="text-filter">Search by Name</label>
+            <input type="text" id="text-filter" placeholder="Type to filter...">
+        </div>
+        <div class="filter-group">
+            <h3>Categories</h3>
+            <div id="category-filters" class="category-filter-list">
+                <p class="loading">Loading categories...</p>
+            </div>
+        </div>
+    </aside>
+    <main class="browse-main">
+        <h1 id="browse-title">All Integrations</h1>
+        <div id="browse-grid" class="integration-grid">
+            <p class="loading">Loading integrations...</p>
+        </div>
+    </main>
+</div>
+{{ end }}

@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ .Title }} | Elastic Integrations</title>
     
+    <script>
+      // Make the EPR URL from hugo.toml available to client-side scripts
+      const EPR_URL = "{{ .Site.Params.eprUrl | safeJS }}";
+    </script>
+
     <!-- Google Font (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +19,7 @@
     <link rel="stylesheet" href="/css/style.css">
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="/images/favicon.png">
 
     <!-- NEW: Elastic RUM Agent -->
         {{ with .Site.Params.rum }}
@@ -24,7 +30,8 @@
                         serviceName: '{{ .serviceName }}',
                         serverUrl: '{{ .serverUrl }}',
                         serviceVersion: '{{ .serviceVersion }}',
-                        environment: '{{ .environment }}'
+                        environment: '{{ .environment }}',
+                        distributedTracingOrigins: ['{{ .eprUrl | safeJS }}']
                     })
                 </script>
             {{ end }}
@@ -47,6 +54,14 @@
                 <span>Elastic Integrations</span>
             </a>
             <div class="header-controls">
+                <!-- Beta Selector Filter -->
+                <div class="toggle-control">
+                    <label for="prerelease-toggle">Include Pre-releases</label>
+                    <label class="switch">
+                        <input type="checkbox" id="prerelease-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
                 <!-- Kibana Version Filter -->
                 <div class="filter-container">
                     <label for="kibana-version-selector">Kibana:</label>
@@ -54,7 +69,8 @@
                         <!-- Populated by JS -->
                     </select>
                 </div>
-                <form action="/search" method="get" id="search-form">
+                <!-- <form action="/search" method="get" id="search-form"> -->
+                <form action="{{ "browse/" | relURL }}" method="get" id="search-form">
                     <input type="search" name="q" placeholder="Search integrations..." required>
                     <button type="submit" aria-label="Search">🔍</button>
                 </form>

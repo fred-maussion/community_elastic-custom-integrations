@@ -140,6 +140,78 @@ header nav button[type="submit"]:hover {
     color: var(--brand-accent);
 }
 
+/* --- NEW --- */
+.toggle-control {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.toggle-control label {
+    margin-right: 10px;
+    font-size: 14px;
+    color: #f5f3f3;
+    white-space: nowrap;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #007bff;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #007bff;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+
+
+#results {
+  margin-bottom: 20px;
+}
+
 /* --- Integration Grid & Cards --- */
 .integration-grid {
     display: grid;
@@ -156,6 +228,7 @@ header nav button[type="submit"]:hover {
     border-radius: 8px;
     padding: 1.5rem;
     transition: all 0.2s ease-in-out;
+    box-sizing: border-box; /* Include padding/border in width */
 }
 
 .integration-card:hover {
@@ -186,7 +259,6 @@ header nav button[type="submit"]:hover {
     font-weight: 600;
     margin: 0;
     color: var(--text-primary);
-    /* --- NEW: Ensure long titles wrap correctly --- */
     word-break: break-word;
     white-space: normal;
 }
@@ -278,7 +350,14 @@ header nav button[type="submit"]:hover {
     text-decoration: none;
 }
 
-/* --- New Three-Column Detail Page Layout --- */
+.category-icon {
+    height: 1.75rem; /* Match the font size of the h2 */
+    width: 1.75rem;
+    vertical-align: middle; /* Align the icon with the text */
+    margin-right: 0.75rem;
+}
+
+/* --- Three-Column Detail Page Layout --- */
 .three-column-layout {
     display: grid;
     grid-template-columns: 275px 1fr 275px; /* Left, Center, Right */
@@ -382,7 +461,7 @@ header nav button[type="submit"]:hover {
 }
 
 
-/* --- New Data Streams Styles --- */
+/* --- Data Streams Styles --- */
 .data-streams-list {
     margin: 2rem 0;
 }
@@ -399,6 +478,7 @@ header nav button[type="submit"]:hover {
     border-radius: 8px;
     padding: 1rem 1.5rem;
     margin-bottom: 1rem;
+    cursor: pointer; /* Indicate it's clickable */
 }
 
 .data-stream-item h4 {
@@ -410,6 +490,21 @@ header nav button[type="submit"]:hover {
     color: var(--text-secondary);
     font-family: monospace;
     font-size: 0.875rem;
+}
+
+.json-viewer {
+    margin-top: 1rem;
+    background-color: var(--dark-bg);
+    padding: 1rem;
+    border-radius: 6px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.json-viewer pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-all;
 }
 
 /* --- Carousel Styles --- */
@@ -447,22 +542,118 @@ header nav button[type="submit"]:hover {
 
 .carousel-viewport {
     overflow: hidden;
+    /* --- NEW --- Add some margin if buttons are outside */
 }
 
 .horizontal-list {
     display: flex;
-    gap: 1.5rem;
+    /* --- REMOVED gap --- We handle spacing via card width */
     transition: transform 0.3s ease-in-out;
 }
 
 .horizontal-list .integration-card {
-    flex: 0 0 calc(20% - 1.2rem); /* Show 5 items, accounting for gap */
-    min-width: 220px;
+    flex-shrink: 0; /* Prevent cards from shrinking */
+    /* --- UPDATED --- Set base width for 5 cards across */
+    width: 20%;
+    /* --- NEW --- Add margin for spacing instead of gap */
+    margin-right: 1.5rem;
 }
 
-/* --- Responsive Design --- */
+/* --- UPDATED --- Remove the last card's margin */
+.horizontal-list .integration-card:last-child {
+    margin-right: 0;
+}
+
+/* --- New Browse Page Styles --- */
+.browse-container {
+    display: grid;
+    grid-template-columns: 250px 1fr; /* Sidebar and main content */
+    gap: 2rem;
+    align-items: start;
+}
+
+.browse-sidebar {
+    position: sticky;
+    top: 2rem;
+}
+
+.filter-group {
+    margin-bottom: 2rem;
+}
+
+.filter-group label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+#text-filter {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+}
+
+.category-filter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+.category-filter-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.category-filter-item label {
+    font-weight: normal;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.category-filter-item input {
+    cursor: pointer;
+}
+
+/* --- New "Browse All" Link Styles --- */
+/* .carousel-header .browse-all-link {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 1.5rem; /* Add space between buttons and link
+} */
+
+.carousel-header .browse-all-link {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-decoration: none;
+    margin-left: 1.5rem; /* Add space between buttons and link */
+    transition: all 0.2s;
+}
+
+.carousel-header .browse-all-link:hover {
+    background-color: var(--border-color);
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+/* --- Responsive Design Adjustments for Carousel --- */
 
 /* For Tablets and smaller desktops */
+@media (max-width: 1200px) {
+    .horizontal-list .integration-card {
+        width: 25%; /* Show 4 cards */
+    }
+}
 @media (max-width: 1024px) {
     .three-column-layout {
         grid-template-columns: 1fr; /* Switch to a single column */
@@ -476,7 +667,7 @@ header nav button[type="submit"]:hover {
     }
 
     .horizontal-list .integration-card {
-        flex-basis: calc(33.33% - 1rem); /* Show ~3 cards */
+        width: 33.333%; /* Show 3 cards */
     }
 }
 
@@ -492,7 +683,8 @@ header nav button[type="submit"]:hover {
     }
 
     .horizontal-list .integration-card {
-        flex-basis: calc(50% - 0.75rem); /* Show ~2 cards */
+        width: 50%; /* Show 2 cards */
+         margin-right: 1rem; /* Reduce margin */
     }
 
     .integration-card {
@@ -503,7 +695,8 @@ header nav button[type="submit"]:hover {
 /* For very small mobile devices */
 @media (max-width: 480px) {
     .horizontal-list .integration-card {
-        flex-basis: 90%; /* Show ~1 card */
+        width: 80%; /* Show ~1 card */
+        margin-right: 1rem;
     }
 
     .header-controls {
