@@ -18,7 +18,7 @@
     <!-- NEW: Elastic RUM Agent -->
         {{ with .Site.Params.rum }}
         {{ if .enabled }}
-            <script src="https://unpkg.com/@elastic/apm-rum@5/dist/bundles/elastic-apm-rum.umd.min.js" crossorigin></script>
+            <script src="/js/elastic-apm-rum.umd.min.js" crossorigin></script>
             <script>
             elasticApm.init({
                 serviceName: '{{ .serviceName }}',
