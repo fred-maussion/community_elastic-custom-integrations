@@ -31,7 +31,8 @@
                         serverUrl: '{{ .serverUrl }}',
                         serviceVersion: '{{ .serviceVersion }}',
                         environment: '{{ .environment }}',
-                        distributedTracingOrigins: ['{{ .eprUrl | safeJS }}']
+                        distributedTracingOrigins: ['{{ .eprUrl | safeJS }}'],
+                        propagateTracestate: true
                     })
                 </script>
             {{ end }}
