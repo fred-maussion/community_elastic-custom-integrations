@@ -1,6 +1,11 @@
 # newer versions go on top
 - version: "0.0.2"
   changes:
+    - description: Adding policy test
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/9
+- version: "0.0.3"
+  changes:
     - description: Changing Manifest Github Repository
       type: enhancement
       link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/9

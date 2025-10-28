@@ -1,0 +1,10 @@
+input: cel
+data_stream:
+  vars:
+    dataset: ti_redflag.domains
+    interval: 12h
+    url: "https://dl.red.flag.domains/red.flag.domains.txt"
+    tags:
+      - red-flag-domains
+      - forwarded
+
