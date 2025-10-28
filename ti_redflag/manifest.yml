@@ -1,7 +1,7 @@
 format_version: 3.5.0
 name: ti_redflag
 title: "Red Flag Domains"
-version: 0.0.2
+version: 0.0.3
 source:
   license: "Apache-2.0"
 description: "Ingest threat intelligence indicators from red.flag.domains feeds with Elastic Agent."
