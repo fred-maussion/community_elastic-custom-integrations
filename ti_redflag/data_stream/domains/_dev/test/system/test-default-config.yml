@@ -1,0 +1,8 @@
+deployer: docker
+service: nginx
+input: cel
+data_stream:
+  vars:
+    url: "http://{{Hostname}}/red.flag.domains.txt"
+assert:
+  min_count: 500
