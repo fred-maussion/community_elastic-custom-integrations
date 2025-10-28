@@ -95,7 +95,6 @@ jobs:
             elastic-package build;
           "     
       - name: Upload Artifact
-        if: steps.check_release.outputs.skip_build == 'false'
         uses: actions/upload-artifact@v4
         with:
           name: build-artifact-${{ matrix.app }}
