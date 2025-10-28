@@ -1,0 +1,55 @@
+inputs:
+    - data_stream:
+        namespace: ep
+      meta:
+        package:
+            name: ti_redflag
+            policy_template: redflag_domains
+            release: beta
+      name: test-default-policy-ti_redflag
+      streams:
+        - data_stream:
+            dataset: ti_redflag.domains
+          interval: 12h
+          program: |-
+            state.with(
+              request(
+                "GET",
+                state.url
+              ).do_request().as(resp,
+                (resp.StatusCode == 200) ? {
+                  "events": string(resp.Body)
+                    .split('\n')
+                    .filter(line, line != '' && !line.startsWith('#'))
+                    .map(domain, {"message": domain})
+                } : {
+                  "events": [{
+                    "message": "ERROR: Failed to download Red Flag Domains feed. Status code: " + string(resp.StatusCode)
+                  }]
+                }
+              )
+            )
+          resource.timeout: 30s
+          resource.url: https://dl.red.flag.domains/red.flag.domains.txt
+          state:
+            url: https://dl.red.flag.domains/red.flag.domains.txt
+          tags:
+            - red-flag-domains
+            - forwarded
+      type: cel
+      use_output: default
+output_permissions:
+    default:
+        _elastic_agent_checks:
+            cluster:
+                - monitor
+        _elastic_agent_monitoring:
+            indices: []
+        uuid-for-permissions-on-related-indices:
+            indices:
+                - names:
+                    - logs-ti_redflag.domains-ep
+                  privileges:
+                    - auto_configure
+                    - create_doc
+secret_references: []
