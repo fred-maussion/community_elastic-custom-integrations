@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+    types: [opened, synchronize, ready_for_review]
 
 permissions:
   contents: read
@@ -11,10 +12,10 @@ permissions:
   packages: read
 
 jobs:
-  pr-tests:
-    name: Run tests on changed packages
+  pr-checks:
+    name: Run PR Checks
     runs-on: ubuntu-latest
-
+   
     steps:
       - name: Checkout PR branch and main
         uses: actions/checkout@v3
@@ -25,6 +26,7 @@ jobs:
       - name: Fetch origin/main
         run: |
             git fetch origin main
+
       - name: Determine Changed Packages
         id: changed
         run: |
@@ -32,7 +34,6 @@ jobs:
             PACKAGES=$(ls -d */ | cut -f1 -d'/')
             echo "PACKAGES : $PACKAGES"
 
-            CHANGED_APPS=""
             for pkg in $PACKAGES; do
             if git diff --name-only origin/main...HEAD | grep -q "^${pkg}/"; then
                 echo "Detected changes in: $pkg"
@@ -53,7 +54,7 @@ jobs:
         if: env.changed_apps == ''
         run: echo "No changed apps found. Skipping tests."
 
-      - name: Run Tests on Changed Packages
+      - name: Run Fast Tests on Changed Packages
         if: env.changed_apps != ''
         run: |
           IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
@@ -61,17 +62,152 @@ jobs:
           docker pull $IMAGE_PATH:latest
 
           for app in ${{ env.changed_apps }}; do
-            echo "Running tests for $app"
+            echo "Running fast tests for $app"
             docker run --rm -v $PWD:/workspace -w /workspace $IMAGE_PATH:latest sh -c "
               cd $app;
+              echo 'Running lint...'
               elastic-package lint;
-              elastic-package test static  --report-format xUnit --report-output file;
+              echo 'Running static tests...'
+              elastic-package test static --report-format xUnit --report-output file;
             "
           done
-      - name: Publish xUnit test results to GitHub summary
+
+      - name: Publish Fast Test Results
+        if: env.changed_apps != ''
         uses: dorny/test-reporter@v1
         with:
-          name: Elastic Package Tests
+          name: Fast Tests
+          path: 'build/test-results/*.xml'
+          reporter: swift-xunit
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Serverless Environment
+        if: env.changed_apps != '' && github.event.pull_request.draft == false
+        env:
+          EC_API_KEY: ${{ secrets.EC_API_KEY }}
+        run: |
+          echo "Setting up serverless profile and environment..."
+          
+          # Set env var for subsequent steps per documentation
+          echo "ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS=true" >> $GITHUB_ENV
+
+          elastic-package profiles create serverless
+          elastic-package profiles use serverless
+          
+          cat <<EOF > ~/.elastic-package/profiles/serverless/config.yml
+          stack.elastic_cloud.host: https://cloud.elastic.co
+          stack.serverless.type: security
+          stack.serverless.region: aws-us-east-1
+          EOF
+          
+          echo "Serverless profile 'serverless' configured."
+
+      - name: Run Costly Tests on Changed Packages
+        if: env.changed_apps != '' && github.event.pull_request.draft == false
+        env:
+          EC_API_KEY: ${{ secrets.EC_API_KEY }}
+          ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS: "true"
+        run: |
+          echo "PR IS NOT DRAFT: Running costly tests..."
+          IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
+          
+          for app in ${{ env.changed_apps }}; do
+            echo "--- Running Costly Tests for $app ---"
+            
+            # This script will run INSIDE the container
+            # We create it dynamically to handle logging and cleanup
+            cat << 'RUN_SCRIPT' > "run_script_${app}.sh"
+            #!/bin.sh
+            # Exit immediately if a command exits with a non-zero status
+            set -e 
+            
+            echo "--- [$0] Inside container for $1 ---"
+            
+            # cd into the app directory
+            cd $1
+            
+            # Create a log file for the stack up command
+            STACK_UP_LOG="stack-up.log"
+            
+            # Run stack up, redirecting all output to the log file
+            # Use 'set +e' to handle the exit code manually
+            set +e
+            elastic-package stack up -d --provider serverless -v &> $STACK_UP_LOG
+            STACK_UP_STATUS=$?
+            set -e
+
+            USERNAME=$(grep 'Username: ' $STACK_UP_LOG | awk '{print $2}')
+            PASSWORD=$(grep 'Password: ' $STACK_UP_LOG | awk '{print $2}')
+            
+            # This writes to stdout, which the runner will intercept
+            if [ -n "$USERNAME" ]; then
+                echo "::add-mask::$USERNAME"
+            fi
+            if [ -n "$PASSWORD" ]; then
+                echo "::add-mask::$PASSWORD"
+            fi
+
+            echo "--- Stack Up Logs ---"
+            cat $STACK_UP_LOG
+            echo "---------------------"
+
+            # Check if stack up failed
+            if [ $STACK_UP_STATUS -ne 0 ]; then
+                echo "elastic-package stack up failed"
+                # Attempt cleanup just in case
+                elastic-package stack down || echo "Stack down failed, proceeding..."
+                exit $STACK_UP_STATUS
+            fi
+
+            # Run tests
+            # Use 'set +e' again to capture status and ensure stack down
+            set +e
+            echo "--- Running Tests ---"
+            elastic-package test assets --report-format xUnit && \
+            elastic-package test pipeline --report-format xUnit && \
+            elastic-package test policy --report-format xUnit && \
+            elastic-package test --report-format xUnit
+            
+            TEST_STATUS=$? # Capture test status
+            set -e
+
+            # Always run stack down
+            echo "--- Tearing Down Stack ---"
+            elastic-package stack down
+            
+            # Exit with test status if tests failed
+            if [ $TEST_STATUS -ne 0 ]; then
+                echo "Tests failed"
+                exit $TEST_STATUS
+            fi
+
+            echo "--- Successfully completed tests ---"
+            exit 0
+            
+            RUN_SCRIPT
+            
+            # Make the script executable
+            chmod +x "run_script_${app}.sh"
+            
+            # Execute the script inside the docker container
+            docker run --rm \
+              -e EC_API_KEY \
+              -e ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS \
+              -v $PWD:/workspace \
+              -v ~/.elastic-package:/root/.elastic-package \
+              -w /workspace \
+              $IMAGE_PATH:latest \
+              sh "/workspace/run_script_${app}.sh" $app
+            
+            # Clean up the script
+            rm "run_script_${app}.sh"
+          done
+
+      - name: Publish Costly Test Results
+        if: env.changed_apps != '' && github.event.pull_request.draft == false
+        uses: dorny/test-reporter@v1
+        with:
+          name: Costly Tests
           path: 'build/test-results/*.xml'
           reporter: swift-xunit
           token: ${{ secrets.GITHUB_TOKEN }}
