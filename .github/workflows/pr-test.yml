@@ -81,43 +81,6 @@ jobs:
           reporter: swift-xunit
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Serverless Environment
-        if: env.changed_apps != '' && github.event.pull_request.draft == false
-        env:
-          # This pulls the 'EC_API_KEY' secret you created
-          EC_API_KEY: ${{ secrets.EC_API_KEY }}
-        run: |
-          echo "Setting up serverless profile and environment..."
-          
-          # This env var must be set on the host runner so subsequent steps can see it
-          echo "ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS=true" >> $GITHUB_ENV
-
-          IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
-
-          # Run the profile setup INSIDE the container
-          # We mount the local .elastic-package dir to the container's root .elastic-package dir
-          # This ensures the config.yml is created in the right place for the NEXT docker run step
-          docker run --rm \
-            -e EC_API_KEY \
-            -v ~/.elastic-package:/root/.elastic-package \
-            -w /workspace \
-            $IMAGE_PATH:latest sh -c "
-              set -e
-              echo 'Inside container: Creating serverless profile...'
-              elastic-package profiles create serverless
-              elastic-package profiles use serverless
-              
-              echo 'Inside container: Writing profile config...'
-              mkdir -p /root/.elastic-package/profiles/serverless
-              cat <<EOF > /root/.elastic-package/profiles/serverless/config.yml
-          stack.elastic_cloud.host: https://cloud.elastic.co
-          stack.serverless.type: security
-          stack.serverless.region: aws-us-east-1
-          EOF
-            "
-          
-          echo "Serverless profile 'serverless' configured."
-
       - name: Run Costly Tests on Changed Packages
         if: env.changed_apps != '' && github.event.pull_request.draft == false
         env:
@@ -139,6 +102,21 @@ jobs:
             set -e 
             
             echo "--- [$0] Inside container for $1 ---"
+
+            # --- Create Serverless Profile ---
+            echo "Inside container: Creating serverless profile..."
+            elastic-package profiles create serverless
+            elastic-package profiles use serverless
+            
+            echo "Inside container: Writing profile config..."
+            # This path is /root/.elastic-package inside the container
+            cat <<EOF > /root/.elastic-package/profiles/serverless/config.yml
+              stack.elastic_cloud.host: https://cloud.elastic.co
+              stack.serverless.type: security
+              stack.serverless.region: aws-us-east-1
+              EOF
+            echo "Serverless profile 'serverless' configured."
+            # --- End Profile Creation ---
             
             # cd into the app directory
             cd $1
@@ -205,12 +183,10 @@ jobs:
             # Make the script executable
             chmod +x "run_script_${app}.sh"
             
-            # Execute the script inside the docker container
             docker run --rm \
               -e EC_API_KEY \
               -e ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS \
               -v $PWD:/workspace \
-              -v ~/.elastic-package:/root/.elastic-package \
               -w /workspace \
               $IMAGE_PATH:latest \
               sh "/workspace/run_script_${app}.sh" $app
@@ -227,5 +203,3 @@ jobs:
           path: 'build/test-results/*.xml'
           reporter: swift-xunit
           token: ${{ secrets.GITHUB_TOKEN }}
-
-
