@@ -178,7 +178,7 @@ jobs:
             echo "--- Successfully completed tests ---"
             exit 0
             
-            RUN_SCRIPT
+          RUN_SCRIPT
             
             # Make the script executable
             chmod +x "run_script_${app}.sh"
