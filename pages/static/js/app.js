@@ -598,7 +598,6 @@ async function loadIntegrationDetails() {
     }
 }
 
-
 /**
  * 4. BROWSE PAGE: Fetches all integrations and categories for client-side filtering
  */
@@ -606,41 +605,29 @@ async function loadBrowsePage() {
     const grid = document.getElementById('browse-grid');
     const categoryFilters = document.getElementById('category-filters');
     const textFilter = document.getElementById('text-filter');
+    const ownerFilterContainer = document.getElementById('owner-filters');
     const title = document.getElementById('browse-title');
 
     let allPackages = []; // To store the master list of packages
     let activeFilters = {
         text: '',
+        owner: 'all',
         categories: new Set()
     };
 
     const urlParams = new URLSearchParams(window.location.search);
-
-    // --- NEW: Check for a search query from the header ---
-    const searchQuery = urlParams.get('q');
-    if (searchQuery) {
-        // Set the value of the browse page's search box to match
-        textFilter.value = searchQuery;
-        // Set the filter so it's applied when the integrations load
-        activeFilters.text = searchQuery.toLowerCase();
-    }
-
-    // --- NEW: Check for a pre-selected category from the URL ---
     const preselectedCategory = urlParams.get('category');
     if (preselectedCategory) {
         activeFilters.categories.add(preselectedCategory);
     }
-    // ---------------------------------------------------------
 
-    // Function to re-render the grid based on current filters
     const applyFilters = () => {
         const kibanaVersion = sessionStorage.getItem('kibanaVersion');
-        
         const filteredPackages = allPackages.filter(pkg => {
             const textMatch = activeFilters.text === '' || (pkg.title || pkg.name).toLowerCase().includes(activeFilters.text);
-            // const categoryMatch = activeFilters.categories.size === 0 || pkg.categories.some(cat => activeFilters.categories.has(cat));
             const categoryMatch = activeFilters.categories.size === 0 || (pkg.categories && pkg.categories.some(cat => activeFilters.categories.has(cat)));
-            return textMatch && categoryMatch;
+            const ownerMatch = activeFilters.owner === 'all' || (pkg.owner && pkg.owner.type === activeFilters.owner);
+            return textMatch && categoryMatch && ownerMatch;
         });
 
         grid.innerHTML = '';
@@ -648,55 +635,11 @@ async function loadBrowsePage() {
             grid.innerHTML = '<p>No integrations match your filters.</p>';
             return;
         }
-
         filteredPackages.forEach(pkg => {
             grid.innerHTML += createIntegrationCard(pkg, kibanaVersion);
         });
     };
-    
-    // Fetch categories and render checkboxes
-    try {
-        const catResponse = await fetch(`${EPR_URL}/categories`);
-        const categories = await catResponse.json();
-        const parentCategories = categories.filter(cat => !cat.parent_id);
-        
-        categoryFilters.innerHTML = ''; // Clear loading text
-        parentCategories.forEach(cat => {
-            const item = document.createElement('div');
-            item.className = 'category-filter-item';
-            item.innerHTML = `
-                <input type="checkbox" id="cat-${cat.id}" value="${cat.id}">
-                <label for="cat-${cat.id}">${cat.title} (${cat.count})</label>
-            `;
-            categoryFilters.appendChild(item);
-        });
 
-        // Add event listeners to checkboxes
-        categoryFilters.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    activeFilters.categories.add(e.target.value);
-                } else {
-                    activeFilters.categories.delete(e.target.value);
-                }
-                applyFilters();
-            });
-        });
-
-        // --- NEW: Programmatically check the box if it was pre-selected ---
-        if (preselectedCategory) {
-            const checkbox = document.getElementById(`cat-${preselectedCategory}`);
-            if (checkbox) {
-                checkbox.checked = true;
-            }
-        }
-        // -----------------------------------------------------------------
-
-    } catch (error) {
-        categoryFilters.innerHTML = '<p class="error">Could not load categories.</p>';
-    }
-
-    // Fetch all integrations
     try {
         const kibanaVersion = sessionStorage.getItem('kibanaVersion');
         const prerelease = sessionStorage.getItem('prerelease') === 'true';
@@ -710,19 +653,216 @@ async function loadBrowsePage() {
 
         const pkgResponse = await fetch(apiUrl);
         allPackages = await parseApiResponse(await pkgResponse.json());
-        
-        // Sort alphabetically by title
         allPackages.sort((a, b) => (a.title || a.name).localeCompare(b.title || b.name));
 
-        applyFilters(); // Initial render
+        // --- Owner Filters ---
+        const ownerTypes = ['all', ...new Set(allPackages.map(pkg => pkg.owner ? pkg.owner.type : null).filter(Boolean))];
+        ownerFilterContainer.innerHTML = '';
+        ownerTypes.forEach(ownerType => {
+            const capitalizedOwner = ownerType.charAt(0).toUpperCase() + ownerType.slice(1);
+            const itemHTML = `
+                <div class="owner-filter-item">
+                    <input type="radio" id="owner-${ownerType}" name="owner-filter" value="${ownerType}" ${ownerType === 'all' ? 'checked' : ''}>
+                    <label for="owner-${ownerType}">${capitalizedOwner}</label>
+                </div>
+            `;
+            ownerFilterContainer.innerHTML += itemHTML;
+        });
+        ownerFilterContainer.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                activeFilters.owner = e.target.value;
+                applyFilters();
+            });
+        });
 
-        // Add event listener for text filter
+        // --- Category Filters ---
+        const allCategories = [...new Set(allPackages.flatMap(p => p.categories || []))].sort();
+        categoryFilters.innerHTML = '';
+        allCategories.forEach(cat => {
+            const item = document.createElement('div');
+            item.className = 'category-filter-item';
+            item.innerHTML = `
+                <input type="checkbox" id="cat-${cat}" value="${cat}" ${preselectedCategory === cat ? 'checked' : ''}>
+                <label for="cat-${cat}">${cat}</label>
+            `;
+            categoryFilters.appendChild(item);
+        });
+        categoryFilters.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    activeFilters.categories.add(e.target.value);
+                } else {
+                    activeFilters.categories.delete(e.target.value);
+                }
+                applyFilters();
+            });
+        });
+        
+        // --- Text Filter ---
         textFilter.addEventListener('input', (e) => {
             activeFilters.text = e.target.value.toLowerCase();
             applyFilters();
         });
 
+        // Initial render
+        applyFilters();
+
     } catch (error) {
         grid.innerHTML = '<p class="error">Could not load integrations.</p>';
+        console.error("Error loading browse page:", error);
     }
 }
+
+/**
+ * 4. BROWSE PAGE: Fetches all integrations and categories for client-side filtering
+ */
+// async function loadBrowsePage() {
+//     const grid = document.getElementById('browse-grid');
+//     const categoryFilters = document.getElementById('category-filters');
+//     const textFilter = document.getElementById('text-filter');
+//     const title = document.getElementById('browse-title');
+
+//     let allPackages = []; // To store the master list of packages
+//     let activeFilters = {
+//         text: '',
+//         owner: 'all',
+//         categories: new Set()
+//     };
+
+//     const urlParams = new URLSearchParams(window.location.search);
+
+//     // --- NEW: Check for a search query from the header ---
+//     const searchQuery = urlParams.get('q');
+//     if (searchQuery) {
+//         // Set the value of the browse page's search box to match
+//         textFilter.value = searchQuery;
+//         // Set the filter so it's applied when the integrations load
+//         activeFilters.text = searchQuery.toLowerCase();
+//     }
+
+//     // --- NEW: Check for a pre-selected category from the URL ---
+//     const preselectedCategory = urlParams.get('category');
+//     if (preselectedCategory) {
+//         activeFilters.categories.add(preselectedCategory);
+//     }
+//     // ---------------------------------------------------------
+
+//     // Function to re-render the grid based on current filters
+//     const applyFilters = () => {
+//         const kibanaVersion = sessionStorage.getItem('kibanaVersion');
+        
+//         const filteredPackages = allPackages.filter(pkg => {
+//             const textMatch = activeFilters.text === '' || (pkg.title || pkg.name).toLowerCase().includes(activeFilters.text);
+//             // const categoryMatch = activeFilters.categories.size === 0 || pkg.categories.some(cat => activeFilters.categories.has(cat));
+//             const categoryMatch = activeFilters.categories.size === 0 || (pkg.categories && pkg.categories.some(cat => activeFilters.categories.has(cat)));
+//             const ownerMatch = activeFilters.owner === 'all' || (pkg.owner && pkg.owner.type === activeFilters.owner);
+//             return textMatch && categoryMatch && ownerMatch;
+//         });
+
+//         grid.innerHTML = '';
+//         if (filteredPackages.length === 0) {
+//             grid.innerHTML = '<p>No integrations match your filters.</p>';
+//             return;
+//         }
+
+//         filteredPackages.forEach(pkg => {
+//             grid.innerHTML += createIntegrationCard(pkg, kibanaVersion);
+//         });
+//     };
+    
+//     // Fetch categories and render checkboxes
+//     // try {
+//     // --- CORRECTED LOGIC for Filters and Package Loading ---
+//     const kibanaVersion = sessionStorage.getItem('kibanaVersion');
+//     const prerelease = sessionStorage.getItem('prerelease') === 'true';
+
+//     title.textContent = `All Integrations (Kibana v${kibanaVersion}${prerelease ? ', Pre-releases' : ''})`;
+
+//     // Fetch all integrations first
+//     try {
+//         let apiUrl = `${EPR_URL}/search?kibana.version=${kibanaVersion}`;
+//         if (prerelease) {
+//             apiUrl += '&prerelease=true';
+//         }
+//         const pkgResponse = await fetch(apiUrl);
+//         allPackages = await parseApiResponse(await pkgResponse.json());
+//         allPackages.sort((a, b) => (a.title || a.name).localeCompare(b.title || b.name));
+
+//         // Now that we have packages, populate owner filters
+//         const ownerFilterContainer = document.getElementById('owner-filters');
+//         const ownerTypes = ['all', ...new Set(allPackages.map(pkg => pkg.owner ? pkg.owner.type : null).filter(Boolean))];
+//         ownerFilterContainer.innerHTML = '';
+//         ownerTypes.forEach(ownerType => {
+//             const capitalizedOwner = ownerType.charAt(0).toUpperCase() + ownerType.slice(1);
+//             const itemHTML = `
+//                 <div class="owner-filter-item">
+//                     <input type="radio" id="owner-${ownerType}" name="owner-filter" value="${ownerType}" ${ownerType === 'all' ? 'checked' : ''}>
+//                     <label for="owner-${ownerType}">${capitalizedOwner}</label>
+//                 </div>
+//             `;
+//             ownerFilterContainer.innerHTML += itemHTML;
+//         });
+        
+//         ownerFilterContainer.querySelectorAll('input[type="radio"]').forEach(radio => {
+//             radio.addEventListener('change', (e) => {
+//                 activeFilters.owner = e.target.value;
+//                 applyFilters();
+//             });
+//         });
+
+//         // Now that we have packages, populate category filters from the packages themselves
+//         const allCategories = new Set();
+//         allPackages.forEach(pkg => {
+//             if (pkg.categories) {
+//                 pkg.categories.forEach(cat => allCategories.add(cat));
+//             }
+//         });
+        
+//         categoryFilters.innerHTML = '';
+//         [...allCategories].sort().forEach(cat => {
+//             const item = document.createElement('div');
+//             item.className = 'category-filter-item';
+//             item.innerHTML = `
+//                 <input type="checkbox" id="cat-${cat}" value="${cat}">
+//                 <label for="cat-${cat}">${cat}</label>
+//             `;
+//             categoryFilters.appendChild(item);
+//         });
+
+//         categoryFilters.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+//             checkbox.addEventListener('change', (e) => {
+//                 if (e.target.checked) {
+//                     activeFilters.categories.add(e.target.value);
+//                 } else {
+//                     activeFilters.categories.delete(e.target.value);
+//                 }
+//                 applyFilters();
+//             });
+//         });
+
+//         if (preselectedCategory) {
+//             const checkbox = document.getElementById(`cat-${preselectedCategory}`);
+//             if (checkbox) {
+//                 checkbox.checked = true;
+//             }
+//         }
+        
+//         // Initial render
+//         applyFilters();
+
+//         // Add event listener for text filter
+//         textFilter.addEventListener('input', (e) => {
+//             activeFilters.text = e.target.value.toLowerCase();
+//             applyFilters();
+//         });
+
+//     } catch (error) {
+//         grid.innerHTML = '<p class="error">Could not load integrations.</p>';
+//         console.error("Error loading browse page:", error);
+//     // }
+//     // ---------------------------------------------------------
+
+//     } catch (error) {
+//         grid.innerHTML = '<p class="error">Could not load integrations.</p>';
+//     }
+// }

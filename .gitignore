@@ -8,3 +8,8 @@ Gitlab-runner issue
 step2*
 step1*
 backup_*
+pages/public/*
+.continue
+.vscode
+.env
+*.lock

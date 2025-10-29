@@ -587,6 +587,33 @@ input:checked + .slider:before {
     margin-bottom: 0.5rem;
 }
 
+.owner-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.owner-filter-group input[type="radio"] {
+    display: none; /* Hide the default radio button */
+}
+.owner-filter-group label {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    font-weight: 500;
+}
+.owner-filter-group label:hover {
+    background-color: var(--border-color);
+}
+.owner-filter-group input[type="radio"]:checked + label {
+    background-color: var(--brand-accent);
+    border-color: var(--brand-accent);
+    color: var(--text-primary);
+}
+
 #text-filter {
     width: 100%;
     padding: 0.5rem;

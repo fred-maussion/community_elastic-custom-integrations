@@ -18,10 +18,10 @@ The Elastic Agent uses the Common Event Language (CEL) input to periodically pol
 ## What data does this integration collect?
 
 The Red Flag Domains integration collects a list of domain names. Each domain is processed into an ECS-compliant threat intelligence document with the following key fields:
-*   `threat.indicator.domain`: The suspicious domain name.
-*   `threat.indicator.provider`: Set to `red.flag.domains`.
-*   `threat.indicator.type`: Set to `domain-name`.
-*   `event.dataset`: Set to `threat.redflag.domains`.
+*   `threat.feed.name`: Set to `red.flag.domains`.
+*   `threat.indicator.type`: The suspicious domain name.
+*   `threat.indicator.name`: The suspicious domain name.
+*   `threat.indicator.url.domain`: Set to `message`.
 
 ### Supported use cases
 
@@ -70,11 +70,11 @@ The most common issue with this integration is a lack of network connectivity. E
 curl -v https://dl.red.flag.domains/red.flag.domains.txt
 ```
 
-## Scaling
-
-For more information on architectures that can be used for scaling this integration, check the [Ingest Architectures](https://www.elastic.co/guide/en/ingest/current/ingest-reference-architectures.html) documentation. This integration has a very low performance footprint and a single Elastic Agent can easily handle the data collection.
-
 ## Reference
+
+### API usage
+
+This integration makes a simple HTTP GET request to `https://dl.red.flag.domains/red.flag.domains.txt` to download the feed. It does not use a formal API with authentication or complex endpoints.
 
 ### Red Flag Domains Feed
 
@@ -168,8 +168,3 @@ An example event for `domains` looks as following:
 | threat.indicator.name |  | keyword |
 | threat.indicator.type | The type of the threat indicator. | constant_keyword |
 | threat.indicator.url.domain |  | keyword |
-
-
-### API usage
-
-This integration makes a simple HTTP GET request to `https://dl.red.flag.domains/red.flag.domains.txt` to download the feed. It does not use a formal API with authentication or complex endpoints.
