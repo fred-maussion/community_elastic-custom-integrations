@@ -111,10 +111,10 @@ jobs:
             echo "Inside container: Writing profile config..."
             # This path is /root/.elastic-package inside the container
             cat <<EOF > /root/.elastic-package/profiles/serverless/config.yml
-              stack.elastic_cloud.host: https://cloud.elastic.co
-              stack.serverless.type: security
-              stack.serverless.region: aws-us-east-1
-              EOF
+          stack.elastic_cloud.host: https://cloud.elastic.co
+          stack.serverless.type: security
+          stack.serverless.region: aws-us-east-1
+          EOF
             echo "Serverless profile 'serverless' configured."
             # --- End Profile Creation ---
             
@@ -183,6 +183,8 @@ jobs:
             # Make the script executable
             chmod +x "run_script_${app}.sh"
             
+            # Execute the script inside the docker container
+            # Note: No ~/.elastic-package mount
             docker run --rm \
               -e EC_API_KEY \
               -e ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS \
