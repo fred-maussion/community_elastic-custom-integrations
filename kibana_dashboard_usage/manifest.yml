@@ -1,0 +1,31 @@
+format_version: 3.5.0
+name: kibana_dashboard_usage
+title: "Kibana Dashboard Usage"
+version: 0.0.1
+source:
+  license: "Apache-2.0"
+description: "This integration gather information from Dashboard usage"
+type: content
+categories:
+  - custom
+  - productivity
+conditions:
+  kibana:
+    version: "^8.17.0 || ^9.0.0"
+  elastic:
+    subscription: "basic"
+discovery:
+  fields: []
+screenshots:
+  - src: /img/kibana-dashboard-screenshot-1.png
+    title: Dashboard screenshot
+    size: 600x600
+    type: image/png
+icons:
+  - src: /img/logo.svg
+    title: Kibana Dashboard logo
+    size: 32x32
+    type: image/svg+xml
+owner:
+  github: fred-maussion/community_elastic-custom-integrations
+  type: community
