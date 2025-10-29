@@ -84,31 +84,48 @@ jobs:
       - name: Setup Serverless Environment
         if: env.changed_apps != '' && github.event.pull_request.draft == false
         env:
+          # This pulls the 'EC_API_KEY' secret you created
           EC_API_KEY: ${{ secrets.EC_API_KEY }}
         run: |
           echo "Setting up serverless profile and environment..."
           
-          # Set env var for subsequent steps per documentation
+          # This env var must be set on the host runner so subsequent steps can see it
           echo "ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS=true" >> $GITHUB_ENV
 
-          elastic-package profiles create serverless
-          elastic-package profiles use serverless
-          
-          cat <<EOF > ~/.elastic-package/profiles/serverless/config.yml
+          IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
+
+          # Run the profile setup INSIDE the container
+          # We mount the local .elastic-package dir to the container's root .elastic-package dir
+          # This ensures the config.yml is created in the right place for the NEXT docker run step
+          docker run --rm \
+            -e EC_API_KEY \
+            -v ~/.elastic-package:/root/.elastic-package \
+            -w /workspace \
+            $IMAGE_PATH:latest sh -c "
+              set -e
+              echo 'Inside container: Creating serverless profile...'
+              elastic-package profiles create serverless
+              elastic-package profiles use serverless
+              
+              echo 'Inside container: Writing profile config...'
+              mkdir -p /root/.elastic-package/profiles/serverless
+              cat <<EOF > /root/.elastic-package/profiles/serverless/config.yml
           stack.elastic_cloud.host: https://cloud.elastic.co
           stack.serverless.type: security
           stack.serverless.region: aws-us-east-1
           EOF
+            "
           
           echo "Serverless profile 'serverless' configured."
 
       - name: Run Costly Tests on Changed Packages
         if: env.changed_apps != '' && github.event.pull_request.draft == false
         env:
+          # Make secrets available to the docker run command
           EC_API_KEY: ${{ secrets.EC_API_KEY }}
           ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS: "true"
         run: |
-          echo "PR IS NOT DRAFT: Running costly tests..."
+          echo "PR IS NOT DRAFT: Running costly E2E tests..."
           IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
           
           for app in ${{ env.changed_apps }}; do
@@ -139,7 +156,6 @@ jobs:
             USERNAME=$(grep 'Username: ' $STACK_UP_LOG | awk '{print $2}')
             PASSWORD=$(grep 'Password: ' $STACK_UP_LOG | awk '{print $2}')
             
-            # This writes to stdout, which the runner will intercept
             if [ -n "$USERNAME" ]; then
                 echo "::add-mask::$USERNAME"
             fi
@@ -211,3 +227,5 @@ jobs:
           path: 'build/test-results/*.xml'
           reporter: swift-xunit
           token: ${{ secrets.GITHUB_TOKEN }}
+
+
