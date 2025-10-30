@@ -107,8 +107,8 @@ jobs:
           # --- Install Docker Client ---
           echo "Inside container: Installing docker client..."
           if [ -f /etc/alpine-release ]; then
-              # It's Alpine. Add docker-cli (which includes 'docker compose')
-              apk add --no-cache docker-cli
+              # It's Alpine. Add docker-cli and the compose plugin
+              apk add --no-cache docker-cli docker-compose-plugin
           elif [ -f /etc/debian_version ]; then
               # It's Debian/Ubuntu.
               apt-get update
