@@ -10,6 +10,7 @@ permissions:
   contents: read
   checks: write
   packages: read
+  pull-requests: write
 
 jobs:
   pr-checks:
@@ -224,12 +225,10 @@ jobs:
           done
 
       - name: Publish Costly Test Results
-        # Use if: always() so this step runs even if the previous steps fail
-        if: always() && env.changed_apps != '' && github.event.pull_request.draft == false
+        if: env.changed_apps != '' && github.event.pull_request.draft == false
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           check_name: Costly Tests
-          # Use multi-line glob patterns
           files: |
             build/test-results/*-asset-*.xml
             build/test-results/*-pipeline-*.xml
