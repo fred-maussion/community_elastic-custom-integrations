@@ -173,20 +173,20 @@ jobs:
 
           if [ "$INTEGRATION_TYPE" = "integration" ] || [ "$INTEGRATION_TYPE" = "input" ]; then
               echo "Running full test suite for '$INTEGRATION_TYPE' type..."
-              elastic-package test asset -v --report-format xUnit && \
-              elastic-package test pipeline -v --report-format xUnit && \
-              elastic-package test policy -v --report-format xUnit && \
-              elastic-package test -v --report-format xUnit
+              elastic-package test asset -v --report-format xUnit --report-output file && \
+              elastic-package test pipeline -v --report-format xUnit --report-output file && \
+              elastic-package test policy -v --report-format xUnit --report-output file && \
+              elastic-package test -v --report-format xUnit --report-output file
           elif [ "$INTEGRATION_TYPE" = "content" ]; then
               echo "Running partial test suite for 'content' type..."
-              elastic-package test asset -v --report-format xUnit && \
-              elastic-package test pipeline -v --report-format xUnit
+              elastic-package test asset -v --report-format xUnit --report-output file && \
+              elastic-package test pipeline -v --report-format xUnit --report-output file
           else
               echo "Unknown or unset integration type '$INTEGRATION_TYPE'. Running full test suite as default..."
-              elastic-package test asset -v --report-format xUnit && \
-              elastic-package test pipeline -v --report-format xUnit && \
-              elastic-package test policy -v --report-format xUnit && \
-              elastic-package test -v --report-format xUnit
+              elastic-package test asset -v --report-format xUnit --report-output file && \
+              elastic-package test pipeline -v --report-format xUnit --report-output file && \
+              elastic-package test policy -v --report-format xUnit --report-output file && \
+              elastic-package test -v --report-format xUnit --report-output file
           fi
 
           TEST_STATUS=$? # Capture test status
