@@ -157,10 +157,10 @@ jobs:
             # Use 'set +e' again to capture status and ensure stack down
             set +e
             echo "--- Running Tests ---"
-            elastic-package test assets --report-format xUnit && \
-            elastic-package test pipeline --report-format xUnit && \
-            elastic-package test policy --report-format xUnit && \
-            elastic-package test --report-format xUnit
+            elastic-package test asset -v --report-format xUnit && \
+            elastic-package test pipeline -v --report-format xUnit && \
+            elastic-package test policy -v --report-format xUnit && \
+            elastic-package test -v --report-format xUnit
             
             TEST_STATUS=$? # Capture test status
             set -e
