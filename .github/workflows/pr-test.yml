@@ -104,6 +104,35 @@ jobs:
 
           echo "--- [$0] Inside container for $1 ---"
 
+          # --- Install Docker Client ---
+          echo "Inside container: Installing docker client..."
+          if [ -f /etc/alpine-release ]; then
+              # It's Alpine. Add docker-cli (which includes 'docker compose')
+              apk add --no-cache docker-cli
+          elif [ -f /etc/debian_version ]; then
+              # It's Debian/Ubuntu.
+              apt-get update
+              # Install prerequisites
+              apt-get install -y --no-install-recommends ca-certificates curl
+              # Add Docker's official GPG key
+              install -m 0755 -d /etc/apt/keyrings
+              curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+              chmod a+r /etc/apt/keyrings/docker.asc
+              # Set up the repository
+              echo \
+                "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+                $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+                tee /etc/apt/sources.list.d/docker.list > /dev/null
+              apt-get update
+              # Install the client and compose plugin
+              apt-get install -y --no-install-recommends docker-ce-cli docker-compose-plugin
+          else
+              echo "WARNING: Unknown container OS, cannot install docker client."
+              echo "Attempting to proceed..."
+          fi
+          echo "Docker client installed."
+          # --- End Docker Client Install ---
+
           # --- Create Serverless Profile ---
           echo "Inside container: Creating serverless profile..."
           elastic-package profiles create serverless
@@ -190,7 +219,7 @@ jobs:
           elastic-package stack down
 
           # Exit with test status if tests failed
-          if [ $TEST_ASTATUS -ne 0 ]; then
+          if [ $TEST_STATUS -ne 0 ]; then
               echo "Tests failed"
               exit $TEST_STATUS
           fi
@@ -208,7 +237,6 @@ jobs:
               -e ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS \
               -v $PWD:/workspace \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              -v $(readlink -f $(which docker)):/usr/bin/docker \
               -w /workspace \
               $IMAGE_PATH:latest \
               sh "/workspace/run_script_${app}.sh" $app
