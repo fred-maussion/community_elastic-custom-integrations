@@ -208,7 +208,7 @@ jobs:
               -e ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS \
               -v $PWD:/workspace \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              -v $(which docker):/usr/bin/docker \
+              -v $(readlink -f $(which docker)):/usr/bin/docker \
               -w /workspace \
               $IMAGE_PATH:latest \
               sh "/workspace/run_script_${app}.sh" $app
@@ -225,3 +225,4 @@ jobs:
           path: 'build/test-results/*.xml'
           reporter: swift-xunit
           token: ${{ secrets.GITHUB_TOKEN }}
+
