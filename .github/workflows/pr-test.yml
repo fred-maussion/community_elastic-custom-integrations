@@ -96,88 +96,106 @@ jobs:
             
             # This script will run INSIDE the container
             # We create it dynamically to handle logging and cleanup
+            # All content from here to RUN_SCRIPT MUST have no indentation
             cat << 'RUN_SCRIPT' > "run_script_${app}.sh"
-            #!/bin.sh
-            # Exit immediately if a command exits with a non-zero status
-            set -e 
-            
-            echo "--- [$0] Inside container for $1 ---"
+          #!/bin/sh
+          # Exit immediately if a command exits with a non-zero status
+          set -e 
 
-            # --- Create Serverless Profile ---
-            echo "Inside container: Creating serverless profile..."
-            elastic-package profiles create serverless
-            elastic-package profiles use serverless
-            
-            echo "Inside container: Writing profile config..."
-            # This path is /root/.elastic-package inside the container
-            cat <<EOF > /root/.elastic-package/profiles/serverless/config.yml
+          echo "--- [$0] Inside container for $1 ---"
+
+          # --- Create Serverless Profile ---
+          echo "Inside container: Creating serverless profile..."
+          elastic-package profiles create serverless
+          elastic-package profiles use serverless
+
+          echo "Inside container: Writing profile config..."
+          # This path is /root/.elastic-package inside the container
+          cat <<EOF > /root/.elastic-package/profiles/serverless/config.yml
           stack.elastic_cloud.host: https://cloud.elastic.co
           stack.serverless.type: security
           stack.serverless.region: aws-us-east-1
           EOF
-            echo "Serverless profile 'serverless' configured."
-            # --- End Profile Creation ---
-            
-            # cd into the app directory
-            cd $1
-            
-            # Create a log file for the stack up command
-            STACK_UP_LOG="stack-up.log"
-            
-            # Run stack up, redirecting all output to the log file
-            # Use 'set +e' to handle the exit code manually
-            set +e
-            elastic-package stack up -d --provider serverless -v &> $STACK_UP_LOG
-            STACK_UP_STATUS=$?
-            set -e
+          echo "Serverless profile 'serverless' configured."
+          # --- End Profile Creation ---
 
-            USERNAME=$(grep 'Username: ' $STACK_UP_LOG | awk '{print $2}')
-            PASSWORD=$(grep 'Password: ' $STACK_UP_LOG | awk '{print $2}')
-            
-            if [ -n "$USERNAME" ]; then
-                echo "::add-mask::$USERNAME"
-            fi
-            if [ -n "$PASSWORD" ]; then
-                echo "::add-mask::$PASSWORD"
-            fi
+          # cd into the app directory
+          cd $1
 
-            echo "--- Stack Up Logs ---"
-            cat $STACK_UP_LOG
-            echo "---------------------"
+          # Create a log file for the stack up command
+          STACK_UP_LOG="stack-up.log"
 
-            # Check if stack up failed
-            if [ $STACK_UP_STATUS -ne 0 ]; then
-                echo "elastic-package stack up failed"
-                # Attempt cleanup just in case
-                elastic-package stack down || echo "Stack down failed, proceeding..."
-                exit $STACK_UP_STATUS
-            fi
+          # Run stack up, redirecting all output to the log file
+          # Use 'set +e' to handle the exit code manually
+          set +e
+          elastic-package stack up -d --provider serverless -v &> $STACK_UP_LOG
+          STACK_UP_STATUS=$?
+          set -e
 
-            # Run tests
-            # Use 'set +e' again to capture status and ensure stack down
-            set +e
-            echo "--- Running Tests ---"
-            elastic-package test asset -v --report-format xUnit && \
-            elastic-package test pipeline -v --report-format xUnit && \
-            elastic-package test policy -v --report-format xUnit && \
-            elastic-package test -v --report-format xUnit
-            
-            TEST_STATUS=$? # Capture test status
-            set -e
+          USERNAME=$(grep 'Username: ' $STACK_UP_LOG | awk '{print $2}')
+          PASSWORD=$(grep 'Password: ' $STACK_UP_LOG | awk '{print $2}')
 
-            # Always run stack down
-            echo "--- Tearing Down Stack ---"
-            elastic-package stack down
-            
-            # Exit with test status if tests failed
-            if [ $TEST_STATUS -ne 0 ]; then
-                echo "Tests failed"
-                exit $TEST_STATUS
-            fi
+          if [ -n "$USERNAME" ]; then
+              echo "::add-mask::$USERNAME"
+          fi
+          if [ -n "$PASSWORD" ]; then
+              echo "::add-mask::$PASSWORD"
+          fi
 
-            echo "--- Successfully completed tests ---"
-            exit 0
-            
+          echo "--- Stack Up Logs ---"
+          cat $STACK_UP_LOG
+          echo "---------------------"
+
+          # Check if stack up failed
+          if [ $STACK_UP_STATUS -ne 0 ]; then
+              echo "elastic-package stack up failed"
+              # Attempt cleanup just in case
+              elastic-package stack down || echo "Stack down failed, proceeding..."
+              exit $STACK_UP_STATUS
+          fi
+
+          # Run tests
+          # Use 'set +e' again to capture status and ensure stack down
+          set +e
+          echo "--- Running Tests ---"
+
+          # Determine integration type from manifest.yml
+          INTEGRATION_TYPE=$(grep -E '^type:' manifest.yml | awk '{print $2}' | tr -d '"')
+          echo "Detected integration type: $INTEGRATION_TYPE"
+
+          if [ "$INTEGRATION_TYPE" = "integration" ] || [ "$INTEGRATION_TYPE" = "input" ]; then
+              echo "Running full test suite for '$INTEGRATION_TYPE' type..."
+              elastic-package test asset -v --report-format xUnit && \
+              elastic-package test pipeline -v --report-format xUnit && \
+              elastic-package test policy -v --report-format xUnit && \
+              elastic-package test -v --report-format xUnit
+          elif [ "$INTEGRATION_TYPE" = "content" ]; then
+              echo "Running partial test suite for 'content' type..."
+              elastic-package test asset -v --report-format xUnit && \
+              elastic-package test pipeline -v --report-format xUnit
+          else
+              echo "Unknown or unset integration type '$INTEGRATION_TYPE'. Running full test suite as default..."
+              elastic-package test asset -v --report-format xUnit && \
+              elastic-package test pipeline -v --report-format xUnit && \
+              elastic-package test policy -v --report-format xUnit && \
+              elastic-package test -v --report-format xUnit
+          fi
+
+          TEST_STATUS=$? # Capture test status
+          set -e
+
+          # Always run stack down
+          echo "--- Tearing Down Stack ---"
+          elastic-package stack down
+
+          # Exit with test status if tests failed
+          if [ $TEST_STATUS -ne 0 ]; then
+              echo "Tests failed"
+              exit $TEST_STATUS
+          fi
+
+          echo "--- Successfully completed tests ---"
+          exit 0
           RUN_SCRIPT
             
             # Make the script executable
