@@ -190,7 +190,7 @@ jobs:
           elastic-package stack down
 
           # Exit with test status if tests failed
-          if [ $TEST_STATUS -ne 0 ]; then
+          if [ $TEST_ASTATUS -ne 0 ]; then
               echo "Tests failed"
               exit $TEST_STATUS
           fi
@@ -208,7 +208,7 @@ jobs:
               -e ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS \
               -v $PWD:/workspace \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              -v /usr/bin/docker:/usr/bin/docker \
+              -v $(which docker):/usr/bin/docker \
               -w /workspace \
               $IMAGE_PATH:latest \
               sh "/workspace/run_script_${app}.sh" $app
