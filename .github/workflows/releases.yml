@@ -6,6 +6,7 @@ on:
       - main
     paths-ignore:
       - 'pages/**'
+      - '.github/**'
 permissions:
   contents: write
   packages: read
