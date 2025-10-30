@@ -10,6 +10,7 @@ permissions:
   contents: read
   checks: write
   packages: read
+  pull-requests: write
 
 jobs:
   pr-checks:
@@ -73,50 +74,12 @@ jobs:
           done
 
       - name: Publish Fast Test Results
-        if: env.changed_apps != ''
-        uses: dorny/test-reporter@v1
+        # Use if: always() so this step runs even if the previous step fails
+        if: always() && env.changed_apps != ''
+        uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          name: Fast Tests
-          path: 'build/test-results/*.xml'
-          reporter: swift-xunit
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Serverless Environment
-        if: env.changed_apps != '' && github.event.pull_request.draft == false
-        env:
-          # This pulls the 'EC_API_KEY' secret you created
-          EC_API_KEY: ${{ secrets.EC_API_KEY }}
-        run: |
-          echo "Setting up serverless profile and environment..."
-          
-          # This env var must be set on the host runner so subsequent steps can see it
-          echo "ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS=true" >> $GITHUB_ENV
-
-          IMAGE_PATH=ghcr.io/${{ github.repository_owner }}/custom-integrations/elastic-package
-
-          # Run the profile setup INSIDE the container
-          # We mount the local .elastic-package dir to the container's root .elastic-package dir
-          # This ensures the config.yml is created in the right place for the NEXT docker run step
-          docker run --rm \
-            -e EC_API_KEY \
-            -v ~/.elastic-package:/root/.elastic-package \
-            -w /workspace \
-            $IMAGE_PATH:latest sh -c "
-              set -e
-              echo 'Inside container: Creating serverless profile...'
-              elastic-package profiles create serverless
-              elastic-package profiles use serverless
-              
-              echo 'Inside container: Writing profile config...'
-              mkdir -p /root/.elastic-package/profiles/serverless
-              cat <<EOF > /root/.elastic-package/profiles/serverless/config.yml
-          stack.elastic_cloud.host: https://cloud.elastic.co
-          stack.serverless.type: security
-          stack.serverless.region: aws-us-east-1
-          EOF
-            "
-          
-          echo "Serverless profile 'serverless' configured."
+          check_name: Fast Tests
+          files: 'build/test-results/*-static-*.xml'
 
       - name: Run Costly Tests on Changed Packages
         if: env.changed_apps != '' && github.event.pull_request.draft == false
@@ -133,74 +96,116 @@ jobs:
             
             # This script will run INSIDE the container
             # We create it dynamically to handle logging and cleanup
+            # All content from here to RUN_SCRIPT MUST have no indentation
             cat << 'RUN_SCRIPT' > "run_script_${app}.sh"
-            #!/bin.sh
-            # Exit immediately if a command exits with a non-zero status
-            set -e 
-            
-            echo "--- [$0] Inside container for $1 ---"
-            
-            # cd into the app directory
-            cd $1
-            
-            # Create a log file for the stack up command
-            STACK_UP_LOG="stack-up.log"
-            
-            # Run stack up, redirecting all output to the log file
-            # Use 'set +e' to handle the exit code manually
-            set +e
-            elastic-package stack up -d --provider serverless -v &> $STACK_UP_LOG
-            STACK_UP_STATUS=$?
-            set -e
+          #!/bin/sh
+          # Exit immediately if a command exits with a non-zero status
+          set -e 
 
-            USERNAME=$(grep 'Username: ' $STACK_UP_LOG | awk '{print $2}')
-            PASSWORD=$(grep 'Password: ' $STACK_UP_LOG | awk '{print $2}')
-            
-            if [ -n "$USERNAME" ]; then
-                echo "::add-mask::$USERNAME"
-            fi
-            if [ -n "$PASSWORD" ]; then
-                echo "::add-mask::$PASSWORD"
-            fi
+          echo "--- [$0] Inside container for $1 ---"
 
-            echo "--- Stack Up Logs ---"
-            cat $STACK_UP_LOG
-            echo "---------------------"
+          # --- Install Docker Client ---
+          echo "Inside container: Installing docker client (Alpine base)..."
+          # Add docker-cli and the compose plugin (docker-cli-compose)
+          apk add --no-cache docker-cli docker-cli-compose
+          echo "Docker client installed."
+          # --- End Docker Client Install ---
 
-            # Check if stack up failed
-            if [ $STACK_UP_STATUS -ne 0 ]; then
-                echo "elastic-package stack up failed"
-                # Attempt cleanup just in case
-                elastic-package stack down || echo "Stack down failed, proceeding..."
-                exit $STACK_UP_STATUS
-            fi
+          # --- Create Serverless Profile ---
+          echo "Inside container: Creating serverless profile..."
+          elastic-package profiles create serverless
+          elastic-package profiles use serverless
 
-            # Run tests
-            # Use 'set +e' again to capture status and ensure stack down
-            set +e
-            echo "--- Running Tests ---"
-            elastic-package test assets --report-format xUnit && \
-            elastic-package test pipeline --report-format xUnit && \
-            elastic-package test policy --report-format xUnit && \
-            elastic-package test --report-format xUnit
-            
-            TEST_STATUS=$? # Capture test status
-            set -e
+          echo "Inside container: Writing profile config..."
+          # This path is /root/.elastic-package inside the container
+          mkdir -p /root/.elastic-package/profiles/serverless
+          cat <<EOF > /root/.elastic-package/profiles/serverless/config.yml
+          stack.elastic_cloud.host: https://cloud.elastic.co
+          stack.serverless.type: security
+          stack.serverless.region: aws-us-east-1
+          EOF
+          echo "Serverless profile 'serverless' configured."
+          # --- End Profile Creation ---
 
-            # Always run stack down
-            echo "--- Tearing Down Stack ---"
-            elastic-package stack down
-            
-            # Exit with test status if tests failed
-            if [ $TEST_STATUS -ne 0 ]; then
-                echo "Tests failed"
-                exit $TEST_STATUS
-            fi
+          # cd into the app directory
+          cd $1
 
-            echo "--- Successfully completed tests ---"
-            exit 0
-            
-            RUN_SCRIPT
+          # Create a log file for the stack up command
+          STACK_UP_LOG="stack-up.log"
+
+          # Run stack up, redirecting all output to the log file
+          # Use 'set +e' to handle the exit code manually
+          set +e
+          elastic-package stack up -d --provider serverless -v &> $STACK_UP_LOG
+          STACK_UP_STATUS=$?
+          set -e
+
+          USERNAME=$(grep 'Username: ' $STACK_UP_LOG | awk '{print $2}')
+          PASSWORD=$(grep 'Password: ' $STACK_UP_LOG | awk '{print $2}')
+
+          if [ -n "$USERNAME" ]; then
+              echo "::add-mask::$USERNAME"
+          fi
+          if [ -n "$PASSWORD" ]; then
+              echo "::add-mask::$PASSWORD"
+          fi
+
+          echo "--- Stack Up Logs ---"
+          cat $STACK_UP_LOG
+          echo "---------------------"
+
+          # Check if stack up failed
+          if [ $STACK_UP_STATUS -ne 0 ]; then
+              echo "elastic-package stack up failed"
+              # Attempt cleanup just in case
+              elastic-package stack down || echo "Stack down failed, proceeding..."
+              exit $STACK_UP_STATUS
+          fi
+
+          # Run tests
+          # Use 'set +e' again to capture status and ensure stack down
+          set +e
+          echo "--- Running Tests ---"
+
+          # Determine integration type from manifest.yml
+          INTEGRATION_TYPE=$(grep -E '^type:' manifest.yml | awk '{print $2}' | tr -d '"')
+          echo "Detected integration type: $INTEGRATION_TYPE"
+
+          # Added --report-output file to all test commands
+          if [ "$INTEGRATION_TYPE" = "integration" ] || [ "$INTEGACTION_TYPE" = "input" ]; then
+              echo "Running full test suite for '$INTEGRATION_TYPE' type..."
+              elastic-package test asset --report-format xUnit --report-output file && \
+              elastic-package test pipeline --report-format xUnit --report-output file && \
+              elastic-package test policy --report-format xUnit --report-output file && \
+              elastic-package test --report-format xUnit --report-output file
+          elif [ "$INTEGRATION_TYPE" = "content" ]; then
+              echo "Running partial test suite for 'content' type..."
+              elastic-package test asset --report-format xUnit --report-output file && \
+              elastic-package test pipeline --report-format xUnit --report-output file
+          else
+              echo "Unknown or unset integration type '$INTEGRATION_TYPE'. Running full test suite as default..."
+              elastic-package test asset --report-format xUnit --report-output file && \
+              elastic-package test pipeline --report-format xUnit --report-output file && \
+              elastic-package test policy --report-format xUnit --report-output file && \
+              elastic-package test --report-format xUnit --report-output file
+          fi
+
+          TEST_STATUS=$? # Capture test status
+          set -e
+
+          # Always run stack down
+          echo "--- Tearing Down Stack ---"
+          elastic-package stack down
+
+          # Exit with test status if tests failed
+          if [ $TEST_STATUS -ne 0 ]; then
+              echo "Tests failed"
+              exit $TEST_STATUS
+          fi
+
+          echo "--- Successfully completed tests ---"
+          exit 0
+          RUN_SCRIPT
             
             # Make the script executable
             chmod +x "run_script_${app}.sh"
@@ -210,7 +215,7 @@ jobs:
               -e EC_API_KEY \
               -e ELASTIC_PACKAGE_SERVERLESS_PIPELINE_TEST_DISABLE_COMPARE_RESULTS \
               -v $PWD:/workspace \
-              -v ~/.elastic-package:/root/.elastic-package \
+              -v /var/run/docker.sock:/var/run/docker.sock \
               -w /workspace \
               $IMAGE_PATH:latest \
               sh "/workspace/run_script_${app}.sh" $app
@@ -221,9 +226,12 @@ jobs:
 
       - name: Publish Costly Test Results
         if: env.changed_apps != '' && github.event.pull_request.draft == false
-        uses: dorny/test-reporter@v1
+        uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          name: Costly Tests
-          path: 'build/test-results/*.xml'
-          reporter: swift-xunit
-          token: ${{ secrets.GITHUB_TOKEN }}
+          check_name: Costly Tests
+          files: |
+            build/test-results/*-asset-*.xml
+            build/test-results/*-pipeline-*.xml
+            build/test-results/*-policy-*.xml
+            build/test-results/*-test-*.xml
+

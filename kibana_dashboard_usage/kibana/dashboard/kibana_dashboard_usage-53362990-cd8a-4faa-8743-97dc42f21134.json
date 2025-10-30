@@ -1,0 +1,543 @@
+{
+    "attributes": {
+        "controlGroupInput": {
+            "chainingSystem": "HIERARCHICAL",
+            "controlStyle": "oneLine",
+            "ignoreParentSettingsJSON": {
+                "ignoreFilters": false,
+                "ignoreQuery": false,
+                "ignoreTimerange": false,
+                "ignoreValidations": false
+            },
+            "panelsJSON": {
+                "35003d75-ac4b-4663-92fd-b335764d9fe4": {
+                    "explicitInput": {
+                        "dataViewId": "kibana_usage_counters*",
+                        "exclude": null,
+                        "existsSelected": false,
+                        "fieldName": "namespace",
+                        "hideActionBar": null,
+                        "hideExclude": null,
+                        "hideExists": null,
+                        "hideSort": null,
+                        "placeholder": null,
+                        "runPastTimeout": null,
+                        "searchTechnique": "prefix",
+                        "selectedOptions": [],
+                        "singleSelect": null,
+                        "sort": {
+                            "by": "_count",
+                            "direction": "desc"
+                        },
+                        "title": "Space"
+                    },
+                    "grow": false,
+                    "order": 0,
+                    "type": "optionsListControl",
+                    "width": "medium"
+                }
+            },
+            "showApplySelections": false
+        },
+        "description": "",
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "filter": [
+                    {
+                        "$state": {
+                            "store": "appState"
+                        },
+                        "meta": {
+                            "alias": null,
+                            "disabled": false,
+                            "field": "_index",
+                            "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                            "key": "_index",
+                            "negate": false,
+                            "params": {
+                                "query": ".kibana_usage_counters*"
+                            },
+                            "type": "phrase"
+                        },
+                        "query": {
+                            "match_phrase": {
+                                "_index": ".kibana_usage_counters*"
+                            }
+                        }
+                    }
+                ],
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "0845982131278f20dcf444b10b9602abf64c9ace58475d6e6fdee30998f1156e": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldFormats": {},
+                                    "id": "0845982131278f20dcf444b10b9602abf64c9ace58475d6e6fdee30998f1156e",
+                                    "name": ".kibana_usage_counters*",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": ".kibana_usage_counters*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "indexPatternRefs": [
+                                        {
+                                            "id": "0845982131278f20dcf444b10b9602abf64c9ace58475d6e6fdee30998f1156e",
+                                            "timeField": "updated_at",
+                                            "title": ".kibana_usage_counters*"
+                                        }
+                                    ],
+                                    "layers": {
+                                        "35e45bdf-96c6-43a8-9006-bab1a424d211": {
+                                            "allColumns": [
+                                                {
+                                                    "columnId": "usage-counter.counterName",
+                                                    "customLabel": true,
+                                                    "fieldName": "usage-counter.counterName",
+                                                    "label": "Dashboard(s)",
+                                                    "meta": {
+                                                        "esType": "keyword",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "Month",
+                                                    "customLabel": false,
+                                                    "fieldName": "Month",
+                                                    "inMetricDimension": true,
+                                                    "label": "Month",
+                                                    "meta": {
+                                                        "esType": "long",
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "Total_Views",
+                                                    "customLabel": false,
+                                                    "fieldName": "Total_Views",
+                                                    "inMetricDimension": true,
+                                                    "label": "Total_Views",
+                                                    "meta": {
+                                                        "esType": "long",
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "columns": [
+                                                {
+                                                    "columnId": "usage-counter.counterName",
+                                                    "customLabel": true,
+                                                    "fieldName": "usage-counter.counterName",
+                                                    "label": "Dashboard(s)",
+                                                    "meta": {
+                                                        "esType": "keyword",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "Total_Views",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total_Views",
+                                                    "inMetricDimension": true,
+                                                    "label": "View per month",
+                                                    "meta": {
+                                                        "esType": "long",
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "9fbdf940-3daa-438d-9cd6-96d6baa648f3",
+                                                    "fieldName": "Month",
+                                                    "meta": {
+                                                        "esType": "long",
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "index": "0845982131278f20dcf444b10b9602abf64c9ace58475d6e6fdee30998f1156e",
+                                            "query": {
+                                                "esql": "FROM .kibana_usage_counters*\n| WHERE `usage-counter.domainId` == \"dashboard\" and `usage-counter.source` != \"ui\" AND updated_at \u003e= ?_tstart and updated_at \u003c= ?_tend\n| EVAL Month = DATE_EXTRACT(\"month_of_year\", updated_at)\n| STATS Total_Views = sum(`usage-counter.count`) by `usage-counter.counterName`, Month\n| KEEP `usage-counter.counterName`,Month, Total_Views\n| sort Total_Views DESC \n| limit 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "needsRefresh": false,
+                            "query": {
+                                "esql": "FROM .kibana_usage_counters*\n| WHERE `usage-counter.domainId` == \"dashboard\" and `usage-counter.source` != \"ui\" AND updated_at \u003e= ?_tstart and updated_at \u003c= ?_tend\n| EVAL Month = DATE_EXTRACT(\"month_of_year\", updated_at)\n| STATS Total_Views = sum(`usage-counter.count`) by `usage-counter.counterName`, Month\n| KEEP `usage-counter.counterName`,Month, Total_Views\n| sort Total_Views DESC \n| limit 10"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "columnId": "usage-counter.counterName",
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "colorMode": "cell",
+                                        "columnId": "Total_Views",
+                                        "palette": {
+                                            "name": "complementary",
+                                            "params": {
+                                                "continuity": "above",
+                                                "name": "complementary",
+                                                "rangeMax": null,
+                                                "rangeMin": 1,
+                                                "rangeType": "number",
+                                                "reverse": false,
+                                                "stops": [
+                                                    {
+                                                        "color": "#6092c0",
+                                                        "stop": 1
+                                                    },
+                                                    {
+                                                        "color": "#a6c1db",
+                                                        "stop": 3
+                                                    },
+                                                    {
+                                                        "color": "#ebeff5",
+                                                        "stop": 5
+                                                    },
+                                                    {
+                                                        "color": "#e3bd9d",
+                                                        "stop": 7
+                                                    },
+                                                    {
+                                                        "color": "#da8b45",
+                                                        "stop": 9
+                                                    }
+                                                ]
+                                            },
+                                            "type": "palette"
+                                        },
+                                        "summaryRow": "sum"
+                                    },
+                                    {
+                                        "columnId": "9fbdf940-3daa-438d-9cd6-96d6baa648f3",
+                                        "isMetric": false,
+                                        "isTransposed": true
+                                    }
+                                ],
+                                "layerId": "35e45bdf-96c6-43a8-9006-bab1a424d211",
+                                "layerType": "data"
+                            }
+                        },
+                        "title": "Month \u0026 Total_Views of usage-counter.counterName",
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [],
+                    "query": {
+                        "esql": "FROM .kibana_usage_counters*\n| WHERE `usage-counter.domainId` == \"dashboard\" and `usage-counter.source` != \"ui\" AND updated_at \u003e= ?_tstart and updated_at \u003c= ?_tend\n| EVAL Month = DATE_EXTRACT(\"month_of_year\", updated_at)\n| STATS Total_Views = sum(`usage-counter.count`) by `usage-counter.counterName`, Month\n| KEEP `usage-counter.counterName`,Month, Total_Views\n| sort Total_Views DESC \n| limit 10"
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false,
+                    "title": "Dashboard Usage - Top"
+                },
+                "gridData": {
+                    "h": 16,
+                    "i": "feafe9e9-0dee-432a-87b1-c38f78261016",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "feafe9e9-0dee-432a-87b1-c38f78261016",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "0845982131278f20dcf444b10b9602abf64c9ace58475d6e6fdee30998f1156e": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldFormats": {},
+                                    "id": "0845982131278f20dcf444b10b9602abf64c9ace58475d6e6fdee30998f1156e",
+                                    "name": ".kibana_usage_counters*",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "updated_at",
+                                    "title": ".kibana_usage_counters*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "indexPatternRefs": [
+                                        {
+                                            "id": "0845982131278f20dcf444b10b9602abf64c9ace58475d6e6fdee30998f1156e",
+                                            "timeField": "updated_at",
+                                            "title": ".kibana_usage_counters*"
+                                        }
+                                    ],
+                                    "layers": {
+                                        "6eb1a52c-0a6c-4a99-9499-abc9f9bce4e9": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "usage-counter.counterName",
+                                                    "customLabel": false,
+                                                    "fieldName": "usage-counter.counterName",
+                                                    "label": "usage-counter.counterName",
+                                                    "meta": {
+                                                        "esType": "keyword",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "Total_Views",
+                                                    "customLabel": false,
+                                                    "fieldName": "Total_Views",
+                                                    "inMetricDimension": true,
+                                                    "label": "Total_Views",
+                                                    "meta": {
+                                                        "esType": "long",
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "index": "0845982131278f20dcf444b10b9602abf64c9ace58475d6e6fdee30998f1156e",
+                                            "query": {
+                                                "esql": "FROM .kibana_usage_counters*\n| WHERE `usage-counter.domainId` == \"dashboard\" and `usage-counter.source` != \"ui\" AND updated_at \u003e= NOW() - 90d\n| STATS Total_Views = sum(`usage-counter.count`) by `usage-counter.counterName`\n| KEEP `usage-counter.counterName`,Total_Views\n| sort Total_Views ASC \n| limit 10"
+                                            },
+                                            "timeField": "updated_at"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "needsRefresh": false,
+                            "query": {
+                                "esql": "FROM .kibana_usage_counters*\n| WHERE `usage-counter.domainId` == \"dashboard\" and `usage-counter.source` != \"ui\" AND updated_at \u003e= NOW() - 90d\n| STATS Total_Views = sum(`usage-counter.count`) by `usage-counter.counterName`\n| KEEP `usage-counter.counterName`,Total_Views\n| sort Total_Views ASC \n| limit 10"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "columnId": "usage-counter.counterName",
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "columnId": "Total_Views"
+                                    }
+                                ],
+                                "layerId": "6eb1a52c-0a6c-4a99-9499-abc9f9bce4e9",
+                                "layerType": "data"
+                            }
+                        },
+                        "title": "Bar vertical stacked",
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [],
+                    "query": {
+                        "esql": "FROM .kibana_usage_counters*\n| WHERE `usage-counter.domainId` == \"dashboard\" and `usage-counter.source` != \"ui\" AND updated_at \u003e= NOW() - 90d\n| STATS Total_Views = sum(`usage-counter.count`) by `usage-counter.counterName`\n| KEEP `usage-counter.counterName`,Total_Views\n| sort Total_Views ASC \n| limit 10"
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false,
+                    "title": "Dashboard Usage - Least usage \u003c90d"
+                },
+                "gridData": {
+                    "h": 16,
+                    "i": "545ea6b8-3b78-4557-8638-2f8ac246ec83",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "545ea6b8-3b78-4557-8638-2f8ac246ec83",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "0845982131278f20dcf444b10b9602abf64c9ace58475d6e6fdee30998f1156e": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldFormats": {},
+                                    "id": "0845982131278f20dcf444b10b9602abf64c9ace58475d6e6fdee30998f1156e",
+                                    "name": ".kibana_usage_counters*",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": ".kibana_usage_counters*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "indexPatternRefs": [
+                                        {
+                                            "id": "0845982131278f20dcf444b10b9602abf64c9ace58475d6e6fdee30998f1156e",
+                                            "title": ".kibana_usage_counters*"
+                                        }
+                                    ],
+                                    "layers": {
+                                        "6497cb0c-ae8d-4945-b38a-d3a859c2cb9a": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "Views",
+                                                    "customLabel": false,
+                                                    "fieldName": "Views",
+                                                    "inMetricDimension": true,
+                                                    "label": "Views",
+                                                    "meta": {
+                                                        "esType": "long",
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "spaceName",
+                                                    "customLabel": false,
+                                                    "fieldName": "spaceName",
+                                                    "label": "spaceName",
+                                                    "meta": {
+                                                        "esType": "keyword",
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "index": "0845982131278f20dcf444b10b9602abf64c9ace58475d6e6fdee30998f1156e",
+                                            "query": {
+                                                "esql": "from .kibana_usage_counters*\n| WHERE `usage-counter.domainId` == \"dashboard\"\n| EVAL spaceName = coalesce(namespace, \"default\")\n| STATS  Views = sum(`usage-counter.count`) by spaceName\n| SORT  Views desc\n| LIMIT 3"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "needsRefresh": false,
+                            "query": {
+                                "esql": "from .kibana_usage_counters*\n| WHERE `usage-counter.domainId` == \"dashboard\"\n| EVAL spaceName = coalesce(namespace, \"default\")\n| STATS  Views = sum(`usage-counter.count`) by spaceName\n| SORT  Views desc\n| LIMIT 3"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "emptySizeRatio": 0.3,
+                                        "layerId": "6497cb0c-ae8d-4945-b38a-d3a859c2cb9a",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "metrics": [
+                                            "Views"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 2,
+                                        "primaryGroups": [
+                                            "spaceName"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "donut"
+                            }
+                        },
+                        "title": "Treemap",
+                        "visualizationType": "lnsPie"
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [],
+                    "query": {
+                        "esql": "from .kibana_usage_counters*\n| WHERE `usage-counter.domainId` == \"dashboard\"\n| EVAL spaceName = coalesce(namespace, \"default\")\n| STATS  Views = sum(`usage-counter.count`) by spaceName\n| SORT  Views desc\n| LIMIT 3"
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false,
+                    "title": "Space Usage"
+                },
+                "gridData": {
+                    "h": 17,
+                    "i": "985f0b72-168e-4f7f-a4f1-b8067c473c94",
+                    "w": 24,
+                    "x": 0,
+                    "y": 16
+                },
+                "panelIndex": "985f0b72-168e-4f7f-a4f1-b8067c473c94",
+                "type": "lens"
+            }
+        ],
+        "timeRestore": false,
+        "title": "[Kibana] Dashboard Usage",
+        "version": 3
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2025-10-21T13:42:59.646Z",
+    "created_by": "u_3727848238_cloud",
+    "id": "kibana_dashboard_usage-53362990-cd8a-4faa-8743-97dc42f21134",
+    "references": [
+        {
+            "id": "kibana_usage_counters*",
+            "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+            "type": "index-pattern"
+        },
+        {
+            "id": "kibana_usage_counters*",
+            "name": "controlGroup_35003d75-ac4b-4663-92fd-b335764d9fe4:optionsListDataView",
+            "type": "index-pattern"
+        },
+        {
+            "id": "kibana_usage_counters*",
+            "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+            "type": "index-pattern"
+        }
+    ],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_3727848238_cloud"
+}
