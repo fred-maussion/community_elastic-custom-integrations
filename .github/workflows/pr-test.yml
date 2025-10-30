@@ -105,31 +105,28 @@ jobs:
           echo "--- [$0] Inside container for $1 ---"
 
           # --- Install Docker Client ---
-          echo "Inside container: Installing docker client..."
-          if [ -f /etc/alpine-release ]; then
-              # It's Alpine. Add docker-cli and the compose plugin
-              apk add --no-cache docker-cli docker-compose-plugin
-          elif [ -f /etc/debian_version ]; then
-              # It's Debian/Ubuntu.
-              apt-get update
-              # Install prerequisites
-              apt-get install -y --no-install-recommends ca-certificates curl
-              # Add Docker's official GPG key
-              install -m 0755 -d /etc/apt/keyrings
-              curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-              chmod a+r /etc/apt/keyrings/docker.asc
-              # Set up the repository
-              echo \
-                "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
-                $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-                tee /etc/apt/sources.list.d/docker.list > /dev/null
-              apt-get update
-              # Install the client and compose plugin
-              apt-get install -y --no-install-recommends docker-ce-cli docker-compose-plugin
-          else
-              echo "WARNING: Unknown container OS, cannot install docker client."
-              echo "Attempting to proceed..."
-          fi
+          echo "Inside container: Installing docker client (assuming Ubuntu/Debian base)..."
+          # Update and install prerequisites
+          apt-get update
+          apt-get install -y --no-install-recommends lsb-release ca-certificates curl
+
+          # Add Docker's official GPG key
+          install -m 0755 -d /etc/apt/keyrings
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+          chmod a+r /etc/apt/keyrings/docker.asc
+
+          # Set up the repository using the LSB-provided codename
+          echo \
+            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+            $(lsb_release -cs) stable" | \
+            tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+          # Update apt cache again with new repo
+          apt-get update
+
+          # Install the client and compose plugin
+          apt-get install -y --no-install-recommends docker-ce-cli docker-compose-plugin
+
           echo "Docker client installed."
           # --- End Docker Client Install ---
 
@@ -193,7 +190,7 @@ jobs:
           INTEGRATION_TYPE=$(grep -E '^type:' manifest.yml | awk '{print $2}' | tr -d '"')
           echo "Detected integration type: $INTEGRATION_TYPE"
 
-          if [ "$INTEGRATION_TYPE" = "integration" ] || [ "$INTEGRATION_TYPE" = "input" ]; then
+          if [ "$INTEGRATION_TYPE" = "integration" ] || [ "$INTE_TYPE" = "input" ]; then
               echo "Running full test suite for '$INTEGRATION_TYPE' type..."
               elastic-package test asset -v --report-format xUnit && \
               elastic-package test pipeline -v --report-format xUnit && \
