@@ -73,13 +73,12 @@ jobs:
           done
 
       - name: Publish Fast Test Results
-        if: env.changed_apps != ''
-        uses: dorny/test-reporter@v1
+        # Use if: always() so this step runs even if the previous step fails
+        if: always() && env.changed_apps != ''
+        uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          name: Fast Tests
-          path: 'build/test-results/*.xml'
-          reporter: swift-xunit
-          token: ${{ secrets.GITHUB_TOKEN }}
+          check_name: Fast Tests
+          files: 'build/test-results/*-static-*.xml'
 
       - name: Run Costly Tests on Changed Packages
         if: env.changed_apps != '' && github.event.pull_request.draft == false
@@ -171,22 +170,23 @@ jobs:
           INTEGRATION_TYPE=$(grep -E '^type:' manifest.yml | awk '{print $2}' | tr -d '"')
           echo "Detected integration type: $INTEGRATION_TYPE"
 
-          if [ "$INTEGRATION_TYPE" = "integration" ] || [ "$INTEGRATION_TYPE" = "input" ]; then
+          # Added --report-output file to all test commands
+          if [ "$INTEGRATION_TYPE" = "integration" ] || [ "$INTEGACTION_TYPE" = "input" ]; then
               echo "Running full test suite for '$INTEGRATION_TYPE' type..."
-              elastic-package test asset -v --report-format xUnit --report-output file && \
-              elastic-package test pipeline -v --report-format xUnit --report-output file && \
-              elastic-package test policy -v --report-format xUnit --report-output file && \
-              elastic-package test -v --report-format xUnit --report-output file
+              elastic-package test asset --report-format xUnit --report-output file && \
+              elastic-package test pipeline --report-format xUnit --report-output file && \
+              elastic-package test policy --report-format xUnit --report-output file && \
+              elastic-package test --report-format xUnit --report-output file
           elif [ "$INTEGRATION_TYPE" = "content" ]; then
               echo "Running partial test suite for 'content' type..."
-              elastic-package test asset -v --report-format xUnit --report-output file && \
-              elastic-package test pipeline -v --report-format xUnit --report-output file
+              elastic-package test asset --report-format xUnit --report-output file && \
+              elastic-package test pipeline --report-format xUnit --report-output file
           else
               echo "Unknown or unset integration type '$INTEGRATION_TYPE'. Running full test suite as default..."
-              elastic-package test asset -v --report-format xUnit --report-output file && \
-              elastic-package test pipeline -v --report-format xUnit --report-output file && \
-              elastic-package test policy -v --report-format xUnit --report-output file && \
-              elastic-package test -v --report-format xUnit --report-output file
+              elastic-package test asset --report-format xUnit --report-output file && \
+              elastic-package test pipeline --report-format xUnit --report-output file && \
+              elastic-package test policy --report-format xUnit --report-output file && \
+              elastic-package test --report-format xUnit --report-output file
           fi
 
           TEST_STATUS=$? # Capture test status
@@ -224,11 +224,15 @@ jobs:
           done
 
       - name: Publish Costly Test Results
-        if: env.changed_apps != '' && github.event.pull_request.draft == false
-        uses: dorny/test-reporter@v1
+        # Use if: always() so this step runs even if the previous steps fail
+        if: always() && env.changed_apps != '' && github.event.pull_request.draft == false
+        uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          name: Costly Tests
-          path: 'build/test-results/*.xml'
-          reporter: swift-xunit
-          token: ${{ secrets.GITHUB_TOKEN }}
+          check_name: Costly Tests
+          # Use multi-line glob patterns
+          files: |
+            build/test-results/*-asset-*.xml
+            build/test-results/*-pipeline-*.xml
+            build/test-results/*-policy-*.xml
+            build/test-results/*-test-*.xml
 
