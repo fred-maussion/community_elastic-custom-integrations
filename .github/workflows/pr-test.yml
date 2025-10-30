@@ -106,8 +106,8 @@ jobs:
 
           # --- Install Docker Client ---
           echo "Inside container: Installing docker client (Alpine base)..."
-          # Add docker-cli and the compose plugin
-          apk add --no-cache docker-cli docker-compose-plugin
+          # Add docker-cli and the compose plugin (docker-cli-compose)
+          apk add --no-cache docker-cli docker-cli-compose
           echo "Docker client installed."
           # --- End Docker Client Install ---
 
@@ -205,7 +205,7 @@ jobs:
           echo "--- Successfully completed tests ---"
           exit 0
           RUN_SCRIPT
-                      
+            
             # Make the script executable
             chmod +x "run_script_${app}.sh"
             
@@ -231,3 +231,4 @@ jobs:
           path: 'build/test-results/*.xml'
           reporter: swift-xunit
           token: ${{ secrets.GITHUB_TOKEN }}
+
