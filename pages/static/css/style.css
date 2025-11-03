@@ -587,15 +587,18 @@ input:checked + .slider:before {
     margin-bottom: 0.5rem;
 }
 
-.owner-filter-group {
+.owner-filter-group,
+#type-filters {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
-.owner-filter-group input[type="radio"] {
+.owner-filter-group input[type="radio"],
+#type-filters input[type="radio"] {
     display: none; /* Hide the default radio button */
 }
-.owner-filter-group label {
+.owner-filter-group label,
+#type-filters label {
     display: block;
     padding: 0.5rem 0.75rem;
     border: 1px solid var(--border-color);
@@ -605,10 +608,12 @@ input:checked + .slider:before {
     text-align: center;
     font-weight: 500;
 }
-.owner-filter-group label:hover {
+.owner-filter-group label:hover,
+#type-filters label:hover {
     background-color: var(--border-color);
 }
-.owner-filter-group input[type="radio"]:checked + label {
+.owner-filter-group input[type="radio"]:checked + label,
+#type-filters input[type="radio"]:checked + label {
     background-color: var(--brand-accent);
     border-color: var(--brand-accent);
     color: var(--text-primary);
@@ -776,3 +781,45 @@ input:checked + .slider:before {
     border-radius: 8px;
     overflow-x: auto;
 }
+
+/* --- Pagination Styles --- */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-bottom: 2rem; /* Add some space at the bottom */
+}
+
+.pagination-btn {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background-color: var(--border-color);
+}
+
+.pagination-btn.active {
+    background-color: var(--brand-accent);
+    border-color: var(--brand-accent);
+    color: var(--text-primary);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination-ellipsis {
+    color: var(--text-secondary);
+    padding: 0 0.25rem;
+}
+/* --- END NEW STYLES --- */

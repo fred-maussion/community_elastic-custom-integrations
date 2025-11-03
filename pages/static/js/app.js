@@ -1,6 +1,7 @@
 // --- NEW ---
 // State object to track the current index and max items for each carousel
 const sliderState = {
+    content: { index: 0, max: 0, itemsPerView: 1 },
     all: { index: 0, max: 0, itemsPerView: 1 },
     observability: { index: 0, max: 0, itemsPerView: 1 },
     security: { index: 0, max: 0, itemsPerView: 1 }
@@ -83,6 +84,7 @@ function initSliders() {
     window.addEventListener('resize', () => {
         // Use a timeout to avoid spamming the resize event
         setTimeout(() => {
+            updateSlider('content');
             updateSlider('all');
             updateSlider('observability');
             updateSlider('security');
@@ -93,7 +95,6 @@ function initSliders() {
 
 /**
  * Helper function to construct the absolute URL for an integration icon.
- * --- CORRECTED ---
  * The API returns an 'icons' array, not a single 'icon' field.
  * This function now correctly accesses the 'src' from the first element of that array.
  */
@@ -116,10 +117,10 @@ function getAbsoluteIconUrl(icons) {
     return `${EPR_URL}${iconPath}`;
 }
 
-// --- NEW ---
 // A hardcoded list of relevant Kibana versions.
 // This is the correct approach since the API does not provide a version endpoint.
 const KIBANA_VERSIONS = [
+"9.2.0",
 "9.1.0",
 "9.0.0",
 "8.19.0",
@@ -144,12 +145,10 @@ const KIBANA_VERSIONS = [
 "8.0.0"
 ]
 
-// --- NEW ---
 // Function to populate the Kibana version dropdown from the hardcoded list
 function populateKibanaVersions() {
     const selector = document.getElementById('kibana-version-selector');
     const prereleaseToggle = document.getElementById('prerelease-toggle');
-    // if (!selector) return;
     if (!selector || !prereleaseToggle) return;
 
     selector.innerHTML = ''; // Clear any existing options
@@ -207,6 +206,10 @@ document.addEventListener('DOMContentLoaded', () => {
         initSliders(); 
     }
 
+    if (document.getElementById('content-integrations')) {
+        initSliders(); 
+    }
+
     if (document.getElementById('observability-integrations')) {
         initSliders(); 
     }
@@ -233,9 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * (Unchanged)
  */
 function createIntegrationCard(pkg, kibanaVersion) {
-    // --- CORRECTED ---
     // Construct the absolute URL using the global SITE_BASE_URL variable.
-    // const detailUrl = `${SITE_BASE_URL}integration?pkg=${pkg.name}${kibanaVersion ? `&kibana_version=${kibanaVersion}` : ''}`;
     let detailUrl = `${SITE_BASE_URL}integration?pkg=${pkg.name}${kibanaVersion ? `&kibana_version=${kibanaVersion}` : ''}`;
 
     // Append the prerelease flag to the URL if it's active
@@ -281,16 +282,21 @@ function parseApiResponse(data) {
 
 /**
  * Helper function to fetch integrations for a specific category and display them
- * --- MODIFIED ---
  * Filters by the selected Kibana version.
  */
-async function fetchAndDisplayCategory(category, container, kibanaVersion, includePrerelease) {
+// async function fetchAndDisplayCategory(category, container, kibanaVersion, includePrerelease) {
+async function fetchAndDisplay(filterType, filterValue, container, kibanaVersion, includePrerelease) {
     try {
         // Build the URL with the Kibana version parameter
         // const apiUrl = `${EPR_URL}/search?category=${category}&kibana.version=${kibanaVersion}`;
         let apiUrl = `${EPR_URL}/search?kibana.version=${kibanaVersion}`;
-        if (category !== 'all') {
-            apiUrl += `&category=${category}`;
+        // if (category !== 'all') {
+        //     apiUrl += `&category=${category}`;
+        // }
+        if (filterType === 'category' && filterValue !== 'all') {
+            apiUrl += `&category=${filterValue}`;
+        } else if (filterType === 'type') {
+            apiUrl += `&type=${filterValue}`;
         }
         if (includePrerelease) {
             apiUrl += '&prerelease=true';
@@ -323,35 +329,27 @@ async function fetchAndDisplayCategory(category, container, kibanaVersion, inclu
             }
         });
 
-        // --- NEW ---
         // Update the slider state for this category
-        // sliderState[category].max = randomPackages.length;
-        // updateSlider(category); // Call to set initial button states
-        // --- NEW --- // fred
-        // Update the slider state for this category
-        sliderState[category].max = randomPackages.length; // fred
+        sliderState[filterValue].max = randomPackages.length;        
         
-        // --- CORRECTED ---
-        // Use a small timeout to ensure the browser has rendered the new cards
-        // before we try to measure them. This fixes the race condition.
         requestAnimationFrame(() => {
-            updateSlider(category);
+            updateSlider(filterValue);
         }, 100);
 
     } catch (error) {
-        console.error(`Failed to load ${category} integrations:`, error);
-        container.innerHTML = `<p class="error">Could not load ${category} integrations.</p>`;
+        console.error(`Failed to load ${filterValue} integrations:`, error);
+        container.innerHTML = `<p class="error">Could not load ${filterValue} integrations.</p>`;
     }
 }
 
 /**
  * 1. HOMEPAGE: Fetches all integrations and sorts them by category
- * --- MODIFIED ---
  * Reads the selected Kibana version and passes it to the fetch helpers.
  */
 async function loadHomepageIntegrations() {
     const obsContainer = document.getElementById('observability-integrations');
     const secContainer = document.getElementById('security-integrations');
+    const contContainer = document.getElementById('content-integrations');
     const allContainer = document.getElementById('all-integrations');
     const versionSelector = document.getElementById('kibana-version-selector');
     const prereleaseToggle = document.getElementById('prerelease-toggle');
@@ -366,18 +364,20 @@ async function loadHomepageIntegrations() {
         sliderState[cat].index = 0;
         updateSlider(cat);
     });
-    obsContainer.innerHTML = `<p class="loading">Loading integrations for Kibana v${selectedVersion}...</p>`;
-    secContainer.innerHTML = `<p class="loading">Loading integrations for Kibana v${selectedVersion}...</p>`;
-  
+    if(contContainer) contContainer.innerHTML = `<p class="loading">Loading integrations for Kibana v${selectedVersion}...</p>`; // <-- ADD THIS
+    if(obsContainer) obsContainer.innerHTML = `<p class="loading">Loading integrations for Kibana v${selectedVersion}...</p>`;
+    if(secContainer) secContainer.innerHTML = `<p class="loading">Loading integrations for Kibana v${selectedVersion}...</p>`;
+    if(allContainer) allContainer.innerHTML = `<p class="loading">Loading integrations for Kibana v${selectedVersion}...</p>`; // <-- ADD THIS
+
     // Run all fetches in parallel, passing the selected version
-    fetchAndDisplayCategory('all', allContainer, selectedVersion, includePrerelease);
-    fetchAndDisplayCategory('observability', obsContainer, selectedVersion, includePrerelease);
-    fetchAndDisplayCategory('security', secContainer, selectedVersion, includePrerelease);
+    fetchAndDisplay('all', 'all', allContainer, selectedVersion, includePrerelease);
+    fetchAndDisplay('category', 'observability', obsContainer, selectedVersion, includePrerelease);
+    fetchAndDisplay('category', 'security', secContainer, selectedVersion, includePrerelease);
+    fetchAndDisplay('type', 'content', contContainer, selectedVersion, includePrerelease); // <-- ADD THIS (using 'type')
 }
 
 /**
- * 2. SEARCH PAGE: Fetches results for a specific query (Req 6)
- * (Unchanged)
+ * 2. SEARCH PAGE: Fetches results for a specific query
  */
 async function loadSearchResults() {
     const resultsContainer = document.getElementById('search-results');
@@ -401,7 +401,6 @@ async function loadSearchResults() {
     }
 
     try {
-        // --- CORRECTED HYBRID APPROACH ---
         let apiUrl = `${EPR_URL}/search?kibana.version=${kibanaVersion}`;
         if (prerelease) {
             apiUrl += '&prerelease=true';
@@ -440,12 +439,7 @@ async function loadSearchResults() {
 }
 
 /**
- * 3. DETAIL PAGE: Fetches info for one integration (Req 5)
- * --- MODIFIED ---
- * Implements a more robust fallback mechanism. It attempts to fetch from the 
- * `/package/` endpoint. If that fetch promise is rejected (due to a CORS 
- * error on a 404, for example) or if the response is not 'ok', it proceeds 
- * to a fallback search.
+ * 3. DETAIL PAGE: Fetches info for one integration
  */
 async function loadIntegrationDetails() {
     const detailContainer = document.getElementById('integration-detail');
@@ -460,9 +454,7 @@ async function loadIntegrationDetails() {
     }
 
     try {
-        // --- CORRECTED LOGIC ---
         // Step 1: Find the correct package version that matches the Kibana version.
-        // const searchUrl = `${EPR_URL}/search?package=${encodeURIComponent(pkgName)}` + (kibanaVersion ? `&kibana.version=${kibanaVersion}` : '');
         let searchUrl = `${EPR_URL}/search?package=${encodeURIComponent(pkgName)}` + (kibanaVersion ? `&kibana.version=${kibanaVersion}` : '');
         if (prerelease) {
             searchUrl += '&prerelease=true';
@@ -473,7 +465,7 @@ async function loadIntegrationDetails() {
         const packages = parseApiResponse(await searchResponse.json());
         if (packages.length === 0) throw new Error(`No compatible version of '${pkgName}' found.`);
         
-        const basePkg = packages[0]; // This has the correct version we need
+        const basePkg = packages[0];
         const correctVersion = basePkg.version;
 
         // Step 2: Fetch the full, detailed package info using the correct version.
@@ -485,7 +477,7 @@ async function loadIntegrationDetails() {
             pkg = await detailedResponse.json();
         } else {
             console.warn(`Could not load detailed info for ${pkgName} v${correctVersion}. Using summary data.`);
-            pkg = basePkg; // Fallback to the summary data if the detailed endpoint fails
+            pkg = basePkg;
         }
         
         // --- Build UI ---
@@ -608,11 +600,14 @@ async function loadBrowsePage() {
     const ownerFilterContainer = document.getElementById('owner-filters');
     const title = document.getElementById('browse-title');
 
-    let allPackages = []; // To store the master list of packages
+    let allPackages = [];
     let activeFilters = {
         text: '',
         owner: 'all',
-        categories: new Set()
+        categories: new Set(),
+        type: 'all',
+        currentPage: 1,
+        itemsPerPage: 50
     };
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -620,31 +615,127 @@ async function loadBrowsePage() {
     if (preselectedCategory) {
         activeFilters.categories.add(preselectedCategory);
     }
+    const preselectedType = urlParams.get('type');
+    if (preselectedType) {
+        activeFilters.type = preselectedType;
+    }
+
+    const searchQuery = urlParams.get('q');
+    if (searchQuery) {
+        activeFilters.text = searchQuery.toLowerCase();
+        textFilter.value = searchQuery;
+    }
+
+    const paginationControls = document.getElementById('pagination-controls');
+
+    const renderPagination = (totalItems) => {
+        const totalPages = Math.ceil(totalItems / activeFilters.itemsPerPage);
+        const currentPage = activeFilters.currentPage;
+        paginationControls.innerHTML = ''; // Clear old buttons
+
+        if (totalPages <= 1) return; // No pagination needed
+
+        // --- Helper to create a button ---
+        const createButton = (page, text, isDisabled = false, isActive = false) => {
+            const btn = document.createElement('button');
+            btn.className = 'pagination-btn';
+            btn.textContent = text || page;
+            if (isDisabled) btn.disabled = true;
+            if (isActive) btn.classList.add('active');
+            
+            btn.addEventListener('click', () => {
+                activeFilters.currentPage = page;
+                applyFilters();
+                // Scroll to the top of the grid
+                document.getElementById('browse-title').scrollIntoView({ behavior: 'smooth' });
+            });
+            return btn;
+        };
+
+        // --- "Prev" Button ---
+        paginationControls.appendChild(createButton(currentPage - 1, '< Prev', currentPage === 1));
+        
+        // --- Page Number Buttons (with ellipsis) ---
+        let showEllipsisStart = false;
+        let showEllipsisEnd = false;
+
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                paginationControls.appendChild(createButton(i, null, false, i === currentPage));
+            } else if (i < currentPage - 2 && !showEllipsisStart) {
+                const ellipsis = document.createElement('span');
+                ellipsis.className = 'pagination-ellipsis';
+                ellipsis.textContent = '...';
+                paginationControls.appendChild(ellipsis);
+                showEllipsisStart = true;
+            } else if (i > currentPage + 2 && !showEllipsisEnd) {
+                const ellipsis = document.createElement('span');
+                ellipsis.className = 'pagination-ellipsis';
+                ellipsis.textContent = '...';
+                paginationControls.appendChild(ellipsis);
+                showEllipsisEnd = true;
+            }
+        }
+
+        // --- "Next" Button ---
+        paginationControls.appendChild(createButton(currentPage + 1, 'Next >', currentPage === totalPages));
+    };
+    // --- END OF NEW FUNCTION ---
+
 
     const applyFilters = () => {
         const kibanaVersion = sessionStorage.getItem('kibanaVersion');
+        const prerelease = sessionStorage.getItem('prerelease') === 'true'; // --- MODIFIED: Get prerelease state ---
+
+        // --- MODIFIED: Add dynamic title logic ---
+        let titleText = 'All Integrations'; // Default title
+        if (activeFilters.type === 'content') {
+            titleText = 'Dashboard & Content';
+        } else if (activeFilters.type === 'integration') {
+            titleText = 'Integrations';
+        }
+        // Set the title text, including prerelease status
+        title.textContent = `${titleText} (Kibana v${kibanaVersion}${prerelease ? ', Pre-releases' : ''})`;
+        // --- END MODIFICATION ---
+
         const filteredPackages = allPackages.filter(pkg => {
             const textMatch = activeFilters.text === '' || (pkg.title || pkg.name).toLowerCase().includes(activeFilters.text);
             const categoryMatch = activeFilters.categories.size === 0 || (pkg.categories && pkg.categories.some(cat => activeFilters.categories.has(cat)));
             const ownerMatch = activeFilters.owner === 'all' || (pkg.owner && pkg.owner.type === activeFilters.owner);
-            return textMatch && categoryMatch && ownerMatch;
+            const typeMatch = activeFilters.type === 'all' || (pkg.type && pkg.type === activeFilters.type);
+            return textMatch && categoryMatch && ownerMatch && typeMatch;
         });
 
+        // --- 3. Slicing Logic ---
+        const start = (activeFilters.currentPage - 1) * activeFilters.itemsPerPage;
+        const end = start + activeFilters.itemsPerPage;
+        const paginatedPackages = filteredPackages.slice(start, end);
+
+        // grid.innerHTML = '';
+        // if (filteredPackages.length === 0) {
+        //     grid.innerHTML = '<p>No integrations match your filters.</p>';
+        //     return;
+        // }
+        // filteredPackages.forEach(pkg => {
+        //     grid.innerHTML += createIntegrationCard(pkg, kibanaVersion);
+        // });
+        // --- 4. Render Logic (Updated) ---
         grid.innerHTML = '';
         if (filteredPackages.length === 0) {
             grid.innerHTML = '<p>No integrations match your filters.</p>';
-            return;
+        } else {
+            paginatedPackages.forEach(pkg => {
+                grid.innerHTML += createIntegrationCard(pkg, kibanaVersion);
+            });
         }
-        filteredPackages.forEach(pkg => {
-            grid.innerHTML += createIntegrationCard(pkg, kibanaVersion);
-        });
+        
+        // --- 5. Render Pagination (NEW) ---
+        renderPagination(filteredPackages.length);
     };
 
     try {
         const kibanaVersion = sessionStorage.getItem('kibanaVersion');
         const prerelease = sessionStorage.getItem('prerelease') === 'true';
-
-        title.textContent = `All Integrations (Kibana v${kibanaVersion}${prerelease ? ', Pre-releases' : ''})`;
 
         let apiUrl = `${EPR_URL}/search?kibana.version=${kibanaVersion}`;
         if (prerelease) {
@@ -652,6 +743,10 @@ async function loadBrowsePage() {
         }
 
         const pkgResponse = await fetch(apiUrl);
+        // --- ADDED: Check if response is OK ---
+        if (!pkgResponse.ok) {
+            throw new Error(`Failed to fetch package list: ${pkgResponse.status}`);
+        }
         allPackages = await parseApiResponse(await pkgResponse.json());
         allPackages.sort((a, b) => (a.title || a.name).localeCompare(b.title || b.name));
 
@@ -671,12 +766,34 @@ async function loadBrowsePage() {
         ownerFilterContainer.querySelectorAll('input[type="radio"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
                 activeFilters.owner = e.target.value;
+                activeFilters.currentPage = 1;
+                applyFilters();
+            });
+        });
+
+        // --- Add listener for Type filters ---
+        document.querySelectorAll('input[name="type-filter"]').forEach(radio => {
+            // Set the default checked state from URL params
+            if (radio.value === activeFilters.type) {
+                radio.checked = true;
+            }
+            
+            radio.addEventListener('change', (e) => {
+                activeFilters.type = e.target.value;
+                activeFilters.currentPage = 1;
                 applyFilters();
             });
         });
 
         // --- Category Filters ---
         const allCategories = [...new Set(allPackages.flatMap(p => p.categories || []))].sort();
+        const contentItem = document.createElement('div');
+        contentItem.className = 'category-filter-item';
+        contentItem.innerHTML = `
+            <input type="checkbox" id="cat-content" value="content" ${preselectedType === 'content' ? 'checked' : ''}>
+            <label for="cat-content">Content</label>
+        `;
+        categoryFilters.appendChild(contentItem); 
         categoryFilters.innerHTML = '';
         allCategories.forEach(cat => {
             const item = document.createElement('div');
@@ -694,13 +811,14 @@ async function loadBrowsePage() {
                 } else {
                     activeFilters.categories.delete(e.target.value);
                 }
+                activeFilters.currentPage = 1;
                 applyFilters();
             });
         });
-        
         // --- Text Filter ---
         textFilter.addEventListener('input', (e) => {
             activeFilters.text = e.target.value.toLowerCase();
+            activeFilters.currentPage = 1;
             applyFilters();
         });
 
@@ -712,157 +830,3 @@ async function loadBrowsePage() {
         console.error("Error loading browse page:", error);
     }
 }
-
-/**
- * 4. BROWSE PAGE: Fetches all integrations and categories for client-side filtering
- */
-// async function loadBrowsePage() {
-//     const grid = document.getElementById('browse-grid');
-//     const categoryFilters = document.getElementById('category-filters');
-//     const textFilter = document.getElementById('text-filter');
-//     const title = document.getElementById('browse-title');
-
-//     let allPackages = []; // To store the master list of packages
-//     let activeFilters = {
-//         text: '',
-//         owner: 'all',
-//         categories: new Set()
-//     };
-
-//     const urlParams = new URLSearchParams(window.location.search);
-
-//     // --- NEW: Check for a search query from the header ---
-//     const searchQuery = urlParams.get('q');
-//     if (searchQuery) {
-//         // Set the value of the browse page's search box to match
-//         textFilter.value = searchQuery;
-//         // Set the filter so it's applied when the integrations load
-//         activeFilters.text = searchQuery.toLowerCase();
-//     }
-
-//     // --- NEW: Check for a pre-selected category from the URL ---
-//     const preselectedCategory = urlParams.get('category');
-//     if (preselectedCategory) {
-//         activeFilters.categories.add(preselectedCategory);
-//     }
-//     // ---------------------------------------------------------
-
-//     // Function to re-render the grid based on current filters
-//     const applyFilters = () => {
-//         const kibanaVersion = sessionStorage.getItem('kibanaVersion');
-        
-//         const filteredPackages = allPackages.filter(pkg => {
-//             const textMatch = activeFilters.text === '' || (pkg.title || pkg.name).toLowerCase().includes(activeFilters.text);
-//             // const categoryMatch = activeFilters.categories.size === 0 || pkg.categories.some(cat => activeFilters.categories.has(cat));
-//             const categoryMatch = activeFilters.categories.size === 0 || (pkg.categories && pkg.categories.some(cat => activeFilters.categories.has(cat)));
-//             const ownerMatch = activeFilters.owner === 'all' || (pkg.owner && pkg.owner.type === activeFilters.owner);
-//             return textMatch && categoryMatch && ownerMatch;
-//         });
-
-//         grid.innerHTML = '';
-//         if (filteredPackages.length === 0) {
-//             grid.innerHTML = '<p>No integrations match your filters.</p>';
-//             return;
-//         }
-
-//         filteredPackages.forEach(pkg => {
-//             grid.innerHTML += createIntegrationCard(pkg, kibanaVersion);
-//         });
-//     };
-    
-//     // Fetch categories and render checkboxes
-//     // try {
-//     // --- CORRECTED LOGIC for Filters and Package Loading ---
-//     const kibanaVersion = sessionStorage.getItem('kibanaVersion');
-//     const prerelease = sessionStorage.getItem('prerelease') === 'true';
-
-//     title.textContent = `All Integrations (Kibana v${kibanaVersion}${prerelease ? ', Pre-releases' : ''})`;
-
-//     // Fetch all integrations first
-//     try {
-//         let apiUrl = `${EPR_URL}/search?kibana.version=${kibanaVersion}`;
-//         if (prerelease) {
-//             apiUrl += '&prerelease=true';
-//         }
-//         const pkgResponse = await fetch(apiUrl);
-//         allPackages = await parseApiResponse(await pkgResponse.json());
-//         allPackages.sort((a, b) => (a.title || a.name).localeCompare(b.title || b.name));
-
-//         // Now that we have packages, populate owner filters
-//         const ownerFilterContainer = document.getElementById('owner-filters');
-//         const ownerTypes = ['all', ...new Set(allPackages.map(pkg => pkg.owner ? pkg.owner.type : null).filter(Boolean))];
-//         ownerFilterContainer.innerHTML = '';
-//         ownerTypes.forEach(ownerType => {
-//             const capitalizedOwner = ownerType.charAt(0).toUpperCase() + ownerType.slice(1);
-//             const itemHTML = `
-//                 <div class="owner-filter-item">
-//                     <input type="radio" id="owner-${ownerType}" name="owner-filter" value="${ownerType}" ${ownerType === 'all' ? 'checked' : ''}>
-//                     <label for="owner-${ownerType}">${capitalizedOwner}</label>
-//                 </div>
-//             `;
-//             ownerFilterContainer.innerHTML += itemHTML;
-//         });
-        
-//         ownerFilterContainer.querySelectorAll('input[type="radio"]').forEach(radio => {
-//             radio.addEventListener('change', (e) => {
-//                 activeFilters.owner = e.target.value;
-//                 applyFilters();
-//             });
-//         });
-
-//         // Now that we have packages, populate category filters from the packages themselves
-//         const allCategories = new Set();
-//         allPackages.forEach(pkg => {
-//             if (pkg.categories) {
-//                 pkg.categories.forEach(cat => allCategories.add(cat));
-//             }
-//         });
-        
-//         categoryFilters.innerHTML = '';
-//         [...allCategories].sort().forEach(cat => {
-//             const item = document.createElement('div');
-//             item.className = 'category-filter-item';
-//             item.innerHTML = `
-//                 <input type="checkbox" id="cat-${cat}" value="${cat}">
-//                 <label for="cat-${cat}">${cat}</label>
-//             `;
-//             categoryFilters.appendChild(item);
-//         });
-
-//         categoryFilters.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-//             checkbox.addEventListener('change', (e) => {
-//                 if (e.target.checked) {
-//                     activeFilters.categories.add(e.target.value);
-//                 } else {
-//                     activeFilters.categories.delete(e.target.value);
-//                 }
-//                 applyFilters();
-//             });
-//         });
-
-//         if (preselectedCategory) {
-//             const checkbox = document.getElementById(`cat-${preselectedCategory}`);
-//             if (checkbox) {
-//                 checkbox.checked = true;
-//             }
-//         }
-        
-//         // Initial render
-//         applyFilters();
-
-//         // Add event listener for text filter
-//         textFilter.addEventListener('input', (e) => {
-//             activeFilters.text = e.target.value.toLowerCase();
-//             applyFilters();
-//         });
-
-//     } catch (error) {
-//         grid.innerHTML = '<p class="error">Could not load integrations.</p>';
-//         console.error("Error loading browse page:", error);
-//     // }
-//     // ---------------------------------------------------------
-
-//     } catch (error) {
-//         grid.innerHTML = '<p class="error">Could not load integrations.</p>';
-//     }
-// }

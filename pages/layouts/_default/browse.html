@@ -12,6 +12,25 @@
                 <!-- Radio buttons will be populated by JS -->
             </div>
         </div>
+        <!-- --- ADD THIS NEW BLOCK --- -->
+        <div class="filter-group">
+            <h3>Type</h3>
+            <div id="type-filters">
+                <div class="owner-filter-item"> <!-- Re-using the radio button style -->
+                    <input type="radio" id="type-all" name="type-filter" value="all" checked>
+                    <label for="type-all">All</label>
+                </div>
+                <div class="owner-filter-item">
+                    <input type="radio" id="type-integration" name="type-filter" value="integration">
+                    <label for="type-integration">Integration</label>
+                </div>
+                <div class="owner-filter-item">
+                    <input type="radio" id="type-content" name="type-filter" value="content">
+                    <label for="type-content">Content</label>
+                </div>
+            </div>
+        </div>
+        <!-- --- END OF NEW BLOCK --- -->
         <div class="filter-group">
             <h3>Categories</h3>
             <div id="category-filters" class="category-filter-list">
@@ -24,6 +43,7 @@
         <div id="browse-grid" class="integration-grid">
             <p class="loading">Loading integrations...</p>
         </div>
+        <div id="pagination-controls" class="pagination-controls"></div>
     </main>
 </div>
 {{ end }}
