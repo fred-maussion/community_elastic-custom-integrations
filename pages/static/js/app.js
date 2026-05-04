@@ -120,6 +120,8 @@ function getAbsoluteIconUrl(icons) {
 // A hardcoded list of relevant Kibana versions.
 // This is the correct approach since the API does not provide a version endpoint.
 const KIBANA_VERSIONS = [
+"9.4.0",
+"9.3.0",
 "9.2.0",
 "9.1.0",
 "9.0.0",
