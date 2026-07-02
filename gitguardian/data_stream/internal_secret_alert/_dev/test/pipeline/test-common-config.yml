@@ -1,0 +1,4 @@
+dynamic_fields:
+  "_id": ".*"
+numeric_keyword_fields:
+  - gitguardian.incident.id

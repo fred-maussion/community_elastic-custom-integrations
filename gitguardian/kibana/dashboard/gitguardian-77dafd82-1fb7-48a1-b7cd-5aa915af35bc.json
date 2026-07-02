@@ -1,0 +1,1246 @@
+{
+    "accessControl": {
+        "accessMode": "default",
+        "owner": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+    },
+    "attributes": {
+        "description": "Dashboard monitoring GitGuardian internal secret alerts across Protect, Detect, and Remediate dimensions.",
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "filter": [
+                    {
+                        "meta": {
+                            "disabled": false,
+                            "field": "event.kind",
+                            "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                            "key": "event.kind",
+                            "params": {
+                                "query": "alert"
+                            },
+                            "type": "phrase"
+                        },
+                        "query": {
+                            "match_phrase": {
+                                "event.kind": "alert"
+                            }
+                        }
+                    }
+                ],
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "autoApplyFilters": true,
+            "hidePanelBorders": false,
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                    "name": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "internal_repositories_monitored",
+                                                    "label": "Repositories Monitored",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                            "query": {
+                                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS internal_repositories_monitored = COUNT_DISTINCT(gitguardian.incident.id)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS internal_repositories_monitored = COUNT_DISTINCT(gitguardian.incident.id)"
+                            },
+                            "visualization": {
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "ef883903-7e0f-4dda-b620-c7755617e493",
+                    "w": 16,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "ef883903-7e0f-4dda-b620-c7755617e493",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                    "name": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "count",
+                                                    "label": "Critical Incidents",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                            "query": {
+                                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| WHERE gitguardian.incident.severity == \"critical\"\n| STATS count = COUNT(*)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| WHERE gitguardian.incident.severity == \"critical\"\n| STATS count = COUNT(*)"
+                            },
+                            "visualization": {
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "52fb5eac-07d1-4fff-bc55-b360b5053dba",
+                    "w": 16,
+                    "x": 16,
+                    "y": 0
+                },
+                "panelIndex": "52fb5eac-07d1-4fff-bc55-b360b5053dba",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                    "name": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "median_days_to_remediate",
+                                                    "label": "Median Remediation (days)",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 1
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                            "query": {
+                                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n  AND gitguardian.incident.severity == \"critical\"\n  AND gitguardian.incident.status == \"RESOLVED\"\n| EVAL triggered_at_dt = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'\", gitguardian.incident.triggered_at)\n| EVAL days_to_remediate = DATE_DIFF(\"day\", triggered_at_dt, @timestamp)\n| STATS median_days_to_remediate = MEDIAN(days_to_remediate)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n  AND gitguardian.incident.severity == \"critical\"\n  AND gitguardian.incident.status == \"RESOLVED\"\n| EVAL triggered_at_dt = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'\", gitguardian.incident.triggered_at)\n| EVAL days_to_remediate = DATE_DIFF(\"day\", triggered_at_dt, @timestamp)\n| STATS median_days_to_remediate = MEDIAN(days_to_remediate)"
+                            },
+                            "visualization": {
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "aa72cacd-ed7d-46e3-bb31-a9055de4135c",
+                    "w": 16,
+                    "x": 32,
+                    "y": 0
+                },
+                "panelIndex": "aa72cacd-ed7d-46e3-bb31-a9055de4135c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                    "name": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_x",
+                                                    "fieldName": "week",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "unique_incidents",
+                                                    "label": "Unique Incidents",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                            "query": {
+                                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS unique_incidents = COUNT_DISTINCT(gitguardian.incident.id) BY week = BUCKET(@timestamp, 1 week)\n| SORT week ASC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS unique_incidents = COUNT_DISTINCT(gitguardian.incident.id) BY week = BUCKET(@timestamp, 1 week)\n| SORT week ASC"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "curveType": "LINEAR",
+                                "gridlinesVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "hideEndzones": true,
+                                "labelsOrientation": {
+                                    "x": 0,
+                                    "yLeft": 0,
+                                    "yRight": 0
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_y_0"
+                                        ],
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "xAccessor": "line_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "maxLines": 1,
+                                    "position": "bottom",
+                                    "showSingleSeries": true
+                                },
+                                "pointVisibility": "auto",
+                                "preferredSeriesType": "line",
+                                "showCurrentTimeMarker": false,
+                                "tickLabelsVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "xExtent": {
+                                    "mode": "dataBounds",
+                                    "niceValues": false
+                                },
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                },
+                                "yLeftScale": "linear"
+                            }
+                        },
+                        "title": "Unique GitGuardian Incidents per Week (Week over Week)",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Unique GitGuardian Incidents per Week (Week over Week)"
+                },
+                "gridData": {
+                    "h": 11,
+                    "i": "8c608705-7f02-48ea-bdbc-e21705f3a0f8",
+                    "sectionId": "1d5b9d6c-2e89-4cd5-bb80-3b0af4b43e1e",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "8c608705-7f02-48ea-bdbc-e21705f3a0f8",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-b9b11782245668e528243b9fca510dc0cda5997b08e20f571b9436b2051ac75f": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-b9b11782245668e528243b9fca510dc0cda5997b08e20f571b9436b2051ac75f",
+                                    "name": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "gitguardian.incident.detector.display_name",
+                                                    "label": "Data Source",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "count",
+                                                    "label": "Incident Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-b9b11782245668e528243b9fca510dc0cda5997b08e20f571b9436b2051ac75f",
+                                            "query": {
+                                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE gitguardian.incident.severity IN (\"critical\", \"high\")\n| STATS count = COUNT(*) BY gitguardian.incident.detector.display_name\n| SORT count DESC\n| LIMIT 5"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-b9b11782245668e528243b9fca510dc0cda5997b08e20f571b9436b2051ac75f",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE gitguardian.incident.severity IN (\"critical\", \"high\")\n| STATS count = COUNT(*) BY gitguardian.incident.detector.display_name\n| SORT count DESC\n| LIMIT 5"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "gridlinesVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "hideEndzones": true,
+                                "labelsOrientation": {
+                                    "x": 0,
+                                    "yLeft": 0,
+                                    "yRight": 0
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "maxLines": 1,
+                                    "position": "bottom"
+                                },
+                                "minBarHeight": 1,
+                                "preferredSeriesType": "bar_horizontal",
+                                "showCurrentTimeMarker": false,
+                                "tickLabelsVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "valueLabels": "hide",
+                                "xExtent": {
+                                    "mode": "dataBounds",
+                                    "niceValues": false
+                                },
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                },
+                                "yLeftScale": "linear"
+                            }
+                        },
+                        "title": "Top 5 Data Sources by Critical/High Severity Incident Count",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Top 5 Data Sources by Critical/High Severity Incident Count"
+                },
+                "gridData": {
+                    "h": 11,
+                    "i": "fe344ac6-801a-4e87-98da-53388968c3a9",
+                    "sectionId": "1d5b9d6c-2e89-4cd5-bb80-3b0af4b43e1e",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "fe344ac6-801a-4e87-98da-53388968c3a9",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                    "name": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_x",
+                                                    "fieldName": "week",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "count",
+                                                    "label": "Critical Incidents",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                            "query": {
+                                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| WHERE gitguardian.incident.severity == \"critical\"\n| STATS count = COUNT(*) BY week = BUCKET(@timestamp, 1 week)\n| SORT week ASC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| WHERE gitguardian.incident.severity == \"critical\"\n| STATS count = COUNT(*) BY week = BUCKET(@timestamp, 1 week)\n| SORT week ASC"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "curveType": "LINEAR",
+                                "gridlinesVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "hideEndzones": true,
+                                "labelsOrientation": {
+                                    "x": 0,
+                                    "yLeft": 0,
+                                    "yRight": 0
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_y_0"
+                                        ],
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "xAccessor": "line_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "maxLines": 1,
+                                    "position": "bottom"
+                                },
+                                "pointVisibility": "auto",
+                                "preferredSeriesType": "line",
+                                "showCurrentTimeMarker": false,
+                                "tickLabelsVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "xExtent": {
+                                    "mode": "dataBounds",
+                                    "niceValues": false
+                                },
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                },
+                                "yLeftScale": "linear"
+                            }
+                        },
+                        "title": "Critical Severity Incidents per Week",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Critical Severity Incidents per Week"
+                },
+                "gridData": {
+                    "h": 11,
+                    "i": "b905212a-d6a2-4c96-b618-755244a45c47",
+                    "sectionId": "085ad684-dcc5-4524-adb0-8f2a2cf2f4c1",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "b905212a-d6a2-4c96-b618-755244a45c47",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-1fe5f51b6f93df3a9b7f773a510282959b378358d0a1ca82fe6c97e4a31c3582": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-1fe5f51b6f93df3a9b7f773a510282959b378358d0a1ca82fe6c97e4a31c3582",
+                                    "name": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "gitguardian.incident.detector.display_name",
+                                                    "label": "Secret Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "count",
+                                                    "label": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-1fe5f51b6f93df3a9b7f773a510282959b378358d0a1ca82fe6c97e4a31c3582",
+                                            "query": {
+                                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| STATS count = COUNT(*) BY gitguardian.incident.detector.display_name\n| SORT count DESC\n| LIMIT 5"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-1fe5f51b6f93df3a9b7f773a510282959b378358d0a1ca82fe6c97e4a31c3582",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| STATS count = COUNT(*) BY gitguardian.incident.detector.display_name\n| SORT count DESC\n| LIMIT 5"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "gridlinesVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "hideEndzones": true,
+                                "labelsOrientation": {
+                                    "x": 0,
+                                    "yLeft": 0,
+                                    "yRight": 0
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "maxLines": 1,
+                                    "position": "bottom"
+                                },
+                                "minBarHeight": 1,
+                                "preferredSeriesType": "bar_horizontal",
+                                "showCurrentTimeMarker": false,
+                                "tickLabelsVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "valueLabels": "hide",
+                                "xExtent": {
+                                    "mode": "dataBounds",
+                                    "niceValues": false
+                                },
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                },
+                                "yLeftScale": "linear"
+                            }
+                        },
+                        "title": "Top 5 Secret Types by Total Count",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Top 5 Secret Types by Total Count"
+                },
+                "gridData": {
+                    "h": 11,
+                    "i": "272c33ec-a9b7-43a0-b1f9-daaf03af958d",
+                    "sectionId": "085ad684-dcc5-4524-adb0-8f2a2cf2f4c1",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "272c33ec-a9b7-43a0-b1f9-daaf03af958d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-87cf0aa194549991654530d545814f7490709407b1c6742f0734da3863c74e94": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-87cf0aa194549991654530d545814f7490709407b1c6742f0734da3863c74e94",
+                                    "name": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "week",
+                                                    "label": "Week",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "median_remediation_days",
+                                                    "label": "Median Remediation Days",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-87cf0aa194549991654530d545814f7490709407b1c6742f0734da3863c74e94",
+                                            "query": {
+                                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE gitguardian.incident.severity == \"critical\"\n  AND gitguardian.incident.status == \"RESOLVED\"\n| EVAL triggered_at_dt = TO_DATETIME(gitguardian.incident.triggered_at)\n| EVAL remediation_days = DATE_DIFF(\"day\", triggered_at_dt, @timestamp)\n| STATS median_remediation_days = MEDIAN(remediation_days) BY week = BUCKET(@timestamp, 1 week)\n| SORT week"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-87cf0aa194549991654530d545814f7490709407b1c6742f0734da3863c74e94",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE gitguardian.incident.severity == \"critical\"\n  AND gitguardian.incident.status == \"RESOLVED\"\n| EVAL triggered_at_dt = TO_DATETIME(gitguardian.incident.triggered_at)\n| EVAL remediation_days = DATE_DIFF(\"day\", triggered_at_dt, @timestamp)\n| STATS median_remediation_days = MEDIAN(remediation_days) BY week = BUCKET(@timestamp, 1 week)\n| SORT week"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "curveType": "CURVE_MONOTONE_X",
+                                "gridlinesVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "hideEndzones": true,
+                                "labelsOrientation": {
+                                    "x": 0,
+                                    "yLeft": 0,
+                                    "yRight": 0
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_y_0"
+                                        ],
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "xAccessor": "line_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "maxLines": 1,
+                                    "position": "bottom"
+                                },
+                                "pointVisibility": "always",
+                                "preferredSeriesType": "line",
+                                "showCurrentTimeMarker": false,
+                                "tickLabelsVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "xExtent": {
+                                    "mode": "dataBounds",
+                                    "niceValues": false
+                                },
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                },
+                                "yLeftScale": "linear"
+                            }
+                        },
+                        "title": "Median Time to Remediate Critical Incidents (Days) per Week",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Median Time to Remediate Critical Incidents (Days) per Week"
+                },
+                "gridData": {
+                    "h": 11,
+                    "i": "80318fe6-c012-4fec-9048-8009919adda9",
+                    "sectionId": "6a25b70d-29b2-4aee-b39e-69f80b6ae68d",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "80318fe6-c012-4fec-9048-8009919adda9",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-fae5a3224d840d249edb3b09f36125cfd96f021e3473f9b50209b64cc3a4da82": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-fae5a3224d840d249edb3b09f36125cfd96f021e3473f9b50209b64cc3a4da82",
+                                    "name": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "gitguardian.incident.id",
+                                                    "label": "Incident ID",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "gitguardian.incident.incident_name",
+                                                    "label": "Incident Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "gitguardian.incident.severity",
+                                                    "label": "Severity",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "gitguardian.incident.detector.display_name",
+                                                    "label": "Detector",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_4",
+                                                    "customLabel": true,
+                                                    "fieldName": "gitguardian.incident.triggered_at",
+                                                    "label": "Triggered At",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_5",
+                                                    "customLabel": true,
+                                                    "fieldName": "@timestamp",
+                                                    "label": "Resolved At",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "gitguardian.incident.id",
+                                                    "inMetricDimension": true,
+                                                    "label": "Incident ID",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-fae5a3224d840d249edb3b09f36125cfd96f021e3473f9b50209b64cc3a4da82",
+                                            "query": {
+                                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE gitguardian.incident.status == \"RESOLVED\"\n| KEEP gitguardian.incident.id, gitguardian.incident.incident_name, gitguardian.incident.severity, gitguardian.incident.detector.display_name, gitguardian.incident.triggered_at, @timestamp\n| SORT @timestamp DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-fae5a3224d840d249edb3b09f36125cfd96f021e3473f9b50209b64cc3a4da82",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM .ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001\n| WHERE gitguardian.incident.status == \"RESOLVED\"\n| KEEP gitguardian.incident.id, gitguardian.incident.incident_name, gitguardian.incident.severity, gitguardian.incident.detector.display_name, gitguardian.incident.triggered_at, @timestamp\n| SORT @timestamp DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "center",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_3",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_4",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_5",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": true,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "compact",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "paging": {
+                                    "enabled": true,
+                                    "size": 20
+                                },
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_row_4",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Resolved GitGuardian Incidents (Most Recent First)",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "title": "Resolved GitGuardian Incidents (Most Recent First)"
+                },
+                "gridData": {
+                    "h": 11,
+                    "i": "af85ddb2-d752-4e79-8768-a08ae2d1d1c1",
+                    "sectionId": "6a25b70d-29b2-4aee-b39e-69f80b6ae68d",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "af85ddb2-d752-4e79-8768-a08ae2d1d1c1",
+                "type": "vis"
+            }
+        ],
+        "refreshInterval": {
+            "pause": true,
+            "value": 0
+        },
+        "sections": [
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "1d5b9d6c-2e89-4cd5-bb80-3b0af4b43e1e",
+                    "y": 6
+                },
+                "title": "🛡️ Protect"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "085ad684-dcc5-4524-adb0-8f2a2cf2f4c1",
+                    "y": 7
+                },
+                "title": "🔍 Detect"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "6a25b70d-29b2-4aee-b39e-69f80b6ae68d",
+                    "y": 8
+                },
+                "title": "🔧 Remediate"
+            }
+        ],
+        "timeFrom": "now-1M/d",
+        "timeRestore": true,
+        "timeTo": "now",
+        "title": "GitGuardian Secret Alerts - Security Overview"
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2026-07-02T14:54:33.372Z",
+    "created_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0",
+    "id": "gitguardian-77dafd82-1fb7-48a1-b7cd-5aa915af35bc",
+    "references": [
+        {
+            "id": ".ds-logs-gitguardian.internal_secret_alert-default-2026.07.02-000001-@timestamp",
+            "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+            "type": "index-pattern"
+        }
+    ],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+}

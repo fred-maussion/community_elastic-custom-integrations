@@ -1,9 +1,10 @@
 bind9/.DS_Store
 .DS_Store
 build_old/
-build/
+/build/
 fortinet*
 Notes.md
+notes.md
 Gitlab-runner issue
 step2*
 step1*

@@ -1,0 +1,86 @@
+title: Collect GitGuardian Alert Secrets Incidents
+type: logs
+streams:
+  - input: cel
+    title: Collect Secrets Incidents via API
+    description: Collect secrets incidents from the GitGuardian API using the CEL input.
+    enabled: true
+    template_path: cel.yml.hbs
+    vars:
+      - name: condition
+        type: text
+        title: Condition
+        description: Condition to filter when to collect this input. See [Dynamic Input Configuration](https://www.elastic.co/guide/en/fleet/current/dynamic-input-configuration.html) for details.
+      - name: data_stream.dataset
+        type: text
+        title: Dataset name
+        description: Dataset to write data to. Changing the dataset will send the data to a different index.
+        required: true
+        show_user: true
+        default: gitguardian.internal_secret_alert
+      - name: url
+        type: text
+        title: Resource URL
+        description: The base URL for the GitGuardian API (e.g., https://api.gitguardian.com/v1).
+        required: true
+        show_user: true
+        default: https://api.gitguardian.com/v1
+      - name: api_key
+        type: password
+        title: GitGuardian API Key
+        description: Your GitGuardian API Key. It will be used in the Authorization header as 'Token <API_KEY>'.
+        required: true
+        secret: true
+        show_user: true
+      - name: interval
+        type: text
+        title: Polling Interval
+        description: How often the API is polled (supports seconds, minutes, and hours).
+        required: true
+        show_user: true
+        default: 1m
+      - name: batch_size
+        type: integer
+        title: Batch Size (Incidents per Request)
+        description: The number of incidents to fetch in each API request (GitGuardian 'per_page' limit). Max 100.
+        required: true
+        show_user: true
+        default: 50
+      - name: preserve_original_event
+        type: bool
+        title: Preserve original event
+        description: Preserves a raw copy of the original event, added to the field `event.original`.
+        default: false
+        show_user: true
+        required: true
+      - name: enable_request_tracer
+        type: bool
+        title: Enable request tracing
+        description: Enables HTTP request/response logging for debugging. **Compromises security and should only be used temporarily.**
+        default: false
+      - name: ssl
+        type: yaml
+        title: SSL Configuration
+        description: SSL configuration for the HTTP client.
+      - name: http_client_timeout
+        type: text
+        title: HTTP Client Timeout
+        description: Duration before the HTTP client connection times out. Default is "30s".
+      - name: proxy_url
+        type: text
+        title: Resource Proxy URL
+        description: Proxy configuration (e.g., http[s]://<user>:<password>@<server>:<port>).
+      - name: proxy_headers
+        type: yaml
+        title: Resource Proxy Headers
+        description: Additional headers to send to the proxy.
+      - name: processors
+        type: yaml
+        title: Processors
+        description: Processors to reduce or enhance the exported event. Executes in the agent before parsing.
+      - name: tags
+        type: text
+        title: Tags
+        multi: true
+        default:
+          - forwarded
