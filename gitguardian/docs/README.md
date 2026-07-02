@@ -57,6 +57,9 @@ for forensic investigation and code attribution.
 - Correlate GitGuardian findings with other security signals using ECS-mapped fields
   (`event.kind: alert`, `event.category: [intrusion_detection, vulnerability]`).
 - Use `vulnerability.severity` to prioritize remediation efforts.
+- Build user entity profiles and risk scores in Elastic Entity Analytics from commit author
+  identities (`audit_log`, `secret_occurrence`) and secret-detection alerts
+  (`internal_secret_alert`, `honeytoken_event`).
 
 ### Elastic Security alerting
 
@@ -71,11 +74,49 @@ Once enabled, every GitGuardian incident that arrives will automatically appear 
 in the Security Alerts view, enriched with the ECS fields mapped by this integration
 (`rule.name`, `vulnerability.severity`, `event.url`, etc.).
 
+### Elastic Entity Analytics
+
+This integration is designed for use with **Elastic Entity Analytics**. Different data streams
+contribute to Entity Analytics in distinct ways:
+
+| Data stream | `event.kind` | Entity Store contribution | Risk Score contribution |
+|---|---|---|---|
+| `audit_log` | `event` | User entity profiles (actor identity) | No |
+| `secret_occurrence` | `event` | User entity profiles (commit author identity) | No |
+| `internal_secret_alert` | `alert` | No | Yes |
+| `honeytoken_event` | `alert` | No | Yes |
+
+**How this works:**
+
+- The Entity Store builds user profiles from documents with `event.kind: event`. Both `audit_log`
+  (actor `user.name` / `user.email`) and `secret_occurrence` (commit author `user.name` /
+  `user.email`) contribute user entity records. The Entity Store uses `user.name` as the primary
+  key and `user.email` for cross-stream entity resolution. Both streams use the author's email
+  address as `user.name`, which ensures consistent resolution across sources.
+
+- Risk Score is driven by documents with `event.kind: alert`. `internal_secret_alert` and
+  `honeytoken_event` generate risk signals but carry no user identity — they represent
+  security findings, not user actions.
+
+**Critical:** if you enable `internal_secret_alert` without `secret_occurrence`, detected secrets
+generate risk alerts with no user attribution in the Entity Store. The commit author who
+introduced the secret is only available in `secret_occurrence`. Enable both data streams together
+to link risk signals to user entities:
+
+```
+secret_occurrence  →  user entity (who committed the secret)
+internal_secret_alert  →  risk score (how serious the finding is)
+Entity Analytics  →  joins them: "user X has Y active secrets, risk score Z"
+```
+
+For Entity Analytics to function correctly, Elastic recommends enabling at least `audit_log` and
+`secret_occurrence` alongside `internal_secret_alert`.
+
 ## What do I need to use this integration?
 
 - A GitGuardian account (Business or Enterprise plan recommended for full API access).
 - A GitGuardian API token with the appropriate scopes:
-  - `incidents:read` — required for the `internal_secret_alert` data stream.
+  - `incidents:read` — required for the `internal_secret_alert` and `secret_occurrence` data streams.
   - `audit_logs:read` — required for the `audit_log` data stream.
   - `honeytokens:read` — required for the `honeytoken_event` data stream.
 - Elastic Agent deployed on a host with network access to `https://api.gitguardian.com`.
