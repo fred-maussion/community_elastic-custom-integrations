@@ -1,10 +1,10 @@
 format_version: 3.5.2
 name: gitguardian
 title: "GitGuardian"
-version: 1.0.0
+version: 2.0.0
 source:
   license: "Apache-2.0"
-description: "Collect secrets incidents from the GitGuardian API."
+description: "Collect secrets incidents and audit logs from the GitGuardian API."
 type: integration
 categories:
   - security
@@ -23,7 +23,6 @@ screenshots:
     size: 600x600
     type: image/png
 icons:
-  # Placeholder: use a specific GitGuardian logo if available
   - src: /img/gitguardian-logo.svg
     title: GitGuardian
     size: 32x32
@@ -31,10 +30,10 @@ icons:
 policy_templates:
   - name: gitguardian
     title: GitGuardian
-    description: Collect incidents from GitGuardian.
+    description: Collect incidents and audit logs from GitGuardian.
     inputs:
       - type: cel
-        title: Collect Secrets Incidents via API
+        title: Collect Audit Logs & Secrets Incidents via API
         description: Collecting secrets incidents from the GitGuardian API.
 owner:
   github: fred-maussion

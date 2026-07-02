@@ -1,0 +1,72 @@
+{
+    "@timestamp": "2024-11-18T10:00:05.007Z",
+    "data_stream": {
+        "dataset": "gitguardian.audit_log",
+        "namespace": "default",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "event": {
+        "action": "personal_access_token.created",
+        "category": [
+            "iam"
+        ],
+        "dataset": "gitguardian.audit_log",
+        "ingested": "2024-11-18T10:00:38Z",
+        "kind": "event",
+        "provider": "GitGuardian",
+        "type": [
+            "creation"
+        ]
+    },
+    "gitguardian": {
+        "audit_log": {
+            "action_type": "CREATE",
+            "data": {
+                "expire_at": "2024-11-25T10:00:00.000000+00:00",
+                "scopes": "incidents:read"
+            },
+            "date": "2024-11-18T10:00:05.007Z",
+            "event_name": "personal_access_token.created",
+            "id": "10000001",
+            "member_email": "john.smith@example.com",
+            "member_id": "100001",
+            "member_name": "John Smith",
+            "target_ids": [
+                "fdf075f9-1662-4cf1-9171-af50568158a8"
+            ]
+        }
+    },
+    "source": {
+        "as": {
+            "number": 64496,
+            "organization": {
+                "name": "Example ISP"
+            }
+        },
+        "geo": {
+            "city_name": "London",
+            "continent_name": "Europe",
+            "country_iso_code": "GB",
+            "country_name": "United Kingdom",
+            "location": {
+                "lat": 51.5074,
+                "lon": -0.1278
+            },
+            "region_iso_code": "GB-ENG",
+            "region_name": "England"
+        },
+        "ip": "198.51.100.42"
+    },
+    "tags": [
+        "forwarded"
+    ],
+    "user": {
+        "email": "john.smith@example.com",
+        "full_name": "John Smith",
+        "id": "100001",
+        "name": "john.smith@example.com"
+    }
+}

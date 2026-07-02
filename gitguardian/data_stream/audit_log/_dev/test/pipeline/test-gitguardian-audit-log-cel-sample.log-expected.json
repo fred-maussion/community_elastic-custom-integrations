@@ -1,0 +1,113 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2024-11-18T10:00:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "user.logged_in",
+                "category": [
+                    "iam"
+                ],
+                "kind": "event",
+                "provider": "GitGuardian",
+                "type": [
+                    "info"
+                ]
+            },
+            "gitguardian": {
+                "audit_log": {
+                    "action_type": "READ",
+                    "data": {
+                        "type": "password"
+                    },
+                    "date": "2024-11-18T10:00:00Z",
+                    "event_name": "user.logged_in",
+                    "id": "1001",
+                    "member_email": "john.smith@example.com",
+                    "member_id": "1243",
+                    "member_name": "John Smith",
+                    "target_ids": []
+                }
+            },
+            "source": {
+                "ip": "198.51.100.42"
+            },
+            "user": {
+                "email": "john.smith@example.com",
+                "full_name": "John Smith",
+                "id": "1243",
+                "name": "john.smith@example.com"
+            }
+        },
+        {
+            "@timestamp": "2024-11-18T10:05:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "incident.resolved",
+                "category": [
+                    "iam"
+                ],
+                "kind": "event",
+                "provider": "GitGuardian",
+                "type": [
+                    "change"
+                ]
+            },
+            "gitguardian": {
+                "audit_log": {
+                    "action_type": "UPDATE",
+                    "api_token_id": "fdf075f9-1662-4cf1-9171-af50568158a8",
+                    "date": "2024-11-18T10:05:00Z",
+                    "event_name": "incident.resolved",
+                    "id": "1002",
+                    "member_email": "john.smith@example.com",
+                    "member_id": "1243",
+                    "member_name": "John Smith",
+                    "target_ids": [
+                        "12345678"
+                    ]
+                }
+            },
+            "source": {
+                "ip": "198.51.100.42"
+            },
+            "user": {
+                "email": "john.smith@example.com",
+                "full_name": "John Smith",
+                "id": "1243",
+                "name": "john.smith@example.com"
+            }
+        },
+        {
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "member.created",
+                "category": [
+                    "iam"
+                ],
+                "kind": "event",
+                "provider": "GitGuardian",
+                "type": [
+                    "creation"
+                ]
+            },
+            "gitguardian": {
+                "audit_log": {
+                    "action_type": "CREATE",
+                    "api_token_id": "fdf075f9-1662-4cf1-9171-af50568158a8",
+                    "event_name": "member.created",
+                    "id": "1003",
+                    "target_ids": [
+                        "5678"
+                    ]
+                }
+            }
+        }
+    ]
+}
