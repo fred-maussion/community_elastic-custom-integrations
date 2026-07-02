@@ -1,0 +1,66 @@
+{
+    "@timestamp": "2024-11-18T10:00:00.000Z",
+    "data_stream": {
+        "dataset": "gitguardian.secret_occurrence",
+        "namespace": "default",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "event": {
+        "category": [
+            "vulnerability"
+        ],
+        "dataset": "gitguardian.secret_occurrence",
+        "ingested": "2024-11-18T10:00:38Z",
+        "kind": "event",
+        "provider": "GitGuardian",
+        "type": [
+            "info"
+        ],
+        "url": "https://github.com/example-org/example-repo/commit/a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2#diff-0001R1"
+    },
+    "file": {
+        "path": "config/settings.py"
+    },
+    "gitguardian": {
+        "secret_occurrence": {
+            "author_info": "john.smith@example.com",
+            "author_name": "John Smith",
+            "date": "2024-11-18T10:00:00Z",
+            "filepath": "config/settings.py",
+            "id": "4421",
+            "incident_id": "3759",
+            "kind": "realtime",
+            "matches": [
+                {
+                    "indice_end": 64,
+                    "indice_start": 32,
+                    "name": "apikey"
+                }
+            ],
+            "presence": "present",
+            "sha": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+            "source": {
+                "full_name": "example-org/example-repo",
+                "health": "at_risk",
+                "id": "6531",
+                "type": "github",
+                "url": "https://github.com/example-org/example-repo"
+            },
+            "tags": [
+                "DEFAULT_BRANCH"
+            ],
+            "url": "https://github.com/example-org/example-repo/commit/a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2#diff-0001R1"
+        }
+    },
+    "tags": [
+        "forwarded"
+    ],
+    "user": {
+        "email": "john.smith@example.com",
+        "full_name": "John Smith",
+        "name": "john.smith@example.com"
+    }
+}
