@@ -1,0 +1,30 @@
+- name: gitguardian
+  type: group
+  fields:
+    - name: honeytoken_event
+      type: group
+      fields:
+        - name: id
+          type: keyword
+          description: Unique identifier for the honeytoken event.
+        - name: honeytoken_id
+          type: keyword
+          description: ID of the honeytoken that was triggered.
+        - name: triggered_at
+          type: date
+          description: Timestamp when the honeytoken was triggered.
+        - name: status
+          type: keyword
+          description: Status of the honeytoken event (e.g., triggered).
+        - name: action
+          type: keyword
+          description: The action performed through the honeytoken (e.g., GetCallerIdentity, list_repositories).
+        - name: gitguardian_url
+          type: keyword
+          description: URL to the honeytoken event in the GitGuardian dashboard.
+        - name: data
+          type: flattened
+          description: Additional data related to the event. Structure varies by honeytoken type.
+        - name: tags
+          type: keyword
+          description: Custom tags applied to the honeytoken event.

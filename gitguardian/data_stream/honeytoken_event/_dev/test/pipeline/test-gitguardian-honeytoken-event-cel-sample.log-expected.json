@@ -1,0 +1,105 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2024-11-18T10:00:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "GetCallerIdentity",
+                "category": [
+                    "intrusion_detection"
+                ],
+                "kind": "alert",
+                "provider": "GitGuardian",
+                "type": [
+                    "info"
+                ],
+                "url": "https://dashboard.gitguardian.com/honeytokens/events/ht-evt-0001"
+            },
+            "gitguardian": {
+                "honeytoken_event": {
+                    "action": "GetCallerIdentity",
+                    "data": {
+                        "account_id": "123456789012",
+                        "arn": "arn:aws:iam::123456789012:user/example-user",
+                        "user_id": "AIDAEXAMPLEID"
+                    },
+                    "gitguardian_url": "https://dashboard.gitguardian.com/honeytokens/events/ht-evt-0001",
+                    "honeytoken_id": "ht-0001",
+                    "id": "ht-evt-0001",
+                    "status": "triggered",
+                    "tags": [
+                        "prod",
+                        "aws"
+                    ],
+                    "triggered_at": "2024-11-18T10:00:00Z"
+                }
+            },
+            "source": {
+                "ip": "198.51.100.42"
+            }
+        },
+        {
+            "@timestamp": "2024-11-18T11:30:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "list_repositories",
+                "category": [
+                    "intrusion_detection"
+                ],
+                "kind": "alert",
+                "provider": "GitGuardian",
+                "type": [
+                    "info"
+                ],
+                "url": "https://dashboard.gitguardian.com/honeytokens/events/ht-evt-0002"
+            },
+            "gitguardian": {
+                "honeytoken_event": {
+                    "action": "list_repositories",
+                    "data": {
+                        "login": "example-attacker"
+                    },
+                    "gitguardian_url": "https://dashboard.gitguardian.com/honeytokens/events/ht-evt-0002",
+                    "honeytoken_id": "ht-0002",
+                    "id": "ht-evt-0002",
+                    "status": "triggered",
+                    "triggered_at": "2024-11-18T11:30:00Z"
+                }
+            }
+        },
+        {
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "GetCallerIdentity",
+                "category": [
+                    "intrusion_detection"
+                ],
+                "kind": "alert",
+                "provider": "GitGuardian",
+                "type": [
+                    "info"
+                ]
+            },
+            "gitguardian": {
+                "honeytoken_event": {
+                    "action": "GetCallerIdentity",
+                    "honeytoken_id": "ht-0003",
+                    "id": "ht-evt-0003",
+                    "status": "triggered",
+                    "tags": [
+                        "staging"
+                    ]
+                }
+            },
+            "source": {
+                "ip": "198.51.100.99"
+            }
+        }
+    ]
+}

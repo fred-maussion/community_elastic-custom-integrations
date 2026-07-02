@@ -40,6 +40,11 @@ type, severity, status, and a link to the incident in the GitGuardian dashboard.
 in the GitGuardian workspace — such as logins, token creation, incident resolution, or member
 management — and includes the actor's identity, IP address, and the type of action performed.
 
+**Honeytoken events** (`honeytoken_event`): Each entry represents a trigger event on a planted
+decoy credential (AWS key, GitHub PAT, etc.) — meaning the honeytoken was found and actively
+used by an attacker. Ingested as `event.kind: alert` with `event.category: [intrusion_detection]`,
+with GeoIP enrichment on the attacker's IP address.
+
 ### Supported use cases
 
 - Alert on newly detected secrets exposures via Kibana alerting rules.
@@ -67,6 +72,7 @@ in the Security Alerts view, enriched with the ECS fields mapped by this integra
 - A GitGuardian API token with the appropriate scopes:
   - `incidents:read` — required for the `internal_secret_alert` data stream.
   - `audit_logs:read` — required for the `audit_log` data stream.
+  - `honeytokens:read` — required for the `honeytoken_event` data stream.
 - Elastic Agent deployed on a host with network access to `https://api.gitguardian.com`.
 
 ## How do I deploy this integration?
@@ -416,6 +422,128 @@ An example event for `audit_log` looks as following:
 }
 ```
 
+### Honeytoken Event data stream
+
+The `honeytoken_event` data stream collects trigger events from planted decoy credentials in the
+GitGuardian workspace. Each event signals that an attacker found and actively used a honeytoken,
+mapped to ECS with `event.kind: alert`, `event.category: [intrusion_detection]`, and GeoIP
+enrichment on the attacker's source IP. Requires the `honeytokens:read` API scope.
+
+#### honeytoken_event fields
+
+**Exported fields**
+
+| Field | Description | Type |
+|---|---|---|
+| @timestamp | Event timestamp. | date |
+| data_stream.dataset | Data stream dataset. | constant_keyword |
+| data_stream.namespace | Data stream namespace. | constant_keyword |
+| data_stream.type | Data stream type. | constant_keyword |
+| error.message | Error message. | match_only_text |
+| event.action | The action captured by the event. This describes the information in the event. It is more specific than `event.category`. Examples are `group-add`, `process-started`, `file-created`. The value is normally defined by the implementer. | keyword |
+| event.category | This is one of four ECS Categorization Fields, and indicates the second level in the ECS category hierarchy. `event.category` represents the "big buckets" of ECS categories. For example, filtering on `event.category:process` yields all events relating to process activity. This field is closely related to `event.type`, which is used as a subcategory. This field is an array. This will allow proper categorization of some events that fall in multiple categories. | keyword |
+| event.dataset | Event dataset. | constant_keyword |
+| event.kind | This is one of four ECS Categorization Fields, and indicates the highest level in the ECS category hierarchy. `event.kind` gives high-level information about what type of information the event contains, without being specific to the contents of the event. For example, values of this field distinguish alert events from metric events. The value of this field can be used to inform how these kinds of events should be handled. They may warrant different retention, different access control, it may also help understand whether the data is coming in at a regular interval or not. | keyword |
+| event.module | Event module. | constant_keyword |
+| event.provider | Source of the event. Event transports such as Syslog or the Windows Event Log typically mention the source of an event. It can be the name of the software that generated the event (e.g. Sysmon, httpd), or of a subsystem of the operating system (kernel, Microsoft-Windows-Security-Auditing). | keyword |
+| event.type | This is one of four ECS Categorization Fields, and indicates the third level in the ECS category hierarchy. `event.type` represents a categorization "sub-bucket" that, when used along with the `event.category` field values, enables filtering events down to a level appropriate for single visualization. This field is an array. This will allow proper categorization of some events that fall in multiple event types. | keyword |
+| event.url | URL linking to an external system to continue investigation of this event. This URL links to another system where in-depth investigation of the specific occurrence of this event can take place. Alert events, indicated by `event.kind:alert`, are a common use case for this field. | keyword |
+| gitguardian.honeytoken_event.action | The action performed through the honeytoken (e.g., GetCallerIdentity, list_repositories). | keyword |
+| gitguardian.honeytoken_event.data | Additional data related to the event. Structure varies by honeytoken type. | flattened |
+| gitguardian.honeytoken_event.gitguardian_url | URL to the honeytoken event in the GitGuardian dashboard. | keyword |
+| gitguardian.honeytoken_event.honeytoken_id | ID of the honeytoken that was triggered. | keyword |
+| gitguardian.honeytoken_event.id | Unique identifier for the honeytoken event. | keyword |
+| gitguardian.honeytoken_event.status | Status of the honeytoken event (e.g., triggered). | keyword |
+| gitguardian.honeytoken_event.tags | Custom tags applied to the honeytoken event. | keyword |
+| gitguardian.honeytoken_event.triggered_at | Timestamp when the honeytoken was triggered. | date |
+| source.as.number | Unique number allocated to the autonomous system. The autonomous system number (ASN) uniquely identifies each network on the Internet. | long |
+| source.as.organization.name | Organization name. | keyword |
+| source.as.organization.name.text | Multi-field of `source.as.organization.name`. | match_only_text |
+| source.geo.city_name | City name. | keyword |
+| source.geo.continent_name | Name of the continent. | keyword |
+| source.geo.country_iso_code | Country ISO code. | keyword |
+| source.geo.country_name | Country name. | keyword |
+| source.geo.location | Longitude and latitude. | geo_point |
+| source.geo.region_iso_code | Region ISO code. | keyword |
+| source.geo.region_name | Region name. | keyword |
+| source.ip | IP address of the source (IPv4 or IPv6). | ip |
+| tags | List of keywords used to tag each event. | keyword |
+
+
+#### Sample event
+
+An example event for `honeytoken_event` looks as following:
+
+```json
+{
+    "@timestamp": "2024-11-18T10:00:00.000Z",
+    "data_stream": {
+        "dataset": "gitguardian.honeytoken_event",
+        "namespace": "default",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "event": {
+        "action": "GetCallerIdentity",
+        "category": [
+            "intrusion_detection"
+        ],
+        "dataset": "gitguardian.honeytoken_event",
+        "ingested": "2024-11-18T10:00:38Z",
+        "kind": "alert",
+        "provider": "GitGuardian",
+        "type": [
+            "info"
+        ],
+        "url": "https://dashboard.gitguardian.com/honeytokens/events/ht-evt-0001"
+    },
+    "gitguardian": {
+        "honeytoken_event": {
+            "action": "GetCallerIdentity",
+            "data": {
+                "account_id": "123456789012",
+                "arn": "arn:aws:iam::123456789012:user/example-user",
+                "user_id": "AIDAEXAMPLEID"
+            },
+            "honeytoken_id": "ht-0001",
+            "id": "ht-evt-0001",
+            "status": "triggered",
+            "tags": [
+                "prod",
+                "aws"
+            ],
+            "triggered_at": "2024-11-18T10:00:00.000Z"
+        }
+    },
+    "source": {
+        "as": {
+            "number": 64496,
+            "organization": {
+                "name": "Example ISP"
+            }
+        },
+        "geo": {
+            "city_name": "London",
+            "continent_name": "Europe",
+            "country_iso_code": "GB",
+            "country_name": "United Kingdom",
+            "location": {
+                "lat": 51.5074,
+                "lon": -0.1278
+            },
+            "region_iso_code": "GB-ENG",
+            "region_name": "England"
+        },
+        "ip": "198.51.100.42"
+    },
+    "tags": [
+        "forwarded"
+    ]
+}
+```
+
 ### Inputs used
 These inputs can be used with this integration:
 <details>
@@ -453,3 +581,5 @@ These APIs are used with this integration:
   the full response schema.
 - `GET /v1/audit_logs` — Fetches audit log entries, filtered by `date_after` cursor and
   paginated via `per_page`. Requires the `audit_logs:read` API scope.
+- `GET /v1/honeytokens_events` — Fetches honeytoken trigger events, ordered by `triggered_at`
+  and paginated via `per_page`. Requires the `honeytokens:read` API scope.
