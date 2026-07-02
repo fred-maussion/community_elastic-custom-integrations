@@ -1,0 +1,80 @@
+{
+    "@timestamp": "2024-11-18T10:00:00.000Z",
+    "data_stream": {
+        "dataset": "gitguardian.public_secret_alert",
+        "namespace": "default",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "event": {
+        "action": "TRIGGERED",
+        "agent_id_status": "verified",
+        "category": [
+            "intrusion_detection",
+            "vulnerability"
+        ],
+        "dataset": "gitguardian.public_secret_alert",
+        "ingested": "2024-11-18T10:00:45Z",
+        "kind": "alert",
+        "provider": "GitGuardian",
+        "type": [
+            "info"
+        ],
+        "url": "https://dashboard.gitguardian.com/workspace/100000/public-incidents/200001"
+    },
+    "gitguardian": {
+        "public_incident": {
+            "assignee_email": "john.smith@example.com",
+            "assignee_id": "42",
+            "date": "2024-11-18T10:05:00Z",
+            "detector": {
+                "category": "messaging_system",
+                "detector_group_display_name": "Slack Bot Token",
+                "detector_group_name": "slackbot_token",
+                "display_name": "Slack Bot Token",
+                "family": "token",
+                "name": "slack_bot_token",
+                "nature": "specific"
+            },
+            "feedback_list": [
+                {
+                    "created_at": "2024-11-18T10:02:00Z",
+                    "created_by": "community",
+                    "feedback": "real_secret"
+                }
+            ],
+            "hmsl_hash": "05975add34ddc9a38a0fb57c7d3e676ffed57080516fc16bf8d8f14308fedb86",
+            "id": "200001",
+            "incident_name": "Slack Bot Token",
+            "is_vaulted": false,
+            "occurrences_count": 3,
+            "risk_score": 87.5,
+            "secret_hash": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "secret_id": "500001",
+            "secret_revoked": false,
+            "severity": "critical",
+            "share_url": "https://dashboard.gitguardian.com/share/public-incidents/00000000-0000-0000-0000-000000000001",
+            "status": "TRIGGERED",
+            "tags": [
+                "DEFAULT_BRANCH"
+            ],
+            "triggered_at": "2024-11-18T10:00:00Z",
+            "validity": "valid"
+        }
+    },
+    "rule": {
+        "description": "Slack Bot Token",
+        "name": "slack_bot_token"
+    },
+    "tags": [
+        "forwarded"
+    ],
+    "vulnerability": {
+        "scanner": {
+            "vendor": "GitGuardian"
+        },
+        "severity": "critical"
+    }
+}

@@ -50,6 +50,12 @@ the exact commit, file path, branch, and author where a secret was found. While 
 tracks one document per incident (the grouped finding), occurrences give the granular detection layer
 for forensic investigation and code attribution.
 
+**Public secret alerts** (`public_secret_alert`): Each entry represents a secret incident detected on
+the **public internet** — GitHub public repositories, Pastebin, and similar public sources. The risk
+profile is categorically higher than `internal_secret_alert`: the secret is already publicly visible and
+may already be exploited. Ingested as `event.kind: alert` with `event.category: [intrusion_detection,
+vulnerability]`. Requires only the `incidents:read` scope — no additional token needed.
+
 ### Supported use cases
 
 - Alert on newly detected secrets exposures via Kibana alerting rules.
@@ -85,6 +91,7 @@ contribute to Entity Analytics in distinct ways:
 | `secret_occurrence` | `event` | User entity profiles (commit author identity) | No |
 | `internal_secret_alert` | `alert` | No | Yes |
 | `honeytoken_event` | `alert` | No | Yes |
+| `public_secret_alert` | `alert` | No | Yes |
 
 **How this works:**
 
@@ -116,7 +123,7 @@ For Entity Analytics to function correctly, Elastic recommends enabling at least
 
 - A GitGuardian account (Business or Enterprise plan recommended for full API access).
 - A GitGuardian API token with the appropriate scopes:
-  - `incidents:read` — required for the `internal_secret_alert` and `secret_occurrence` data streams.
+  - `incidents:read` — required for the `internal_secret_alert`, `secret_occurrence`, and `public_secret_alert` data streams.
   - `audit_logs:read` — required for the `audit_log` data stream.
   - `honeytokens:read` — required for the `honeytoken_event` data stream.
 - Elastic Agent deployed on a host with network access to `https://api.gitguardian.com`.
@@ -716,6 +723,167 @@ An example event for `secret_occurrence` looks as following:
 }
 ```
 
+### Public Secret Alert data stream
+
+The `public_secret_alert` data stream collects secrets incidents detected on the **public internet**
+— GitHub public repositories, Pastebin, and similar sources — via the GitGuardian API. Each alert
+represents a secret that is already publicly visible, making the risk categorically higher than an
+internal incident. Mapped to ECS with `event.kind: alert`, `event.category: [intrusion_detection,
+vulnerability]`, `rule.name` from the detector, and `vulnerability.severity` from the incident
+severity. Includes `feedback_list` (community validation) and `share_url` (public shareable link)
+where available. Requires only the `incidents:read` API scope.
+
+#### public_secret_alert fields
+
+**Exported fields**
+
+| Field | Description | Type |
+|---|---|---|
+| @timestamp | Event timestamp. | date |
+| data_stream.dataset | Data stream dataset. | constant_keyword |
+| data_stream.namespace | Data stream namespace. | constant_keyword |
+| data_stream.type | Data stream type. | constant_keyword |
+| error.message | Error message. | match_only_text |
+| event.action | The action captured by the event. This describes the information in the event. It is more specific than `event.category`. Examples are `group-add`, `process-started`, `file-created`. The value is normally defined by the implementer. | keyword |
+| event.category | This is one of four ECS Categorization Fields, and indicates the second level in the ECS category hierarchy. `event.category` represents the "big buckets" of ECS categories. For example, filtering on `event.category:process` yields all events relating to process activity. This field is closely related to `event.type`, which is used as a subcategory. This field is an array. This will allow proper categorization of some events that fall in multiple categories. | keyword |
+| event.dataset | Event dataset. | constant_keyword |
+| event.kind | This is one of four ECS Categorization Fields, and indicates the highest level in the ECS category hierarchy. `event.kind` gives high-level information about what type of information the event contains, without being specific to the contents of the event. For example, values of this field distinguish alert events from metric events. The value of this field can be used to inform how these kinds of events should be handled. They may warrant different retention, different access control, it may also help understand whether the data is coming in at a regular interval or not. | keyword |
+| event.module | Event module. | constant_keyword |
+| event.provider | Source of the event. Event transports such as Syslog or the Windows Event Log typically mention the source of an event. It can be the name of the software that generated the event (e.g. Sysmon, httpd), or of a subsystem of the operating system (kernel, Microsoft-Windows-Security-Auditing). | keyword |
+| event.type | This is one of four ECS Categorization Fields, and indicates the third level in the ECS category hierarchy. `event.type` represents a categorization "sub-bucket" that, when used along with the `event.category` field values, enables filtering events down to a level appropriate for single visualization. This field is an array. This will allow proper categorization of some events that fall in multiple event types. | keyword |
+| event.url | URL linking to an external system to continue investigation of this event. This URL links to another system where in-depth investigation of the specific occurrence of this event can take place. Alert events, indicated by `event.kind:alert`, are a common use case for this field. | keyword |
+| gitguardian.public_incident.assignee_email | Email of the assignee (nullable). | keyword |
+| gitguardian.public_incident.assignee_id | ID of the assignee (nullable, integer converted to string). | keyword |
+| gitguardian.public_incident.custom_tags | Custom tags associated with the incident. | keyword |
+| gitguardian.public_incident.date | Last update date of the incident. | date |
+| gitguardian.public_incident.declarative_secret_status | Declarative secret management status (nullable). | keyword |
+| gitguardian.public_incident.detector.category | Category of the detector. | keyword |
+| gitguardian.public_incident.detector.detector_group_display_name | Human-readable name of the detector group. | keyword |
+| gitguardian.public_incident.detector.detector_group_name | Internal name of the detector group. | keyword |
+| gitguardian.public_incident.detector.display_name | Human-readable name of the detector. | keyword |
+| gitguardian.public_incident.detector.family | Family classification of the detector. | keyword |
+| gitguardian.public_incident.detector.name | Internal name of the detector. | keyword |
+| gitguardian.public_incident.detector.nature | Nature of the detector (generic, specific). | keyword |
+| gitguardian.public_incident.feedback_list | Community feedback entries on whether the secret is real. | flattened |
+| gitguardian.public_incident.gitguardian_url | URL to the incident in the GitGuardian dashboard. | keyword |
+| gitguardian.public_incident.hmsl_hash | Hash used for HasMySecretLeaked checks. | keyword |
+| gitguardian.public_incident.id | Unique identifier for the public incident. | keyword |
+| gitguardian.public_incident.ignore_reason | Reason the incident was ignored (nullable). | keyword |
+| gitguardian.public_incident.ignored_at | Timestamp when the incident was ignored (nullable). | date |
+| gitguardian.public_incident.ignorer_api_token_id | UUID of the API token used to ignore the incident (nullable). | keyword |
+| gitguardian.public_incident.ignorer_id | ID of the user who ignored the incident (nullable, integer converted to string). | keyword |
+| gitguardian.public_incident.incident_name | Human-readable name of the incident. | keyword |
+| gitguardian.public_incident.is_vaulted | Whether the secret is stored in a vault. | boolean |
+| gitguardian.public_incident.occurrences_count | Number of public occurrences of the secret. | long |
+| gitguardian.public_incident.resolve_reason | Reason the incident was resolved (nullable). | keyword |
+| gitguardian.public_incident.resolved_at | Timestamp when the incident was resolved (nullable). | date |
+| gitguardian.public_incident.resolver_api_token_id | UUID of the API token used to resolve the incident (nullable). | keyword |
+| gitguardian.public_incident.resolver_id | ID of the user who resolved the incident (nullable, integer converted to string). | keyword |
+| gitguardian.public_incident.risk_score | Risk score assigned to the incident. | float |
+| gitguardian.public_incident.secret_hash | Hash of the detected secret. | keyword |
+| gitguardian.public_incident.secret_id | Unique identifier of the detected secret. | keyword |
+| gitguardian.public_incident.secret_revoked | Whether the detected secret has been revoked. | boolean |
+| gitguardian.public_incident.severity | Severity level (critical, high, medium, low, info, unknown). | keyword |
+| gitguardian.public_incident.severity_rule_id | ID of the severity rule applied (nullable). | keyword |
+| gitguardian.public_incident.share_url | Public shareable URL for the incident (nullable). | keyword |
+| gitguardian.public_incident.status | Status of the incident (IGNORED, TRIGGERED, ASSIGNED, RESOLVED). | keyword |
+| gitguardian.public_incident.tags | Tags associated with the incident. | keyword |
+| gitguardian.public_incident.triggered_at | Timestamp when the secret was first publicly detected. | date |
+| gitguardian.public_incident.validity | Validity status of the secret (valid, invalid, no_checker, unknown). | keyword |
+| rule.description | The description of the rule generating the event. | keyword |
+| rule.name | The name of the rule or signature generating the event. | keyword |
+| tags | List of keywords used to tag each event. | keyword |
+| vulnerability.scanner.vendor | The name of the vulnerability scanner vendor. | keyword |
+| vulnerability.severity | The severity of the vulnerability can help with metrics and internal prioritization regarding remediation. For example (https://nvd.nist.gov/vuln-metrics/cvss) | keyword |
+
+
+#### Sample event
+
+An example event for `public_secret_alert` looks as following:
+
+```json
+{
+    "@timestamp": "2024-11-18T10:00:00.000Z",
+    "data_stream": {
+        "dataset": "gitguardian.public_secret_alert",
+        "namespace": "default",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "event": {
+        "action": "TRIGGERED",
+        "agent_id_status": "verified",
+        "category": [
+            "intrusion_detection",
+            "vulnerability"
+        ],
+        "dataset": "gitguardian.public_secret_alert",
+        "ingested": "2024-11-18T10:00:45Z",
+        "kind": "alert",
+        "provider": "GitGuardian",
+        "type": [
+            "info"
+        ],
+        "url": "https://dashboard.gitguardian.com/workspace/100000/public-incidents/200001"
+    },
+    "gitguardian": {
+        "public_incident": {
+            "assignee_email": "john.smith@example.com",
+            "assignee_id": "42",
+            "date": "2024-11-18T10:05:00Z",
+            "detector": {
+                "category": "messaging_system",
+                "detector_group_display_name": "Slack Bot Token",
+                "detector_group_name": "slackbot_token",
+                "display_name": "Slack Bot Token",
+                "family": "token",
+                "name": "slack_bot_token",
+                "nature": "specific"
+            },
+            "feedback_list": [
+                {
+                    "created_at": "2024-11-18T10:02:00Z",
+                    "created_by": "community",
+                    "feedback": "real_secret"
+                }
+            ],
+            "hmsl_hash": "05975add34ddc9a38a0fb57c7d3e676ffed57080516fc16bf8d8f14308fedb86",
+            "id": "200001",
+            "incident_name": "Slack Bot Token",
+            "is_vaulted": false,
+            "occurrences_count": 3,
+            "risk_score": 87.5,
+            "secret_hash": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "secret_id": "500001",
+            "secret_revoked": false,
+            "severity": "critical",
+            "share_url": "https://dashboard.gitguardian.com/share/public-incidents/00000000-0000-0000-0000-000000000001",
+            "status": "TRIGGERED",
+            "tags": [
+                "DEFAULT_BRANCH"
+            ],
+            "triggered_at": "2024-11-18T10:00:00Z",
+            "validity": "valid"
+        }
+    },
+    "rule": {
+        "description": "Slack Bot Token",
+        "name": "slack_bot_token"
+    },
+    "tags": [
+        "forwarded"
+    ],
+    "vulnerability": {
+        "scanner": {
+            "vendor": "GitGuardian"
+        },
+        "severity": "critical"
+    }
+}
+```
+
 ### Inputs used
 These inputs can be used with this integration:
 <details>
@@ -757,3 +925,5 @@ These APIs are used with this integration:
   and paginated via `per_page`. Requires the `honeytokens:read` API scope.
 - `GET /v1/occurrences/secrets` — Fetches raw secret occurrence detections, ordered by `date`
   and paginated via `per_page`. Requires the `incidents:read` API scope.
+- `GET /v1/public-incidents/secrets` — Fetches publicly detected secrets incidents, filtered by
+  `date_after` cursor and paginated via `per_page`. Requires the `incidents:read` API scope.

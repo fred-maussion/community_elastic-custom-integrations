@@ -1,0 +1,123 @@
+- name: gitguardian
+  type: group
+  fields:
+    - name: public_incident
+      type: group
+      fields:
+        - name: id
+          type: keyword
+          description: Unique identifier for the public incident.
+        - name: secret_id
+          type: keyword
+          description: Unique identifier of the detected secret.
+        - name: status
+          type: keyword
+          description: Status of the incident (IGNORED, TRIGGERED, ASSIGNED, RESOLVED).
+        - name: date
+          type: date
+          description: Last update date of the incident.
+        - name: triggered_at
+          type: date
+          description: Timestamp when the secret was first publicly detected.
+        - name: ignored_at
+          type: date
+          description: Timestamp when the incident was ignored (nullable).
+        - name: resolved_at
+          type: date
+          description: Timestamp when the incident was resolved (nullable).
+        - name: severity
+          type: keyword
+          description: Severity level (critical, high, medium, low, info, unknown).
+        - name: validity
+          type: keyword
+          description: Validity status of the secret (valid, invalid, no_checker, unknown).
+        - name: secret_revoked
+          type: boolean
+          description: Whether the detected secret has been revoked.
+        - name: secret_hash
+          type: keyword
+          description: Hash of the detected secret.
+        - name: hmsl_hash
+          type: keyword
+          description: Hash used for HasMySecretLeaked checks.
+        - name: occurrences_count
+          type: long
+          description: Number of public occurrences of the secret.
+        - name: risk_score
+          type: float
+          description: Risk score assigned to the incident.
+        - name: incident_name
+          type: keyword
+          description: Human-readable name of the incident.
+        - name: ignore_reason
+          type: keyword
+          description: Reason the incident was ignored (nullable).
+        - name: resolve_reason
+          type: keyword
+          description: Reason the incident was resolved (nullable).
+        - name: assignee_id
+          type: keyword
+          description: ID of the assignee (nullable, integer converted to string).
+        - name: assignee_email
+          type: keyword
+          description: Email of the assignee (nullable).
+        - name: ignorer_id
+          type: keyword
+          description: ID of the user who ignored the incident (nullable, integer converted to string).
+        - name: ignorer_api_token_id
+          type: keyword
+          description: UUID of the API token used to ignore the incident (nullable).
+        - name: resolver_id
+          type: keyword
+          description: ID of the user who resolved the incident (nullable, integer converted to string).
+        - name: resolver_api_token_id
+          type: keyword
+          description: UUID of the API token used to resolve the incident (nullable).
+        - name: gitguardian_url
+          type: keyword
+          description: URL to the incident in the GitGuardian dashboard.
+        - name: share_url
+          type: keyword
+          description: Public shareable URL for the incident (nullable).
+        - name: tags
+          type: keyword
+          description: Tags associated with the incident.
+        - name: custom_tags
+          type: keyword
+          description: Custom tags associated with the incident.
+        - name: declarative_secret_status
+          type: keyword
+          description: Declarative secret management status (nullable).
+        - name: severity_rule_id
+          type: keyword
+          description: ID of the severity rule applied (nullable).
+        - name: is_vaulted
+          type: boolean
+          description: Whether the secret is stored in a vault.
+        - name: feedback_list
+          type: flattened
+          description: Community feedback entries on whether the secret is real.
+        - name: detector
+          type: group
+          fields:
+            - name: name
+              type: keyword
+              description: Internal name of the detector.
+            - name: display_name
+              type: keyword
+              description: Human-readable name of the detector.
+            - name: category
+              type: keyword
+              description: Category of the detector.
+            - name: detector_group_name
+              type: keyword
+              description: Internal name of the detector group.
+            - name: detector_group_display_name
+              type: keyword
+              description: Human-readable name of the detector group.
+            - name: family
+              type: keyword
+              description: Family classification of the detector.
+            - name: nature
+              type: keyword
+              description: Nature of the detector (generic, specific).
