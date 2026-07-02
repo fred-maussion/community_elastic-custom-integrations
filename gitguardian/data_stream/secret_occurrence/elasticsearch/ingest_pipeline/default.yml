@@ -1,0 +1,140 @@
+---
+description: Pipeline for processing GitGuardian secret occurrence events.
+processors:
+  - set:
+      tag: set_ecs_version
+      field: ecs.version
+      value: "9.3.0"
+  - rename:
+      tag: rename_message
+      field: message
+      target_field: event.original
+      ignore_missing: true
+      if: ctx.event?.original == null
+  - json:
+      tag: parse_original_json
+      field: event.original
+      target_field: gitguardian.secret_occurrence
+  - remove:
+      tag: remove_message
+      field: message
+      ignore_missing: true
+      if: ctx.event?.original != null
+  - date:
+      tag: parse_timestamp
+      field: gitguardian.secret_occurrence.date
+      target_field: "@timestamp"
+      formats:
+        - ISO8601
+      if: ctx.gitguardian?.secret_occurrence?.date != null
+  - set:
+      tag: set_event_kind
+      field: event.kind
+      value: event
+  - set:
+      tag: set_event_category
+      field: event.category
+      value: [vulnerability]
+  - set:
+      tag: set_event_type
+      field: event.type
+      value: [info]
+  - set:
+      tag: set_event_provider
+      field: event.provider
+      value: GitGuardian
+  - set:
+      tag: set_event_url
+      field: event.url
+      copy_from: gitguardian.secret_occurrence.url
+      ignore_empty_value: true
+  - convert:
+      tag: convert_id_to_string
+      field: gitguardian.secret_occurrence.id
+      type: string
+      ignore_missing: true
+      ignore_failure: true
+  - convert:
+      tag: convert_incident_id_to_string
+      field: gitguardian.secret_occurrence.incident_id
+      type: string
+      ignore_missing: true
+      ignore_failure: true
+  - convert:
+      tag: convert_source_id_to_string
+      field: gitguardian.secret_occurrence.source.id
+      type: string
+      ignore_missing: true
+      ignore_failure: true
+  - set:
+      tag: set_user_full_name
+      field: user.full_name
+      copy_from: gitguardian.secret_occurrence.author_name
+      ignore_empty_value: true
+  - set:
+      tag: set_user_email
+      field: user.email
+      copy_from: gitguardian.secret_occurrence.author_info
+      ignore_empty_value: true
+  - set:
+      tag: set_user_name
+      field: user.name
+      copy_from: gitguardian.secret_occurrence.author_info
+      ignore_empty_value: true
+  - set:
+      tag: set_file_path
+      field: file.path
+      copy_from: gitguardian.secret_occurrence.filepath
+      ignore_empty_value: true
+  - remove:
+      tag: remove_null_date
+      field: gitguardian.secret_occurrence.date
+      if: ctx.gitguardian?.secret_occurrence?.date == null
+      ignore_missing: true
+  - remove:
+      tag: remove_null_sha
+      field: gitguardian.secret_occurrence.sha
+      if: ctx.gitguardian?.secret_occurrence?.sha == null
+      ignore_missing: true
+  - remove:
+      tag: remove_null_filepath
+      field: gitguardian.secret_occurrence.filepath
+      if: ctx.gitguardian?.secret_occurrence?.filepath == null
+      ignore_missing: true
+  - remove:
+      tag: remove_null_author_name
+      field: gitguardian.secret_occurrence.author_name
+      if: ctx.gitguardian?.secret_occurrence?.author_name == null
+      ignore_missing: true
+  - remove:
+      tag: remove_null_author_info
+      field: gitguardian.secret_occurrence.author_info
+      if: ctx.gitguardian?.secret_occurrence?.author_info == null
+      ignore_missing: true
+  - remove:
+      tag: remove_null_matches
+      field: gitguardian.secret_occurrence.matches
+      if: ctx.gitguardian?.secret_occurrence?.matches == null
+      ignore_missing: true
+  - remove:
+      tag: remove_null_tags
+      field: gitguardian.secret_occurrence.tags
+      if: ctx.gitguardian?.secret_occurrence?.tags == null
+      ignore_missing: true
+  - remove:
+      tag: remove_null_url
+      field: gitguardian.secret_occurrence.url
+      if: ctx.gitguardian?.secret_occurrence?.url == null
+      ignore_missing: true
+  - remove:
+      tag: remove_event_original
+      field: event.original
+      if: "ctx.tags == null || !ctx.tags.contains('preserve_original_event')"
+      ignore_missing: true
+on_failure:
+  - set:
+      field: event.kind
+      value: pipeline_error
+  - append:
+      field: error.message
+      value: "Processor {{{_ingest.on_failure_processor_type}}} with tag {{{_ingest.on_failure_processor_tag}}} in pipeline {{{_ingest.pipeline}}} failed with message: {{{_ingest.on_failure_message}}}"

@@ -1,0 +1,60 @@
+- name: gitguardian
+  type: group
+  fields:
+    - name: secret_occurrence
+      type: group
+      fields:
+        - name: id
+          type: keyword
+          description: Unique identifier for the occurrence.
+        - name: incident_id
+          type: keyword
+          description: ID of the parent incident this occurrence belongs to.
+        - name: kind
+          type: keyword
+          description: Detection kind — realtime (scanned at commit time) or historical (found during a retroactive scan).
+        - name: date
+          type: date
+          description: Timestamp when the occurrence was published (commit date or scan date).
+        - name: url
+          type: keyword
+          description: Direct link to the occurrence in the source (e.g., GitHub commit diff).
+        - name: sha
+          type: keyword
+          description: Commit SHA where the secret was found.
+        - name: filepath
+          type: keyword
+          description: File path within the repository where the secret was detected.
+        - name: presence
+          type: keyword
+          description: Whether the secret is currently present or has been removed from the source.
+        - name: author_name
+          type: keyword
+          description: Name of the commit author who introduced the secret.
+        - name: author_info
+          type: keyword
+          description: Email of the commit author who introduced the secret.
+        - name: source
+          type: group
+          fields:
+            - name: id
+              type: keyword
+              description: ID of the monitored source (repository, CI pipeline, etc.).
+            - name: url
+              type: keyword
+              description: URL of the monitored source.
+            - name: type
+              type: keyword
+              description: Type of source (e.g., github, gitlab, slack, jira_cloud).
+            - name: full_name
+              type: keyword
+              description: Full name of the source (e.g., org/repo-name).
+            - name: health
+              type: keyword
+              description: Health status of the source — safe, at_risk, or unknown.
+        - name: matches
+          type: flattened
+          description: Array of match positions within the file where the secret was detected.
+        - name: tags
+          type: keyword
+          description: Tags applied to the occurrence (e.g., DEFAULT_BRANCH, FROM_HISTORICAL_SCAN, SENSITIVE_FILE).

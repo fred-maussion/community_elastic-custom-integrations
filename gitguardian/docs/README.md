@@ -45,6 +45,11 @@ decoy credential (AWS key, GitHub PAT, etc.) — meaning the honeytoken was foun
 used by an attacker. Ingested as `event.kind: alert` with `event.category: [intrusion_detection]`,
 with GeoIP enrichment on the attacker's IP address.
 
+**Secret occurrences** (`secret_occurrence`): Each entry represents an individual raw detection —
+the exact commit, file path, branch, and author where a secret was found. While `internal_secret_alert`
+tracks one document per incident (the grouped finding), occurrences give the granular detection layer
+for forensic investigation and code attribution.
+
 ### Supported use cases
 
 - Alert on newly detected secrets exposures via Kibana alerting rules.
@@ -544,6 +549,132 @@ An example event for `honeytoken_event` looks as following:
 }
 ```
 
+### Secret Occurrence data stream
+
+The `secret_occurrence` data stream collects raw detection events from the GitGuardian workspace.
+Each occurrence represents the exact commit, file, and author where a secret was found. Unlike
+`internal_secret_alert` which groups detections into incidents, occurrences provide the granular
+detection layer for forensic investigation and code attribution. The commit author email is mapped
+to `user.name` for Elastic Entity Analytics integration. Requires the `incidents:read` API scope.
+
+#### secret_occurrence fields
+
+**Exported fields**
+
+| Field | Description | Type |
+|---|---|---|
+| @timestamp | Event timestamp. | date |
+| data_stream.dataset | Data stream dataset. | constant_keyword |
+| data_stream.namespace | Data stream namespace. | constant_keyword |
+| data_stream.type | Data stream type. | constant_keyword |
+| error.message | Error message. | match_only_text |
+| event.category | This is one of four ECS Categorization Fields, and indicates the second level in the ECS category hierarchy. `event.category` represents the "big buckets" of ECS categories. For example, filtering on `event.category:process` yields all events relating to process activity. This field is closely related to `event.type`, which is used as a subcategory. This field is an array. This will allow proper categorization of some events that fall in multiple categories. | keyword |
+| event.dataset | Event dataset. | constant_keyword |
+| event.kind | This is one of four ECS Categorization Fields, and indicates the highest level in the ECS category hierarchy. `event.kind` gives high-level information about what type of information the event contains, without being specific to the contents of the event. For example, values of this field distinguish alert events from metric events. The value of this field can be used to inform how these kinds of events should be handled. They may warrant different retention, different access control, it may also help understand whether the data is coming in at a regular interval or not. | keyword |
+| event.module | Event module. | constant_keyword |
+| event.provider | Source of the event. Event transports such as Syslog or the Windows Event Log typically mention the source of an event. It can be the name of the software that generated the event (e.g. Sysmon, httpd), or of a subsystem of the operating system (kernel, Microsoft-Windows-Security-Auditing). | keyword |
+| event.type | This is one of four ECS Categorization Fields, and indicates the third level in the ECS category hierarchy. `event.type` represents a categorization "sub-bucket" that, when used along with the `event.category` field values, enables filtering events down to a level appropriate for single visualization. This field is an array. This will allow proper categorization of some events that fall in multiple event types. | keyword |
+| event.url | URL linking to an external system to continue investigation of this event. This URL links to another system where in-depth investigation of the specific occurrence of this event can take place. Alert events, indicated by `event.kind:alert`, are a common use case for this field. | keyword |
+| file.path | Full path to the file, including the file name. It should include the drive letter, when appropriate. | keyword |
+| file.path.text | Multi-field of `file.path`. | match_only_text |
+| gitguardian.secret_occurrence.author_info | Email of the commit author who introduced the secret. | keyword |
+| gitguardian.secret_occurrence.author_name | Name of the commit author who introduced the secret. | keyword |
+| gitguardian.secret_occurrence.date | Timestamp when the occurrence was published (commit date or scan date). | date |
+| gitguardian.secret_occurrence.filepath | File path within the repository where the secret was detected. | keyword |
+| gitguardian.secret_occurrence.id | Unique identifier for the occurrence. | keyword |
+| gitguardian.secret_occurrence.incident_id | ID of the parent incident this occurrence belongs to. | keyword |
+| gitguardian.secret_occurrence.kind | Detection kind — realtime (scanned at commit time) or historical (found during a retroactive scan). | keyword |
+| gitguardian.secret_occurrence.matches | Array of match positions within the file where the secret was detected. | flattened |
+| gitguardian.secret_occurrence.presence | Whether the secret is currently present or has been removed from the source. | keyword |
+| gitguardian.secret_occurrence.sha | Commit SHA where the secret was found. | keyword |
+| gitguardian.secret_occurrence.source.full_name | Full name of the source (e.g., org/repo-name). | keyword |
+| gitguardian.secret_occurrence.source.health | Health status of the source — safe, at_risk, or unknown. | keyword |
+| gitguardian.secret_occurrence.source.id | ID of the monitored source (repository, CI pipeline, etc.). | keyword |
+| gitguardian.secret_occurrence.source.type | Type of source (e.g., github, gitlab, slack, jira_cloud). | keyword |
+| gitguardian.secret_occurrence.source.url | URL of the monitored source. | keyword |
+| gitguardian.secret_occurrence.tags | Tags applied to the occurrence (e.g., DEFAULT_BRANCH, FROM_HISTORICAL_SCAN, SENSITIVE_FILE). | keyword |
+| gitguardian.secret_occurrence.url | Direct link to the occurrence in the source (e.g., GitHub commit diff). | keyword |
+| tags | List of keywords used to tag each event. | keyword |
+| user.email | User email address. | keyword |
+| user.full_name | User's full name, if available. | keyword |
+| user.full_name.text | Multi-field of `user.full_name`. | match_only_text |
+| user.name | Short name or login of the user. | keyword |
+| user.name.text | Multi-field of `user.name`. | match_only_text |
+
+
+#### Sample event
+
+An example event for `secret_occurrence` looks as following:
+
+```json
+{
+    "@timestamp": "2024-11-18T10:00:00.000Z",
+    "data_stream": {
+        "dataset": "gitguardian.secret_occurrence",
+        "namespace": "default",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "event": {
+        "category": [
+            "vulnerability"
+        ],
+        "dataset": "gitguardian.secret_occurrence",
+        "ingested": "2024-11-18T10:00:38Z",
+        "kind": "event",
+        "provider": "GitGuardian",
+        "type": [
+            "info"
+        ],
+        "url": "https://github.com/example-org/example-repo/commit/a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2#diff-0001R1"
+    },
+    "file": {
+        "path": "config/settings.py"
+    },
+    "gitguardian": {
+        "secret_occurrence": {
+            "author_info": "john.smith@example.com",
+            "author_name": "John Smith",
+            "date": "2024-11-18T10:00:00Z",
+            "filepath": "config/settings.py",
+            "id": "4421",
+            "incident_id": "3759",
+            "kind": "realtime",
+            "matches": [
+                {
+                    "indice_end": 64,
+                    "indice_start": 32,
+                    "name": "apikey"
+                }
+            ],
+            "presence": "present",
+            "sha": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+            "source": {
+                "full_name": "example-org/example-repo",
+                "health": "at_risk",
+                "id": "6531",
+                "type": "github",
+                "url": "https://github.com/example-org/example-repo"
+            },
+            "tags": [
+                "DEFAULT_BRANCH"
+            ],
+            "url": "https://github.com/example-org/example-repo/commit/a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2#diff-0001R1"
+        }
+    },
+    "tags": [
+        "forwarded"
+    ],
+    "user": {
+        "email": "john.smith@example.com",
+        "full_name": "John Smith",
+        "name": "john.smith@example.com"
+    }
+}
+```
+
 ### Inputs used
 These inputs can be used with this integration:
 <details>
@@ -583,3 +714,5 @@ These APIs are used with this integration:
   paginated via `per_page`. Requires the `audit_logs:read` API scope.
 - `GET /v1/honeytokens_events` — Fetches honeytoken trigger events, ordered by `triggered_at`
   and paginated via `per_page`. Requires the `honeytokens:read` API scope.
+- `GET /v1/occurrences/secrets` — Fetches raw secret occurrence detections, ordered by `date`
+  and paginated via `per_page`. Requires the `incidents:read` API scope.

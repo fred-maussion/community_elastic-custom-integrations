@@ -1,4 +1,9 @@
 # newer versions go on top
+- version: "4.0.0"
+  changes:
+    - description: Add secret_occurrence data stream collecting raw detection events from the GitGuardian /v1/occurrences/secrets endpoint with ECS mapping (event.kind=event, event.category=vulnerability, user.*, file.path) and commit author identity for Entity Analytics.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/55
 - version: "3.0.0"
   changes:
     - description: Add honeytoken_event data stream collecting trigger events from the GitGuardian /v1/honeytokens_events endpoint with ECS mapping (event.kind=alert, event.category=intrusion_detection, source.ip) and GeoIP enrichment.

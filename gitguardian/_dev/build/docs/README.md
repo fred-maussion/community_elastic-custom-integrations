@@ -44,6 +44,11 @@ decoy credential (AWS key, GitHub PAT, etc.) — meaning the honeytoken was foun
 used by an attacker. Ingested as `event.kind: alert` with `event.category: [intrusion_detection]`,
 with GeoIP enrichment on the attacker's IP address.
 
+**Secret occurrences** (`secret_occurrence`): Each entry represents an individual raw detection —
+the exact commit, file path, branch, and author where a secret was found. While `internal_secret_alert`
+tracks one document per incident (the grouped finding), occurrences give the granular detection layer
+for forensic investigation and code attribution.
+
 ### Supported use cases
 
 - Alert on newly detected secrets exposures via Kibana alerting rules.
@@ -175,6 +180,22 @@ enrichment on the attacker's source IP. Requires the `honeytokens:read` API scop
 
 {{ event "honeytoken_event" }}
 
+### Secret Occurrence data stream
+
+The `secret_occurrence` data stream collects raw detection events from the GitGuardian workspace.
+Each occurrence represents the exact commit, file, and author where a secret was found. Unlike
+`internal_secret_alert` which groups detections into incidents, occurrences provide the granular
+detection layer for forensic investigation and code attribution. The commit author email is mapped
+to `user.name` for Elastic Entity Analytics integration. Requires the `incidents:read` API scope.
+
+#### secret_occurrence fields
+
+{{ fields "secret_occurrence" }}
+
+#### Sample event
+
+{{ event "secret_occurrence" }}
+
 ### Inputs used
 {{ inputDocs }}
 
@@ -189,3 +210,5 @@ These APIs are used with this integration:
   paginated via `per_page`. Requires the `audit_logs:read` API scope.
 - `GET /v1/honeytokens_events` — Fetches honeytoken trigger events, ordered by `triggered_at`
   and paginated via `per_page`. Requires the `honeytokens:read` API scope.
+- `GET /v1/occurrences/secrets` — Fetches raw secret occurrence detections, ordered by `date`
+  and paginated via `per_page`. Requires the `incidents:read` API scope.
