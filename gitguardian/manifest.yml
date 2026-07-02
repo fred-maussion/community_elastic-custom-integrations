@@ -33,11 +33,8 @@ policy_templates:
     description: Collect incidents and audit logs from GitGuardian.
     inputs:
       - type: cel
-        title: Collect Secrets Incidents via API
+        title: Collect Audit Logs & Secrets Incidents via API
         description: Collecting secrets incidents from the GitGuardian API.
-      - type: cel
-        title: Collect Audit Logs via API
-        description: Collecting audit logs from the GitGuardian API.
 owner:
   github: fred-maussion
   type: community

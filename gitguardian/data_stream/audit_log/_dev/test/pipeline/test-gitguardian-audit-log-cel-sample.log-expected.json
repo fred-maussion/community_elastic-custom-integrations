@@ -37,7 +37,8 @@
             "user": {
                 "email": "john.smith@example.com",
                 "full_name": "John Smith",
-                "id": "1243"
+                "id": "1243",
+                "name": "john.smith@example.com"
             }
         },
         {
@@ -77,7 +78,8 @@
             "user": {
                 "email": "john.smith@example.com",
                 "full_name": "John Smith",
-                "id": "1243"
+                "id": "1243",
+                "name": "john.smith@example.com"
             }
         },
         {

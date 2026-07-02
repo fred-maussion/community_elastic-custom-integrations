@@ -28,12 +28,16 @@ stores the full raw incident payload in `event.original`.
 
 ## What data does this integration collect?
 
-The GitGuardian integration collects secrets incidents from the GitGuardian API.
+The GitGuardian integration collects two types of data from the GitGuardian API.
 
-Each incident represents a secret (API key, password, certificate, or other credential)
-detected in a monitored source — such as a git commit, a Slack message, or a CI pipeline
-log — and includes metadata such as the detector type, severity, status, and a link to
-the incident in the GitGuardian dashboard.
+**Secrets incidents** (`internal_secret_alert`): Each incident represents a secret (API key,
+password, certificate, or other credential) detected in a monitored source — such as a git
+commit, a Slack message, or a CI pipeline log — and includes metadata such as the detector
+type, severity, status, and a link to the incident in the GitGuardian dashboard.
+
+**Audit logs** (`audit_log`): Each entry represents an administrative or user action performed
+in the GitGuardian workspace — such as logins, token creation, incident resolution, or member
+management — and includes the actor's identity, IP address, and the type of action performed.
 
 ### Supported use cases
 
@@ -59,7 +63,9 @@ in the Security Alerts view, enriched with the ECS fields mapped by this integra
 ## What do I need to use this integration?
 
 - A GitGuardian account (Business or Enterprise plan recommended for full API access).
-- A GitGuardian API token with the `incidents:read` scope.
+- A GitGuardian API token with the appropriate scopes:
+  - `incidents:read` — required for the `internal_secret_alert` data stream.
+  - `audit_logs:read` — required for the `audit_log` data stream.
 - Elastic Agent deployed on a host with network access to `https://api.gitguardian.com`.
 
 ## How do I deploy this integration?
@@ -133,6 +139,21 @@ The `internal_secret_alert` data stream collects secrets incidents from the GitG
 
 {{ event "internal_secret_alert" }}
 
+### Audit Log data stream
+
+The `audit_log` data stream collects administrative and user activity events from the
+GitGuardian workspace. Events are mapped to ECS with `event.kind: event`,
+`event.category: [iam]`, and actor identity fields (`user.name`, `user.email`) to support
+Elastic Entity Analytics user entity resolution.
+
+#### audit_log fields
+
+{{ fields "audit_log" }}
+
+#### Sample event
+
+{{ event "audit_log" }}
+
 ### Inputs used
 {{ inputDocs }}
 
@@ -143,3 +164,5 @@ These APIs are used with this integration:
 - `GET /v1/incidents/secrets` — Fetches secrets incidents, filtered by `date_after` cursor and
   paginated via `per_page`. See the [GitGuardian API docs](https://api.gitguardian.com/docs) for
   the full response schema.
+- `GET /v1/audit_logs` — Fetches audit log entries, filtered by `date_after` cursor and
+  paginated via `per_page`. Requires the `audit_logs:read` API scope.

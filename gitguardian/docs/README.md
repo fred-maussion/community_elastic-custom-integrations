@@ -29,12 +29,16 @@ stores the full raw incident payload in `event.original`.
 
 ## What data does this integration collect?
 
-The GitGuardian integration collects secrets incidents from the GitGuardian API.
+The GitGuardian integration collects two types of data from the GitGuardian API.
 
-Each incident represents a secret (API key, password, certificate, or other credential)
-detected in a monitored source — such as a git commit, a Slack message, or a CI pipeline
-log — and includes metadata such as the detector type, severity, status, and a link to
-the incident in the GitGuardian dashboard.
+**Secrets incidents** (`internal_secret_alert`): Each incident represents a secret (API key,
+password, certificate, or other credential) detected in a monitored source — such as a git
+commit, a Slack message, or a CI pipeline log — and includes metadata such as the detector
+type, severity, status, and a link to the incident in the GitGuardian dashboard.
+
+**Audit logs** (`audit_log`): Each entry represents an administrative or user action performed
+in the GitGuardian workspace — such as logins, token creation, incident resolution, or member
+management — and includes the actor's identity, IP address, and the type of action performed.
 
 ### Supported use cases
 
@@ -60,7 +64,9 @@ in the Security Alerts view, enriched with the ECS fields mapped by this integra
 ## What do I need to use this integration?
 
 - A GitGuardian account (Business or Enterprise plan recommended for full API access).
-- A GitGuardian API token with the `incidents:read` scope.
+- A GitGuardian API token with the appropriate scopes:
+  - `incidents:read` — required for the `internal_secret_alert` data stream.
+  - `audit_logs:read` — required for the `audit_log` data stream.
 - Elastic Agent deployed on a host with network access to `https://api.gitguardian.com`.
 
 ## How do I deploy this integration?
@@ -276,6 +282,140 @@ An example event for `internal_secret_alert` looks as following:
 }
 ```
 
+### Audit Log data stream
+
+The `audit_log` data stream collects administrative and user activity events from the
+GitGuardian workspace. Events are mapped to ECS with `event.kind: event`,
+`event.category: [iam]`, and actor identity fields (`user.name`, `user.email`) to support
+Elastic Entity Analytics user entity resolution.
+
+#### audit_log fields
+
+**Exported fields**
+
+| Field | Description | Type |
+|---|---|---|
+| @timestamp | Event timestamp. | date |
+| data_stream.dataset | Data stream dataset. | constant_keyword |
+| data_stream.namespace | Data stream namespace. | constant_keyword |
+| data_stream.type | Data stream type. | constant_keyword |
+| error.message | Error message. | match_only_text |
+| event.action | The action captured by the event. This describes the information in the event. It is more specific than `event.category`. Examples are `group-add`, `process-started`, `file-created`. The value is normally defined by the implementer. | keyword |
+| event.category | This is one of four ECS Categorization Fields, and indicates the second level in the ECS category hierarchy. `event.category` represents the "big buckets" of ECS categories. For example, filtering on `event.category:process` yields all events relating to process activity. This field is closely related to `event.type`, which is used as a subcategory. This field is an array. This will allow proper categorization of some events that fall in multiple categories. | keyword |
+| event.dataset | Event dataset. | constant_keyword |
+| event.kind | This is one of four ECS Categorization Fields, and indicates the highest level in the ECS category hierarchy. `event.kind` gives high-level information about what type of information the event contains, without being specific to the contents of the event. For example, values of this field distinguish alert events from metric events. The value of this field can be used to inform how these kinds of events should be handled. They may warrant different retention, different access control, it may also help understand whether the data is coming in at a regular interval or not. | keyword |
+| event.module | Event module. | constant_keyword |
+| event.provider | Source of the event. Event transports such as Syslog or the Windows Event Log typically mention the source of an event. It can be the name of the software that generated the event (e.g. Sysmon, httpd), or of a subsystem of the operating system (kernel, Microsoft-Windows-Security-Auditing). | keyword |
+| event.type | This is one of four ECS Categorization Fields, and indicates the third level in the ECS category hierarchy. `event.type` represents a categorization "sub-bucket" that, when used along with the `event.category` field values, enables filtering events down to a level appropriate for single visualization. This field is an array. This will allow proper categorization of some events that fall in multiple event types. | keyword |
+| gitguardian.audit_log.action_type | Type of action performed (READ, CREATE, UPDATE, DELETE, OTHER). | keyword |
+| gitguardian.audit_log.api_token_id | ID of the API token used if the action was performed via API. | keyword |
+| gitguardian.audit_log.data | Additional data associated with the audit event. | flattened |
+| gitguardian.audit_log.date | Date the audit event occurred. | date |
+| gitguardian.audit_log.event_name | Name of the audit event (e.g., user.logged_in, incident.resolved). | keyword |
+| gitguardian.audit_log.id | Unique identifier for the audit log entry. | keyword |
+| gitguardian.audit_log.member_email | Email of the member that performed the action. | keyword |
+| gitguardian.audit_log.member_id | ID of the member that performed the action. Null if member has been deleted. | keyword |
+| gitguardian.audit_log.member_name | Name of the member at the time of the event. | keyword |
+| gitguardian.audit_log.target_ids | IDs of the resources targeted by the action. | keyword |
+| source.as.number | Unique number allocated to the autonomous system. The autonomous system number (ASN) uniquely identifies each network on the Internet. | long |
+| source.as.organization.name | Organization name. | keyword |
+| source.as.organization.name.text | Multi-field of `source.as.organization.name`. | match_only_text |
+| source.geo.city_name | City name. | keyword |
+| source.geo.continent_name | Name of the continent. | keyword |
+| source.geo.country_iso_code | Country ISO code. | keyword |
+| source.geo.country_name | Country name. | keyword |
+| source.geo.location | Longitude and latitude. | geo_point |
+| source.geo.region_iso_code | Region ISO code. | keyword |
+| source.geo.region_name | Region name. | keyword |
+| source.ip | IP address of the source (IPv4 or IPv6). | ip |
+| tags | List of keywords used to tag each event. | keyword |
+| user.email | User email address. | keyword |
+| user.full_name | User's full name, if available. | keyword |
+| user.full_name.text | Multi-field of `user.full_name`. | match_only_text |
+| user.id | Unique identifier of the user. | keyword |
+| user.name | Short name or login of the user. | keyword |
+| user.name.text | Multi-field of `user.name`. | match_only_text |
+
+
+#### Sample event
+
+An example event for `audit_log` looks as following:
+
+```json
+{
+    "@timestamp": "2024-11-18T10:00:05.007Z",
+    "data_stream": {
+        "dataset": "gitguardian.audit_log",
+        "namespace": "default",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "event": {
+        "action": "personal_access_token.created",
+        "category": [
+            "iam"
+        ],
+        "dataset": "gitguardian.audit_log",
+        "ingested": "2024-11-18T10:00:38Z",
+        "kind": "event",
+        "provider": "GitGuardian",
+        "type": [
+            "creation"
+        ]
+    },
+    "gitguardian": {
+        "audit_log": {
+            "action_type": "CREATE",
+            "data": {
+                "expire_at": "2024-11-25T10:00:00.000000+00:00",
+                "scopes": "incidents:read"
+            },
+            "date": "2024-11-18T10:00:05.007Z",
+            "event_name": "personal_access_token.created",
+            "id": "10000001",
+            "member_email": "john.smith@example.com",
+            "member_id": "100001",
+            "member_name": "John Smith",
+            "target_ids": [
+                "fdf075f9-1662-4cf1-9171-af50568158a8"
+            ]
+        }
+    },
+    "source": {
+        "as": {
+            "number": 64496,
+            "organization": {
+                "name": "Example ISP"
+            }
+        },
+        "geo": {
+            "city_name": "London",
+            "continent_name": "Europe",
+            "country_iso_code": "GB",
+            "country_name": "United Kingdom",
+            "location": {
+                "lat": 51.5074,
+                "lon": -0.1278
+            },
+            "region_iso_code": "GB-ENG",
+            "region_name": "England"
+        },
+        "ip": "198.51.100.42"
+    },
+    "tags": [
+        "forwarded"
+    ],
+    "user": {
+        "email": "john.smith@example.com",
+        "full_name": "John Smith",
+        "id": "100001",
+        "name": "john.smith@example.com"
+    }
+}
+```
+
 ### Inputs used
 These inputs can be used with this integration:
 <details>
@@ -311,3 +451,5 @@ These APIs are used with this integration:
 - `GET /v1/incidents/secrets` — Fetches secrets incidents, filtered by `date_after` cursor and
   paginated via `per_page`. See the [GitGuardian API docs](https://api.gitguardian.com/docs) for
   the full response schema.
+- `GET /v1/audit_logs` — Fetches audit log entries, filtered by `date_after` cursor and
+  paginated via `per_page`. Requires the `audit_logs:read` API scope.

@@ -68,6 +68,11 @@ processors:
       ignore_empty_value: true
   - set:
       tag: set_user_name
+      field: user.name
+      copy_from: gitguardian.audit_log.member_email
+      ignore_empty_value: true
+  - set:
+      tag: set_user_name
       field: user.full_name
       copy_from: gitguardian.audit_log.member_name
       ignore_empty_value: true
