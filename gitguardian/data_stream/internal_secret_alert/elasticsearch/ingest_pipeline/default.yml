@@ -1,0 +1,171 @@
+---
+description: Pipeline for GitGuardian secrets incidents
+processors:
+  # CEL-only: remove agentless metadata fields when present
+  - remove:
+      tag: remove_agentless_metadata
+      field:
+        - organization
+        - division
+        - team
+      ignore_missing: true
+      if: >-
+        ctx.organization instanceof String &&
+        ctx.division instanceof String &&
+        ctx.team instanceof String
+
+  # CEL-only: halt early on collector error events
+  - terminate:
+      tag: terminate_on_collector_error
+      if: ctx.error?.message != null && ctx.message == null
+
+  - set:
+      tag: set_ecs_version
+      field: ecs.version
+      value: "9.3.0"
+
+  - rename:
+      tag: rename_message_to_event_original
+      field: message
+      target_field: event.original
+      ignore_missing: true
+      if: ctx.event?.original == null
+
+  - remove:
+      tag: remove_message_when_event_original_set
+      field: message
+      ignore_missing: true
+      if: ctx.event?.original != null
+
+  - json:
+      tag: json_parse_event_original
+      field: event.original
+      target_field: gitguardian.incident
+
+  - set:
+      tag: set_event_kind
+      field: event.kind
+      value: alert
+
+  - append:
+      tag: append_event_category_intrusion_detection
+      field: event.category
+      value: intrusion_detection
+      allow_duplicates: false
+
+  - append:
+      tag: append_event_category_vulnerability
+      field: event.category
+      value: vulnerability
+      allow_duplicates: false
+
+  - append:
+      tag: append_event_type_info
+      field: event.type
+      value: info
+      allow_duplicates: false
+
+  - set:
+      tag: set_event_provider
+      field: event.provider
+      value: GitGuardian
+
+  - date:
+      tag: parse_timestamp
+      field: gitguardian.incident.date
+      target_field: "@timestamp"
+      formats:
+        - ISO8601
+      if: ctx.gitguardian?.incident?.date != null
+
+  - fingerprint:
+      tag: fingerprint_document_id
+      fields:
+        - gitguardian.incident.id
+        - gitguardian.incident.status
+      target_field: _id
+      ignore_missing: true
+
+  - set:
+      tag: set_vulnerability_scanner_vendor
+      field: vulnerability.scanner.vendor
+      value: GitGuardian
+
+  - set:
+      tag: set_rule_name
+      field: rule.name
+      copy_from: gitguardian.incident.detector.name
+      ignore_empty_value: true
+
+  - set:
+      tag: set_rule_description
+      field: rule.description
+      copy_from: gitguardian.incident.detector.display_name
+      ignore_empty_value: true
+
+  - set:
+      tag: set_event_url
+      field: event.url
+      copy_from: gitguardian.incident.gitguardian_url
+      ignore_empty_value: true
+
+  - set:
+      tag: set_event_action
+      field: event.action
+      copy_from: gitguardian.incident.status
+      ignore_empty_value: true
+
+  - set:
+      tag: set_vulnerability_severity
+      field: vulnerability.severity
+      copy_from: gitguardian.incident.severity
+      ignore_empty_value: true
+
+  - script:
+      tag: script_remove_null_empty_fields
+      lang: painless
+      description: Remove fields with null or empty values recursively.
+      source: |
+        void handleMap(Map map) {
+          for (def x : map.values()) {
+            if (x instanceof Map) {
+                handleMap(x);
+            } else if (x instanceof List) {
+                handleList(x);
+            }
+          }
+          map.values().removeIf(v -> v == null || v == '' || (v instanceof Map && v.size() == 0) || (v instanceof List && v.size() == 0));
+        }
+        void handleList(List list) {
+          for (def x : list) {
+              if (x instanceof Map) {
+                  handleMap(x);
+              } else if (x instanceof List) {
+                  handleList(x);
+              }
+          }
+          list.removeIf(v -> v == null || v == '' || (v instanceof Map && v.size() == 0) || (v instanceof List && v.size() == 0));
+        }
+        handleMap(ctx);
+
+  - remove:
+      tag: remove_mapped_gitguardian_url
+      field:
+        - gitguardian.incident.gitguardian_url
+      ignore_missing: true
+
+on_failure:
+  - append:
+      tag: pipeline_error_message
+      field: error.message
+      value: '{{{ _ingest.on_failure_message }}}'
+      allow_duplicates: false
+  - set:
+      tag: pipeline_error_kind
+      field: event.kind
+      value: pipeline_error
+  - append:
+      tag: pipeline_error_preserve_original
+      field: tags
+      value: preserve_original_event
+      allow_duplicates: false

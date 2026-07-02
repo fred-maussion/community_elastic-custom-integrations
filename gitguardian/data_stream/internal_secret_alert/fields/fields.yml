@@ -1,0 +1,33 @@
+- name: gitguardian
+  type: group
+  fields:
+    - name: incident
+      type: group
+      fields:
+        - name: id
+          type: keyword
+          description: Unique identifier for the incident.
+        - name: status
+          type: keyword
+          description: Status of the incident (e.g., IGNORED, TRIGGERED, ASSIGNED, RESOLVED).
+        - name: date
+          type: date
+          description: Date the incident was created.
+        - name: severity
+          type: keyword
+          description: Severity level of the incident.
+        - name: secret_hash
+          type: keyword
+          description: Hash of the detected secret.
+        - name: gitguardian_url
+          type: keyword
+          description: URL to the incident in the GitGuardian dashboard.
+        - name: detector
+          type: group
+          fields:
+            - name: name
+              type: keyword
+              description: Internal name of the detector.
+            - name: display_name
+              type: keyword
+              description: Human-readable name of the detector.

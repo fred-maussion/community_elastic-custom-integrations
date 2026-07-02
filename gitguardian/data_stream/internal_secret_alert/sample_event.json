@@ -1,0 +1,84 @@
+{
+    "@timestamp": "2024-11-18T10:00:42.000Z",
+    "data_stream": {
+        "dataset": "gitguardian.internal_secret_alert",
+        "namespace": "default",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "event": {
+        "action": "TRIGGERED",
+        "agent_id_status": "verified",
+        "category": [
+            "intrusion_detection",
+            "vulnerability"
+        ],
+        "dataset": "gitguardian.internal_secret_alert",
+        "ingested": "2024-11-18T10:00:45Z",
+        "kind": "alert",
+        "provider": "GitGuardian",
+        "type": [
+            "info"
+        ],
+        "url": "https://dashboard.gitguardian.com/workspace/100000/incidents/12345678"
+    },
+    "gitguardian": {
+        "incident": {
+            "date": "2024-11-18T10:00:42.000Z",
+            "detector": {
+                "category": "other",
+                "detector_group_display_name": "Generic Password",
+                "detector_group_name": "generic_password",
+                "display_name": "Generic Password",
+                "family": "other",
+                "name": "generic_password",
+                "nature": "generic"
+            },
+            "hmsl_hash": "a3f1c2d4e5b6789012345678901234567890abcdef1234567890abcdef123456",
+            "id": "12345678",
+            "incident_name": "Generic Password",
+            "occurrences_count": 1,
+            "public_exposure": {
+                "leaked_outside_perimeter": false,
+                "public_incident_linked": false,
+                "source_publicly_visible": false
+            },
+            "regression": false,
+            "risk_score": 50.0,
+            "secret_hash": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "secret_id": 10000001,
+            "secret_presence": {
+                "files_fixed": 0,
+                "files_pending_merge": 0,
+                "files_requiring_code_fix": 1,
+                "in_vcs": 1,
+                "outside_vcs": 0,
+                "removed_in_vcs": 0,
+                "removed_outside_vcs": 0
+            },
+            "secret_revoked": false,
+            "severity": "critical",
+            "status": "TRIGGERED",
+            "tags": [
+                "DEFAULT_BRANCH"
+            ],
+            "triggered_at": "2024-11-18T10:00:44.933205Z",
+            "validity": "no_checker"
+        }
+    },
+    "rule": {
+        "description": "Generic Password",
+        "name": "generic_password"
+    },
+    "tags": [
+        "forwarded"
+    ],
+    "vulnerability": {
+        "scanner": {
+            "vendor": "GitGuardian"
+        },
+        "severity": "critical"
+    }
+}
