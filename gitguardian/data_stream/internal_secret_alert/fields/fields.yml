@@ -22,6 +22,72 @@
         - name: gitguardian_url
           type: keyword
           description: URL to the incident in the GitGuardian dashboard.
+        - name: hmsl_hash
+          type: keyword
+          description: Hash of the secret used for HasMySecretLeaked checks.
+        - name: incident_name
+          type: keyword
+          description: Human-readable name of the incident.
+        - name: occurrences_count
+          type: long
+          description: Number of occurrences of the secret across monitored sources.
+        - name: regression
+          type: boolean
+          description: Whether the incident is a regression of a previously resolved incident.
+        - name: risk_score
+          type: float
+          description: Risk score assigned to the incident.
+        - name: secret_id
+          type: long
+          description: Unique identifier of the detected secret.
+        - name: secret_revoked
+          type: boolean
+          description: Whether the secret has been revoked.
+        - name: tags
+          type: keyword
+          description: Tags associated with the incident (e.g., DEFAULT_BRANCH).
+        - name: triggered_at
+          type: date
+          description: Timestamp when the incident was first triggered.
+        - name: validity
+          type: keyword
+          description: Validity status of the secret (e.g., valid, invalid, no_checker).
+        - name: public_exposure
+          type: group
+          fields:
+            - name: leaked_outside_perimeter
+              type: boolean
+              description: Whether the secret leaked outside the monitored perimeter.
+            - name: public_incident_linked
+              type: boolean
+              description: Whether a public incident is linked to this secret.
+            - name: source_publicly_visible
+              type: boolean
+              description: Whether the source where the secret was found is publicly visible.
+        - name: secret_presence
+          type: group
+          fields:
+            - name: files_fixed
+              type: long
+              description: Number of files where the secret has been fixed.
+            - name: files_pending_merge
+              type: long
+              description: Number of files with the secret pending merge.
+            - name: files_requiring_code_fix
+              type: long
+              description: Number of files still requiring a code fix.
+            - name: in_vcs
+              type: long
+              description: Number of occurrences of the secret in version control.
+            - name: outside_vcs
+              type: long
+              description: Number of occurrences of the secret outside version control.
+            - name: removed_in_vcs
+              type: long
+              description: Number of occurrences removed from version control.
+            - name: removed_outside_vcs
+              type: long
+              description: Number of occurrences removed from outside version control.
         - name: detector
           type: group
           fields:
@@ -31,3 +97,18 @@
             - name: display_name
               type: keyword
               description: Human-readable name of the detector.
+            - name: category
+              type: keyword
+              description: Category of the detector.
+            - name: detector_group_name
+              type: keyword
+              description: Internal name of the detector group.
+            - name: detector_group_display_name
+              type: keyword
+              description: Human-readable name of the detector group.
+            - name: family
+              type: keyword
+              description: Family classification of the detector.
+            - name: nature
+              type: keyword
+              description: Nature of the detector (e.g., generic, specific).

@@ -146,13 +146,38 @@ The `internal_secret_alert` data stream collects secrets incidents from the GitG
 | event.type | This is one of four ECS Categorization Fields, and indicates the third level in the ECS category hierarchy. `event.type` represents a categorization "sub-bucket" that, when used along with the `event.category` field values, enables filtering events down to a level appropriate for single visualization. This field is an array. This will allow proper categorization of some events that fall in multiple event types. | keyword |
 | event.url | URL linking to an external system to continue investigation of this event. This URL links to another system where in-depth investigation of the specific occurrence of this event can take place. Alert events, indicated by `event.kind:alert`, are a common use case for this field. | keyword |
 | gitguardian.incident.date | Date the incident was created. | date |
+| gitguardian.incident.detector.category | Category of the detector. | keyword |
+| gitguardian.incident.detector.detector_group_display_name | Human-readable name of the detector group. | keyword |
+| gitguardian.incident.detector.detector_group_name | Internal name of the detector group. | keyword |
 | gitguardian.incident.detector.display_name | Human-readable name of the detector. | keyword |
+| gitguardian.incident.detector.family | Family classification of the detector. | keyword |
 | gitguardian.incident.detector.name | Internal name of the detector. | keyword |
+| gitguardian.incident.detector.nature | Nature of the detector (e.g., generic, specific). | keyword |
 | gitguardian.incident.gitguardian_url | URL to the incident in the GitGuardian dashboard. | keyword |
+| gitguardian.incident.hmsl_hash | Hash of the secret used for HasMySecretLeaked checks. | keyword |
 | gitguardian.incident.id | Unique identifier for the incident. | keyword |
+| gitguardian.incident.incident_name | Human-readable name of the incident. | keyword |
+| gitguardian.incident.occurrences_count | Number of occurrences of the secret across monitored sources. | long |
+| gitguardian.incident.public_exposure.leaked_outside_perimeter | Whether the secret leaked outside the monitored perimeter. | boolean |
+| gitguardian.incident.public_exposure.public_incident_linked | Whether a public incident is linked to this secret. | boolean |
+| gitguardian.incident.public_exposure.source_publicly_visible | Whether the source where the secret was found is publicly visible. | boolean |
+| gitguardian.incident.regression | Whether the incident is a regression of a previously resolved incident. | boolean |
+| gitguardian.incident.risk_score | Risk score assigned to the incident. | float |
 | gitguardian.incident.secret_hash | Hash of the detected secret. | keyword |
+| gitguardian.incident.secret_id | Unique identifier of the detected secret. | long |
+| gitguardian.incident.secret_presence.files_fixed | Number of files where the secret has been fixed. | long |
+| gitguardian.incident.secret_presence.files_pending_merge | Number of files with the secret pending merge. | long |
+| gitguardian.incident.secret_presence.files_requiring_code_fix | Number of files still requiring a code fix. | long |
+| gitguardian.incident.secret_presence.in_vcs | Number of occurrences of the secret in version control. | long |
+| gitguardian.incident.secret_presence.outside_vcs | Number of occurrences of the secret outside version control. | long |
+| gitguardian.incident.secret_presence.removed_in_vcs | Number of occurrences removed from version control. | long |
+| gitguardian.incident.secret_presence.removed_outside_vcs | Number of occurrences removed from outside version control. | long |
+| gitguardian.incident.secret_revoked | Whether the secret has been revoked. | boolean |
 | gitguardian.incident.severity | Severity level of the incident. | keyword |
 | gitguardian.incident.status | Status of the incident (e.g., IGNORED, TRIGGERED, ASSIGNED, RESOLVED). | keyword |
+| gitguardian.incident.tags | Tags associated with the incident (e.g., DEFAULT_BRANCH). | keyword |
+| gitguardian.incident.triggered_at | Timestamp when the incident was first triggered. | date |
+| gitguardian.incident.validity | Validity status of the secret (e.g., valid, invalid, no_checker). | keyword |
 | rule.description | The description of the rule generating the event. | keyword |
 | rule.name | The name of the rule or signature generating the event. | keyword |
 | tags | List of keywords used to tag each event. | keyword |
