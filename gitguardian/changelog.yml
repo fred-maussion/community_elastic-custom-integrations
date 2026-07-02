@@ -1,4 +1,9 @@
 # newer versions go on top
+- version: "5.0.0"
+  changes:
+    - description: Add public_secret_alert data stream collecting public secrets incidents from the GitGuardian /v1/public-incidents/secrets endpoint with ECS mapping (event.kind=alert, event.category=[intrusion_detection,vulnerability], rule.name, vulnerability.severity) and community feedback support.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/58
 - version: "4.0.0"
   changes:
     - description: Add secret_occurrence data stream collecting raw detection events from the GitGuardian /v1/occurrences/secrets endpoint with ECS mapping (event.kind=event, event.category=vulnerability, user.*, file.path) and commit author identity for Entity Analytics.

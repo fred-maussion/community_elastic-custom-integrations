@@ -49,6 +49,12 @@ the exact commit, file path, branch, and author where a secret was found. While 
 tracks one document per incident (the grouped finding), occurrences give the granular detection layer
 for forensic investigation and code attribution.
 
+**Public secret alerts** (`public_secret_alert`): Each entry represents a secret incident detected on
+the **public internet** — GitHub public repositories, Pastebin, and similar public sources. The risk
+profile is categorically higher than `internal_secret_alert`: the secret is already publicly visible and
+may already be exploited. Ingested as `event.kind: alert` with `event.category: [intrusion_detection,
+vulnerability]`. Requires only the `incidents:read` scope — no additional token needed.
+
 ### Supported use cases
 
 - Alert on newly detected secrets exposures via Kibana alerting rules.
@@ -84,6 +90,7 @@ contribute to Entity Analytics in distinct ways:
 | `secret_occurrence` | `event` | User entity profiles (commit author identity) | No |
 | `internal_secret_alert` | `alert` | No | Yes |
 | `honeytoken_event` | `alert` | No | Yes |
+| `public_secret_alert` | `alert` | No | Yes |
 
 **How this works:**
 
@@ -115,7 +122,7 @@ For Entity Analytics to function correctly, Elastic recommends enabling at least
 
 - A GitGuardian account (Business or Enterprise plan recommended for full API access).
 - A GitGuardian API token with the appropriate scopes:
-  - `incidents:read` — required for the `internal_secret_alert` and `secret_occurrence` data streams.
+  - `incidents:read` — required for the `internal_secret_alert`, `secret_occurrence`, and `public_secret_alert` data streams.
   - `audit_logs:read` — required for the `audit_log` data stream.
   - `honeytokens:read` — required for the `honeytoken_event` data stream.
 - Elastic Agent deployed on a host with network access to `https://api.gitguardian.com`.
@@ -237,6 +244,24 @@ to `user.name` for Elastic Entity Analytics integration. Requires the `incidents
 
 {{ event "secret_occurrence" }}
 
+### Public Secret Alert data stream
+
+The `public_secret_alert` data stream collects secrets incidents detected on the **public internet**
+— GitHub public repositories, Pastebin, and similar sources — via the GitGuardian API. Each alert
+represents a secret that is already publicly visible, making the risk categorically higher than an
+internal incident. Mapped to ECS with `event.kind: alert`, `event.category: [intrusion_detection,
+vulnerability]`, `rule.name` from the detector, and `vulnerability.severity` from the incident
+severity. Includes `feedback_list` (community validation) and `share_url` (public shareable link)
+where available. Requires only the `incidents:read` API scope.
+
+#### public_secret_alert fields
+
+{{ fields "public_secret_alert" }}
+
+#### Sample event
+
+{{ event "public_secret_alert" }}
+
 ### Inputs used
 {{ inputDocs }}
 
@@ -253,3 +278,5 @@ These APIs are used with this integration:
   and paginated via `per_page`. Requires the `honeytokens:read` API scope.
 - `GET /v1/occurrences/secrets` — Fetches raw secret occurrence detections, ordered by `date`
   and paginated via `per_page`. Requires the `incidents:read` API scope.
+- `GET /v1/public-incidents/secrets` — Fetches publicly detected secrets incidents, filtered by
+  `date_after` cursor and paginated via `per_page`. Requires the `incidents:read` API scope.
