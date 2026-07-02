@@ -1,4 +1,9 @@
 # newer versions go on top
+- version: "3.0.0"
+  changes:
+    - description: Add honeytoken_event data stream collecting trigger events from the GitGuardian /v1/honeytokens_events endpoint with ECS mapping (event.kind=alert, event.category=intrusion_detection, source.ip) and GeoIP enrichment.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/54
 - version: "2.0.0"
   changes:
     - description: Add audit_log data stream collecting events from the GitGuardian /v1/audit_logs endpoint with ECS mapping (event.kind, event.action, event.type, user.*, source.ip) and GeoIP enrichment.

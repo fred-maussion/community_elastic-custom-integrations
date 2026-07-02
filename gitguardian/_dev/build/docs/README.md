@@ -39,6 +39,11 @@ type, severity, status, and a link to the incident in the GitGuardian dashboard.
 in the GitGuardian workspace — such as logins, token creation, incident resolution, or member
 management — and includes the actor's identity, IP address, and the type of action performed.
 
+**Honeytoken events** (`honeytoken_event`): Each entry represents a trigger event on a planted
+decoy credential (AWS key, GitHub PAT, etc.) — meaning the honeytoken was found and actively
+used by an attacker. Ingested as `event.kind: alert` with `event.category: [intrusion_detection]`,
+with GeoIP enrichment on the attacker's IP address.
+
 ### Supported use cases
 
 - Alert on newly detected secrets exposures via Kibana alerting rules.
@@ -66,6 +71,7 @@ in the Security Alerts view, enriched with the ECS fields mapped by this integra
 - A GitGuardian API token with the appropriate scopes:
   - `incidents:read` — required for the `internal_secret_alert` data stream.
   - `audit_logs:read` — required for the `audit_log` data stream.
+  - `honeytokens:read` — required for the `honeytoken_event` data stream.
 - Elastic Agent deployed on a host with network access to `https://api.gitguardian.com`.
 
 ## How do I deploy this integration?
@@ -154,6 +160,21 @@ Elastic Entity Analytics user entity resolution.
 
 {{ event "audit_log" }}
 
+### Honeytoken Event data stream
+
+The `honeytoken_event` data stream collects trigger events from planted decoy credentials in the
+GitGuardian workspace. Each event signals that an attacker found and actively used a honeytoken,
+mapped to ECS with `event.kind: alert`, `event.category: [intrusion_detection]`, and GeoIP
+enrichment on the attacker's source IP. Requires the `honeytokens:read` API scope.
+
+#### honeytoken_event fields
+
+{{ fields "honeytoken_event" }}
+
+#### Sample event
+
+{{ event "honeytoken_event" }}
+
 ### Inputs used
 {{ inputDocs }}
 
@@ -166,3 +187,5 @@ These APIs are used with this integration:
   the full response schema.
 - `GET /v1/audit_logs` — Fetches audit log entries, filtered by `date_after` cursor and
   paginated via `per_page`. Requires the `audit_logs:read` API scope.
+- `GET /v1/honeytokens_events` — Fetches honeytoken trigger events, ordered by `triggered_at`
+  and paginated via `per_page`. Requires the `honeytokens:read` API scope.

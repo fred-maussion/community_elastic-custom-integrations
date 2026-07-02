@@ -1,0 +1,67 @@
+{
+    "@timestamp": "2024-11-18T10:00:00.000Z",
+    "data_stream": {
+        "dataset": "gitguardian.honeytoken_event",
+        "namespace": "default",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "event": {
+        "action": "GetCallerIdentity",
+        "category": [
+            "intrusion_detection"
+        ],
+        "dataset": "gitguardian.honeytoken_event",
+        "ingested": "2024-11-18T10:00:38Z",
+        "kind": "alert",
+        "provider": "GitGuardian",
+        "type": [
+            "info"
+        ],
+        "url": "https://dashboard.gitguardian.com/honeytokens/events/ht-evt-0001"
+    },
+    "gitguardian": {
+        "honeytoken_event": {
+            "action": "GetCallerIdentity",
+            "data": {
+                "account_id": "123456789012",
+                "arn": "arn:aws:iam::123456789012:user/example-user",
+                "user_id": "AIDAEXAMPLEID"
+            },
+            "honeytoken_id": "ht-0001",
+            "id": "ht-evt-0001",
+            "status": "triggered",
+            "tags": [
+                "prod",
+                "aws"
+            ],
+            "triggered_at": "2024-11-18T10:00:00.000Z"
+        }
+    },
+    "source": {
+        "as": {
+            "number": 64496,
+            "organization": {
+                "name": "Example ISP"
+            }
+        },
+        "geo": {
+            "city_name": "London",
+            "continent_name": "Europe",
+            "country_iso_code": "GB",
+            "country_name": "United Kingdom",
+            "location": {
+                "lat": 51.5074,
+                "lon": -0.1278
+            },
+            "region_iso_code": "GB-ENG",
+            "region_name": "England"
+        },
+        "ip": "198.51.100.42"
+    },
+    "tags": [
+        "forwarded"
+    ]
+}

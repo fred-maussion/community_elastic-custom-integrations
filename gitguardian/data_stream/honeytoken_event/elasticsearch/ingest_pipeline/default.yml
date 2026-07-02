@@ -1,0 +1,128 @@
+---
+description: Pipeline for processing GitGuardian honeytoken events.
+processors:
+  - set:
+      tag: set_ecs_version
+      field: ecs.version
+      value: "9.3.0"
+  - rename:
+      tag: rename_message
+      field: message
+      target_field: event.original
+      ignore_missing: true
+      if: ctx.event?.original == null
+  - json:
+      tag: parse_original_json
+      field: event.original
+      target_field: gitguardian.honeytoken_event
+  - remove:
+      tag: remove_message
+      field: message
+      ignore_missing: true
+      if: ctx.event?.original != null
+  - date:
+      tag: parse_timestamp
+      field: gitguardian.honeytoken_event.triggered_at
+      target_field: "@timestamp"
+      formats:
+        - ISO8601
+      if: ctx.gitguardian?.honeytoken_event?.triggered_at != null
+  - set:
+      tag: set_event_kind
+      field: event.kind
+      value: alert
+  - set:
+      tag: set_event_category
+      field: event.category
+      value: [intrusion_detection]
+  - set:
+      tag: set_event_type
+      field: event.type
+      value: [info]
+  - set:
+      tag: set_event_provider
+      field: event.provider
+      value: GitGuardian
+  - set:
+      tag: set_event_action
+      field: event.action
+      copy_from: gitguardian.honeytoken_event.action
+      ignore_empty_value: true
+  - set:
+      tag: set_event_url
+      field: event.url
+      copy_from: gitguardian.honeytoken_event.gitguardian_url
+      ignore_empty_value: true
+  - convert:
+      tag: convert_id_to_string
+      field: gitguardian.honeytoken_event.id
+      type: string
+      ignore_missing: true
+      ignore_failure: true
+  - set:
+      tag: set_source_ip
+      field: source.ip
+      copy_from: gitguardian.honeytoken_event.ip_address
+      ignore_empty_value: true
+  - geoip:
+      tag: geoip_source
+      field: source.ip
+      target_field: source.geo
+      ignore_missing: true
+      ignore_failure: true
+  - geoip:
+      tag: geoip_source_asn
+      database_file: GeoLite2-ASN.mmdb
+      field: source.ip
+      target_field: source.as
+      properties:
+        - asn
+        - organization_name
+      ignore_missing: true
+      ignore_failure: true
+  - rename:
+      tag: rename_source_as_asn
+      field: source.as.asn
+      target_field: source.as.number
+      ignore_missing: true
+  - rename:
+      tag: rename_source_as_org
+      field: source.as.organization_name
+      target_field: source.as.organization.name
+      ignore_missing: true
+  - remove:
+      tag: remove_gitguardian_ip
+      field: gitguardian.honeytoken_event.ip_address
+      ignore_missing: true
+  - remove:
+      tag: remove_null_triggered_at
+      field: gitguardian.honeytoken_event.triggered_at
+      if: ctx.gitguardian?.honeytoken_event?.triggered_at == null
+      ignore_missing: true
+  - remove:
+      tag: remove_null_data
+      field: gitguardian.honeytoken_event.data
+      if: ctx.gitguardian?.honeytoken_event?.data == null
+      ignore_missing: true
+  - remove:
+      tag: remove_null_tags
+      field: gitguardian.honeytoken_event.tags
+      if: ctx.gitguardian?.honeytoken_event?.tags == null
+      ignore_missing: true
+  - remove:
+      tag: remove_null_gitguardian_url
+      field: gitguardian.honeytoken_event.gitguardian_url
+      if: ctx.gitguardian?.honeytoken_event?.gitguardian_url == null
+      ignore_missing: true
+  - remove:
+      tag: remove_event_original
+      field: event.original
+      if: "ctx.tags == null || !ctx.tags.contains('preserve_original_event')"
+      ignore_missing: true
+on_failure:
+  - set:
+      field: event.kind
+      value: pipeline_error
+  - append:
+      field: error.message
+      value: "Processor {{{_ingest.on_failure_processor_type}}} with tag {{{_ingest.on_failure_processor_tag}}} in pipeline {{{_ingest.pipeline}}} failed with message: {{{_ingest.on_failure_message}}}"
