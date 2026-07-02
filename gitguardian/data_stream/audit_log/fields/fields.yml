@@ -1,0 +1,36 @@
+- name: gitguardian
+  type: group
+  fields:
+    - name: audit_log
+      type: group
+      fields:
+        - name: id
+          type: keyword
+          description: Unique identifier for the audit log entry.
+        - name: date
+          type: date
+          description: Date the audit event occurred.
+        - name: event_name
+          type: keyword
+          description: Name of the audit event (e.g., user.logged_in, incident.resolved).
+        - name: action_type
+          type: keyword
+          description: Type of action performed (READ, CREATE, UPDATE, DELETE, OTHER).
+        - name: member_id
+          type: keyword
+          description: ID of the member that performed the action. Null if member has been deleted.
+        - name: member_email
+          type: keyword
+          description: Email of the member that performed the action.
+        - name: member_name
+          type: keyword
+          description: Name of the member at the time of the event.
+        - name: api_token_id
+          type: keyword
+          description: ID of the API token used if the action was performed via API.
+        - name: target_ids
+          type: keyword
+          description: IDs of the resources targeted by the action.
+        - name: data
+          type: flattened
+          description: Additional data associated with the audit event.
