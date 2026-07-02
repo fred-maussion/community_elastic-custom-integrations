@@ -3,7 +3,7 @@
   changes:
     - description: Add audit_log data stream collecting events from the GitGuardian /v1/audit_logs endpoint with ECS mapping (event.kind, event.action, event.type, user.*, source.ip) and GeoIP enrichment.
       type: enhancement
-      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/49
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/52
 - version: "1.0.0"
   changes:
     - description: Initial version of the package
