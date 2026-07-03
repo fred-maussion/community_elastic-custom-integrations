@@ -7,6 +7,9 @@
     - description: Pin Kibana saved search typeMigrationVersion to 10.12.0 to ensure compatibility with Kibana 9.4 and above.
       type: bugfix
       link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/62
+    - description: Raise minimum Kibana version requirement to 9.4.0 to match dashboard saved-object schema requirements.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/64
 - version: "5.0.0"
   changes:
     - description: Add public_secret_alert data stream collecting public secrets incidents from the GitGuardian /v1/public-incidents/secrets endpoint with ECS mapping (event.kind=alert, event.category=[intrusion_detection,vulnerability], rule.name, vulnerability.severity) and community feedback support.
