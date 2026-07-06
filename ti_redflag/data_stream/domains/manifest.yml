@@ -30,8 +30,8 @@ streams:
         type: text
         title: "Daily Feed Base URL"
         description: |-
-          Base URL for the Red Flag Domains daily diff feed. The date (yesterday, formatted
-          YYYY-MM-DD) and the .txt suffix are appended automatically.
+          Base URL for the Red Flag Domains daily diff feed. Today's date (formatted YYYY-MM-DD)
+          and the .txt suffix are appended automatically.
         required: true
         show_user: false
         secret: false

@@ -14,6 +14,11 @@ processors:
       tag: drop_empty_lines
       description: "Drop any empty lines that remain after trimming"
       if: "ctx.message.isEmpty()"
+  - dissect:
+      tag: dissect_domain_and_provider
+      description: "The CEL input marks which of its two fetch mechanisms (full-fetch reconciliation or daily-diff) produced this line by appending it to the domain. Split it out into event.provider and reduce `message` back to just the domain before any further processing, so event.original and fingerprinting are unaffected by the marker."
+      field: message
+      pattern: "%{message}|%{event.provider}"
   - rename:
       tag: rename_message_to_event_original
       description: "Renames the original `message` field to `event.original` to store a copy of the original message."

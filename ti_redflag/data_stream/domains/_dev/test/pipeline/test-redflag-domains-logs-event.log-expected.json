@@ -12,6 +12,7 @@
                 "dataset": "ti_redflag.domains",
                 "kind": "enrichment",
                 "original": "000webhostapp.fr",
+                "provider": "full_fetch",
                 "type": [
                     "indicator"
                 ]
@@ -25,7 +26,7 @@
                 },
                 "indicator": {
                     "confidence": "High",
-                    "first_seen": "2026-07-06T16:34:34.858840008Z",
+                    "first_seen": "2026-07-06T17:44:39.175066168Z",
                     "name": "000webhostapp.fr",
                     "type": "domain-name",
                     "url": {
@@ -45,6 +46,7 @@
                 "dataset": "ti_redflag.domains",
                 "kind": "enrichment",
                 "original": "000webhost.fr",
+                "provider": "daily_diff",
                 "type": [
                     "indicator"
                 ]
@@ -58,7 +60,7 @@
                 },
                 "indicator": {
                     "confidence": "High",
-                    "first_seen": "2026-07-06T16:34:34.858842717Z",
+                    "first_seen": "2026-07-06T17:44:39.175067960Z",
                     "name": "000webhost.fr",
                     "type": "domain-name",
                     "url": {
