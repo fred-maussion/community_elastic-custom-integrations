@@ -1,4 +1,10 @@
 # newer versions go on top
+- version: "1.1.2"
+  changes:
+    - description: >-
+        Fix the daily diff feed URL to fetch today's date instead of yesterday's. The daily diff feed was assumed to only be finalized after the day is over, but the vendor in fact publishes/updates the current day's file in real time, so fetching yesterday's file left the daily-diff path permanently one day behind newly added domains.
+      type: bugfix
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/67
 - version: "1.1.1"
   changes:
     - description: >-

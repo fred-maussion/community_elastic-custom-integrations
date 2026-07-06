@@ -33,7 +33,7 @@ program: |-
       dyn(
         request(
           "GET",
-          state.daily_url + "/" + (now - duration("24h")).format("2006-01-02") + ".txt"
+          state.daily_url + "/" + now.format("2006-01-02") + ".txt"
         ).do_request().as(resp,
           (resp.StatusCode == 200) ? dyn({
             "events": string(resp.Body)
