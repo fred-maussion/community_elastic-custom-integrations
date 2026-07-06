@@ -3,26 +3,52 @@ resource.url: {{url}}
 
 state:
   url: {{url}}
+  daily_url: {{daily_url}}
+  full_fetch_interval: {{full_fetch_interval}}
 
-# This program now has identical data structures in both branches of the
-# ternary operator, which will satisfy the CEL compiler.
 program: |-
   state.with(
-    request(
-      "GET",
-      state.url
-    ).do_request().as(resp,
-      (resp.StatusCode == 200) ? {
-        "events": string(resp.Body)
-          .split('\n')
-          .filter(line, line != '' && !line.startsWith('#'))
-          .map(domain, {"message": domain})
-      } : {
-        "events": [{
-          "message": "ERROR: Failed to download Red Flag Domains feed. Status code: " + string(resp.StatusCode)
-        }]
-      }
-    )
+    (state.?last_full.orValue("") == "" || (now - timestamp(state.last_full)) > duration(state.full_fetch_interval)) ?
+      dyn(
+        request(
+          "GET",
+          state.url
+        ).do_request().as(resp,
+          (resp.StatusCode == 200) ? dyn({
+            "events": string(resp.Body)
+              .split('\n')
+              .filter(line, line != '' && !line.startsWith('#'))
+              .map(domain, {"message": domain}),
+            "last_full": now.format("2006-01-02T15:04:05.000Z07:00")
+          }) : dyn({
+            "events": {
+              "error": {
+                "message": "Failed to download Red Flag Domains full feed. Status code: " + string(resp.StatusCode)
+              }
+            }
+          })
+        )
+      )
+    :
+      dyn(
+        request(
+          "GET",
+          state.daily_url + "/" + (now - duration("24h")).format("2006-01-02") + ".txt"
+        ).do_request().as(resp,
+          (resp.StatusCode == 200) ? dyn({
+            "events": string(resp.Body)
+              .split('\n')
+              .filter(line, line != '' && !line.startsWith('#'))
+              .map(domain, {"message": domain})
+          }) : dyn({
+            "events": {
+              "error": {
+                "message": "Failed to download Red Flag Domains daily feed. Status code: " + string(resp.StatusCode)
+              }
+            }
+          })
+        )
+      )
   )
 
 {{#if tags}}

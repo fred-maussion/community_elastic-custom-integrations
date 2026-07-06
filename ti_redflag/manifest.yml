@@ -1,7 +1,7 @@
 format_version: 3.5.0
 name: ti_redflag
 title: "Red Flag Domains"
-version: 0.0.4
+version: 1.1.0
 source:
   license: "Apache-2.0"
 description: "Ingest threat intelligence indicators from red.flag.domains feeds with Elastic Agent."
@@ -15,10 +15,10 @@ conditions:
   elastic:
     subscription: "basic"
 screenshots:
-  - src: /img/logo.svg
+  - src: /img/sample-screenshot.png
     title: Sample screenshot
     size: 600x600
-    type: image/svg+xml
+    type: image/png
 icons:
   - src: /img/logo.svg
     title: Red Flag Logo
@@ -38,8 +38,7 @@ policy_templates:
             title: Dataset
             show_user: false
             secret: false
-            default: "redflag.domains"
-
+            default: "ti_redflag.domains"
 owner:
   github: fred-maussion/community_elastic-custom-integrations
   type: community

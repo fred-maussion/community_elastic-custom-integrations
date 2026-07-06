@@ -2,54 +2,93 @@
 description: Pipeline for ingesting Red Flag Domains as ECS-compliant threat intelligence indicators.
 processors:
   - drop:
+      tag: drop_comment_lines
       description: "Ignore comments or header lines from the feed"
       if: "ctx.message.startsWith('#')"
   - script:
-      description: "Remove leading/trailing whitespace from the domain name"
+      tag: trim_domain_whitespace
+      description: "Remove leading/trailing whitespace from the domain name and normalize case so the full-fetch and daily-diff inputs fingerprint the same domain identically"
       lang: painless
-      source: "ctx.message = ctx.message.trim()"
+      source: "ctx.message = ctx.message.trim().toLowerCase()"
   - drop:
+      tag: drop_empty_lines
       description: "Drop any empty lines that remain after trimming"
       if: "ctx.message.isEmpty()"
+  - rename:
+      tag: rename_message_to_event_original
+      description: "Renames the original `message` field to `event.original` to store a copy of the original message."
+      field: message
+      target_field: event.original
+      ignore_missing: true
+      if: "ctx.event?.original == null"
+  - remove:
+      tag: remove_message
+      description: "The `message` field is no longer required if the document has an `event.original` field."
+      field: message
+      ignore_missing: true
+      if: "ctx.event?.original != null"
+  - fingerprint:
+      tag: fingerprint_indicator_id
+      description: "Deterministic ID from the domain so the same domain is only ever indexed once, regardless of which input (full-fetch or daily-diff) observed it first. Data streams only support the `create` action, so a later duplicate write for the same domain is rejected at the Elasticsearch layer instead of overwriting this document."
+      fields: [event.original]
+      target_field: _id
+      method: SHA-256
   - set:
+      tag: set_ecs_version
       field: ecs.version
-      value: '8.11.0'
+      value: '8.17.0'
   - set:
+      tag: set_event_kind
       field: event.kind
       value: enrichment
-  - set:
+  - append:
+      tag: append_event_category
       field: event.category
-      value:
-        - threat
-  - set:
+      value: threat
+  - append:
+      tag: append_event_type
       field: event.type
-      value:
-        - indicator
+      value: indicator
   - set:
+      tag: set_event_dataset
       field: event.dataset
       value: "ti_redflag.domains"
   - set:
+      tag: set_threat_feed_name
       field: threat.feed.name
       value: "Red Flag Domains"
   - set:
+      tag: set_threat_indicator_type
       field: threat.indicator.type
       value: "domain-name"
   - set:
+      tag: set_threat_indicator_name
       field: threat.indicator.name
-      value: "{{{message}}}"
+      value: "{{{event.original}}}"
   - set:
+      tag: set_threat_indicator_url_domain
       field: threat.indicator.url.domain
-      value: "{{{message}}}"
+      value: "{{{event.original}}}"
   - set:
+      tag: set_threat_indicator_confidence
       field: threat.indicator.confidence
       value: "High"
-  - remove:
-      field: message
+  - set:
+      tag: set_threat_indicator_first_seen
+      description: "Only takes effect on the write that wins the fingerprint/create race above (see fingerprint_indicator_id); later duplicate attempts for the same domain never reach this value, so it is never overwritten once set."
+      field: threat.indicator.first_seen
+      value: '{{{_ingest.timestamp}}}'
 
 on_failure:
+  - append:
+      tag: on_failure_append_error_message
+      field: error.message
+      value: "Processor '{{{ _ingest.on_failure_processor_type }}}' failed with message '{{{ _ingest.on_failure_message }}}'"
   - set:
+      tag: on_failure_set_event_kind
       field: event.kind
       value: pipeline_error
   - append:
-      field: error.message
-      value: "Failed to process Red Flag Domains indicator in ingest pipeline."
+      tag: on_failure_append_preserve_original_event
+      field: tags
+      value: preserve_original_event

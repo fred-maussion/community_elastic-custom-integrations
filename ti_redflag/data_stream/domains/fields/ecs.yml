@@ -10,9 +10,9 @@
   external: ecs
 - name: event.kind
   external: ecs
-- name: event.type
+- name: event.original
   external: ecs
-- name: event.dataset
+- name: event.type
   external: ecs
 - name: tags
   external: ecs
@@ -37,3 +37,5 @@
   type: keyword
 - name: threat.indicator.confidence
   type: constant_keyword
+- name: threat.indicator.first_seen
+  external: ecs

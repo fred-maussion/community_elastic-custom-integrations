@@ -5,5 +5,13 @@
   description: Data stream dataset.
 - name: data_stream.namespace
   external: ecs
+- name: event.module
+  external: ecs
+  type: constant_keyword
+  value: ti_redflag
+- name: event.dataset
+  external: ecs
+  type: constant_keyword
+  value: "ti_redflag.domains"
 - name: "@timestamp"
   external: ecs
