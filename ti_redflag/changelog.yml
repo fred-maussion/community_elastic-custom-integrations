@@ -1,4 +1,10 @@
 # newer versions go on top
+- version: "1.2.0"
+  changes:
+    - description: >-
+        Add a Kibana dashboard ("Red Flag Domains Overview") focused on feed volume/freshness and analyst triage: new indicators over time, recent additions table, top TLDs breakdown, and full-fetch/daily-diff fetch-health metrics.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/69
 - version: "1.1.2"
   changes:
     - description: >-
