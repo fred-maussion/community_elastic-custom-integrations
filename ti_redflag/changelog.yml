@@ -1,4 +1,10 @@
 # newer versions go on top
+- version: "1.1.1"
+  changes:
+    - description: >-
+        Add event.provider, marking which fetch mechanism (full_fetch or daily_diff) produced each document, so an operator can verify the two-cadence design introduced in 1.1.0 is actually alternating as expected.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/67
 - version: "1.1.0"
   changes:
     - description: >-

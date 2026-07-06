@@ -18,7 +18,7 @@ program: |-
             "events": string(resp.Body)
               .split('\n')
               .filter(line, line != '' && !line.startsWith('#'))
-              .map(domain, {"message": domain}),
+              .map(domain, {"message": domain + "|full_fetch"}),
             "last_full": now.format("2006-01-02T15:04:05.000Z07:00")
           }) : dyn({
             "events": {
@@ -39,7 +39,7 @@ program: |-
             "events": string(resp.Body)
               .split('\n')
               .filter(line, line != '' && !line.startsWith('#'))
-              .map(domain, {"message": domain})
+              .map(domain, {"message": domain + "|daily_diff"})
           }) : dyn({
             "events": {
               "error": {
