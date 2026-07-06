@@ -37,3 +37,5 @@
   type: keyword
 - name: threat.indicator.confidence
   type: constant_keyword
+- name: threat.indicator.first_seen
+  external: ecs

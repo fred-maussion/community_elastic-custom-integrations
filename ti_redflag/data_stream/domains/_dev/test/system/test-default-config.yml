@@ -4,5 +4,6 @@ input: cel
 data_stream:
   vars:
     url: "http://{{Hostname}}/red.flag.domains.txt"
+    daily_url: "http://{{Hostname}}/daily"
 assert:
   min_count: 500
