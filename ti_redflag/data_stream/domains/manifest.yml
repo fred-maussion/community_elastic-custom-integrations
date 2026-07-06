@@ -14,8 +14,7 @@ streams:
         required: true
         show_user: false
         secret: false
-        default: redflag.domains
-
+        default: ti_redflag.domains
       - name: url
         type: text
         title: "Feed URL"
@@ -24,7 +23,6 @@ streams:
         show_user: false
         secret: false
         default: https://dl.red.flag.domains/red.flag.domains.txt
-
       - name: interval
         type: text
         title: "Polling Interval"
@@ -33,7 +31,6 @@ streams:
         required: true
         show_user: true
         default: 12h
-      
       - name: tags
         type: text
         title: "Tags"
@@ -43,13 +40,11 @@ streams:
         default:
           - red-flag-domains
           - forwarded
-
       - name: timeout
         type: text
         title: "Timeout"
         description: "Duration to wait for the HTTP request to complete before timing out."
         default: "30s"
-
       - name: proxy_url
         type: text
         title: "Proxy URL"

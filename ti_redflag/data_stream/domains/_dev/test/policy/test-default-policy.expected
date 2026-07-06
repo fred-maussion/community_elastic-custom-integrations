@@ -4,8 +4,6 @@ inputs:
       meta:
         package:
             name: ti_redflag
-            policy_template: redflag_domains
-            release: beta
       name: test-default-policy-ti_redflag
       streams:
         - data_stream:
@@ -17,16 +15,18 @@ inputs:
                 "GET",
                 state.url
               ).do_request().as(resp,
-                (resp.StatusCode == 200) ? {
+                (resp.StatusCode == 200) ? dyn({
                   "events": string(resp.Body)
                     .split('\n')
                     .filter(line, line != '' && !line.startsWith('#'))
                     .map(domain, {"message": domain})
-                } : {
-                  "events": [{
-                    "message": "ERROR: Failed to download Red Flag Domains feed. Status code: " + string(resp.StatusCode)
-                  }]
-                }
+                }) : dyn({
+                  "events": {
+                    "error": {
+                      "message": "GET " + state.url + ": " + string(resp.StatusCode)
+                    }
+                  }
+                })
               )
             )
           resource.timeout: 30s

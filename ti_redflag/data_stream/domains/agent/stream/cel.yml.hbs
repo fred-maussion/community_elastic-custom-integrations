@@ -4,24 +4,24 @@ resource.url: {{url}}
 state:
   url: {{url}}
 
-# This program now has identical data structures in both branches of the
-# ternary operator, which will satisfy the CEL compiler.
 program: |-
   state.with(
     request(
       "GET",
       state.url
     ).do_request().as(resp,
-      (resp.StatusCode == 200) ? {
+      (resp.StatusCode == 200) ? dyn({
         "events": string(resp.Body)
           .split('\n')
           .filter(line, line != '' && !line.startsWith('#'))
           .map(domain, {"message": domain})
-      } : {
-        "events": [{
-          "message": "ERROR: Failed to download Red Flag Domains feed. Status code: " + string(resp.StatusCode)
-        }]
-      }
+      }) : dyn({
+        "events": {
+          "error": {
+            "message": "GET " + state.url + ": " + string(resp.StatusCode)
+          }
+        }
+      })
     )
   )
 

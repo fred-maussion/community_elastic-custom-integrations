@@ -23,7 +23,7 @@ The Elastic Agent uses the Common Event Language (CEL) input to periodically pol
 ## What data does this integration collect?
 
 The Red Flag Domains integration collects a list of domain names. Each domain is processed into an ECS-compliant threat intelligence document with the following key fields:
-*   `threat.feed.name`: Set to `red.flag.domains`.
+*   `threat.feed.name`: Set to `Red Flag Domains`.
 *   `threat.indicator.type`: The suspicious domain name.
 *   `threat.indicator.name`: The suspicious domain name.
 *   `threat.indicator.url.domain`: Set to `message`.

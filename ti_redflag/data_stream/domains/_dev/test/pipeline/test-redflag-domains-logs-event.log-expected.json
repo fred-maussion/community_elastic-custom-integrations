@@ -3,7 +3,7 @@
         null,
         {
             "ecs": {
-                "version": "8.11.0"
+                "version": "8.17.0"
             },
             "event": {
                 "category": [
@@ -11,6 +11,7 @@
                 ],
                 "dataset": "ti_redflag.domains",
                 "kind": "enrichment",
+                "original": "000webhostapp.fr",
                 "type": [
                     "indicator"
                 ]
@@ -31,7 +32,7 @@
         },
         {
             "ecs": {
-                "version": "8.11.0"
+                "version": "8.17.0"
             },
             "event": {
                 "category": [
@@ -39,6 +40,7 @@
                 ],
                 "dataset": "ti_redflag.domains",
                 "kind": "enrichment",
+                "original": "000webhost.fr",
                 "type": [
                     "indicator"
                 ]
@@ -56,6 +58,7 @@
                     }
                 }
             }
-        }
+        },
+        null
     ]
 }

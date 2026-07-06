@@ -1,22 +1,31 @@
 # newer versions go on top
+- version: "1.0.0"
+  changes:
+    - description: >-
+        Promote to v1.0.0: full elastic-package test coverage (static, policy, asset, pipeline, system) now passes, including validation against a live Elastic Security serverless project. Also fixes a local system-test port collision (docker-compose nginx service hardcoded to host port 8080, clashing with the elastic-package Package Registry container) and regenerates stale test fixtures.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/65
+- version: "0.0.5"
+  changes:
+    - description: >-
+        Fix data_stream.dataset default mismatch with event.dataset, preserve event.original, use append for event.category/event.type, fix CEL error-event shape, align ecs.version with build.yml, and complete base-fields.yml.
+      type: bugfix
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/9
 - version: "0.0.4"
   changes:
     - description: Adding system test
       type: enhancement
       link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/9
-
 - version: "0.0.3"
   changes:
     - description: Adding policy test
       type: enhancement
       link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/9
-
 - version: "0.0.2"
   changes:
     - description: Changing Manifest Github Repository
       type: enhancement
       link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/9
-
 - version: "0.0.1"
   changes:
     - description: Initial draft of the package
