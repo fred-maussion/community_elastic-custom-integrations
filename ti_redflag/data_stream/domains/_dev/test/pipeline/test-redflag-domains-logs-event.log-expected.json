@@ -16,12 +16,16 @@
                     "indicator"
                 ]
             },
+            "tags": [
+                "preserve_original_event"
+            ],
             "threat": {
                 "feed": {
                     "name": "Red Flag Domains"
                 },
                 "indicator": {
                     "confidence": "High",
+                    "first_seen": "2026-07-06T16:34:34.858840008Z",
                     "name": "000webhostapp.fr",
                     "type": "domain-name",
                     "url": {
@@ -45,12 +49,16 @@
                     "indicator"
                 ]
             },
+            "tags": [
+                "preserve_original_event"
+            ],
             "threat": {
                 "feed": {
                     "name": "Red Flag Domains"
                 },
                 "indicator": {
                     "confidence": "High",
+                    "first_seen": "2026-07-06T16:34:34.858842717Z",
                     "name": "000webhost.fr",
                     "type": "domain-name",
                     "url": {

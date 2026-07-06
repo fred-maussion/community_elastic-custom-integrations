@@ -4,7 +4,10 @@ streams:
   - input: cel
     title: "Red Flag Domains Feed"
     description: |-
-      Collects suspicious newly registered domains from the Red Flag Domains feed.
+      Collects suspicious newly registered domains from the Red Flag Domains feed. Most polls
+      fetch the lightweight daily diff feed; a full-feed reconciliation pass (governed by
+      full_fetch_interval) runs periodically as a safety net and is the only time this input
+      re-downloads the complete list.
     template_path: cel.yml.hbs
     vars:
       - name: data_stream.dataset
@@ -17,20 +20,41 @@ streams:
         default: ti_redflag.domains
       - name: url
         type: text
-        title: "Feed URL"
-        description: "The URL for the Red Flag Domains text file feed."
+        title: "Full Feed URL"
+        description: "The URL for the Red Flag Domains complete text file feed."
         required: true
         show_user: false
         secret: false
         default: https://dl.red.flag.domains/red.flag.domains.txt
+      - name: daily_url
+        type: text
+        title: "Daily Feed Base URL"
+        description: |-
+          Base URL for the Red Flag Domains daily diff feed. The date (yesterday, formatted
+          YYYY-MM-DD) and the .txt suffix are appended automatically.
+        required: true
+        show_user: false
+        secret: false
+        default: https://dl.red.flag.domains/daily
       - name: interval
         type: text
         title: "Polling Interval"
         description: |-
-          How often the feed URL is checked for updates. The feed is updated daily.
+          How often this input runs. Most runs fetch the lightweight daily diff; a full-feed
+          reconciliation pass happens automatically whenever full_fetch_interval has elapsed.
         required: true
         show_user: true
-        default: 12h
+        default: 24h
+      - name: full_fetch_interval
+        type: text
+        title: "Full Feed Reconciliation Interval"
+        description: |-
+          Minimum time between full-feed reconciliation passes. This is a safety net for domains
+          the daily diff feed missed (e.g. a missed day), so it does not need to run often; the
+          daily diff feed is what determines first_seen for most indicators.
+        required: true
+        show_user: true
+        default: 168h
       - name: tags
         type: text
         title: "Tags"

@@ -7,9 +7,9 @@ processors:
       if: "ctx.message.startsWith('#')"
   - script:
       tag: trim_domain_whitespace
-      description: "Remove leading/trailing whitespace from the domain name"
+      description: "Remove leading/trailing whitespace from the domain name and normalize case so the full-fetch and daily-diff inputs fingerprint the same domain identically"
       lang: painless
-      source: "ctx.message = ctx.message.trim()"
+      source: "ctx.message = ctx.message.trim().toLowerCase()"
   - drop:
       tag: drop_empty_lines
       description: "Drop any empty lines that remain after trimming"
@@ -27,6 +27,12 @@ processors:
       field: message
       ignore_missing: true
       if: "ctx.event?.original != null"
+  - fingerprint:
+      tag: fingerprint_indicator_id
+      description: "Deterministic ID from the domain so the same domain is only ever indexed once, regardless of which input (full-fetch or daily-diff) observed it first. Data streams only support the `create` action, so a later duplicate write for the same domain is rejected at the Elasticsearch layer instead of overwriting this document."
+      fields: [event.original]
+      target_field: _id
+      method: SHA-256
   - set:
       tag: set_ecs_version
       field: ecs.version
@@ -67,6 +73,11 @@ processors:
       tag: set_threat_indicator_confidence
       field: threat.indicator.confidence
       value: "High"
+  - set:
+      tag: set_threat_indicator_first_seen
+      description: "Only takes effect on the write that wins the fingerprint/create race above (see fingerprint_indicator_id); later duplicate attempts for the same domain never reach this value, so it is never overwritten once set."
+      field: threat.indicator.first_seen
+      value: '{{{_ingest.timestamp}}}'
 
 on_failure:
   - append:

@@ -1,4 +1,10 @@
 # newer versions go on top
+- version: "1.1.0"
+  changes:
+    - description: >-
+        Add threat.indicator.first_seen, populated primarily from a new daily-diff feed poll with the existing full-feed fetch retained as a periodic reconciliation safety net. A deterministic document ID (fingerprint of the domain) combined with Elasticsearch data streams' append-only create semantics ensures a domain's first_seen is set once and never overwritten on later polls. threat.indicator.last_seen is not populated.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/67
 - version: "1.0.0"
   changes:
     - description: >-

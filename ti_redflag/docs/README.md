@@ -13,7 +13,7 @@ This integration is compatible with any environment that can run the Elastic Age
 
 ### How it works
 
-The Elastic Agent uses the Common Event Language (CEL) input to periodically poll the Red Flag Domains URL. It downloads the plain text feed, processes each line as a separate domain, and sends the data to your Elastic cluster. An ingest pipeline then enriches each domain into a fully ECS-compliant threat indicator document.
+The Elastic Agent uses the Common Event Language (CEL) input to periodically poll the Red Flag Domains feeds. Most polls fetch the lightweight daily diff feed (only domains added in the last day); a full-feed reconciliation pass runs automatically on a longer interval (governed by the **Full Feed Reconciliation Interval** setting) as a safety net for anything the daily diff missed. Each domain is processed into an ECS-compliant threat indicator document, and a deterministic document ID (derived from the domain name) ensures a domain is only ever indexed once, regardless of which fetch observed it first — this is what allows `threat.indicator.first_seen` to reflect the date the domain was actually first seen, rather than being reset on every poll.
 
 ## What data does this integration collect?
 
@@ -22,6 +22,7 @@ The Red Flag Domains integration collects a list of domain names. Each domain is
 *   `threat.indicator.type`: The suspicious domain name.
 *   `threat.indicator.name`: The suspicious domain name.
 *   `threat.indicator.url.domain`: Set to `message`.
+*   `threat.indicator.first_seen`: The date this integration first observed the domain. This is set once, when the domain is first indexed, and is never overwritten on later polls. Note this reflects when *this integration* first saw the domain, which for domains missed by the daily diff feed may lag their true addition date by up to the full-feed reconciliation interval. `threat.indicator.last_seen` is not populated.
 
 ### Supported use cases
 
@@ -48,7 +49,7 @@ Elastic Agent must be installed to collect data from the Red Flag Domains feed. 
 
 1.  From your Elastic deployment, go to **Integrations** and search for "Red Flag Domains".
 2.  Click **Add Red Flag Domains**.
-3.  On the configuration page, give the integration a name. The default settings for the feed URL and polling interval are suitable for most users.
+3.  On the configuration page, give the integration a name. The default settings for the feed URLs, polling interval, and full-feed reconciliation interval are suitable for most users.
 4.  Click **Save and continue**.
 5.  Deploy the integration to an existing or new Elastic Agent policy.
 
@@ -69,6 +70,8 @@ The most common issue with this integration is a lack of network connectivity. E
 ```sh
 curl -v https://dl.red.flag.domains/red.flag.domains.txt
 ```
+
+During each full-feed reconciliation pass, it is expected to see version-conflict errors reported for most domains — this is normal. It means those domains were already indexed by an earlier daily diff fetch (or a previous reconciliation pass), so their existing `threat.indicator.first_seen` value is correctly preserved rather than overwritten.
 
 ## Reference
 
@@ -167,6 +170,7 @@ An example event for `domains` looks as following:
 | threat.feed.name | Display friendly feed name. | constant_keyword |
 | threat.feed.reference | Display the feed reference. | constant_keyword |
 | threat.indicator.confidence |  | constant_keyword |
+| threat.indicator.first_seen | The date and time when intelligence source first reported sighting this indicator. | date |
 | threat.indicator.name |  | keyword |
 | threat.indicator.type | The type of the threat indicator. | constant_keyword |
 | threat.indicator.url.domain |  | keyword |
