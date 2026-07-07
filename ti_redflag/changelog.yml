@@ -1,4 +1,10 @@
 # newer versions go on top
+- version: "1.2.1"
+  changes:
+    - description: >-
+        Fix the daily diff feed erroring every poll before the vendor publishes anything for the current day. Confirmed the vendor does not pre-create a day's file at midnight -- it only appears once the first domain of that day is added, so a 404 on today's dated file is normal and now treated as zero new events instead of an error.
+      type: bugfix
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/73
 - version: "1.2.0"
   changes:
     - description: >-
