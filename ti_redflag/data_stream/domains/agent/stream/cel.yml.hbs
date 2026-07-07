@@ -40,6 +40,8 @@ program: |-
               .split('\n')
               .filter(line, line != '' && !line.startsWith('#'))
               .map(domain, {"message": domain + "|daily_diff"})
+          }) : (resp.StatusCode == 404) ? dyn({
+            "events": []
           }) : dyn({
             "events": {
               "error": {

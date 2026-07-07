@@ -31,7 +31,9 @@ streams:
         title: "Daily Feed Base URL"
         description: |-
           Base URL for the Red Flag Domains daily diff feed. Today's date (formatted YYYY-MM-DD)
-          and the .txt suffix are appended automatically.
+          and the .txt suffix are appended automatically. The vendor only creates today's file
+          once the first domain of the day is published, so a 404 early in the day is normal and
+          treated as zero new domains rather than an error.
         required: true
         show_user: false
         secret: false
