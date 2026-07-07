@@ -1,7 +1,7 @@
 format_version: 3.5.2
 name: gitguardian
 title: "GitGuardian"
-version: 5.0.1
+version: 5.0.2
 source:
   license: "Apache-2.0"
 description: "Collect secrets incidents, audit logs, honeytoken events, secret occurrences, and public secret alerts from the GitGuardian API."

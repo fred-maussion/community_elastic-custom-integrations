@@ -1,4 +1,9 @@
 # newer versions go on top
+- version: "5.0.2"
+  changes:
+    - description: Fix GitGuardian Secret Alerts dashboard referencing a hardcoded backing index instead of the generic logs-gitguardian.internal_secret_alert-* data stream pattern, and realign its saved-object id/title with the file name.
+      type: bugfix
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/71
 - version: "5.0.1"
   changes:
     - description: Compress screenshot PNGs (~68% size reduction) and remove openapi.json from package tracking.
