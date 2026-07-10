@@ -1,0 +1,42 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-07-10T09:00:32.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "resetIPMI",
+                "category": [
+                    "host"
+                ],
+                "end": "2026-07-10T09:00:32.000Z",
+                "id": 1004,
+                "kind": "event",
+                "original": "{\"taskId\":1004,\"function\":\"resetIPMI\",\"status\":\"customerError\",\"comment\":\"IPMI reset failed: session already in use\",\"note\":null,\"startDate\":\"2026-07-10T11:00:00+02:00\",\"lastUpdate\":\"2026-07-10T11:00:32+02:00\",\"doneDate\":\"2026-07-10T11:00:32+02:00\",\"needSchedule\":false,\"plannedInterventionId\":null,\"changeUuid\":null,\"ticketReference\":null,\"tags\":[],\"serviceName\":\"ns-example1.ip-192-0-2.example\"}",
+                "outcome": "failure",
+                "start": "2026-07-10T09:00:00.000Z",
+                "type": [
+                    "change"
+                ]
+            },
+            "message": "IPMI reset failed: session already in use",
+            "ovh_dedicated_servers": {
+                "server_name": "ns-example1.ip-192-0-2.example",
+                "task": {
+                    "need_schedule": false,
+                    "status": "customerError",
+                    "tags": []
+                }
+            },
+            "related": {
+                "hosts": [
+                    "ns-example1.ip-192-0-2.example"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

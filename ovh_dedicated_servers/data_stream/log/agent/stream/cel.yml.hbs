@@ -1,0 +1,154 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+resource.url: {{url}}
+state:
+  application_key: {{application_key}}
+  application_secret: {{application_secret}}
+  consumer_key: {{consumer_key}}
+  batch_size: {{batch_size}}
+redact:
+  fields:
+    - application_secret
+    - consumer_key
+    - cursor.creds.application_secret
+    - cursor.creds.consumer_key
+program: |-
+  // Phase A: calibrate the clock offset against OVH server time (once, cached in cursor.offset)
+  // and persist the credentials into cursor.creds -- state.application_key/application_secret/
+  // consumer_key are only seeded from config on the very first evaluation; cursor is the only
+  // state the framework carries forward across periodic ticks, so credentials must live there.
+  !has(state.?cursor.offset) ?
+    state.with(
+      request("GET", state.url.trim_right("/") + "/auth/time").do_request().as(resp,
+        (resp.StatusCode == 200) ?
+          {
+            "events": [{"retry": true}],
+            "cursor": {
+              "offset": int(resp.Body.decode_json()) - int(now),
+              "creds": {
+                "application_key": state.application_key,
+                "application_secret": state.application_secret,
+                "consumer_key": state.consumer_key,
+              },
+            },
+            "want_more": true,
+          }
+        :
+          {
+            "events": {
+              "error": {
+                "code": string(resp.StatusCode),
+                "id": string(resp.Status),
+                "message": "GET /auth/time: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+              },
+            },
+            "want_more": false,
+          }
+      )
+    )
+  :
+    // Phase B: fetch one page of the account-wide provisioning/activity log. Pagination
+    // is genuine page/limit pagination (the only endpoint in this API family that has it) --
+    // no per-server fan-out, no time-range filter. Each polling tick starts a fresh sweep
+    // from page 1; cursor.page tracks progress only within a sweep and is dropped once the
+    // terminal (short) page is reached, so the next tick starts over at page 1 again.
+    {
+      "creds": state.cursor.creds,
+      "page": int(state.cursor.?page.orValue(1)),
+      "ts": int(now) + int(state.cursor.offset),
+    }.as(ctx,
+      (
+        state.url.trim_right("/") + "/dedicated/server/log?" + {
+          "page": [string(ctx.page)],
+          "limit": [string(int(state.batch_size))],
+        }.format_query()
+      ).as(reqUrl,
+        state.with(
+          request("GET", reqUrl).with(
+            {
+              "Header": {
+                "X-Ovh-Application": [ctx.creds.application_key],
+                "X-Ovh-Consumer": [ctx.creds.consumer_key],
+                "X-Ovh-Timestamp": [string(ctx.ts)],
+                "X-Ovh-Signature": [
+                  "$1$" + bytes(
+                    [
+                      ctx.creds.application_secret,
+                      ctx.creds.consumer_key,
+                      "GET",
+                      reqUrl,
+                      "",
+                      string(ctx.ts),
+                    ].join("+")
+                  ).sha1().hex(),
+                ],
+                "Accept": ["application/json"],
+              },
+            }
+          ).do_request().as(resp,
+            (resp.StatusCode == 200) ?
+              resp.Body.decode_json().?data.orValue([]).as(entries,
+                (size(entries) < int(state.batch_size)) ?
+                  (
+                    (size(entries) > 0) ?
+                      {
+                        "events": entries.map(e, {"message": e.encode_json()}),
+                        "cursor": state.cursor.drop(["page"]),
+                        "want_more": false,
+                      }
+                    :
+                      {
+                        "events": [{"retry": true}],
+                        "cursor": state.cursor.drop(["page"]),
+                        "want_more": false,
+                      }
+                  )
+                :
+                  {
+                    "events": entries.map(e, {"message": e.encode_json()}),
+                    "cursor": state.cursor.with({"page": ctx.page + 1}),
+                    "want_more": true,
+                  }
+              )
+            :
+              {
+                "events": {
+                  "error": {
+                    "code": string(resp.StatusCode),
+                    "id": string(resp.Status),
+                    "message": "GET /dedicated/server/log: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+                  },
+                },
+                "want_more": false,
+              }
+          )
+        )
+      )
+    )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+processors:
+- drop_event.when.equals.retry: true
+{{#if processors}}
+{{processors}}
+{{/if}}

@@ -1,0 +1,254 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+resource.url: {{url}}
+state:
+  application_key: {{application_key}}
+  application_secret: {{application_secret}}
+  consumer_key: {{consumer_key}}
+redact:
+  fields:
+    - application_secret
+    - consumer_key
+    - cursor.creds.application_secret
+    - cursor.creds.consumer_key
+program: |-
+  // Phase A: calibrate the clock offset against OVH server time (once, cached in cursor.offset)
+  // and persist the credentials into cursor.creds -- state.application_key/application_secret/
+  // consumer_key are only seeded from config on the very first evaluation; cursor is the only
+  // state the framework carries forward across periodic ticks, so credentials must live there.
+  !has(state.?cursor.offset) ?
+    state.with(
+      request("GET", state.url.trim_right("/") + "/auth/time").do_request().as(resp,
+        (resp.StatusCode == 200) ?
+          {
+            "events": [{"retry": true}],
+            "cursor": {
+              "offset": int(resp.Body.decode_json()) - int(now),
+              "creds": {
+                "application_key": state.application_key,
+                "application_secret": state.application_secret,
+                "consumer_key": state.consumer_key,
+              },
+            },
+            "want_more": true,
+          }
+        :
+          {
+            "events": {
+              "error": {
+                "code": string(resp.StatusCode),
+                "id": string(resp.Status),
+                "message": "GET /auth/time: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+              },
+            },
+            "want_more": false,
+          }
+      )
+    )
+  :
+    state.cursor.creds.as(creds,
+      (size(state.cursor.?queue.orValue([])) > 0) ?
+        // Phase D: pop the front of the pending-task-detail queue and fetch one task's detail.
+        state.cursor.queue[0].as(item,
+          (int(now) + int(state.cursor.offset)).as(ts,
+            state.with(
+              request("GET", state.url.trim_right("/") + "/dedicated/server/" + item.service + "/task/" + string(item.id)).with(
+                {
+                  "Header": {
+                    "X-Ovh-Application": [creds.application_key],
+                    "X-Ovh-Consumer": [creds.consumer_key],
+                    "X-Ovh-Timestamp": [string(ts)],
+                    "X-Ovh-Signature": [
+                      "$1$" + bytes(
+                        [
+                          creds.application_secret,
+                          creds.consumer_key,
+                          "GET",
+                          state.url.trim_right("/") + "/dedicated/server/" + item.service + "/task/" + string(item.id),
+                          "",
+                          string(ts),
+                        ].join("+")
+                      ).sha1().hex(),
+                    ],
+                    "Accept": ["application/json"],
+                  },
+                }
+              ).do_request().as(resp,
+                (resp.StatusCode == 200) ?
+                  {
+                    "events": [{"message": resp.Body.decode_json().with({"serviceName": item.service}).encode_json()}],
+                    "cursor": state.cursor.with(
+                      {
+                        "queue": tail(state.cursor.queue, 1),
+                        // Bounded dedup: task IDs are monotonically increasing longs (per the API
+                        // research brief), so tracking only the highest seen ID per server --
+                        // rather than an ever-growing list of every ID ever seen -- is sufficient
+                        // to never re-emit an already-seen task, and keeps cursor.seen at a fixed
+                        // size (one number per server) for the lifetime of the running agent.
+                        "seen": state.cursor.?seen.orValue({}).with(
+                          {
+                            item.service: [item.id, state.cursor.?seen[?item.service].orValue(0)].max(),
+                          }
+                        ),
+                      }
+                    ),
+                    "want_more": true,
+                  }
+                :
+                  {
+                    "events": {
+                      "error": {
+                        "code": string(resp.StatusCode),
+                        "id": string(resp.Status),
+                        "message": "GET /dedicated/server/" + item.service + "/task/" + string(item.id) + ": " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+                      },
+                    },
+                    "want_more": false,
+                  }
+              )
+            )
+          )
+        )
+      : !has(state.?cursor.servers) ?
+        // Phase B: no active sweep in progress -- list owned dedicated servers and start one.
+        (int(now) + int(state.cursor.offset)).as(ts,
+          state.with(
+            request("GET", state.url.trim_right("/") + "/dedicated/server").with(
+              {
+                "Header": {
+                  "X-Ovh-Application": [creds.application_key],
+                  "X-Ovh-Consumer": [creds.consumer_key],
+                  "X-Ovh-Timestamp": [string(ts)],
+                  "X-Ovh-Signature": [
+                    "$1$" + bytes(
+                      [
+                        creds.application_secret,
+                        creds.consumer_key,
+                        "GET",
+                        state.url.trim_right("/") + "/dedicated/server",
+                        "",
+                        string(ts),
+                      ].join("+")
+                    ).sha1().hex(),
+                  ],
+                  "Accept": ["application/json"],
+                },
+              }
+            ).do_request().as(resp,
+              (resp.StatusCode == 200) ?
+                {
+                  "events": [{"retry": true}],
+                  "cursor": state.cursor.with(
+                    {
+                      "servers": resp.Body.decode_json(),
+                      "idx": 0,
+                    }
+                  ),
+                  "want_more": true,
+                }
+              :
+                {
+                  "events": {
+                    "error": {
+                      "code": string(resp.StatusCode),
+                      "id": string(resp.Status),
+                      "message": "GET /dedicated/server: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+                    },
+                  },
+                  "want_more": false,
+                }
+            )
+          )
+        )
+      : (int(state.cursor.idx) < size(state.cursor.servers)) ?
+        // Phase C: list task IDs for the current server, queue up any not already seen.
+        int(state.cursor.idx).as(idx,
+          state.cursor.servers[idx].as(service,
+            (int(now) + int(state.cursor.offset)).as(ts,
+              state.with(
+                request("GET", state.url.trim_right("/") + "/dedicated/server/" + service + "/task").with(
+                  {
+                    "Header": {
+                      "X-Ovh-Application": [creds.application_key],
+                      "X-Ovh-Consumer": [creds.consumer_key],
+                      "X-Ovh-Timestamp": [string(ts)],
+                      "X-Ovh-Signature": [
+                        "$1$" + bytes(
+                          [
+                            creds.application_secret,
+                            creds.consumer_key,
+                            "GET",
+                            state.url.trim_right("/") + "/dedicated/server/" + service + "/task",
+                            "",
+                            string(ts),
+                          ].join("+")
+                        ).sha1().hex(),
+                      ],
+                      "Accept": ["application/json"],
+                    },
+                  }
+                ).do_request().as(resp,
+                  (resp.StatusCode == 200) ?
+                    {
+                      "events": [{"retry": true}],
+                      "cursor": state.cursor.with(
+                        {
+                          "idx": idx + 1,
+                          "queue": resp.Body.decode_json().filter(id,
+                            id > state.cursor.?seen[?service].orValue(0)
+                          ).map(id, {"service": service, "id": id}),
+                        }
+                      ),
+                      "want_more": true,
+                    }
+                  :
+                    {
+                      "events": {
+                        "error": {
+                          "code": string(resp.StatusCode),
+                          "id": string(resp.Status),
+                          "message": "GET /dedicated/server/" + service + "/task: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+                        },
+                      },
+                      "want_more": false,
+                    }
+                )
+              )
+            )
+          )
+        )
+      :
+        // Phase E: sweep complete -- clear the transient sweep state and pause until the next interval.
+        {
+          "events": [{"retry": true}],
+          "cursor": state.cursor.drop(["servers", "idx"]),
+          "want_more": false,
+        }
+    )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+processors:
+- drop_event.when.equals.retry: true
+{{#if processors}}
+{{processors}}
+{{/if}}

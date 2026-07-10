@@ -1,0 +1,76 @@
+format_version: "3.4.2"
+name: ovh_dedicated_servers
+title: "OVHcloud Dedicated Servers"
+version: 1.0.0
+source:
+  license: "Apache-2.0"
+description: "Collect task/audit history, hardware intervention records, the provisioning/activity log, and backup-FTP ACL snapshots from OVHcloud Dedicated (bare-metal) Servers via the OVH API."
+type: integration
+categories:
+  - security
+  - infrastructure
+conditions:
+  kibana:
+    version: "^9.4.0"
+  elastic:
+    subscription: "basic"
+screenshots:
+  - src: /img/ovh-dedicated-logs-screenshot-1.png
+    title: Screenshot 1
+    size: 600x600
+    type: image/png
+  - src: /img/ovh-dedicated-logs-screenshot-2.png
+    title: Screenshot 2
+    size: 600x600
+    type: image/png
+  - src: /img/ovh-dedicated-logs-screenshot-3.png
+    title: Screenshot 3
+    size: 600x600
+    type: image/png
+icons:
+  - src: /img/ovh-logo.svg
+    title: OVHcloud
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: ovh_dedicated_servers
+    title: OVHcloud Dedicated Servers
+    description: Collect task, intervention, provisioning-log, and backup-FTP ACL data from OVHcloud Dedicated Servers.
+    inputs:
+      - type: cel
+        title: Collect OVHcloud Dedicated Servers data via API
+        description: Collecting task, intervention, log, and backup ACL data from the OVHcloud API.
+        vars:
+          - name: url
+            type: text
+            title: OVH API URL
+            description: >-
+              OVH Management API base URL. Use the region matching your OVH account: https://eu.api.ovh.com/1.0 (Europe), https://ca.api.ovh.com/1.0 (Canada), or https://api.us.ovhcloud.com/1.0 (US).
+            required: true
+            show_user: true
+            default: https://eu.api.ovh.com/1.0
+          - name: application_key
+            type: text
+            title: Application Key
+            description: >-
+              OVH API application key (AK). Create an application at https://eu.api.ovh.com/createApp/ to obtain this value.
+            required: true
+            show_user: true
+          - name: application_secret
+            type: password
+            title: Application Secret
+            description: OVH API application secret (AS), issued alongside the application key.
+            required: true
+            show_user: true
+            secret: true
+          - name: consumer_key
+            type: password
+            title: Consumer Key
+            description: >-
+              OVH API consumer key (CK), scoped to GET /dedicated/server and GET /dedicated/server/* access rules.
+            required: true
+            show_user: true
+            secret: true
+owner:
+  github: fred-maussion/community_elastic-custom-integrations
+  type: community

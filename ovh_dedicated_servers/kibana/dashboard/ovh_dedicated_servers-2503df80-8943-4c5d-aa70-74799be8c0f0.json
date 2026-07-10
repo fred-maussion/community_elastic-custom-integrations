@@ -1,0 +1,1924 @@
+{
+    "accessControl": {
+        "accessMode": "default",
+        "owner": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+    },
+    "attributes": {
+        "description": "Monitoring of interventions on OVH dedicated servers. SRE KPIs: volume, statuses, scheduling, types of actions, affected servers, and trends over time.",
+        "esqlApproximation": false,
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "autoApplyFilters": true,
+            "hidePanelBorders": false,
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-29f5b5dde6227183d2460bf627781f792c229b4428dfa0e97365cc5c5daf9ca3": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-29f5b5dde6227183d2460bf627781f792c229b4428dfa0e97365cc5c5daf9ca3",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Count",
+                                                    "label": "Total Intervention Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-29f5b5dde6227183d2460bf627781f792c229b4428dfa0e97365cc5c5daf9ca3",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| STATS `Total Count` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-29f5b5dde6227183d2460bf627781f792c229b4428dfa0e97365cc5c5daf9ca3",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| STATS `Total Count` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "ec112398-4f10-4a7f-a8b2-73f44fad8efc",
+                    "sectionId": "6b07a2f8-97c9-4b9c-bcae-b5d28049391c",
+                    "w": 8,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "ec112398-4f10-4a7f-a8b2-73f44fad8efc",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-6c3e2159527195e045f188b5b5bbf7e459678c5c73f03cecea76af443e36a9af": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-6c3e2159527195e045f188b5b5bbf7e459678c5c73f03cecea76af443e36a9af",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Servers",
+                                                    "label": "Distinct Servers with Interventions",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-6c3e2159527195e045f188b5b5bbf7e459678c5c73f03cecea76af443e36a9af",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| STATS `Distinct Servers` = COUNT_DISTINCT(ovh_dedicated_servers.server_name)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-6c3e2159527195e045f188b5b5bbf7e459678c5c73f03cecea76af443e36a9af",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| STATS `Distinct Servers` = COUNT_DISTINCT(ovh_dedicated_servers.server_name)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "3852bc6f-71c4-47db-9902-86125b3879df",
+                    "sectionId": "6b07a2f8-97c9-4b9c-bcae-b5d28049391c",
+                    "w": 8,
+                    "x": 8,
+                    "y": 0
+                },
+                "panelIndex": "3852bc6f-71c4-47db-9902-86125b3879df",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-b848f25a7553e6116702b7d2ed16906efeb900802aabf87926547d7c5895a529": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-b848f25a7553e6116702b7d2ed16906efeb900802aabf87926547d7c5895a529",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of Interventions",
+                                                    "label": "Planned Interventions",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-b848f25a7553e6116702b7d2ed16906efeb900802aabf87926547d7c5895a529",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE ovh_dedicated_servers.intervention.planned == true\n| STATS `Count of Interventions` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-b848f25a7553e6116702b7d2ed16906efeb900802aabf87926547d7c5895a529",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE ovh_dedicated_servers.intervention.planned == true\n| STATS `Count of Interventions` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "7f6bdb4d-2233-4434-9958-8cba0cfb6a39",
+                    "sectionId": "6b07a2f8-97c9-4b9c-bcae-b5d28049391c",
+                    "w": 8,
+                    "x": 16,
+                    "y": 0
+                },
+                "panelIndex": "7f6bdb4d-2233-4434-9958-8cba0cfb6a39",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-c4d0804a88dabfba4c881b5d0473be9a8dea3a6a598bd851abebb61a163f955e": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-c4d0804a88dabfba4c881b5d0473be9a8dea3a6a598bd851abebb61a163f955e",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of Interventions",
+                                                    "label": "Unplanned Interventions",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-c4d0804a88dabfba4c881b5d0473be9a8dea3a6a598bd851abebb61a163f955e",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE ovh_dedicated_servers.intervention.planned == false\n| STATS `Count of Interventions` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-c4d0804a88dabfba4c881b5d0473be9a8dea3a6a598bd851abebb61a163f955e",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE ovh_dedicated_servers.intervention.planned == false\n| STATS `Count of Interventions` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "5fc3f8dc-5329-4a09-bcf2-b60da65559ee",
+                    "sectionId": "6b07a2f8-97c9-4b9c-bcae-b5d28049391c",
+                    "w": 8,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "5fc3f8dc-5329-4a09-bcf2-b60da65559ee",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-55b66e5df922f7eba928020ba5716c958693f5cfed81083180e7a27b42b6008e": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-55b66e5df922f7eba928020ba5716c958693f5cfed81083180e7a27b42b6008e",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of Interventions",
+                                                    "label": "Successful Interventions",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-55b66e5df922f7eba928020ba5716c958693f5cfed81083180e7a27b42b6008e",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE event.outcome == \"success\"\n| STATS `Count of Interventions` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-55b66e5df922f7eba928020ba5716c958693f5cfed81083180e7a27b42b6008e",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE event.outcome == \"success\"\n| STATS `Count of Interventions` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "4456bb42-f5f3-46f0-830c-16de50f3142d",
+                    "sectionId": "6b07a2f8-97c9-4b9c-bcae-b5d28049391c",
+                    "w": 8,
+                    "x": 32,
+                    "y": 0
+                },
+                "panelIndex": "4456bb42-f5f3-46f0-830c-16de50f3142d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-edfb6ab845cfe91c100a8bd2f9de556f83f107664667971c7840e84576413d83": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-edfb6ab845cfe91c100a8bd2f9de556f83f107664667971c7840e84576413d83",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of Interventions",
+                                                    "label": "Interventions with Errors",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-edfb6ab845cfe91c100a8bd2f9de556f83f107664667971c7840e84576413d83",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE error.message IS NOT NULL\n| STATS `Count of Interventions` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-edfb6ab845cfe91c100a8bd2f9de556f83f107664667971c7840e84576413d83",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE error.message IS NOT NULL\n| STATS `Count of Interventions` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "62ab2f2f-4c3c-4c7b-9c43-bdc962d3b345",
+                    "sectionId": "6b07a2f8-97c9-4b9c-bcae-b5d28049391c",
+                    "w": 8,
+                    "x": 40,
+                    "y": 0
+                },
+                "panelIndex": "62ab2f2f-4c3c-4c7b-9c43-bdc962d3b345",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "customLabel": true,
+                                                    "fieldName": "Planned",
+                                                    "label": "Planned",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| STATS `Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Planned` = ovh_dedicated_servers.intervention.planned\n| SORT `Time Bucket`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| STATS `Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Planned` = ovh_dedicated_servers.intervention.planned\n| SORT `Time Bucket`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "bar_stacked"
+                            }
+                        },
+                        "title": "Intervention Events Over Time by Planned Status",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Intervention Events Over Time by Planned Status"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "1ff6a218-10c0-40b7-9012-3e2328562dfa",
+                    "sectionId": "eac549a2-f516-4aec-8900-6822314db2cf",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "1ff6a218-10c0-40b7-9012-3e2328562dfa",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "fieldName": "Count of Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "fieldName": "Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| STATS `Count of Events` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Status` = ovh_dedicated_servers.intervention.status\n| SORT `Time Bucket`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| STATS `Count of Events` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Status` = ovh_dedicated_servers.intervention.status\n| SORT `Time Bucket`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "bar_stacked"
+                            }
+                        },
+                        "title": "Count of Intervention Events Over Time by Status",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Count of Intervention Events Over Time by Status"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "545826b6-00a7-4977-ae96-06b57fcad5e4",
+                    "sectionId": "eac549a2-f516-4aec-8900-6822314db2cf",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "545826b6-00a7-4977-ae96-06b57fcad5e4",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-ac6368afc01335b960dc565c1f0b254840a386c81e2effd5f9bd9a187bdd3653": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-ac6368afc01335b960dc565c1f0b254840a386c81e2effd5f9bd9a187bdd3653",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Action Type",
+                                                    "label": "Action Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count",
+                                                    "label": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-ac6368afc01335b960dc565c1f0b254840a386c81e2effd5f9bd9a187bdd3653",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| STATS `Count` = COUNT(*) BY `Action Type` = event.action\n| SORT `Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-ac6368afc01335b960dc565c1f0b254840a386c81e2effd5f9bd9a187bdd3653",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| STATS `Count` = COUNT(*) BY `Action Type` = event.action\n| SORT `Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal"
+                            }
+                        },
+                        "title": "Top 10 Intervention Action Types by Count",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Top 10 Intervention Action Types by Count"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "d6d10bf5-66a3-4ca1-824f-02e0e447e24d",
+                    "sectionId": "5d809ee2-c00a-426e-9e85-2584c40e10c8",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "d6d10bf5-66a3-4ca1-824f-02e0e447e24d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-2ddd5007b5c7bc471175c9285a27b5dfae17458c066bdee23b676affe11e543a": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-2ddd5007b5c7bc471175c9285a27b5dfae17458c066bdee23b676affe11e543a",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Intervention Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Status",
+                                                    "label": "Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-2ddd5007b5c7bc471175c9285a27b5dfae17458c066bdee23b676affe11e543a",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| STATS `Intervention Count` = COUNT(*) BY `Status` = ovh_dedicated_servers.intervention.status\n| SORT `Intervention Count` DESC"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-2ddd5007b5c7bc471175c9285a27b5dfae17458c066bdee23b676affe11e543a",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| STATS `Intervention Count` = COUNT(*) BY `Status` = ovh_dedicated_servers.intervention.status\n| SORT `Intervention Count` DESC"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "emptySizeRatio": 0.54,
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": false
+                                    }
+                                ],
+                                "shape": "donut"
+                            }
+                        },
+                        "title": "Distribution of Interventions by Status",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "title": "Distribution of Interventions by Status"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "305b08c3-36e4-4d31-bcf5-209bf99a2762",
+                    "sectionId": "5d809ee2-c00a-426e-9e85-2584c40e10c8",
+                    "w": 12,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "305b08c3-36e4-4d31-bcf5-209bf99a2762",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Intervention Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.outcome",
+                                                    "label": "Event Outcome",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Intervention Count` = COUNT(*) BY `event.outcome`\n| SORT `Intervention Count` DESC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Intervention Count` = COUNT(*) BY `event.outcome`\n| SORT `Intervention Count` DESC"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "emptySizeRatio": 0.54,
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": false
+                                    }
+                                ],
+                                "shape": "donut"
+                            }
+                        },
+                        "title": "Distribution of Interventions by Event Outcome",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "title": "Distribution of Interventions by Event Outcome"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "160b8bf2-da32-4718-ad63-524023ecbd3b",
+                    "sectionId": "5d809ee2-c00a-426e-9e85-2584c40e10c8",
+                    "w": 12,
+                    "x": 36,
+                    "y": 0
+                },
+                "panelIndex": "160b8bf2-da32-4718-ad63-524023ecbd3b",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Server Name",
+                                                    "label": "Server Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Interventions",
+                                                    "label": "Total Interventions",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Total Interventions` = COUNT(*) BY `Server Name` = ovh_dedicated_servers.server_name\n| SORT `Total Interventions` DESC\n| LIMIT 15"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Total Interventions` = COUNT(*) BY `Server Name` = ovh_dedicated_servers.server_name\n| SORT `Total Interventions` DESC\n| LIMIT 15"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal"
+                            }
+                        },
+                        "title": "Top 15 Servers by Total Interventions",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Top 15 Servers by Total Interventions"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "db23ccb2-9978-4d67-8b1b-9588fffd679f",
+                    "sectionId": "6a65cd94-daa6-4e4d-a6cc-4c53aac6c0d5",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "db23ccb2-9978-4d67-8b1b-9588fffd679f",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-6cac3fefd9e79d7a4075a9d2e9b58cd88d98bce65a8b73091fa94b5079021890": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-6cac3fefd9e79d7a4075a9d2e9b58cd88d98bce65a8b73091fa94b5079021890",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Server Name",
+                                                    "label": "Server Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Unplanned Interventions",
+                                                    "label": "Unplanned Interventions",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-6cac3fefd9e79d7a4075a9d2e9b58cd88d98bce65a8b73091fa94b5079021890",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE ovh_dedicated_servers.intervention.planned == false\n| STATS `Unplanned Interventions` = COUNT(*) BY `Server Name` = ovh_dedicated_servers.server_name\n| SORT `Unplanned Interventions` DESC\n| LIMIT 15"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-6cac3fefd9e79d7a4075a9d2e9b58cd88d98bce65a8b73091fa94b5079021890",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| WHERE ovh_dedicated_servers.intervention.planned == false\n| STATS `Unplanned Interventions` = COUNT(*) BY `Server Name` = ovh_dedicated_servers.server_name\n| SORT `Unplanned Interventions` DESC\n| LIMIT 15"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal"
+                            }
+                        },
+                        "title": "Top 15 Servers by Unplanned Interventions",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Top 15 Servers by Unplanned Interventions"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "49735672-6fa7-4145-9ad3-bcba1c629a19",
+                    "sectionId": "6a65cd94-daa6-4e4d-a6cc-4c53aac6c0d5",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "49735672-6fa7-4145-9ad3-bcba1c629a19",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "Time",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Average Duration (ms)",
+                                                    "label": "Average Duration",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "duration",
+                                                            "params": {
+                                                                "decimals": 2,
+                                                                "fromUnit": "milliseconds",
+                                                                "toUnit": "humanizePrecise"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| EVAL `Duration (ms)` = DATE_DIFF(\"milliseconds\", event.start, event.end)\n| STATS `Average Duration (ms)` = AVG(`Duration (ms)`) BY `Time` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| SORT `Time`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| EVAL `Duration (ms)` = DATE_DIFF(\"milliseconds\", event.start, event.end)\n| STATS `Average Duration (ms)` = AVG(`Duration (ms)`) BY `Time` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| SORT `Time`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "line"
+                            }
+                        },
+                        "title": "Average Duration of Interventions Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Average Duration of Interventions Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "32372bf6-1525-49bf-b051-339d7ad547fe",
+                    "sectionId": "3bd5ac12-14cb-43ac-9a9b-5cf1561b7bbd",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "32372bf6-1525-49bf-b051-339d7ad547fe",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-b866052c7245608ce2ffbf9919c3c4c87a303db91999b34e9a18d69e28c9b6b5": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-b866052c7245608ce2ffbf9919c3c4c87a303db91999b34e9a18d69e28c9b6b5",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_0_x",
+                                                    "fieldName": "event.action",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Average Duration (ms)",
+                                                    "label": "Average Duration",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "duration",
+                                                            "params": {
+                                                                "decimals": 2,
+                                                                "fromUnit": "milliseconds",
+                                                                "toUnit": "humanizePrecise"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-b866052c7245608ce2ffbf9919c3c4c87a303db91999b34e9a18d69e28c9b6b5",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| EVAL `Duration (ms)` = DATE_DIFF(\"milliseconds\", event.start, event.end)\n| STATS `Average Duration (ms)` = AVG(`Duration (ms)`) BY event.action\n| SORT `Average Duration (ms)` DESC"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-b866052c7245608ce2ffbf9919c3c4c87a303db91999b34e9a18d69e28c9b6b5",
+                                    "name": "indexpattern-datasource-layer-bar_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| EVAL `Duration (ms)` = DATE_DIFF(\"milliseconds\", event.start, event.end)\n| STATS `Average Duration (ms)` = AVG(`Duration (ms)`) BY event.action\n| SORT `Average Duration (ms)` DESC"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_0_y_0"
+                                        ],
+                                        "layerId": "bar_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar",
+                                        "xAccessor": "bar_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar"
+                            }
+                        },
+                        "title": "Average Duration of Interventions by Action Type",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Average Duration of Interventions by Action Type"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "44006f6e-e38e-4b8f-a8e0-7a911927cf6d",
+                    "sectionId": "3bd5ac12-14cb-43ac-9a9b-5cf1561b7bbd",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "44006f6e-e38e-4b8f-a8e0-7a911927cf6d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.intervention-default-552d543e6e9e2f81c138e061a07b2c3ac2983aa9ac48f6c530e03b717f69062b": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-552d543e6e9e2f81c138e061a07b2c3ac2983aa9ac48f6c530e03b717f69062b",
+                                    "name": "logs-ovh_dedicated_servers.intervention-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.intervention-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "@timestamp",
+                                                    "label": "Timestamp",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh_dedicated_servers.server_name",
+                                                    "label": "Server Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.action",
+                                                    "label": "Action",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh_dedicated_servers.intervention.planned",
+                                                    "label": "Planned",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh_dedicated_servers.intervention.status",
+                                                    "inMetricDimension": true,
+                                                    "label": "Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.outcome",
+                                                    "inMetricDimension": true,
+                                                    "label": "Outcome",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "error.message",
+                                                    "inMetricDimension": true,
+                                                    "label": "Error Message",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.intervention-default-552d543e6e9e2f81c138e061a07b2c3ac2983aa9ac48f6c530e03b717f69062b",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| KEEP @timestamp, ovh_dedicated_servers.server_name, event.action, ovh_dedicated_servers.intervention.status, ovh_dedicated_servers.intervention.planned, event.outcome, error.message\n| SORT @timestamp DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.intervention-default-552d543e6e9e2f81c138e061a07b2c3ac2983aa9ac48f6c530e03b717f69062b",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.intervention-default\n| KEEP @timestamp, ovh_dedicated_servers.server_name, event.action, ovh_dedicated_servers.intervention.status, ovh_dedicated_servers.intervention.planned, event.outcome, error.message\n| SORT @timestamp DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "columnId": "datatable_accessor_row_3",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "elastic_line_optimized",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "columnId": "datatable_accessor_metric_2",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "compact",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "paging": {
+                                    "enabled": true,
+                                    "size": 20
+                                },
+                                "sorting": {
+                                    "columnId": "datatable_accessor_row_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Recent OVH Dedicated Server Interventions",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "title": "Recent OVH Dedicated Server Interventions"
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "9f365d7c-5bbe-4d68-aa6b-9798edf3e435",
+                    "sectionId": "090137c3-32ce-4465-b789-757a58380b80",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "9f365d7c-5bbe-4d68-aa6b-9798edf3e435",
+                "type": "vis"
+            }
+        ],
+        "pinned_panels": {
+            "panels": {
+                "a3334290-5338-4f9b-8fb0-c8ca1abf3db5": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_dedicated_servers.intervention-default | STATS BY `event.action`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Type d'action",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 1,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "b75b5265-d073-45f0-b050-e74cca715ee8": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_dedicated_servers.intervention-default | STATS BY `event.outcome`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Résultat",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 3,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "bd636eba-311b-4306-92e7-e10bf91be8f0": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_dedicated_servers.intervention-default | STATS BY `ovh_dedicated_servers.server_name`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Serveur",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 0,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "eaca10f7-4c7b-4d1b-a282-66ed3b674a1a": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_dedicated_servers.intervention-default | STATS BY `ovh_dedicated_servers.intervention.status`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Statut",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 2,
+                    "type": "options_list_control",
+                    "width": "medium"
+                }
+            }
+        },
+        "refreshInterval": {
+            "pause": true,
+            "value": 0
+        },
+        "sections": [
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "6b07a2f8-97c9-4b9c-bcae-b5d28049391c",
+                    "y": 0
+                },
+                "title": "📊 Vue d'ensemble – KPIs"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "eac549a2-f516-4aec-8900-6822314db2cf",
+                    "y": 1
+                },
+                "title": "📈 Tendances temporelles"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "5d809ee2-c00a-426e-9e85-2584c40e10c8",
+                    "y": 2
+                },
+                "title": "🔧 Types d'actions \u0026 Statuts"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "6a65cd94-daa6-4e4d-a6cc-4c53aac6c0d5",
+                    "y": 3
+                },
+                "title": "🖥️ Serveurs impactés"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "3bd5ac12-14cb-43ac-9a9b-5cf1561b7bbd",
+                    "y": 4
+                },
+                "title": "⏱️ Durée des interventions"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "090137c3-32ce-4465-b789-757a58380b80",
+                    "y": 5
+                },
+                "title": "📋 Détail des interventions"
+            }
+        ],
+        "timeFrom": "2023-03-07T21:20:31.000Z",
+        "timeRestore": true,
+        "timeTo": "2023-03-07T22:20:31.001Z",
+        "title": "[OVH] Dedicated Servers – Interventions"
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2026-07-10T21:44:50.391Z",
+    "created_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0",
+    "id": "ovh_dedicated_servers-2503df80-8943-4c5d-aa70-74799be8c0f0",
+    "references": [],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+}

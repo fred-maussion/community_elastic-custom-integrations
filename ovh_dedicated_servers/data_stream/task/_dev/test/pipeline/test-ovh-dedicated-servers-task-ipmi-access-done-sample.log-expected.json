@@ -1,0 +1,48 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-07-10T06:05:12.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "ipmiAccessRequest",
+                "category": [
+                    "host"
+                ],
+                "end": "2026-07-10T06:05:12.000Z",
+                "id": 2001,
+                "kind": "event",
+                "original": "{\"taskId\":2001,\"function\":\"ipmiAccessRequest\",\"status\":\"done\",\"comment\":\"KVM access requested by customer\",\"note\":null,\"startDate\":\"2026-07-10T08:00:00+02:00\",\"lastUpdate\":\"2026-07-10T08:05:12+02:00\",\"doneDate\":\"2026-07-10T08:05:12+02:00\",\"needSchedule\":false,\"plannedInterventionId\":null,\"changeUuid\":\"7c1e2a4d-1234-4abc-9def-example00002\",\"ticketReference\":null,\"tags\":[{\"key\":\"ipmiIp\",\"value\":\"203.0.113.10\"}],\"serviceName\":\"ns-example2.ip-192-0-2.example\"}",
+                "outcome": "success",
+                "start": "2026-07-10T06:00:00.000Z",
+                "type": [
+                    "change"
+                ]
+            },
+            "message": "KVM access requested by customer",
+            "ovh_dedicated_servers": {
+                "server_name": "ns-example2.ip-192-0-2.example",
+                "task": {
+                    "change_uuid": "7c1e2a4d-1234-4abc-9def-example00002",
+                    "need_schedule": false,
+                    "status": "done",
+                    "tags": [
+                        {
+                            "key": "ipmiIp",
+                            "value": "203.0.113.10"
+                        }
+                    ]
+                }
+            },
+            "related": {
+                "hosts": [
+                    "ns-example2.ip-192-0-2.example"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

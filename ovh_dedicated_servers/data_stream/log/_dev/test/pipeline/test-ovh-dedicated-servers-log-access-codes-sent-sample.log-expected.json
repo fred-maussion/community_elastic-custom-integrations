@@ -1,0 +1,34 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-07-08T07:00:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "host"
+                ],
+                "kind": "event",
+                "original": "{\"datetime\":\"2026-07-08T09:00:00+02:00\",\"resume\":\"Access codes sent\",\"server\":\"ns-example1.ip-192-0-2.example\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "message": "Access codes sent",
+            "ovh_dedicated_servers": {
+                "log": {
+                    "server_name": "ns-example1.ip-192-0-2.example"
+                }
+            },
+            "related": {
+                "hosts": [
+                    "ns-example1.ip-192-0-2.example"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

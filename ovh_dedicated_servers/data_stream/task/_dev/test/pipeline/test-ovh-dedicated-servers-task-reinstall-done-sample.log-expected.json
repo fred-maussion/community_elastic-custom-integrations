@@ -1,0 +1,52 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-07-10T07:24:47.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "reinstallServer",
+                "category": [
+                    "host"
+                ],
+                "end": "2026-07-10T07:24:47.000Z",
+                "id": 1001,
+                "kind": "event",
+                "original": "{\"taskId\":1001,\"function\":\"reinstallServer\",\"status\":\"done\",\"comment\":\"Reinstall using template debian12_64\",\"note\":null,\"startDate\":\"2026-07-10T09:12:03+02:00\",\"lastUpdate\":\"2026-07-10T09:24:47+02:00\",\"doneDate\":\"2026-07-10T09:24:47+02:00\",\"needSchedule\":false,\"plannedInterventionId\":null,\"changeUuid\":\"3fa4c1b2-9e6a-4d8b-8c9e-example00001\",\"ticketReference\":null,\"tags\":[{\"key\":\"template\",\"value\":\"debian12_64\"},{\"key\":\"sshKeyName\",\"value\":\"example-key\"}],\"serviceName\":\"ns-example1.ip-192-0-2.example\"}",
+                "outcome": "success",
+                "start": "2026-07-10T07:12:03.000Z",
+                "type": [
+                    "change"
+                ]
+            },
+            "message": "Reinstall using template debian12_64",
+            "ovh_dedicated_servers": {
+                "server_name": "ns-example1.ip-192-0-2.example",
+                "task": {
+                    "change_uuid": "3fa4c1b2-9e6a-4d8b-8c9e-example00001",
+                    "need_schedule": false,
+                    "status": "done",
+                    "tags": [
+                        {
+                            "key": "template",
+                            "value": "debian12_64"
+                        },
+                        {
+                            "key": "sshKeyName",
+                            "value": "example-key"
+                        }
+                    ]
+                }
+            },
+            "related": {
+                "hosts": [
+                    "ns-example1.ip-192-0-2.example"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,68 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2023-03-07T22:20:31.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "Netboot Update",
+                "category": [
+                    "host"
+                ],
+                "id": 5001,
+                "kind": "event",
+                "original": "{\"interventionId\":5001,\"date\":\"2023-03-07T23:20:31+01:00\",\"type\":\"Netboot Update\",\"serviceName\":\"ns-example1.ip-192-0-2.example\",\"planned\":false}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh_dedicated_servers": {
+                "intervention": {
+                    "planned": false
+                },
+                "server_name": "ns-example1.ip-192-0-2.example"
+            },
+            "related": {
+                "hosts": [
+                    "ns-example1.ip-192-0-2.example"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        },
+        {
+            "@timestamp": "2023-02-01T08:00:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "OS Reinstall",
+                "category": [
+                    "host"
+                ],
+                "id": 6001,
+                "kind": "event",
+                "original": "{\"interventionId\":6001,\"date\":\"2023-02-01T09:00:00+01:00\",\"type\":\"OS Reinstall\",\"serviceName\":\"ns-example2.ip-192-0-2.example\",\"planned\":false}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh_dedicated_servers": {
+                "intervention": {
+                    "planned": false
+                },
+                "server_name": "ns-example2.ip-192-0-2.example"
+            },
+            "related": {
+                "hosts": [
+                    "ns-example2.ip-192-0-2.example"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

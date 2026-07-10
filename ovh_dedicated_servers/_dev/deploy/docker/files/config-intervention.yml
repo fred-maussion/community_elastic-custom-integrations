@@ -1,0 +1,109 @@
+rules:
+  # OVH server-time endpoint used to calibrate the clock offset (unauthenticated).
+  - path: /auth/time
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '"1751000000"'
+  # List owned dedicated servers -- no pagination, no query params.
+  - path: /dedicated/server
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          ["ns-example1.ip-192-0-2.example","ns-example2.ip-192-0-2.example"]
+  # ---- Server 1: past interventions --------------------------------------
+  # Cycles between a 2-id response (round 1) and a 3-id response with a new
+  # intervention appearing (round 2, cursor-persisted resume). Dedup is keyed
+  # on intervention ID, so re-listing an already-seen ID is a no-op.
+  - path: /dedicated/server/ns-example1.ip-192-0-2.example/intervention
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '[5001,5002]'
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '[5001,5002,5003]'
+  - path: /dedicated/server/ns-example1.ip-192-0-2.example/intervention/5001
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"interventionId":5001,"date":"2023-03-07T23:20:31+01:00","type":"Netboot Update"}
+  - path: /dedicated/server/ns-example1.ip-192-0-2.example/intervention/5002
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"interventionId":5002,"date":"2023-05-14T10:05:12+02:00","type":"OS Reinstall"}
+  - path: /dedicated/server/ns-example1.ip-192-0-2.example/intervention/5003
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"interventionId":5003,"date":"2026-07-10T08:15:00+02:00","type":"Netboot Update"}
+  # ---- Server 1: planned (scheduled future) interventions ----------------
+  - path: /dedicated/server/ns-example1.ip-192-0-2.example/plannedIntervention
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '[9001]'
+  - path: /dedicated/server/ns-example1.ip-192-0-2.example/plannedIntervention/9001
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"id":9001,"type":"HARDWARE_UPGRADE_ON_ACTIVE_SERVER","status":"todo","wantedStartDate":"2026-07-15T02:00:00+02:00","expectedEndDate":"2026-07-15T04:00:00+02:00"}
+  # ---- Server 2: past interventions -- static, single intervention -------
+  - path: /dedicated/server/ns-example2.ip-192-0-2.example/intervention
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '[6001]'
+  - path: /dedicated/server/ns-example2.ip-192-0-2.example/intervention/6001
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"interventionId":6001,"date":"2023-02-01T09:00:00+01:00","type":"OS Reinstall"}
+  # ---- Server 2: planned interventions -- empty, mirrors the live trace --
+  - path: /dedicated/server/ns-example2.ip-192-0-2.example/plannedIntervention
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '[]'

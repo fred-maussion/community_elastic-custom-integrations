@@ -1,0 +1,39 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-07-15T00:00:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "HARDWARE_UPGRADE_ON_ACTIVE_SERVER",
+                "category": [
+                    "host"
+                ],
+                "end": "2026-07-15T02:00:00.000Z",
+                "id": 9001,
+                "kind": "event",
+                "original": "{\"id\":9001,\"type\":\"HARDWARE_UPGRADE_ON_ACTIVE_SERVER\",\"status\":\"todo\",\"wantedStartDate\":\"2026-07-15T02:00:00+02:00\",\"expectedEndDate\":\"2026-07-15T04:00:00+02:00\",\"serviceName\":\"ns-example1.ip-192-0-2.example\",\"planned\":true}",
+                "start": "2026-07-15T00:00:00.000Z",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh_dedicated_servers": {
+                "intervention": {
+                    "planned": true,
+                    "status": "todo"
+                },
+                "server_name": "ns-example1.ip-192-0-2.example"
+            },
+            "related": {
+                "hosts": [
+                    "ns-example1.ip-192-0-2.example"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

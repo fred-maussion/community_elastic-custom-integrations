@@ -1,0 +1,55 @@
+{
+    "@timestamp": "2026-07-08T07:00:00.000Z",
+    "agent": {
+        "ephemeral_id": "6ffc689c-00b3-40f5-be20-a6645e5333e5",
+        "id": "06748d92-bb27-4e8e-a8f3-365cc09a5b31",
+        "name": "elastic-agent-46523",
+        "type": "filebeat",
+        "version": "9.4.2"
+    },
+    "data_stream": {
+        "dataset": "ovh_dedicated_servers.log",
+        "namespace": "77572",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "06748d92-bb27-4e8e-a8f3-365cc09a5b31",
+        "snapshot": false,
+        "version": "9.4.2"
+    },
+    "event": {
+        "category": [
+            "host"
+        ],
+        "dataset": "ovh_dedicated_servers.log",
+        "ingested": "2026-07-10T19:32:11Z",
+        "kind": "event",
+        "module": "ovh_dedicated_servers",
+        "original": "{\"datetime\":\"2026-07-08T09:00:00+02:00\",\"resume\":\"Access codes sent\",\"server\":\"ns-example1.ip-192-0-2.example\"}",
+        "type": [
+            "info"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "message": "Access codes sent",
+    "ovh_dedicated_servers": {
+        "log": {
+            "server_name": "ns-example1.ip-192-0-2.example"
+        }
+    },
+    "related": {
+        "hosts": [
+            "ns-example1.ip-192-0-2.example"
+        ]
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded",
+        "ovh-dedicated-servers-log"
+    ]
+}

@@ -1,0 +1,6 @@
+fields:
+  tags:
+    - preserve_original_event
+numeric_keyword_fields:
+  - event.id
+  - ovh_dedicated_servers.task.planned_intervention_id

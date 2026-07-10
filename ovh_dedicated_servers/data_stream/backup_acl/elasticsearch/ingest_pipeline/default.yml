@@ -1,0 +1,182 @@
+---
+description: Pipeline for processing OVHcloud Dedicated Servers backup-FTP ACL snapshot events.
+processors:
+  - set:
+      field: ecs.version
+      tag: set_ecs_version
+      value: '9.3.0'
+
+  - remove:
+      field:
+        - organization
+        - division
+        - team
+      ignore_missing: true
+      if: ctx.organization instanceof String && ctx.division instanceof String && ctx.team instanceof String
+      tag: remove_agentless_tags
+      description: >-
+        Removes the fields added by Agentless as metadata,
+        as they can collide with ECS fields.
+  - terminate:
+      tag: data_collection_error
+      if: ctx.error?.message != null && ctx.message == null && ctx.event?.original == null
+      description: error message set and no data to process.
+
+  - rename:
+      field: message
+      tag: rename_message_to_event_original
+      target_field: event.original
+      ignore_missing: true
+      description: Renames the original `message` field to `event.original` to store a copy of the original message. The `event.original` field is not touched if the document already has one; it may happen when Logstash sends the document.
+      if: ctx.event?.original == null
+  - remove:
+      field: message
+      tag: remove_message
+      ignore_missing: true
+      description: The `message` field is no longer required if the document has an `event.original` field.
+      if: ctx.event?.original != null
+
+  - json:
+      field: event.original
+      target_field: json
+      tag: parse_json
+      if: ctx.event?.original != null
+
+  # --- Custom fields: dedicated server identity ---
+  - rename:
+      field: json.serviceName
+      target_field: ovh_dedicated_servers.server_name
+      tag: rename_service_name
+      ignore_missing: true
+      description: The OVHcloud dedicated server service name the ACL entry belongs to (injected by the CEL collector).
+
+  # --- Custom fields: backup-FTP ACL entry attributes (no ECS equivalent) ---
+  - rename:
+      field: json.ipBlock
+      target_field: ovh_dedicated_servers.backup_acl.ip_block
+      tag: rename_ip_block
+      ignore_missing: true
+      description: The authorized IP or CIDR block for backup-FTP access.
+  - rename:
+      field: json.cifs
+      target_field: ovh_dedicated_servers.backup_acl.cifs
+      tag: rename_cifs
+      ignore_missing: true
+  - rename:
+      field: json.ftp
+      target_field: ovh_dedicated_servers.backup_acl.ftp
+      tag: rename_ftp
+      ignore_missing: true
+  - rename:
+      field: json.nfs
+      target_field: ovh_dedicated_servers.backup_acl.nfs
+      tag: rename_nfs
+      ignore_missing: true
+  - rename:
+      field: json.isApplied
+      target_field: ovh_dedicated_servers.backup_acl.is_applied
+      tag: rename_is_applied
+      ignore_missing: true
+
+  # --- ECS field mapping ---
+  - date:
+      field: json.lastUpdate
+      target_field: '@timestamp'
+      formats:
+        - ISO8601
+      tag: parse_timestamp_from_last_update
+      if: ctx.json?.lastUpdate != null
+      description: The ACL entry's last-update time is the only history-like signal on this snapshot record and is used as the primary event time.
+      on_failure:
+        - remove:
+            field: json.lastUpdate
+            ignore_missing: true
+        - append:
+            field: error.message
+            value: '{{{_ingest.on_failure_message}}}'
+
+  - dissect:
+      field: ovh_dedicated_servers.backup_acl.ip_block
+      pattern: '%{_temp.cidr_address}/%{_temp.cidr_prefix}'
+      tag: dissect_ip_block_cidr
+      ignore_failure: true
+      description: Splits the CIDR block into its base address and prefix length so the base address can be added to related.ip.
+
+  # --- ECS categorization ---
+  - set:
+      field: event.kind
+      tag: set_event_kind
+      value: state
+      description: >-
+        This data stream is a current-state snapshot of ACL entries re-emitted in full
+        on every poll, not a discrete event, so event.kind is state rather than event.
+  - append:
+      field: event.category
+      tag: append_event_category_configuration
+      value: configuration
+      allow_duplicates: false
+      description: An ACL entry is an access-control configuration setting on the dedicated server's backup-FTP feature.
+  - append:
+      field: event.type
+      tag: append_event_type_info
+      value: info
+      allow_duplicates: false
+      description: The snapshot has no discrete create/change/delete semantics, so it is treated as informational.
+
+  # --- related.* enrichment ---
+  - append:
+      field: related.hosts
+      tag: append_service_name_to_related_hosts
+      value: '{{{ovh_dedicated_servers.server_name}}}'
+      allow_duplicates: false
+      if: ctx.ovh_dedicated_servers?.server_name != null
+  - append:
+      field: related.ip
+      tag: append_ip_block_address_to_related_ip
+      value: '{{{_temp.cidr_address}}}'
+      allow_duplicates: false
+      if: ctx._temp?.cidr_address != null
+      description: Adds the CIDR block's base address to related.ip for correlation with other IP-bearing events.
+
+  # --- Stable document ID: this is a state snapshot with no cross-poll dedup in the CEL
+  # program (every poll re-lists and re-emits all current ACL entries from scratch).
+  # Fingerprinting the document ID on server+ip_block lets Elasticsearch overwrite the
+  # existing document on each poll instead of accumulating a new document per interval.
+  - fingerprint:
+      fields:
+        - ovh_dedicated_servers.server_name
+        - ovh_dedicated_servers.backup_acl.ip_block
+      target_field: _id
+      method: SHA-256
+      tag: fingerprint_backup_acl_entry
+      if: ctx.ovh_dedicated_servers?.server_name != null && ctx.ovh_dedicated_servers?.backup_acl?.ip_block != null
+
+  # --- Cleanup ---
+  - remove:
+      field:
+        - json
+        - _temp
+      ignore_missing: true
+      tag: remove_temp_fields
+  - append:
+      field: tags
+      tag: append_preserve_original_event
+      value: preserve_original_event
+      allow_duplicates: false
+      if: ctx.error?.message != null
+
+on_failure:
+  - append:
+      field: error.message
+      value: >-
+        Processor '{{{ _ingest.on_failure_processor_type }}}'
+        {{{#_ingest.on_failure_processor_tag}}}with tag '{{{ _ingest.on_failure_processor_tag }}}'
+        {{{/_ingest.on_failure_processor_tag}}}failed with message '{{{ _ingest.on_failure_message }}}'
+  - set:
+      field: event.kind
+      tag: set_pipeline_error_to_event_kind
+      value: pipeline_error
+  - append:
+      field: tags
+      value: preserve_original_event
+      allow_duplicates: false

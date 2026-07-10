@@ -1,0 +1,25 @@
+- name: ovh_dedicated_servers
+  type: group
+  fields:
+    - name: server_name
+      type: keyword
+      description: >-
+        The OVHcloud dedicated server service name the ACL entry belongs to (path parameter on the source API, injected by the collector).
+    - name: backup_acl
+      type: group
+      fields:
+        - name: ip_block
+          type: keyword
+          description: The authorized IP or CIDR block (e.g. 203.0.113.0/24).
+        - name: cifs
+          type: boolean
+          description: Whether the CIFS protocol is allowed for this ACL entry.
+        - name: ftp
+          type: boolean
+          description: Whether the FTP protocol is allowed for this ACL entry.
+        - name: nfs
+          type: boolean
+          description: Whether the NFS protocol is allowed for this ACL entry.
+        - name: is_applied
+          type: boolean
+          description: Whether the rule has actually been applied on the OVH backend yet.

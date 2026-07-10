@@ -1,0 +1,62 @@
+{
+    "@timestamp": "2026-06-15T09:02:33.000Z",
+    "agent": {
+        "ephemeral_id": "1170fcbf-b0a9-47cc-ac5e-d8b875c7d9d6",
+        "id": "f3075190-c382-4d1c-aec0-95924905240b",
+        "name": "elastic-agent-73389",
+        "type": "filebeat",
+        "version": "9.4.2"
+    },
+    "data_stream": {
+        "dataset": "ovh_dedicated_servers.backup_acl",
+        "namespace": "39164",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "f3075190-c382-4d1c-aec0-95924905240b",
+        "snapshot": false,
+        "version": "9.4.2"
+    },
+    "event": {
+        "category": [
+            "configuration"
+        ],
+        "dataset": "ovh_dedicated_servers.backup_acl",
+        "ingested": "2026-07-10T18:58:19Z",
+        "kind": "state",
+        "module": "ovh_dedicated_servers",
+        "original": "{\"cifs\":false,\"ftp\":true,\"ipBlock\":\"203.0.113.0/24\",\"isApplied\":true,\"lastUpdate\":\"2026-06-15T11:02:33+02:00\",\"nfs\":false,\"serviceName\":\"ns-example1.ip-192-0-2.example\"}",
+        "type": [
+            "info"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "ovh_dedicated_servers": {
+        "backup_acl": {
+            "cifs": false,
+            "ftp": true,
+            "ip_block": "203.0.113.0/24",
+            "is_applied": true,
+            "nfs": false
+        },
+        "server_name": "ns-example1.ip-192-0-2.example"
+    },
+    "related": {
+        "hosts": [
+            "ns-example1.ip-192-0-2.example"
+        ],
+        "ip": [
+            "203.0.113.0"
+        ]
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded",
+        "ovh-dedicated-servers-backup-acl"
+    ]
+}

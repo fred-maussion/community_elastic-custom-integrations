@@ -1,0 +1,71 @@
+{
+    "@timestamp": "2026-07-10T06:05:12.000Z",
+    "agent": {
+        "ephemeral_id": "86b53d96-bb5f-489d-8e47-c3fdc8381529",
+        "id": "0d29db7f-6029-4ca2-b697-05605b29450e",
+        "name": "elastic-agent-37029",
+        "type": "filebeat",
+        "version": "9.4.2"
+    },
+    "data_stream": {
+        "dataset": "ovh_dedicated_servers.task",
+        "namespace": "39548",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "0d29db7f-6029-4ca2-b697-05605b29450e",
+        "snapshot": false,
+        "version": "9.4.2"
+    },
+    "event": {
+        "action": "ipmiAccessRequest",
+        "category": [
+            "host"
+        ],
+        "dataset": "ovh_dedicated_servers.task",
+        "end": "2026-07-10T06:05:12.000Z",
+        "id": "2001",
+        "ingested": "2026-07-10T19:17:31Z",
+        "kind": "event",
+        "module": "ovh_dedicated_servers",
+        "original": "{\"changeUuid\":\"7c1e2a4d-1234-4abc-9def-example00002\",\"comment\":\"KVM access requested by customer\",\"doneDate\":\"2026-07-10T08:05:12+02:00\",\"function\":\"ipmiAccessRequest\",\"lastUpdate\":\"2026-07-10T08:05:12+02:00\",\"needSchedule\":false,\"note\":null,\"plannedInterventionId\":null,\"serviceName\":\"ns-example2.ip-192-0-2.example\",\"startDate\":\"2026-07-10T08:00:00+02:00\",\"status\":\"done\",\"tags\":[{\"key\":\"ipmiIp\",\"value\":\"203.0.113.10\"}],\"taskId\":2001,\"ticketReference\":null}",
+        "outcome": "success",
+        "start": "2026-07-10T06:00:00.000Z",
+        "type": [
+            "change"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "message": "KVM access requested by customer",
+    "ovh_dedicated_servers": {
+        "server_name": "ns-example2.ip-192-0-2.example",
+        "task": {
+            "change_uuid": "7c1e2a4d-1234-4abc-9def-example00002",
+            "need_schedule": false,
+            "status": "done",
+            "tags": {
+                "key": [
+                    "ipmiIp"
+                ],
+                "value": [
+                    "203.0.113.10"
+                ]
+            }
+        }
+    },
+    "related": {
+        "hosts": [
+            "ns-example2.ip-192-0-2.example"
+        ]
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded",
+        "ovh-dedicated-servers-task"
+    ]
+}
