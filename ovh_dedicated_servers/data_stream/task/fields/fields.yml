@@ -1,0 +1,41 @@
+- name: ovh_dedicated_servers
+  type: group
+  fields:
+    - name: server_name
+      type: keyword
+      description: >-
+        The OVHcloud dedicated server service name the task belongs to (path parameter on the source API, injected by the collector).
+    - name: task
+      type: group
+      fields:
+        - name: status
+          type: keyword
+          description: >-
+            Raw OVH task status. One of cancelled, customerError, doing, done, init, ovhError, todo.
+        - name: note
+          type: keyword
+          description: Extra information about the task, when provided by the API.
+        - name: need_schedule
+          type: boolean
+          description: >-
+            Whether the task needs to be scheduled (some hardware or intervention tasks require the customer to pick a maintenance window).
+        - name: planned_intervention_id
+          type: keyword
+          description: Identifier of the linked planned intervention, if any.
+        - name: change_uuid
+          type: keyword
+          description: UUID of the change linked to this task, if any.
+        - name: ticket_reference
+          type: keyword
+          description: Reference of the linked OVH support ticket, if any.
+        - name: tags
+          type: nested
+          description: >-
+            Array of key/value tags attached to the task by the OVH API (e.g. reinstallation template, SSH key name, IPMI IP). Declared as `nested` because each array entry must preserve its `key`/`value` pairing; a plain `group`/object mapping would flatten these into parallel scalar arrays and lose the association. Known limitation: on indices using synthetic `_source` (the default for serverless/logsdb-mode Elasticsearch), the array-of-objects shape is only preserved through storage/retrieval if the `synthetic_source_keep: all` mapping attribute (Elasticsearch 8.16+) is applied to this field. That attribute cannot currently be expressed through this package's `fields.yml`, nor through `manifest.yml`'s `elasticsearch.index_template.mappings` block — package-spec does not yet support it (see open change proposal https://github.com/elastic/package-spec/issues/861). Until package-spec adds support, a real indexed-and-retrieved document may show `tags` reconstructed as parallel `key`/`value` arrays rather than an array of paired objects, even though this field is correctly declared as `nested`.
+          fields:
+            - name: key
+              type: keyword
+              description: Task result tag key.
+            - name: value
+              type: keyword
+              description: Task result tag value.

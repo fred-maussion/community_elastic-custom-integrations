@@ -1,0 +1,18 @@
+- name: ovh_dedicated_servers
+  type: group
+  fields:
+    - name: server_name
+      type: keyword
+      description: >-
+        The OVHcloud dedicated server service name the intervention belongs to (path parameter on the source API, injected by the collector).
+    - name: intervention
+      type: group
+      fields:
+        - name: planned
+          type: boolean
+          description: >-
+            Discriminator injected by the collector: true for a scheduled future intervention (source: plannedIntervention API), false for a past/completed intervention (source: intervention API).
+        - name: status
+          type: keyword
+          description: >-
+            Status of a planned intervention. One of doing, done, todo. Only present when planned is true.

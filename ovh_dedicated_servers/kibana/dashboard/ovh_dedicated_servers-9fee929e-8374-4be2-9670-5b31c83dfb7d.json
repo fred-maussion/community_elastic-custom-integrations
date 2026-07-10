@@ -1,0 +1,1698 @@
+{
+    "accessControl": {
+        "accessMode": "default",
+        "owner": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+    },
+    "attributes": {
+        "description": "KPIs and trends for monitoring backup ACLs on OVH dedicated servers. Designed for SREs: rule coverage, enabled protocols, application status, and anomalies.",
+        "esqlApproximation": false,
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "autoApplyFilters": true,
+            "hidePanelBorders": false,
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-bfb46bb9a125cac1162810c33f26701ddd53ea8a685e3e746a5972b279ed3c09": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-bfb46bb9a125cac1162810c33f26701ddd53ea8a685e3e746a5972b279ed3c09",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Backup ACL Entries",
+                                                    "label": "Total Backup ACL Entries",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-bfb46bb9a125cac1162810c33f26701ddd53ea8a685e3e746a5972b279ed3c09",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `Total Backup ACL Entries` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-bfb46bb9a125cac1162810c33f26701ddd53ea8a685e3e746a5972b279ed3c09",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `Total Backup ACL Entries` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "a2e38cca-5918-4f49-89a8-88f8015c427b",
+                    "sectionId": "f3405f98-0dfc-4f6d-9f53-3090566f6a5d",
+                    "w": 8,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "a2e38cca-5918-4f49-89a8-88f8015c427b",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-1153f45ba5afdb3c8157ccfa9009c116f273e05cf9914b229f5dfd909ab8655b": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-1153f45ba5afdb3c8157ccfa9009c116f273e05cf9914b229f5dfd909ab8655b",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Servers",
+                                                    "label": "Distinct Servers with Backup ACL",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-1153f45ba5afdb3c8157ccfa9009c116f273e05cf9914b229f5dfd909ab8655b",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `Distinct Servers` = COUNT_DISTINCT(ovh_dedicated_servers.server_name)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-1153f45ba5afdb3c8157ccfa9009c116f273e05cf9914b229f5dfd909ab8655b",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `Distinct Servers` = COUNT_DISTINCT(ovh_dedicated_servers.server_name)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "bb4dc710-0632-427f-b593-69fe7868fccf",
+                    "sectionId": "f3405f98-0dfc-4f6d-9f53-3090566f6a5d",
+                    "w": 8,
+                    "x": 8,
+                    "y": 0
+                },
+                "panelIndex": "bb4dc710-0632-427f-b593-69fe7868fccf",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-3e286f6d225deb27f360967d14ef10554c0671fe5c95b14ecd842788d8b05a9f": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-3e286f6d225deb27f360967d14ef10554c0671fe5c95b14ecd842788d8b05a9f",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of ACL entries",
+                                                    "label": "Applied ACL Entries",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-3e286f6d225deb27f360967d14ef10554c0671fe5c95b14ecd842788d8b05a9f",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| WHERE ovh_dedicated_servers.backup_acl.is_applied == true\n| STATS `Count of ACL entries` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-3e286f6d225deb27f360967d14ef10554c0671fe5c95b14ecd842788d8b05a9f",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| WHERE ovh_dedicated_servers.backup_acl.is_applied == true\n| STATS `Count of ACL entries` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "a217c7c9-d6c6-41a2-bde0-750bb17240b7",
+                    "sectionId": "f3405f98-0dfc-4f6d-9f53-3090566f6a5d",
+                    "w": 8,
+                    "x": 16,
+                    "y": 0
+                },
+                "panelIndex": "a217c7c9-d6c6-41a2-bde0-750bb17240b7",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-9da585f9ed0e60a790c79ab917ac0eb926b19ca03d1e5bc6d3c61c1b88f2a2ef": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-9da585f9ed0e60a790c79ab917ac0eb926b19ca03d1e5bc6d3c61c1b88f2a2ef",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of ACL entries",
+                                                    "label": "Unapplied ACL Entries",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-9da585f9ed0e60a790c79ab917ac0eb926b19ca03d1e5bc6d3c61c1b88f2a2ef",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| WHERE ovh_dedicated_servers.backup_acl.is_applied == false\n| STATS `Count of ACL entries` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-9da585f9ed0e60a790c79ab917ac0eb926b19ca03d1e5bc6d3c61c1b88f2a2ef",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| WHERE ovh_dedicated_servers.backup_acl.is_applied == false\n| STATS `Count of ACL entries` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "09fecf4a-8897-448d-bac0-d1c309562928",
+                    "sectionId": "f3405f98-0dfc-4f6d-9f53-3090566f6a5d",
+                    "w": 8,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "09fecf4a-8897-448d-bac0-d1c309562928",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-f3c858cfd602e5e2429385f755160777d365b4e777bab88bb41d7d5fe60104ec": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-f3c858cfd602e5e2429385f755160777d365b4e777bab88bb41d7d5fe60104ec",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct IP Blocks",
+                                                    "label": "Distinct IP Blocks",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-f3c858cfd602e5e2429385f755160777d365b4e777bab88bb41d7d5fe60104ec",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `Distinct IP Blocks` = COUNT_DISTINCT(ovh_dedicated_servers.backup_acl.ip_block)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-f3c858cfd602e5e2429385f755160777d365b4e777bab88bb41d7d5fe60104ec",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `Distinct IP Blocks` = COUNT_DISTINCT(ovh_dedicated_servers.backup_acl.ip_block)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "77d75e04-d0b2-4dd2-b980-8a42d918bb58",
+                    "sectionId": "f3405f98-0dfc-4f6d-9f53-3090566f6a5d",
+                    "w": 8,
+                    "x": 32,
+                    "y": 0
+                },
+                "panelIndex": "77d75e04-d0b2-4dd2-b980-8a42d918bb58",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-e1dae4438f047c13b337ca01f10e60b04da6fd3cf821af7d78665f35dc6b825a": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-e1dae4438f047c13b337ca01f10e60b04da6fd3cf821af7d78665f35dc6b825a",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of ACL entries",
+                                                    "label": "Count of ACL entries with errors",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-e1dae4438f047c13b337ca01f10e60b04da6fd3cf821af7d78665f35dc6b825a",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| WHERE error.message IS NOT NULL\n| STATS `Count of ACL entries` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-e1dae4438f047c13b337ca01f10e60b04da6fd3cf821af7d78665f35dc6b825a",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| WHERE error.message IS NOT NULL\n| STATS `Count of ACL entries` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "356c346f-e0a2-49e5-8b80-b461f728fae8",
+                    "sectionId": "f3405f98-0dfc-4f6d-9f53-3090566f6a5d",
+                    "w": 8,
+                    "x": 40,
+                    "y": 0
+                },
+                "panelIndex": "356c346f-e0a2-49e5-8b80-b461f728fae8",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Number of Events",
+                                                    "label": "Number of Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "customLabel": true,
+                                                    "fieldName": "Is Applied",
+                                                    "label": "Is Applied",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `Number of Events` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Is Applied` = ovh_dedicated_servers.backup_acl.is_applied\n| SORT `Time Bucket`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `Number of Events` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Is Applied` = ovh_dedicated_servers.backup_acl.is_applied\n| SORT `Time Bucket`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "bar_stacked"
+                            }
+                        },
+                        "title": "Backup ACL Events Over Time by Is Applied Status",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Backup ACL Events Over Time by Is Applied Status"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "99fefa5d-cf34-4e02-a97f-fd44df44fab1",
+                    "sectionId": "7957e2e5-4c66-4cb8-a514-57742899e2ce",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "99fefa5d-cf34-4e02-a97f-fd44df44fab1",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "fieldName": "Count of Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "fieldName": "Event Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `Count of Events` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Event Type` = event.type\n| SORT `Time Bucket`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `Count of Events` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Event Type` = event.type\n| SORT `Time Bucket`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right",
+                                    "showSingleSeries": true
+                                },
+                                "preferredSeriesType": "bar_stacked"
+                            }
+                        },
+                        "title": "Count of Backup ACL Events Over Time by Event Type",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Count of Backup ACL Events Over Time by Event Type"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "68dfc253-a3a2-48f0-b537-e58135a644c1",
+                    "sectionId": "7957e2e5-4c66-4cb8-a514-57742899e2ce",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "68dfc253-a3a2-48f0-b537-e58135a644c1",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-5b64aed2b38529eb572aa316b52a8748c882a1bfb67b5c06a96358ca2da0b34d": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-5b64aed2b38529eb572aa316b52a8748c882a1bfb67b5c06a96358ca2da0b34d",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "FTP Enabled",
+                                                    "label": "FTP Enabled",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_0_y_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "NFS Enabled",
+                                                    "label": "NFS Enabled",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_0_y_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "CIFS Enabled",
+                                                    "label": "CIFS Enabled",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-5b64aed2b38529eb572aa316b52a8748c882a1bfb67b5c06a96358ca2da0b34d",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `FTP Enabled` = COUNT(*) WHERE ovh_dedicated_servers.backup_acl.ftp == true, `NFS Enabled` = COUNT(*) WHERE ovh_dedicated_servers.backup_acl.nfs == true, `CIFS Enabled` = COUNT(*) WHERE ovh_dedicated_servers.backup_acl.cifs == true"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-5b64aed2b38529eb572aa316b52a8748c882a1bfb67b5c06a96358ca2da0b34d",
+                                    "name": "indexpattern-datasource-layer-bar_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `FTP Enabled` = COUNT(*) WHERE ovh_dedicated_servers.backup_acl.ftp == true, `NFS Enabled` = COUNT(*) WHERE ovh_dedicated_servers.backup_acl.nfs == true, `CIFS Enabled` = COUNT(*) WHERE ovh_dedicated_servers.backup_acl.cifs == true"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_0_y_0",
+                                            "bar_0_y_1",
+                                            "bar_0_y_2"
+                                        ],
+                                        "layerId": "bar_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_0_y_0"
+                                            },
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_0_y_1"
+                                            },
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_0_y_2"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar"
+                            }
+                        },
+                        "title": "Backup ACL Protocol Enablement Count (FTP, NFS, CIFS)",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Backup ACL Protocol Enablement Count (FTP, NFS, CIFS)"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "114034f4-4db9-40e5-81dc-154d0438a790",
+                    "sectionId": "d889fa3e-bc85-4371-9731-a7e95feab464",
+                    "w": 16,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "114034f4-4db9-40e5-81dc-154d0438a790",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-0f795db7fd2ae700e73ce749ec56acff34231f0d8defa1886efd88240550ce8f": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-0f795db7fd2ae700e73ce749ec56acff34231f0d8defa1886efd88240550ce8f",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ACL Entries",
+                                                    "label": "ACL Entries",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Protocol Combination",
+                                                    "label": "Protocol Combination",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-0f795db7fd2ae700e73ce749ec56acff34231f0d8defa1886efd88240550ce8f",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| EVAL `Protocol Combination` = CASE(\n    ovh_dedicated_servers.backup_acl.ftp == true AND ovh_dedicated_servers.backup_acl.nfs == true AND ovh_dedicated_servers.backup_acl.cifs == true, \"FTP + NFS + CIFS\",\n    ovh_dedicated_servers.backup_acl.ftp == true AND ovh_dedicated_servers.backup_acl.nfs == true, \"FTP + NFS\",\n    ovh_dedicated_servers.backup_acl.ftp == true AND ovh_dedicated_servers.backup_acl.cifs == true, \"FTP + CIFS\",\n    ovh_dedicated_servers.backup_acl.nfs == true AND ovh_dedicated_servers.backup_acl.cifs == true, \"NFS + CIFS\",\n    ovh_dedicated_servers.backup_acl.ftp == true, \"FTP\",\n    ovh_dedicated_servers.backup_acl.nfs == true, \"NFS\",\n    ovh_dedicated_servers.backup_acl.cifs == true, \"CIFS\",\n    \"None\"\n  )\n| STATS `ACL Entries` = COUNT(*) BY `Protocol Combination`\n| SORT `ACL Entries` DESC"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-0f795db7fd2ae700e73ce749ec56acff34231f0d8defa1886efd88240550ce8f",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| EVAL `Protocol Combination` = CASE(\n    ovh_dedicated_servers.backup_acl.ftp == true AND ovh_dedicated_servers.backup_acl.nfs == true AND ovh_dedicated_servers.backup_acl.cifs == true, \"FTP + NFS + CIFS\",\n    ovh_dedicated_servers.backup_acl.ftp == true AND ovh_dedicated_servers.backup_acl.nfs == true, \"FTP + NFS\",\n    ovh_dedicated_servers.backup_acl.ftp == true AND ovh_dedicated_servers.backup_acl.cifs == true, \"FTP + CIFS\",\n    ovh_dedicated_servers.backup_acl.nfs == true AND ovh_dedicated_servers.backup_acl.cifs == true, \"NFS + CIFS\",\n    ovh_dedicated_servers.backup_acl.ftp == true, \"FTP\",\n    ovh_dedicated_servers.backup_acl.nfs == true, \"NFS\",\n    ovh_dedicated_servers.backup_acl.cifs == true, \"CIFS\",\n    \"None\"\n  )\n| STATS `ACL Entries` = COUNT(*) BY `Protocol Combination`\n| SORT `ACL Entries` DESC"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": false
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "Distribution of ACL Entries by Protocol Combination",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": [],
+                    "title": "Distribution of ACL Entries by Protocol Combination"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "96da7f19-a6cd-4973-a72e-bf0acd8596a5",
+                    "sectionId": "d889fa3e-bc85-4371-9731-a7e95feab464",
+                    "w": 16,
+                    "x": 16,
+                    "y": 0
+                },
+                "panelIndex": "96da7f19-a6cd-4973-a72e-bf0acd8596a5",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "ACL Entries",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Is Applied",
+                                                    "label": "Is Applied",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `ACL Entries` = COUNT(*) BY `Is Applied` = ovh_dedicated_servers.backup_acl.is_applied"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `ACL Entries` = COUNT(*) BY `Is Applied` = ovh_dedicated_servers.backup_acl.is_applied"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "emptySizeRatio": 0.54,
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": false
+                                    }
+                                ],
+                                "shape": "donut"
+                            }
+                        },
+                        "title": "ACL Entries: Applied vs Not Applied",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": [],
+                    "title": "ACL Entries: Applied vs Not Applied"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "3ffb4a2e-c126-4f2d-9647-aa38867e7353",
+                    "sectionId": "d889fa3e-bc85-4371-9731-a7e95feab464",
+                    "w": 16,
+                    "x": 32,
+                    "y": 0
+                },
+                "panelIndex": "3ffb4a2e-c126-4f2d-9647-aa38867e7353",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-b89b4c1b12d12382d0da8931c6cd9e1578effc231657f0840901f0d478d7e048": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-b89b4c1b12d12382d0da8931c6cd9e1578effc231657f0840901f0d478d7e048",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Server Name",
+                                                    "label": "Server Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Backup ACL Entries",
+                                                    "label": "Backup ACL Entries",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-b89b4c1b12d12382d0da8931c6cd9e1578effc231657f0840901f0d478d7e048",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `Backup ACL Entries` = COUNT(*) BY `Server Name` = ovh_dedicated_servers.server_name\n| SORT `Backup ACL Entries` DESC\n| LIMIT 15"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-b89b4c1b12d12382d0da8931c6cd9e1578effc231657f0840901f0d478d7e048",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `Backup ACL Entries` = COUNT(*) BY `Server Name` = ovh_dedicated_servers.server_name\n| SORT `Backup ACL Entries` DESC\n| LIMIT 15"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal"
+                            }
+                        },
+                        "title": "Top 15 Servers by Number of Backup ACL Entries",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 15 Servers by Number of Backup ACL Entries"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "15b5c686-bdf0-4496-a2fc-a352486ce298",
+                    "sectionId": "1e29a3b7-c907-4a37-9ef9-3c2de08c502d",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "15b5c686-bdf0-4496-a2fc-a352486ce298",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-fbfc9f164c6b3c9088ad406a1f49f6f0813040d6de39aea96caf1892d6203e48": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-fbfc9f164c6b3c9088ad406a1f49f6f0813040d6de39aea96caf1892d6203e48",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "fieldName": "IP Block",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "fieldName": "ACL Entries",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-fbfc9f164c6b3c9088ad406a1f49f6f0813040d6de39aea96caf1892d6203e48",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `ACL Entries` = COUNT(*) BY `IP Block` = ovh_dedicated_servers.backup_acl.ip_block\n| SORT `ACL Entries` DESC\n| LIMIT 15"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-fbfc9f164c6b3c9088ad406a1f49f6f0813040d6de39aea96caf1892d6203e48",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| STATS `ACL Entries` = COUNT(*) BY `IP Block` = ovh_dedicated_servers.backup_acl.ip_block\n| SORT `ACL Entries` DESC\n| LIMIT 15"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal"
+                            }
+                        },
+                        "title": "Top 15 IP Blocks by Number of ACL Entries",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 15 IP Blocks by Number of ACL Entries"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "f314c07e-84c2-44dc-a91d-3af928de2ae6",
+                    "sectionId": "1e29a3b7-c907-4a37-9ef9-3c2de08c502d",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "f314c07e-84c2-44dc-a91d-3af928de2ae6",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.backup_acl-default-1a1a19e39c6e8c2585cb93232cb0ffcc9a5af94e1fda8eb1e177332d90492265": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-1a1a19e39c6e8c2585cb93232cb0ffcc9a5af94e1fda8eb1e177332d90492265",
+                                    "name": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.backup_acl-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh_dedicated_servers.server_name",
+                                                    "label": "Server Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh_dedicated_servers.backup_acl.ip_block",
+                                                    "label": "IP Block",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "@timestamp",
+                                                    "label": "Timestamp",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh_dedicated_servers.backup_acl.is_applied",
+                                                    "inMetricDimension": true,
+                                                    "label": "Is Applied",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh_dedicated_servers.backup_acl.ftp",
+                                                    "inMetricDimension": true,
+                                                    "label": "FTP",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh_dedicated_servers.backup_acl.nfs",
+                                                    "inMetricDimension": true,
+                                                    "label": "NFS",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh_dedicated_servers.backup_acl.cifs",
+                                                    "inMetricDimension": true,
+                                                    "label": "CIFS",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.backup_acl-default-1a1a19e39c6e8c2585cb93232cb0ffcc9a5af94e1fda8eb1e177332d90492265",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| KEEP ovh_dedicated_servers.server_name, ovh_dedicated_servers.backup_acl.ip_block, ovh_dedicated_servers.backup_acl.is_applied, ovh_dedicated_servers.backup_acl.ftp, ovh_dedicated_servers.backup_acl.nfs, ovh_dedicated_servers.backup_acl.cifs, @timestamp\n| SORT @timestamp DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.backup_acl-default-1a1a19e39c6e8c2585cb93232cb0ffcc9a5af94e1fda8eb1e177332d90492265",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.backup_acl-default\n| KEEP ovh_dedicated_servers.server_name, ovh_dedicated_servers.backup_acl.ip_block, ovh_dedicated_servers.backup_acl.is_applied, ovh_dedicated_servers.backup_acl.ftp, ovh_dedicated_servers.backup_acl.nfs, ovh_dedicated_servers.backup_acl.cifs, @timestamp\n| SORT @timestamp DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_2",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_3",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "compact",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true
+                            }
+                        },
+                        "title": "Backup ACL Entries – OVH Dedicated Servers (Latest 100, sorted by timestamp desc)",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Backup ACL Entries – OVH Dedicated Servers (Latest 100, sorted by timestamp desc)"
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "d728aeab-a084-449d-88cb-ad96f626d206",
+                    "sectionId": "254b4359-4cdf-4b23-b394-080153d40b81",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "d728aeab-a084-449d-88cb-ad96f626d206",
+                "type": "vis"
+            }
+        ],
+        "pinned_panels": {
+            "panels": {
+                "433c1a4a-30a6-4ff4-86f6-1e6a84d874e7": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_dedicated_servers.backup_acl-default | STATS BY `ovh_dedicated_servers.backup_acl.ip_block`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "IP Block",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 1,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "4fe4aa6c-3307-4152-ab35-28c9d6b99ccb": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_dedicated_servers.backup_acl-default | STATS BY `event.type`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Type d'événement",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 2,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "961cd385-df3b-438f-8716-31f5fce9ff2c": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_dedicated_servers.backup_acl-default | STATS BY `ovh_dedicated_servers.server_name`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Serveur",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 0,
+                    "type": "options_list_control",
+                    "width": "medium"
+                }
+            }
+        },
+        "refreshInterval": {
+            "pause": true,
+            "value": 0
+        },
+        "sections": [
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "f3405f98-0dfc-4f6d-9f53-3090566f6a5d",
+                    "y": 0
+                },
+                "title": "📊 Vue d'ensemble – KPIs"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "7957e2e5-4c66-4cb8-a514-57742899e2ce",
+                    "y": 1
+                },
+                "title": "📈 Tendances temporelles"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "d889fa3e-bc85-4371-9731-a7e95feab464",
+                    "y": 2
+                },
+                "title": "🔐 Protocoles \u0026 Accès"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "1e29a3b7-c907-4a37-9ef9-3c2de08c502d",
+                    "y": 3
+                },
+                "title": "🖥️ Serveurs \u0026 IP Blocks"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "254b4359-4cdf-4b23-b394-080153d40b81",
+                    "y": 4
+                },
+                "title": "📋 Détail des règles ACL"
+            }
+        ],
+        "timeFrom": "2023-03-11T10:00:20.000Z",
+        "timeRestore": true,
+        "timeTo": "2023-03-11T11:00:20.001Z",
+        "title": "[OVH] Dedicated Servers - Backup ACL"
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2026-07-10T21:42:06.538Z",
+    "created_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0",
+    "id": "ovh_dedicated_servers-9fee929e-8374-4be2-9670-5b31c83dfb7d",
+    "references": [],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+}

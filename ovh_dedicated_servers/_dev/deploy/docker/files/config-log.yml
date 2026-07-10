@@ -1,0 +1,320 @@
+rules:
+  # OVH server-time endpoint used to calibrate the clock offset (unauthenticated).
+  # Second response (500) is a regression guard: the CEL program must cache the
+  # offset in cursor.offset and never re-calibrate on a later tick. If it does,
+  # this rule traps it and the resulting error event drops hit_count below the
+  # expected total, failing the test.
+  - path: /auth/time
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '"1751000000"'
+      - status_code: 500
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '{"class":"Internal::Error","message":"unexpected re-calibration -- cursor.offset should already be cached"}'
+  # Page 1 of the account-wide provisioning/activity log -- full page (5 of 5),
+  # more pages follow. Round 1 (first tick, full sweep starts here) and round 2
+  # (second tick, interval-driven resume) -- round 2 returns a short page
+  # (2 < limit) so the resumed sweep terminates immediately, proving
+  # cursor.creds/cursor.offset survived the tick boundary. Every response after
+  # round 2 is a genuinely empty terminal page (count: 0, data: []): the mock's
+  # `elastic/stream` service replays its canned responses in a fixed cycle and
+  # WRAPS BACK to index 0 once exhausted rather than repeating the last
+  # response -- confirmed by direct replay (5 sequential requests cycled
+  # 0,1,0,1,0). Since each polling tick after round 2 issues exactly one
+  # page=1 request (the CEL program starts a fresh sweep at page 1 each tick,
+  # and a short/empty page terminates that tick's sweep immediately without
+  # calling page 2/3), the test's `interval: 2s` over `wait_for_data_timeout:
+  # 1m` can drive up to ~30 ticks/requests against this rule. 40 empty
+  # follow-up responses (42 total) comfortably out-run that worst case so the
+  # cycle never wraps back to the non-empty round 1/round 2 responses within
+  # the test window.
+  - path: /dedicated/server/log
+    methods: ['GET']
+    query_params:
+      page: '1'
+      limit: '5'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:00:00+02:00","count":13,"data":[{"datetime":"2026-07-08T09:00:00+02:00","resume":"Access codes sent","server":"ns-example1.ip-192-0-2.example"},{"datetime":"2026-07-08T09:05:00+02:00","resume":"Server ns-example1.ip-192-0-2.example has rebooted","server":"ns-example1.ip-192-0-2.example"},{"datetime":"2026-07-08T10:00:00+02:00","resume":"Access codes sent","server":"ns-example2.ip-192-0-2.example"},{"datetime":"2026-07-08T10:15:00+02:00","resume":"Server ns-example2.ip-192-0-2.example has been reinstalled","server":"ns-example2.ip-192-0-2.example"},{"datetime":"2026-07-08T11:00:00+02:00","resume":"Access codes sent","server":"ns-example1.ip-192-0-2.example"}]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:10:00+02:00","count":2,"data":[{"datetime":"2026-07-10T14:00:00+02:00","resume":"Access codes sent","server":"ns-example1.ip-192-0-2.example"},{"datetime":"2026-07-10T14:05:00+02:00","resume":"Server ns-example2.ip-192-0-2.example has rebooted","server":"ns-example2.ip-192-0-2.example"}]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:20:00+02:00","count":0,"data":[]}
+  # Page 2 -- full page (5 of 5), more pages follow. Only used in round 1.
+  - path: /dedicated/server/log
+    methods: ['GET']
+    query_params:
+      page: '2'
+      limit: '5'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:00:00+02:00","count":13,"data":[{"datetime":"2026-07-08T11:30:00+02:00","resume":"Server ns-example2.ip-192-0-2.example has rebooted","server":"ns-example2.ip-192-0-2.example"},{"datetime":"2026-07-08T12:00:00+02:00","resume":"Access codes sent","server":"ns-example1.ip-192-0-2.example"},{"datetime":"2026-07-08T12:30:00+02:00","resume":"Server ns-example1.ip-192-0-2.example has been reinstalled","server":"ns-example1.ip-192-0-2.example"},{"datetime":"2026-07-08T13:00:00+02:00","resume":"Access codes sent","server":"ns-example2.ip-192-0-2.example"},{"datetime":"2026-07-08T13:30:00+02:00","resume":"Server ns-example2.ip-192-0-2.example has rebooted","server":"ns-example2.ip-192-0-2.example"}]}
+  # Page 3 -- terminal page (3 < limit 5). Only used in round 1.
+  - path: /dedicated/server/log
+    methods: ['GET']
+    query_params:
+      page: '3'
+      limit: '5'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"cacheDate":"2026-07-10T15:00:00+02:00","count":13,"data":[{"datetime":"2026-07-08T14:00:00+02:00","resume":"Access codes sent","server":"ns-example1.ip-192-0-2.example"},{"datetime":"2026-07-08T14:15:00+02:00","resume":"Server ns-example1.ip-192-0-2.example has rebooted","server":"ns-example1.ip-192-0-2.example"},{"datetime":"2026-07-08T14:30:00+02:00","resume":"Access codes sent","server":"ns-example2.ip-192-0-2.example"}]}

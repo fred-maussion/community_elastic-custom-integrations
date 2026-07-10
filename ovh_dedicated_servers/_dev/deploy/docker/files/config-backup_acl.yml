@@ -1,0 +1,62 @@
+rules:
+  # OVH server-time endpoint used to calibrate the clock offset (unauthenticated).
+  - path: /auth/time
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '"1751000000"'
+  # List owned dedicated servers -- no pagination, no query params.
+  - path: /dedicated/server
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          ["ns-example1.ip-192-0-2.example","ns-example2.ip-192-0-2.example"]
+  # Backup-FTP ACL block list for server 1 -- feature activated, two ACL entries.
+  # Static across ticks: this is a current-state snapshot, so the full sweep
+  # re-runs identically every interval (no cursor-driven change expected).
+  - path: /dedicated/server/ns-example1.ip-192-0-2.example/features/backupFTP/access
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          ["203.0.113.0/24","198.51.100.42/32"]
+  # Backup-FTP ACL block list for server 2 -- feature never ordered/activated.
+  # Must be treated as zero ACL entries, not an error.
+  - path: /dedicated/server/ns-example2.ip-192-0-2.example/features/backupFTP/access
+    methods: ['GET']
+    responses:
+      - status_code: 404
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"class":"Client::NotFound","message":"This service does not exist"}
+  # ACL detail: server 1 -- the CEL program URL-encodes the CIDR slash as
+  # %2F, but the mock's underlying router (gorilla/mux) decodes %2F back to
+  # a literal "/" before matching, and a plain {ipBlock} placeholder only
+  # captures a single path segment (it would not span the embedded slash).
+  # {ipBlock:.*} is required here so the capture spans the decoded slash and
+  # matches regardless of whether the incoming path segment was encoded.
+  - path: /dedicated/server/ns-example1.ip-192-0-2.example/features/backupFTP/access/{ipBlock:.*}
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {{ if eq .request.vars.ipBlock "203.0.113.0/24" }}
+          {"ipBlock":"203.0.113.0/24","cifs":false,"ftp":true,"nfs":false,"isApplied":true,"lastUpdate":"2026-06-15T11:02:33+02:00"}
+          {{ else }}
+          {"ipBlock":"198.51.100.42/32","cifs":true,"ftp":false,"nfs":true,"isApplied":false,"lastUpdate":"2026-07-01T08:45:00+02:00"}
+          {{ end }}

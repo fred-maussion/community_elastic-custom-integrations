@@ -1,0 +1,14 @@
+wait_for_data_timeout: 1m
+input: cel
+service: task
+vars:
+  url: http://{{Hostname}}:{{Port}}
+  application_key: test-app-key
+  application_secret: test-app-secret
+  consumer_key: test-consumer-key
+data_stream:
+  vars:
+    interval: 2s
+    preserve_original_event: true
+assert:
+  hit_count: 4

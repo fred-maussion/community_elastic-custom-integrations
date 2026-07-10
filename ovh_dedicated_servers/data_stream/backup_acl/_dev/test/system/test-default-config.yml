@@ -1,0 +1,22 @@
+wait_for_data_timeout: 1m
+input: cel
+service: backup_acl
+vars:
+  url: http://{{Hostname}}:{{Port}}
+  application_key: test-app-key
+  application_secret: test-app-secret
+  consumer_key: test-consumer-key
+data_stream:
+  vars:
+    # This stream is a current-state snapshot with no per-item dedup (see
+    # cel.yml.hbs Phase E): every full sweep re-lists all servers and
+    # re-emits every currently-authorized ACL entry from scratch, unlike the
+    # task/intervention/log streams which dedupe by ID. A short interval
+    # would let multiple sweeps complete within wait_for_data_timeout and
+    # make hit_count non-deterministic (each sweep adds 2 more hits). Using
+    # an interval much longer than wait_for_data_timeout guarantees exactly
+    # one sweep completes, giving a stable, deterministic hit_count.
+    interval: 10m
+    preserve_original_event: true
+assert:
+  hit_count: 2

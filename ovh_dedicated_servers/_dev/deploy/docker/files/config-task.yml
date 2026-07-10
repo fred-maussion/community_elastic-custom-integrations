@@ -1,0 +1,87 @@
+rules:
+  # OVH server-time endpoint used to calibrate the clock offset (unauthenticated).
+  - path: /auth/time
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '"1751000000"'
+  # List owned dedicated servers -- no pagination, no query params.
+  - path: /dedicated/server
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          ["ns-example1.ip-192-0-2.example","ns-example2.ip-192-0-2.example"]
+  # Task ID list for server 1 -- cycles between a 2-id response (round 1) and a
+  # 3-id response with a new task (round 2, cursor-persisted resume). Because
+  # dedup is keyed on task ID, re-listing an already-seen ID is a no-op, so the
+  # cycling is safe regardless of how many times this rule is hit within the
+  # test window.
+  - path: /dedicated/server/ns-example1.ip-192-0-2.example/task
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '[1001,1002]'
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '[1001,1002,1003]'
+  # Task ID list for server 2 -- static, single task.
+  - path: /dedicated/server/ns-example2.ip-192-0-2.example/task
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '[2001]'
+  # Task detail: server 1 / task 1001 -- done reinstall.
+  - path: /dedicated/server/ns-example1.ip-192-0-2.example/task/1001
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"taskId":1001,"function":"reinstallServer","status":"done","comment":"Reinstall using template debian12_64","note":null,"startDate":"2026-07-10T09:12:03+02:00","lastUpdate":"2026-07-10T09:24:47+02:00","doneDate":"2026-07-10T09:24:47+02:00","needSchedule":false,"plannedInterventionId":null,"changeUuid":"3fa4c1b2-9e6a-4d8b-8c9e-example00001","ticketReference":null,"tags":[{"key":"template","value":"debian12_64"},{"key":"sshKeyName","value":"example-key"}]}
+  # Task detail: server 1 / task 1002 -- in-progress firewall change, nullable fields absent/empty.
+  - path: /dedicated/server/ns-example1.ip-192-0-2.example/task/1002
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"taskId":1002,"function":"firewallEnable","status":"doing","comment":null,"note":null,"startDate":"2026-07-10T10:00:00+02:00","lastUpdate":"2026-07-10T10:00:05+02:00","doneDate":null,"needSchedule":false,"plannedInterventionId":null,"changeUuid":null,"ticketReference":null,"tags":[]}
+  # Task detail: server 1 / task 1003 -- new task appearing on the cursor-resume round.
+  - path: /dedicated/server/ns-example1.ip-192-0-2.example/task/1003
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"taskId":1003,"function":"hardware_update","status":"todo","comment":"RAM replacement required following hardware diagnostic","note":"Customer must confirm a backup was performed before scheduling","startDate":"2026-07-10T10:30:00+02:00","lastUpdate":"2026-07-10T10:30:00+02:00","doneDate":null,"needSchedule":true,"plannedInterventionId":987654,"changeUuid":null,"ticketReference":"TICKET-EXAMPLE-000123","tags":[]}
+  # Task detail: server 2 / task 2001 -- done IPMI access request.
+  - path: /dedicated/server/ns-example2.ip-192-0-2.example/task/2001
+    methods: ['GET']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |-
+          {"taskId":2001,"function":"ipmiAccessRequest","status":"done","comment":"KVM access requested by customer","note":null,"startDate":"2026-07-10T08:00:00+02:00","lastUpdate":"2026-07-10T08:05:12+02:00","doneDate":"2026-07-10T08:05:12+02:00","needSchedule":false,"plannedInterventionId":null,"changeUuid":"7c1e2a4d-1234-4abc-9def-example00002","ticketReference":null,"tags":[{"key":"ipmiIp","value":"203.0.113.10"}]}

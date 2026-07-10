@@ -1,0 +1,41 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-07-01T06:45:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "kind": "state",
+                "original": "{\"ipBlock\":\"198.51.100.42/32\",\"cifs\":true,\"ftp\":false,\"nfs\":true,\"isApplied\":false,\"lastUpdate\":\"2026-07-01T08:45:00+02:00\",\"serviceName\":\"ns-example2.ip-192-0-2.example\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh_dedicated_servers": {
+                "backup_acl": {
+                    "cifs": true,
+                    "ftp": false,
+                    "ip_block": "198.51.100.42/32",
+                    "is_applied": false,
+                    "nfs": true
+                },
+                "server_name": "ns-example2.ip-192-0-2.example"
+            },
+            "related": {
+                "hosts": [
+                    "ns-example2.ip-192-0-2.example"
+                ],
+                "ip": [
+                    "198.51.100.42"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

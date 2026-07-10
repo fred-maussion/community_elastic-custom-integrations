@@ -1,0 +1,12 @@
+# newer versions go on top
+- version: "1.0.0"
+  changes:
+    - description: >-
+        First stable release. Add Kibana dashboards for the intervention, log, and backup_acl data streams. Validated end-to-end against a live OVHcloud account. Fixes unbounded cursor-state growth in the task/intervention CEL programs, a pagination edge-case data-loss bug in the log data stream, and a task.tags field-mapping defect found during quality review.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/75
+- version: "0.1.0"
+  changes:
+    - description: Initial release of the OVHcloud Dedicated Servers integration with task, intervention, log, and backup_acl data streams.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/pull/1

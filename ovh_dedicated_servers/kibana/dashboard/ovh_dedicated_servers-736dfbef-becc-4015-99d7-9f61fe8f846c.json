@@ -1,0 +1,1709 @@
+{
+    "accessControl": {
+        "accessMode": "default",
+        "owner": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+    },
+    "attributes": {
+        "description": "Monitoring of system logs for OVH dedicated servers. SRE KPIs: activity volume, server health, event distribution, errors, and time-series trends.",
+        "esqlApproximation": false,
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "autoApplyFilters": true,
+            "hidePanelBorders": false,
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-50c3036fd523b0a04f2640f5a5dd673bdabfd7dab5c0f578531c6d39e805b918": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-50c3036fd523b0a04f2640f5a5dd673bdabfd7dab5c0f578531c6d39e805b918",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Count",
+                                                    "label": "Total Log Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-50c3036fd523b0a04f2640f5a5dd673bdabfd7dab5c0f578531c6d39e805b918",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| STATS `Total Count` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-50c3036fd523b0a04f2640f5a5dd673bdabfd7dab5c0f578531c6d39e805b918",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| STATS `Total Count` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "0765b8aa-4132-4448-b1f1-7c13e5d0985d",
+                    "sectionId": "cfbe8168-1778-47ce-8559-4d7772d1f62c",
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "0765b8aa-4132-4448-b1f1-7c13e5d0985d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-4bfd6f42f24804e7e498673bd23dbee5dae3a228b5047c1d25d5f4bff3731913": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-4bfd6f42f24804e7e498673bd23dbee5dae3a228b5047c1d25d5f4bff3731913",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Servers",
+                                                    "label": "Distinct Servers",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-4bfd6f42f24804e7e498673bd23dbee5dae3a228b5047c1d25d5f4bff3731913",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| STATS `Distinct Servers` = COUNT_DISTINCT(ovh_dedicated_servers.log.server_name)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-4bfd6f42f24804e7e498673bd23dbee5dae3a228b5047c1d25d5f4bff3731913",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| STATS `Distinct Servers` = COUNT_DISTINCT(ovh_dedicated_servers.log.server_name)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "2a0f15cf-a9d5-44d6-9365-4bbe620322db",
+                    "sectionId": "cfbe8168-1778-47ce-8559-4d7772d1f62c",
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "panelIndex": "2a0f15cf-a9d5-44d6-9365-4bbe620322db",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-d8961cad4c7affedd10715b9102cf9b8498aee0aaed84989267eaec82b981aed": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-d8961cad4c7affedd10715b9102cf9b8498aee0aaed84989267eaec82b981aed",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of log events",
+                                                    "label": "Info Log Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-d8961cad4c7affedd10715b9102cf9b8498aee0aaed84989267eaec82b981aed",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE event.type == \"info\"\n| STATS `Count of log events` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-d8961cad4c7affedd10715b9102cf9b8498aee0aaed84989267eaec82b981aed",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE event.type == \"info\"\n| STATS `Count of log events` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "7fc9de61-0e64-4368-9c89-7509d1b3b8d6",
+                    "sectionId": "cfbe8168-1778-47ce-8559-4d7772d1f62c",
+                    "w": 12,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "7fc9de61-0e64-4368-9c89-7509d1b3b8d6",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-dc3e17a15691032efa05ceb643a91f79449f599970db17062e085acffc4d8498": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-dc3e17a15691032efa05ceb643a91f79449f599970db17062e085acffc4d8498",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of log events",
+                                                    "label": "Error Log Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-dc3e17a15691032efa05ceb643a91f79449f599970db17062e085acffc4d8498",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE error.message IS NOT NULL\n| STATS `Count of log events` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-dc3e17a15691032efa05ceb643a91f79449f599970db17062e085acffc4d8498",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE error.message IS NOT NULL\n| STATS `Count of log events` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "285f349a-fc18-4b9a-9ad3-58201eb5f50e",
+                    "sectionId": "cfbe8168-1778-47ce-8559-4d7772d1f62c",
+                    "w": 12,
+                    "x": 36,
+                    "y": 0
+                },
+                "panelIndex": "285f349a-fc18-4b9a-9ad3-58201eb5f50e",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "Time",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "fieldName": "Count of events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| STATS `Count of events` = COUNT() BY `Time` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| SORT `Time`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| STATS `Count of events` = COUNT() BY `Time` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| SORT `Time`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "line"
+                            }
+                        },
+                        "title": "Count of Log Events Over Time – logs-ovh_dedicated_servers.log-default",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Count of Log Events Over Time – logs-ovh_dedicated_servers.log-default"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "2d113dd1-382d-4f61-ac55-2db70a9a4fb7",
+                    "sectionId": "9c59acb1-a5a6-47ec-87f4-f0b2ea342191",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "2d113dd1-382d-4f61-ac55-2db70a9a4fb7",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "fieldName": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "fieldName": "Event Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT() BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Event Type` = event.type\n| SORT `Time Bucket`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT() BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Event Type` = event.type\n| SORT `Time Bucket`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "bar_stacked"
+                            }
+                        },
+                        "title": "Log Event Count Over Time by Event Type (logs-ovh_dedicated_servers.log-default)",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Log Event Count Over Time by Event Type (logs-ovh_dedicated_servers.log-default)"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "9aaea30b-cc1b-4916-819b-5a2dfbd62833",
+                    "sectionId": "9c59acb1-a5a6-47ec-87f4-f0b2ea342191",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "9aaea30b-cc1b-4916-819b-5a2dfbd62833",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.type",
+                                                    "label": "Event Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY event.type"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY event.type"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "emptySizeRatio": 0.54,
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": false
+                                    }
+                                ],
+                                "shape": "donut"
+                            }
+                        },
+                        "title": "Distribution of Log Events by Type",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": [],
+                    "title": "Distribution of Log Events by Type"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "7b7b11f1-6d98-45d4-a79c-bda4900315b1",
+                    "sectionId": "6240faa2-d6bd-49bf-9a61-9d7f89a1604a",
+                    "w": 16,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "7b7b11f1-6d98-45d4-a79c-bda4900315b1",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.category",
+                                                    "label": "Event Category",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `event.category`\n| SORT `Event Count` DESC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `event.category`\n| SORT `Event Count` DESC"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "emptySizeRatio": 0.54,
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": false
+                                    }
+                                ],
+                                "shape": "donut"
+                            }
+                        },
+                        "title": "Distribution of Log Events by Category",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": [],
+                    "title": "Distribution of Log Events by Category"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "91c31231-2231-41a0-8acd-cefeb3ef1250",
+                    "sectionId": "6240faa2-d6bd-49bf-9a61-9d7f89a1604a",
+                    "w": 16,
+                    "x": 16,
+                    "y": 0
+                },
+                "panelIndex": "91c31231-2231-41a0-8acd-cefeb3ef1250",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Kind",
+                                                    "label": "Event Kind",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Event Kind` = event.kind\n| SORT `Event Count` DESC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Event Kind` = event.kind\n| SORT `Event Count` DESC"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "emptySizeRatio": 0.54,
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": false
+                                    }
+                                ],
+                                "shape": "donut"
+                            }
+                        },
+                        "title": "Distribution of Log Events by Event Kind",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": [],
+                    "title": "Distribution of Log Events by Event Kind"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "7a096489-fea5-4312-af8b-8ab446db431a",
+                    "sectionId": "6240faa2-d6bd-49bf-9a61-9d7f89a1604a",
+                    "w": 16,
+                    "x": 32,
+                    "y": 0
+                },
+                "panelIndex": "7a096489-fea5-4312-af8b-8ab446db431a",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-4d22d7310700ae29d8b56dd0e29f14272bc5b6fad3377c37c4897db579e9f18a": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-4d22d7310700ae29d8b56dd0e29f14272bc5b6fad3377c37c4897db579e9f18a",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Server Name",
+                                                    "label": "Server Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Events",
+                                                    "label": "Total Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-4d22d7310700ae29d8b56dd0e29f14272bc5b6fad3377c37c4897db579e9f18a",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| STATS `Total Events` = COUNT(*) BY `Server Name` = ovh_dedicated_servers.log.server_name\n| SORT `Total Events` DESC\n| LIMIT 15"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-4d22d7310700ae29d8b56dd0e29f14272bc5b6fad3377c37c4897db579e9f18a",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| STATS `Total Events` = COUNT(*) BY `Server Name` = ovh_dedicated_servers.log.server_name\n| SORT `Total Events` DESC\n| LIMIT 15"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal"
+                            }
+                        },
+                        "title": "Top 15 Servers by Total Log Event Count",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 15 Servers by Total Log Event Count"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "d595151f-ea21-4758-b53e-b10481469c22",
+                    "sectionId": "48579984-d0cc-4f25-94eb-1534c1340d36",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "d595151f-ea21-4758-b53e-b10481469c22",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "area_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "area_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "area_stacked_0_y_0",
+                                                    "fieldName": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "area_stacked_0_breakdown",
+                                                    "fieldName": "Server Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Server Name` = ovh_dedicated_servers.log.server_name\n| SORT `Time Bucket`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-area_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Server Name` = ovh_dedicated_servers.log.server_name\n| SORT `Time Bucket`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "area_stacked_0_y_0"
+                                        ],
+                                        "layerId": "area_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "area_stacked",
+                                        "splitAccessors": [
+                                            "area_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "area_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "area_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "area_stacked"
+                            }
+                        },
+                        "title": "Log Event Count Over Time by Server Name (Top 5)",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Log Event Count Over Time by Server Name (Top 5)"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "0d423233-1870-4722-89be-2d3922dd3d1b",
+                    "sectionId": "48579984-d0cc-4f25-94eb-1534c1340d36",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "0d423233-1870-4722-89be-2d3922dd3d1b",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-48406df3b652dfea11cdb239ca0798daa90ea4cd451ea9237379b81d31d9be53": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-48406df3b652dfea11cdb239ca0798daa90ea4cd451ea9237379b81d31d9be53",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "tagcloud_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Term Frequency",
+                                                    "label": "Term Frequency",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "tagcloud_accessor_tag",
+                                                    "customLabel": true,
+                                                    "fieldName": "Term",
+                                                    "label": "Term",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-48406df3b652dfea11cdb239ca0798daa90ea4cd451ea9237379b81d31d9be53",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| EVAL words = SPLIT(message, \" \")\n| MV_EXPAND words\n| STATS `Term Frequency` = COUNT() BY `Term` = words\n| SORT `Term Frequency` DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-48406df3b652dfea11cdb239ca0798daa90ea4cd451ea9237379b81d31d9be53",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| EVAL words = SPLIT(message, \" \")\n| MV_EXPAND words\n| STATS `Term Frequency` = COUNT() BY `Term` = words\n| SORT `Term Frequency` DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "layerId": "layer_0",
+                                "maxFontSize": 72,
+                                "minFontSize": 18,
+                                "orientation": "single",
+                                "showLabel": true,
+                                "tagAccessor": "tagcloud_accessor_tag",
+                                "valueAccessor": "tagcloud_accessor_metric"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsTagcloud"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "cb239fe9-1fc8-4d7b-8a01-e8cdfed46c68",
+                    "sectionId": "7d3d4474-fa18-4588-b356-c856b1d74d8c",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "cb239fe9-1fc8-4d7b-8a01-e8cdfed46c68",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-@timestamp": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_0_y_0",
+                                                    "fieldName": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE error.message IS NOT NULL\n| STATS `Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| SORT `Time Bucket`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| WHERE error.message IS NOT NULL\n| STATS `Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| SORT `Time Bucket`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_0_y_0"
+                                        ],
+                                        "layerId": "bar_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar",
+                                        "xAccessor": "bar_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar"
+                            }
+                        },
+                        "title": "Count of Log Events with Error Message Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Count of Log Events with Error Message Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "ccd66749-f50d-4ae8-8fc0-4e4ee7a48545",
+                    "sectionId": "7d3d4474-fa18-4588-b356-c856b1d74d8c",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "ccd66749-f50d-4ae8-8fc0-4e4ee7a48545",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_dedicated_servers.log-default-880f34691d9a291758d074f8606d164992d4f3de872ed4a4b08e753fa6be0a50": {
+                                    "allowHidden": false,
+                                    "allowNoIndex": false,
+                                    "fieldAttrs": {},
+                                    "fieldFormats": {},
+                                    "id": "logs-ovh_dedicated_servers.log-default-880f34691d9a291758d074f8606d164992d4f3de872ed4a4b08e753fa6be0a50",
+                                    "name": "logs-ovh_dedicated_servers.log-default",
+                                    "runtimeFieldMap": {},
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_dedicated_servers.log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "@timestamp",
+                                                    "inMetricDimension": true,
+                                                    "label": "Timestamp",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh_dedicated_servers.log.server_name",
+                                                    "inMetricDimension": true,
+                                                    "label": "Server Name",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "message",
+                                                    "inMetricDimension": true,
+                                                    "label": "Message",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.type",
+                                                    "inMetricDimension": true,
+                                                    "label": "Event Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_4",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.category",
+                                                    "inMetricDimension": true,
+                                                    "label": "Event Category",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_5",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.kind",
+                                                    "inMetricDimension": true,
+                                                    "label": "Event Kind",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_6",
+                                                    "customLabel": true,
+                                                    "fieldName": "error.message",
+                                                    "inMetricDimension": true,
+                                                    "label": "Error Message",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_dedicated_servers.log-default-880f34691d9a291758d074f8606d164992d4f3de872ed4a4b08e753fa6be0a50",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| KEEP @timestamp, ovh_dedicated_servers.log.server_name, message, event.type, event.category, event.kind, error.message\n| SORT @timestamp DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_dedicated_servers.log-default-880f34691d9a291758d074f8606d164992d4f3de872ed4a4b08e753fa6be0a50",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_dedicated_servers.log-default\n| KEEP @timestamp, ovh_dedicated_servers.log.server_name, message, event.type, event.category, event.kind, error.message\n| SORT @timestamp DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "columnId": "datatable_accessor_metric_2",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_3",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "elastic_line_optimized",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_4",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_5",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "columnId": "datatable_accessor_metric_6",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "compact",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "paging": {
+                                    "enabled": true,
+                                    "size": 20
+                                },
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Recent Log Events from OVH Dedicated Servers",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Recent Log Events from OVH Dedicated Servers"
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "39590d4c-db24-4382-bffc-20fdb5e95fbf",
+                    "sectionId": "b8c9452d-3cb0-4cb6-86bf-c51b5d6ddba2",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "39590d4c-db24-4382-bffc-20fdb5e95fbf",
+                "type": "vis"
+            }
+        ],
+        "pinned_panels": {
+            "panels": {
+                "5b5930cb-0125-483c-aeb8-dec6d3b40307": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_dedicated_servers.log-default | STATS BY `ovh_dedicated_servers.log.server_name`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Serveur",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 0,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "83466bec-310f-47be-8f76-85c383a82510": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_dedicated_servers.log-default | STATS BY `event.category`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Catégorie",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 2,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "cbbfa874-50b2-4870-8ed2-fb19a70486a2": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_dedicated_servers.log-default | STATS BY `event.type`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Type d'événement",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 1,
+                    "type": "options_list_control",
+                    "width": "medium"
+                }
+            }
+        },
+        "sections": [
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "cfbe8168-1778-47ce-8559-4d7772d1f62c",
+                    "y": 0
+                },
+                "title": "📊 Vue d'ensemble – KPIs"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "9c59acb1-a5a6-47ec-87f4-f0b2ea342191",
+                    "y": 1
+                },
+                "title": "📈 Tendances temporelles"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "6240faa2-d6bd-49bf-9a61-9d7f89a1604a",
+                    "y": 2
+                },
+                "title": "🔍 Distribution des événements"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "48579984-d0cc-4f25-94eb-1534c1340d36",
+                    "y": 3
+                },
+                "title": "🖥️ Activité par serveur"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "7d3d4474-fa18-4588-b356-c856b1d74d8c",
+                    "y": 4
+                },
+                "title": "💬 Messages \u0026 Erreurs"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "b8c9452d-3cb0-4cb6-86bf-c51b5d6ddba2",
+                    "y": 5
+                },
+                "title": "📋 Détail des logs"
+            }
+        ],
+        "timeRestore": false,
+        "title": "[OVH] Dedicated Servers – Logs"
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2026-07-10T21:48:13.116Z",
+    "created_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0",
+    "id": "ovh_dedicated_servers-736dfbef-becc-4015-99d7-9f61fe8f846c",
+    "references": [],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+}

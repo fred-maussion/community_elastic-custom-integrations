@@ -1,0 +1,63 @@
+title: "Task History"
+type: logs
+streams:
+  - input: cel
+    title: "OVHcloud dedicated server task history"
+    description: |-
+      Collect the async job/task history (reinstalls, reboots, IPMI/KVM access, firewall changes, backup-FTP ACL changes, RIPE org changes, floating-IP/virtual-MAC moves, hardware updates) for each owned OVHcloud dedicated server.
+    template_path: cel.yml.hbs
+    vars:
+      - name: interval
+        type: text
+        title: "Interval"
+        description: How often to poll the OVH API for new/updated tasks.
+        required: true
+        show_user: true
+        default: 5m
+      - name: http_client_timeout
+        type: text
+        title: HTTP Client Timeout
+        description: Duration before declaring that the HTTP client connection has timed out.
+        required: false
+        show_user: false
+        default: 30s
+      - name: proxy_url
+        type: text
+        title: Proxy URL
+        description: HTTP proxy URL.
+        required: false
+        show_user: false
+      - name: ssl
+        type: yaml
+        title: SSL Configuration
+        description: i.e. certificate_authorities, supported_protocols, verification_mode etc.
+        required: false
+        show_user: false
+      - name: tags
+        type: text
+        title: Tags
+        multi: true
+        required: true
+        show_user: false
+        default:
+          - forwarded
+          - ovh-dedicated-servers-task
+      - name: preserve_original_event
+        type: bool
+        title: Preserve Original Event
+        required: true
+        show_user: true
+        default: false
+      - name: enable_request_tracer
+        type: bool
+        title: Enable Request Tracer
+        description: Logs HTTP requests and responses to the agent's local file-system for debugging. Only enable for troubleshooting, as this compromises security.
+        required: false
+        show_user: false
+        default: false
+      - name: processors
+        type: yaml
+        title: Processors
+        description: Processors to apply to events.
+        required: false
+        show_user: false

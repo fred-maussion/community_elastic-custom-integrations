@@ -1,0 +1,10 @@
+- name: ovh_dedicated_servers
+  type: group
+  fields:
+    - name: log
+      type: group
+      fields:
+        - name: server_name
+          type: keyword
+          description: >-
+            The OVHcloud dedicated server service name this log entry pertains to (returned directly in the API response body for this endpoint).

@@ -1,0 +1,53 @@
+services:
+  task:
+    image: docker.elastic.co/observability/stream:v0.20.0
+    hostname: task
+    ports:
+      - 8090
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8090'
+    command:
+      - http-server
+      - --addr=:8090
+      - --config=/files/config-task.yml
+  intervention:
+    image: docker.elastic.co/observability/stream:v0.20.0
+    hostname: intervention
+    ports:
+      - 8090
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8090'
+    command:
+      - http-server
+      - --addr=:8090
+      - --config=/files/config-intervention.yml
+  log:
+    image: docker.elastic.co/observability/stream:v0.20.0
+    hostname: log
+    ports:
+      - 8090
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8090'
+    command:
+      - http-server
+      - --addr=:8090
+      - --config=/files/config-log.yml
+  backup_acl:
+    image: docker.elastic.co/observability/stream:v0.20.0
+    hostname: backup_acl
+    ports:
+      - 8090
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8090'
+    command:
+      - http-server
+      - --addr=:8090
+      - --config=/files/config-backup_acl.yml

@@ -1,0 +1,63 @@
+title: "Backup FTP ACL"
+type: logs
+streams:
+  - input: cel
+    title: "OVHcloud dedicated server backup-FTP ACL snapshot"
+    description: |-
+      Collect a current-state snapshot of backup-FTP IP allow-list (ACL) entries for each owned OVHcloud dedicated server that has the backup-FTP feature activated. Servers without the feature activated report zero entries.
+    template_path: cel.yml.hbs
+    vars:
+      - name: interval
+        type: text
+        title: "Interval"
+        description: How often to poll the OVH API and re-collect the full backup-FTP ACL snapshot for all owned servers.
+        required: true
+        show_user: true
+        default: 1h
+      - name: http_client_timeout
+        type: text
+        title: HTTP Client Timeout
+        description: Duration before declaring that the HTTP client connection has timed out.
+        required: false
+        show_user: false
+        default: 30s
+      - name: proxy_url
+        type: text
+        title: Proxy URL
+        description: HTTP proxy URL.
+        required: false
+        show_user: false
+      - name: ssl
+        type: yaml
+        title: SSL Configuration
+        description: i.e. certificate_authorities, supported_protocols, verification_mode etc.
+        required: false
+        show_user: false
+      - name: tags
+        type: text
+        title: Tags
+        multi: true
+        required: true
+        show_user: false
+        default:
+          - forwarded
+          - ovh-dedicated-servers-backup-acl
+      - name: preserve_original_event
+        type: bool
+        title: Preserve Original Event
+        required: true
+        show_user: true
+        default: false
+      - name: enable_request_tracer
+        type: bool
+        title: Enable Request Tracer
+        description: Logs HTTP requests and responses to the agent's local file-system for debugging. Only enable for troubleshooting, as this compromises security.
+        required: false
+        show_user: false
+        default: false
+      - name: processors
+        type: yaml
+        title: Processors
+        description: Processors to apply to events.
+        required: false
+        show_user: false
