@@ -11,17 +11,25 @@ categories:
   - infrastructure
 conditions:
   kibana:
-    version: "^8.19.0 || ^9.1.0"
+    version: "^9.4.0"
   elastic:
     subscription: "basic"
 screenshots:
-  - src: /img/sample-screenshot.png
-    title: Sample screenshot
+  - src: /img/ovh-dedicated-logs-screenshot-1.png
+    title: Screenshot 1
+    size: 600x600
+    type: image/png
+  - src: /img/ovh-dedicated-logs-screenshot-2.png
+    title: Screenshot 2
+    size: 600x600
+    type: image/png
+  - src: /img/ovh-dedicated-logs-screenshot-3.png
+    title: Screenshot 3
     size: 600x600
     type: image/png
 icons:
-  - src: /img/sample-logo.svg
-    title: Sample logo
+  - src: /img/ovh-logo.svg
+    title: OVHcloud
     size: 32x32
     type: image/svg+xml
 policy_templates:
