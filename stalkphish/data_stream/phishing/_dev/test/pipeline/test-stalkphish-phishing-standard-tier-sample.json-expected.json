@@ -48,7 +48,8 @@
                 }
             },
             "tags": [
-                "preserve_original_event"
+                "preserve_original_event",
+                "_geoip_database_unavailable_GeoLite2-City.mmdb"
             ],
             "threat": {
                 "feed": {
