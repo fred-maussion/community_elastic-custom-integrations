@@ -1,0 +1,93 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+resource.url: {{url}}
+state:
+  api_token: {{api_token}}
+  initial_interval: {{initial_interval}}
+  tlp_marking: {{tlp_marking}}
+redact:
+  fields:
+    - api_token
+program: |-
+  state.?cursor.last_seen_time.orValue("").as(since,
+    state.with(
+      request(
+        "GET",
+        state.url + "?" + (
+          (since == "") ?
+            {"last_hours": [state.initial_interval.trim_right("h")]}.format_query()
+          :
+            {"from_date": [(timestamp(since) + duration("1s")).format("2006-01-02T15:04:05Z07:00")]}.format_query()
+        )
+      ).with(
+        {
+          "Header": {
+            "Authorization": ["Token " + state.api_token],
+            "Accept": ["application/json"],
+          },
+        }
+      ).do_request().as(resp,
+        (resp.StatusCode == 200) ?
+          resp.Body.decode_json().as(body,
+            {
+              "events": body.map(e, {"message": e.encode_json(), "tlp_marking": state.tlp_marking}),
+              "cursor": (size(body) > 0) ?
+                dyn({"last_seen_time": body.map(e, e.?firstseentime.orValue("")).filter(t, t != "").max()})
+              :
+                dyn(state.?cursor.orValue({})),
+              "want_more": false,
+            }
+          )
+        : (resp.StatusCode == 429 || resp.StatusCode >= 500) ?
+          {
+            "events": {
+              "error": {
+                "code": string(resp.StatusCode),
+                "id": string(resp.Status),
+                "message": "GET /api/v1/last: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+              },
+            },
+            "want_more": false,
+          }
+        :
+          {
+            "events": [
+              {
+                "error": {
+                  "code": string(resp.StatusCode),
+                  "id": string(resp.Status),
+                  "message": "GET /api/v1/last: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+                },
+              },
+            ],
+            "want_more": false,
+          }
+      )
+    )
+  )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}

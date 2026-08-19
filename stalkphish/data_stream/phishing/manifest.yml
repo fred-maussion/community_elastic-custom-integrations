@@ -1,0 +1,94 @@
+title: "Phishing"
+type: logs
+streams:
+  - input: cel
+    title: StalkPhish Phishing Detections
+    description: Collect phishing URL detection records from the StalkPhish /last endpoint.
+    template_path: cel.yml.hbs
+    vars:
+      - name: url
+        type: text
+        title: API URL
+        description: StalkPhish API endpoint URL.
+        required: true
+        show_user: false
+        default: https://api.stalkphish.io/api/v1/last
+      - name: interval
+        type: text
+        title: Polling Interval
+        description: >-
+          How often to poll the StalkPhish API. Free tier (50 req/day) requires at least 30 minutes between polls.
+        required: true
+        show_user: true
+        default: 5m
+      - name: initial_interval
+        type: text
+        title: Initial Lookback (whole hours only)
+        description: >-
+          How far back to fetch on first run, in whole hours only (e.g. 24h, 48h). Only the trailing "h" unit is supported — values in minutes (30m), days (2d), or mixed units will produce an invalid API request. Free tier is limited to a 4-hour window.
+        required: true
+        show_user: true
+        default: 24h
+      - name: http_client_timeout
+        type: text
+        title: HTTP Client Timeout
+        description: Duration before declaring that the HTTP client connection has timed out.
+        required: false
+        show_user: false
+        default: 30s
+      - name: proxy_url
+        type: text
+        title: Proxy URL
+        description: URL to proxy connections through.
+        required: false
+        show_user: false
+      - name: ssl
+        type: yaml
+        title: SSL Configuration
+        description: SSL configuration options (certificate_authorities, verification_mode, etc.).
+        required: false
+        show_user: false
+      - name: tags
+        type: text
+        title: Tags
+        multi: true
+        required: true
+        show_user: false
+        default:
+          - forwarded
+          - stalkphish-phishing
+      - name: preserve_original_event
+        type: bool
+        title: Preserve Original Event
+        description: Keep the original event in the event.original field.
+        required: true
+        show_user: true
+        default: false
+      - name: processors
+        type: yaml
+        title: Processors
+        description: Processors to apply to events before sending to Elasticsearch.
+        required: false
+        show_user: false
+      - name: tlp_marking
+        type: text
+        title: TLP Marking
+        description: >-
+          Traffic Light Protocol marking applied to all threat indicators. Set this according to
+          your StalkPhish license agreement. AMBER restricts sharing to your organization and
+          clients who need it on a need-to-know basis.
+        required: true
+        show_user: false
+        default: AMBER
+      - name: enable_request_tracer
+        type: bool
+        title: Enable Request Tracer
+        description: >-
+          The request tracer logs HTTP requests and responses to the agent's local filesystem for debugging. Enabling this compromises security and should only be used for debugging.
+        required: false
+        show_user: false
+        default: false
+elasticsearch:
+  index_template:
+    mappings:
+      subobjects: false

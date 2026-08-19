@@ -1,0 +1,47 @@
+format_version: "3.4.2"
+name: stalkphish
+title: "StalkPhish"
+version: 1.0.0
+source:
+  license: "Apache-2.0"
+description: >-
+  Ingest phishing URL threat intelligence from the StalkPhish platform via the StalkPhish REST API. Detects newly reported phishing URLs enriched with hosting IP, ASN data, SSL certificate details, phishing kit hashes, and Telegram exfiltration attribution.
+type: integration
+categories:
+  - security
+  - threat_intel
+conditions:
+  kibana:
+    version: "^8.19.0 || ^9.1.0"
+  elastic:
+    subscription: "basic"
+screenshots:
+  - src: /img/screenshot-1.png
+    title: Sample screenshot
+    size: 600x600
+    type: image/png
+icons:
+  - src: /img/logo.svg
+    title: StalkPhish logo
+    size: 300x74
+    type: image/svg+xml
+policy_templates:
+  - name: stalkphish
+    title: StalkPhish Phishing Threat Intelligence
+    description: Collect phishing URL detections from the StalkPhish REST API.
+    inputs:
+      - type: cel
+        title: Collect StalkPhish phishing detections via REST API
+        description: Ingests phishing URL detection records from the StalkPhish /last endpoint.
+        vars:
+          - name: api_token
+            type: password
+            title: API Token
+            description: >-
+              StalkPhish API authentication token from your account dashboard at stalkphish.io.
+            required: true
+            show_user: true
+            secret: true
+owner:
+  github: fred-maussion/community_elastic-custom-integrations
+  type: community

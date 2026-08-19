@@ -1,0 +1,54 @@
+- name: stalkphish.phishing
+  type: group
+  fields:
+    - name: firstseencode
+      type: keyword
+      description: HTTP status or connection result on first probe (string; can be "200", "aborted", "timeout").
+    - name: asn_registry
+      type: keyword
+      description: AS regional registrar (lowercase; e.g. arin, ripencc, apnic).
+    - name: page_title
+      type: keyword
+      description: HTML title of crawled page.
+    - name: score
+      type: float
+      description: Phishing threat score (Standard+).
+    - name: google_safebrowsing
+      type: keyword
+      description: Google Safe Browsing threat category (Standard+).
+    - name: page_hash
+      type: keyword
+      description: Hash of page content (Professional+).
+    - name: favicon_mmh3
+      type: keyword
+      description: MurmurHash3 of page favicon as string; can be negative (Professional+).
+    - name: targeted_brand
+      type: keyword
+      description: Impersonated brand name (Professional+).
+    - name: extracted_emails
+      type: keyword
+      description: Email addresses extracted from phishing kit source code.
+    - name: extracted_telegram
+      type: group
+      fields:
+        - name: botID
+          type: keyword
+          description: Telegram bot ID.
+        - name: channelID
+          type: keyword
+          description: Telegram channel identifier.
+        - name: admins
+          type: keyword
+          description: Telegram admin handles.
+    - name: kit
+      type: group
+      fields:
+        - name: filename
+          type: keyword
+          description: Phishing kit ZIP filename (Professional+).
+        - name: hash
+          type: keyword
+          description: Phishing kit ZIP SHA256 hash (Professional+).
+        - name: family
+          type: keyword
+          description: YARA-classified kit family name (Professional+).

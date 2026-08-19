@@ -1,0 +1,74 @@
+{
+    "@timestamp": "2025-01-15T10:00:00.000Z",
+    "agent": {
+        "ephemeral_id": "6d17b9a4-4233-406c-8109-3af074112c96",
+        "id": "ef1987c2-ed42-4cce-a54e-83a43012af4a",
+        "name": "elastic-agent-15231",
+        "type": "filebeat",
+        "version": "9.4.2"
+    },
+    "data_stream": {
+        "dataset": "stalkphish.phishing",
+        "namespace": "70072",
+        "type": "logs"
+    },
+    "destination": {
+        "domain": "phishing-example-3.test"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "ef1987c2-ed42-4cce-a54e-83a43012af4a",
+        "snapshot": false,
+        "version": "9.4.2"
+    },
+    "event": {
+        "category": [
+            "threat"
+        ],
+        "dataset": "stalkphish.phishing",
+        "ingested": "2026-08-19T11:22:27Z",
+        "kind": "enrichment",
+        "module": "stalkphish",
+        "original": "{\"asn\":\"\",\"asndesc\":\"\",\"asnreg\":\"\",\"extracted_emails\":[],\"firstseencode\":\"timeout\",\"firstseentime\":\"2025-01-15T10:00:00Z\",\"ipaddress\":\"\",\"pagetitle\":\"\",\"sitedomain\":\"phishing-example-3.test\",\"siteurl\":\"https://phishing-example-3.test/verify\"}",
+        "type": [
+            "indicator"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "related": {
+        "hosts": [
+            "phishing-example-3.test"
+        ]
+    },
+    "stalkphish": {
+        "phishing": {
+            "asn_registry": "",
+            "firstseencode": "timeout",
+            "page_title": ""
+        }
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded",
+        "stalkphish-phishing"
+    ],
+    "threat": {
+        "indicator": {
+            "first_seen": "2025-01-15T10:00:00.000Z",
+            "provider": "stalkphish",
+            "type": "url",
+            "url": {
+                "domain": "phishing-example-3.test",
+                "full": "https://phishing-example-3.test/verify"
+            }
+        }
+    },
+    "url": {
+        "domain": "phishing-example-3.test",
+        "full": "https://phishing-example-3.test/verify"
+    }
+}

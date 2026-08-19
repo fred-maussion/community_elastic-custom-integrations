@@ -1,0 +1,111 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2025-01-15T10:00:00.000Z",
+            "destination": {
+                "as": {
+                    "number": 64496,
+                    "organization": {
+                        "name": "EXAMPLE-ISP - Example ISP Ltd, DE"
+                    }
+                },
+                "domain": "phishing-ssl.test",
+                "ip": "198.51.100.42"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "kind": "enrichment",
+                "original": "{\"siteurl\":\"https://phishing-ssl.test/verify\",\"sitedomain\":\"phishing-ssl.test\",\"pagetitle\":\"Account Verification\",\"firstseentime\":\"2025-01-15T10:00:00Z\",\"firstseencode\":\"200\",\"ipaddress\":\"198.51.100.42\",\"asn\":\"64496\",\"asndesc\":\"EXAMPLE-ISP - Example ISP Ltd, DE\",\"asnreg\":\"ripencc\",\"extracted_emails\":[],\"lastseentime\":\"2025-01-16T10:00:00Z\",\"lastseencode\":200,\"GoogleSafebrowsing\":\"SOCIAL_ENGINEERING\",\"phishing_score\":87.5,\"SSLcert_countryName\":\"US\",\"SSLcert_Issuer\":\"Let's Encrypt Authority X3\",\"SSLcert_commonName\":\"phishing-ssl.test\",\"SSLcert_notBefore\":\"2025-01-01T00:00:00Z\",\"SSLcert_notAfter\":\"2025-04-01T00:00:00Z\",\"SSLcert_subjectAltName\":[\"phishing-ssl.test\",\"www.phishing-ssl.test\"],\"SSLcert_serialNumber_hex\":\"0x1A2B3C4D\",\"SSLcert_md5\":\"d41d8cd98f00b204e9800998ecf8427e\",\"SSLcert_sha1\":\"da39a3ee5e6b4b0d3255bfef95601890afd80709\",\"SSLcert_sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"}",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "related": {
+                "hash": [
+                    "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                ],
+                "hosts": [
+                    "phishing-ssl.test"
+                ],
+                "ip": [
+                    "198.51.100.42"
+                ]
+            },
+            "stalkphish": {
+                "phishing": {
+                    "asn_registry": "ripencc",
+                    "extracted_emails": [],
+                    "firstseencode": "200",
+                    "google_safebrowsing": "SOCIAL_ENGINEERING",
+                    "page_title": "Account Verification",
+                    "score": 87.5
+                }
+            },
+            "tags": [
+                "preserve_original_event",
+                "_geoip_database_unavailable_GeoLite2-City.mmdb"
+            ],
+            "threat": {
+                "feed": {
+                    "name": "stalkphish",
+                    "reference": "https://stalkphish.io"
+                },
+                "indicator": {
+                    "confidence": "High",
+                    "first_seen": "2025-01-15T10:00:00.000Z",
+                    "ip": "198.51.100.42",
+                    "last_seen": "2025-01-16T10:00:00.000Z",
+                    "marking": {
+                        "tlp": "AMBER"
+                    },
+                    "provider": "stalkphish",
+                    "type": "url",
+                    "url": {
+                        "domain": "phishing-ssl.test",
+                        "full": "https://phishing-ssl.test/verify"
+                    }
+                }
+            },
+            "tls": {
+                "server": {
+                    "hash": {
+                        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+                        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                    },
+                    "x509": {
+                        "alternative_names": [
+                            "phishing-ssl.test",
+                            "www.phishing-ssl.test"
+                        ],
+                        "issuer": {
+                            "common_name": [
+                                "Let's Encrypt Authority X3"
+                            ]
+                        },
+                        "not_after": "2025-04-01T00:00:00.000Z",
+                        "not_before": "2025-01-01T00:00:00.000Z",
+                        "serial_number": "0x1A2B3C4D",
+                        "subject": {
+                            "common_name": [
+                                "phishing-ssl.test"
+                            ],
+                            "country": [
+                                "US"
+                            ]
+                        }
+                    }
+                }
+            },
+            "url": {
+                "domain": "phishing-ssl.test",
+                "full": "https://phishing-ssl.test/verify"
+            }
+        }
+    ]
+}

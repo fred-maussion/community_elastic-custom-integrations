@@ -1,0 +1,2535 @@
+{
+    "accessControl": {
+        "accessMode": "default",
+        "owner": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+    },
+    "attributes": {
+        "description": "Professional threat intelligence dashboard for StalkPhish phishing indicators — covering KPIs, temporal trends, network infrastructure, phishing kit attribution, and raw IOC listings. Data source: stalkphish.phishing (TLP: AMBER).",
+        "esqlApproximation": false,
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "autoApplyFilters": true,
+            "hidePanelBorders": false,
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-f7febd8eb16358c1d657c680c3506b2bf66da1582fd1122c983d26a9afc0c63b": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-f7febd8eb16358c1d657c680c3506b2bf66da1582fd1122c983d26a9afc0c63b",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Count",
+                                                    "label": "Total Phishing Indicators",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-f7febd8eb16358c1d657c680c3506b2bf66da1582fd1122c983d26a9afc0c63b",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Total Count` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-f7febd8eb16358c1d657c680c3506b2bf66da1582fd1122c983d26a9afc0c63b",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Total Count` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "3ec27cca-d57e-434f-a901-758abe345298",
+                    "sectionId": "4467e638-cf5a-4025-810e-3caf6880863e",
+                    "w": 8,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "3ec27cca-d57e-434f-a901-758abe345298",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-59cbea178fb31aaccbac2580bd20e0126eb95b1abb24885efabfe14cd8fbc2af": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-59cbea178fb31aaccbac2580bd20e0126eb95b1abb24885efabfe14cd8fbc2af",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Destination IPs",
+                                                    "label": "Distinct Destination IPs",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-59cbea178fb31aaccbac2580bd20e0126eb95b1abb24885efabfe14cd8fbc2af",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Distinct Destination IPs` = COUNT_DISTINCT(threat.indicator.ip)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-59cbea178fb31aaccbac2580bd20e0126eb95b1abb24885efabfe14cd8fbc2af",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Distinct Destination IPs` = COUNT_DISTINCT(threat.indicator.ip)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "4f787028-2fa8-4a3e-b9fb-b73d8ff98537",
+                    "sectionId": "4467e638-cf5a-4025-810e-3caf6880863e",
+                    "w": 8,
+                    "x": 8,
+                    "y": 0
+                },
+                "panelIndex": "4f787028-2fa8-4a3e-b9fb-b73d8ff98537",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-c6a5a9d5c4a2c4cf7670c1a9dbb02ee4fedeb8b3f4ce585a4732130d67677816": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-c6a5a9d5c4a2c4cf7670c1a9dbb02ee4fedeb8b3f4ce585a4732130d67677816",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Phishing URL Domains",
+                                                    "label": "Distinct Phishing URL Domains",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-c6a5a9d5c4a2c4cf7670c1a9dbb02ee4fedeb8b3f4ce585a4732130d67677816",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Distinct Phishing URL Domains` = COUNT_DISTINCT(threat.indicator.url.domain)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-c6a5a9d5c4a2c4cf7670c1a9dbb02ee4fedeb8b3f4ce585a4732130d67677816",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Distinct Phishing URL Domains` = COUNT_DISTINCT(threat.indicator.url.domain)"
+                            },
+                            "visualization": {
+                                "applyColorTo": "value",
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "1134e1fc-1d27-44b7-84e0-f3fca17e9e43",
+                    "sectionId": "4467e638-cf5a-4025-810e-3caf6880863e",
+                    "w": 8,
+                    "x": 16,
+                    "y": 0
+                },
+                "panelIndex": "1134e1fc-1d27-44b7-84e0-f3fca17e9e43",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-2a302e0b0483b324ca7c4871a1043c49744a26edd284f6e8f073e8ba7dec4ae4": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-2a302e0b0483b324ca7c4871a1043c49744a26edd284f6e8f073e8ba7dec4ae4",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of distinct targeted brands",
+                                                    "label": "Count of distinct targeted brands",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-2a302e0b0483b324ca7c4871a1043c49744a26edd284f6e8f073e8ba7dec4ae4",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Count of distinct targeted brands` = COUNT_DISTINCT(stalkphish.phishing.targeted_brand)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-2a302e0b0483b324ca7c4871a1043c49744a26edd284f6e8f073e8ba7dec4ae4",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Count of distinct targeted brands` = COUNT_DISTINCT(stalkphish.phishing.targeted_brand)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "2d165026-3773-4059-95ef-14ad16c07ecf",
+                    "sectionId": "4467e638-cf5a-4025-810e-3caf6880863e",
+                    "w": 8,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "2d165026-3773-4059-95ef-14ad16c07ecf",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-b7106bb61c27a828a1dbf8af1a9f5bd4422e334abdeca1e37399330fd7b3d27a": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-b7106bb61c27a828a1dbf8af1a9f5bd4422e334abdeca1e37399330fd7b3d27a",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of distinct phishing kit families",
+                                                    "label": "Distinct Phishing Kit Families",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-b7106bb61c27a828a1dbf8af1a9f5bd4422e334abdeca1e37399330fd7b3d27a",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Count of distinct phishing kit families` = COUNT_DISTINCT(stalkphish.phishing.kit.family)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-b7106bb61c27a828a1dbf8af1a9f5bd4422e334abdeca1e37399330fd7b3d27a",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Count of distinct phishing kit families` = COUNT_DISTINCT(stalkphish.phishing.kit.family)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "76dca174-66dc-4d80-8d4b-f894df2b35b6",
+                    "sectionId": "4467e638-cf5a-4025-810e-3caf6880863e",
+                    "w": 8,
+                    "x": 32,
+                    "y": 0
+                },
+                "panelIndex": "76dca174-66dc-4d80-8d4b-f894df2b35b6",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-708e8f6b439681f79296de2e2f760590210c7b29ed2d7fd43a4c57b9550fa043": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-708e8f6b439681f79296de2e2f760590210c7b29ed2d7fd43a4c57b9550fa043",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of Indicators",
+                                                    "label": "Indicators with Google SafeBrowsing Flag",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-708e8f6b439681f79296de2e2f760590210c7b29ed2d7fd43a4c57b9550fa043",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| WHERE stalkphish.phishing.google_safebrowsing IS NOT NULL AND LENGTH(stalkphish.phishing.google_safebrowsing) \u003e 0\n| STATS `Count of Indicators` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-708e8f6b439681f79296de2e2f760590210c7b29ed2d7fd43a4c57b9550fa043",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| WHERE stalkphish.phishing.google_safebrowsing IS NOT NULL AND LENGTH(stalkphish.phishing.google_safebrowsing) \u003e 0\n| STATS `Count of Indicators` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "a332cdaa-329a-4122-a4f1-8abe2308bb7b",
+                    "sectionId": "4467e638-cf5a-4025-810e-3caf6880863e",
+                    "w": 8,
+                    "x": 40,
+                    "y": 0
+                },
+                "panelIndex": "a332cdaa-329a-4122-a4f1-8abe2308bb7b",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-@timestamp",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "fieldName": "Phishing Indicators",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Phishing Indicators` = COUNT() BY `bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Phishing Indicators` = COUNT() BY `bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "line",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Phishing Indicators Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Phishing Indicators Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "b6078d49-6b10-46c7-be6c-76206e05b260",
+                    "sectionId": "bd360f0f-5cb0-4370-bcaa-766db6a4d633",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "b6078d49-6b10-46c7-be6c-76206e05b260",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-@timestamp",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Phishing Indicators",
+                                                    "label": "Phishing Indicators",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "customLabel": true,
+                                                    "fieldName": "Status Code",
+                                                    "label": "HTTP Status Code",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Phishing Indicators` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Status Code` = stalkphish.phishing.firstseencode\n| SORT `Time Bucket` ASC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Phishing Indicators` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Status Code` = stalkphish.phishing.firstseencode\n| SORT `Time Bucket` ASC"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "bottom",
+                                    "showSingleSeries": true
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Phishing Indicators Over Time by First Seen HTTP Status Code",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Phishing Indicators Over Time by First Seen HTTP Status Code"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "047cbb5d-af7d-4d63-b049-8a8cd62d2d2d",
+                    "sectionId": "bd360f0f-5cb0-4370-bcaa-766db6a4d633",
+                    "w": 48,
+                    "x": 0,
+                    "y": 10
+                },
+                "panelIndex": "047cbb5d-af7d-4d63-b049-8a8cd62d2d2d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-82fcfee6ed697c65eefaef3c9ba06d833b332da151d52c98f208c667efc8bcc7": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-82fcfee6ed697c65eefaef3c9ba06d833b332da151d52c98f208c667efc8bcc7",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "fieldName": "destination.as.organization.name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-82fcfee6ed697c65eefaef3c9ba06d833b332da151d52c98f208c667efc8bcc7",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS count = COUNT(*) BY `destination.as.organization.name`\n| SORT count DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-82fcfee6ed697c65eefaef3c9ba06d833b332da151d52c98f208c667efc8bcc7",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS count = COUNT(*) BY `destination.as.organization.name`\n| SORT count DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "emptySizeRatio": 0.7,
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "donut"
+                            }
+                        },
+                        "title": "Top 10 Hosting Providers / ASN Organizations by Phishing Count",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 10 Hosting Providers / ASN Organizations by Phishing Count"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "8ee5e8e5-3356-4502-8b46-a0f78239add2",
+                    "sectionId": "576f9c63-201c-4c26-8871-dc10749f76c2",
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "8ee5e8e5-3356-4502-8b46-a0f78239add2",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-d62340cf3832a6d10dcbd28a3fa00f91ccf13bb5f26692509f8a974dda1d245b": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-d62340cf3832a6d10dcbd28a3fa00f91ccf13bb5f26692509f8a974dda1d245b",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ASN Registry",
+                                                    "label": "ASN Registry",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-d62340cf3832a6d10dcbd28a3fa00f91ccf13bb5f26692509f8a974dda1d245b",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Count` = COUNT(*) BY `ASN Registry` = stalkphish.phishing.asn_registry\n| SORT `Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-d62340cf3832a6d10dcbd28a3fa00f91ccf13bb5f26692509f8a974dda1d245b",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Count` = COUNT(*) BY `ASN Registry` = stalkphish.phishing.asn_registry\n| SORT `Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "e2d2b21d-1468-4bc3-86ea-63d8a40b2d71",
+                    "sectionId": "576f9c63-201c-4c26-8871-dc10749f76c2",
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "panelIndex": "e2d2b21d-1468-4bc3-86ea-63d8a40b2d71",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-@timestamp",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "region_map_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of Phishing Indicators",
+                                                    "label": "Count of Phishing Indicators",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "region_map_accessor_region",
+                                                    "customLabel": true,
+                                                    "fieldName": "Destination Country",
+                                                    "label": "Destination Country",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count of Phishing Indicators` = COUNT(*) BY `Destination Country` = destination.geo.country_iso_code\n| SORT `Count of Phishing Indicators` DESC\n| LIMIT 10"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count of Phishing Indicators` = COUNT(*) BY `Destination Country` = destination.geo.country_iso_code\n| SORT `Count of Phishing Indicators` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "emsField": "iso2",
+                                "emsLayerId": "world_countries",
+                                "layerId": "layer_0",
+                                "regionAccessor": "region_map_accessor_region",
+                                "valueAccessor": "region_map_accessor_metric"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsChoropleth"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "966fa9a3-5b1a-49f1-9fd3-c21083df9c0d",
+                    "sectionId": "576f9c63-201c-4c26-8871-dc10749f76c2",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "966fa9a3-5b1a-49f1-9fd3-c21083df9c0d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-36c69bc0f65aed9c7c5a1c9239fe929a6247e75dde536ea378e10c25b4515662": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-36c69bc0f65aed9c7c5a1c9239fe929a6247e75dde536ea378e10c25b4515662",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "fieldName": "destination.geo.country_name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "fieldName": "Phishing Indicator Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-36c69bc0f65aed9c7c5a1c9239fe929a6247e75dde536ea378e10c25b4515662",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Phishing Indicator Count` = COUNT(*) BY `destination.geo.country_name`\n| SORT `Phishing Indicator Count` DESC\n| LIMIT 15\n| KEEP `destination.geo.country_name`, `Phishing Indicator Count`"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-36c69bc0f65aed9c7c5a1c9239fe929a6247e75dde536ea378e10c25b4515662",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Phishing Indicator Count` = COUNT(*) BY `destination.geo.country_name`\n| SORT `Phishing Indicator Count` DESC\n| LIMIT 15\n| KEEP `destination.geo.country_name`, `Phishing Indicator Count`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "bar_horizontal",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Top 15 Destination Countries by Phishing Indicator Count",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 15 Destination Countries by Phishing Indicator Count"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "12bd4419-9b1f-405b-a507-2e7927693e2c",
+                    "sectionId": "576f9c63-201c-4c26-8871-dc10749f76c2",
+                    "w": 24,
+                    "x": 0,
+                    "y": 12
+                },
+                "panelIndex": "12bd4419-9b1f-405b-a507-2e7927693e2c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-c1bebeb7ab9c1c8bd4682f28c6d59ad4d239749091da2549a604acc840cc9a01": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-c1bebeb7ab9c1c8bd4682f28c6d59ad4d239749091da2549a604acc840cc9a01",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "destination.ip",
+                                                    "label": "Destination IP",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "ASN Organization",
+                                                    "label": "ASN Organization",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "Country",
+                                                    "label": "Country",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Indicator Count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Indicator Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-c1bebeb7ab9c1c8bd4682f28c6d59ad4d239749091da2549a604acc840cc9a01",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Indicator Count` = COUNT(*) BY `destination.ip`, `ASN Organization` = destination.`as`.organization.name, `Country` = destination.geo.country_name\n| SORT `Indicator Count` DESC\n| LIMIT 20\n| KEEP destination.ip, `ASN Organization`, `Country`, `Indicator Count`"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-c1bebeb7ab9c1c8bd4682f28c6d59ad4d239749091da2549a604acc840cc9a01",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Indicator Count` = COUNT(*) BY `destination.ip`, `ASN Organization` = destination.`as`.organization.name, `Country` = destination.geo.country_name\n| SORT `Indicator Count` DESC\n| LIMIT 20\n| KEEP destination.ip, `ASN Organization`, `Country`, `Indicator Count`"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "layerId": "layer_0",
+                                "layerType": "data"
+                            }
+                        },
+                        "title": "Top 20 Phishing Destination IPs by Indicator Count",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 20 Phishing Destination IPs by Indicator Count"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "ee3beaaa-7c40-4c60-96cb-d1fd3164f79f",
+                    "sectionId": "576f9c63-201c-4c26-8871-dc10749f76c2",
+                    "w": 24,
+                    "x": 24,
+                    "y": 12
+                },
+                "panelIndex": "ee3beaaa-7c40-4c60-96cb-d1fd3164f79f",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-90384e806d6920021b2d8036f3ccc13a66068e7bbdaa3bb5bb87bf30a4e5b4ac": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-90384e806d6920021b2d8036f3ccc13a66068e7bbdaa3bb5bb87bf30a4e5b4ac",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "fieldName": "Kit Family",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "fieldName": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-90384e806d6920021b2d8036f3ccc13a66068e7bbdaa3bb5bb87bf30a4e5b4ac",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Count` = COUNT(*) BY `Kit Family` = stalkphish.phishing.kit.family\n| SORT `Count` DESC\n| LIMIT 15"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-90384e806d6920021b2d8036f3ccc13a66068e7bbdaa3bb5bb87bf30a4e5b4ac",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Count` = COUNT(*) BY `Kit Family` = stalkphish.phishing.kit.family\n| SORT `Count` DESC\n| LIMIT 15"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Top 15 Phishing Kit Families by Count",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 15 Phishing Kit Families by Count"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "5ec8bfe6-06b8-4adb-9bf0-6af71d4d4f8e",
+                    "sectionId": "b4fcea75-a4a2-41cb-b524-44bcb9c3966e",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "5ec8bfe6-06b8-4adb-9bf0-6af71d4d4f8e",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-9f4602d1db10a2a7743b8ac62d5e56cdbfdc8e98fe6874f7b677471b9ddab630": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-9f4602d1db10a2a7743b8ac62d5e56cdbfdc8e98fe6874f7b677471b9ddab630",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "tagcloud_accessor_metric",
+                                                    "fieldName": "Frequency",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "tagcloud_accessor_tag",
+                                                    "fieldName": "stalkphish.phishing.targeted_brand",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-9f4602d1db10a2a7743b8ac62d5e56cdbfdc8e98fe6874f7b677471b9ddab630",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Frequency` = COUNT(*) BY `stalkphish.phishing.targeted_brand`\n| SORT `Frequency` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-9f4602d1db10a2a7743b8ac62d5e56cdbfdc8e98fe6874f7b677471b9ddab630",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Frequency` = COUNT(*) BY `stalkphish.phishing.targeted_brand`\n| SORT `Frequency` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "colorMapping": {
+                                    "assignments": [],
+                                    "colorMode": {
+                                        "type": "categorical"
+                                    },
+                                    "paletteId": "default",
+                                    "specialAssignments": [
+                                        {
+                                            "color": {
+                                                "type": "loop"
+                                            },
+                                            "rules": [
+                                                {
+                                                    "type": "other"
+                                                }
+                                            ],
+                                            "touched": false
+                                        }
+                                    ]
+                                },
+                                "layerId": "layer_0",
+                                "maxFontSize": 72,
+                                "minFontSize": 18,
+                                "orientation": "single",
+                                "showLabel": true,
+                                "tagAccessor": "tagcloud_accessor_tag",
+                                "valueAccessor": "tagcloud_accessor_metric"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsTagcloud"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "83099525-5aa7-422e-894f-3f9abac08a2c",
+                    "sectionId": "b4fcea75-a4a2-41cb-b524-44bcb9c3966e",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "83099525-5aa7-422e-894f-3f9abac08a2c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-0a09a399ef197614998a70996d29959fde14cde6e552adcf68c6d0bebb4c1afe": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-0a09a399ef197614998a70996d29959fde14cde6e552adcf68c6d0bebb4c1afe",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "stalkphish.phishing.kit.hash",
+                                                    "label": "Kit Hash",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "stalkphish.phishing.kit.family",
+                                                    "label": "Kit Family",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "stalkphish.phishing.kit.filename",
+                                                    "label": "Filename",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-0a09a399ef197614998a70996d29959fde14cde6e552adcf68c6d0bebb4c1afe",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Count` = COUNT(*) BY `stalkphish.phishing.kit.hash`, `stalkphish.phishing.kit.family`, `stalkphish.phishing.kit.filename`\n| SORT `Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-0a09a399ef197614998a70996d29959fde14cde6e552adcf68c6d0bebb4c1afe",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Count` = COUNT(*) BY `stalkphish.phishing.kit.hash`, `stalkphish.phishing.kit.family`, `stalkphish.phishing.kit.filename`\n| SORT `Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false,
+                                        "summaryLabel": "Total",
+                                        "summaryRow": "sum"
+                                    }
+                                ],
+                                "layerId": "layer_0",
+                                "layerType": "data"
+                            }
+                        },
+                        "title": "Top 10 Phishing Kit Hashes by Count",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 10 Phishing Kit Hashes by Count"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "fbfd5deb-cb8a-4b2e-a845-fbbb5a21463d",
+                    "sectionId": "b4fcea75-a4a2-41cb-b524-44bcb9c3966e",
+                    "w": 48,
+                    "x": 0,
+                    "y": 12
+                },
+                "panelIndex": "fbfd5deb-cb8a-4b2e-a845-fbbb5a21463d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-35be28a8041fa193e8786bf35189e50e30464cf28fd236c21ff0d1ce5f4b9c05": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-35be28a8041fa193e8786bf35189e50e30464cf28fd236c21ff0d1ce5f4b9c05",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "TLS Issuer",
+                                                    "label": "TLS Issuer",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count",
+                                                    "label": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-35be28a8041fa193e8786bf35189e50e30464cf28fd236c21ff0d1ce5f4b9c05",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Count` = COUNT() BY `TLS Issuer` = tls.server.x509.issuer.common_name\n| SORT `Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-35be28a8041fa193e8786bf35189e50e30464cf28fd236c21ff0d1ce5f4b9c05",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| STATS `Count` = COUNT() BY `TLS Issuer` = tls.server.x509.issuer.common_name\n| SORT `Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Top 10 TLS Certificate Issuers by Phishing Count",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 10 TLS Certificate Issuers by Phishing Count"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "d0494d6b-2bae-4f1d-b674-588433d03c3d",
+                    "sectionId": "db07e9e8-3c24-4505-98a9-58c465ad10da",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "d0494d6b-2bae-4f1d-b674-588433d03c3d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-@timestamp",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "fieldName": "TLS Subject Country",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "fieldName": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count` = COUNT(*) BY `TLS Subject Country` = tls.server.x509.subject.country\n| SORT `Count` DESC\n| LIMIT 10"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count` = COUNT(*) BY `TLS Subject Country` = tls.server.x509.subject.country\n| SORT `Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Top 10 TLS Subject Countries by Phishing Count",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 10 TLS Subject Countries by Phishing Count"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "120228be-79df-42ca-9959-95b36f1302e8",
+                    "sectionId": "db07e9e8-3c24-4505-98a9-58c465ad10da",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "120228be-79df-42ca-9959-95b36f1302e8",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-4c3f53498f5a8fd4e7426b940c9dc57b88b8fe54b6ba5255587a1ab82502a04b": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-4c3f53498f5a8fd4e7426b940c9dc57b88b8fe54b6ba5255587a1ab82502a04b",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "tls.server.x509.subject.common_name",
+                                                    "label": "Subject Common Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "tls.server.x509.issuer.common_name",
+                                                    "label": "Issuer Common Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "tls.server.x509.not_after",
+                                                    "label": "Expiry Date (not_after)",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "tls.server.hash.sha256",
+                                                    "label": "SHA-256 Hash",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Certificate Count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Certificate Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-4c3f53498f5a8fd4e7426b940c9dc57b88b8fe54b6ba5255587a1ab82502a04b",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| KEEP tls.server.x509.subject.common_name, tls.server.x509.issuer.common_name, tls.server.x509.not_after, tls.server.hash.sha256\n| STATS `Certificate Count` = COUNT(*) BY tls.server.x509.subject.common_name, tls.server.x509.issuer.common_name, tls.server.x509.not_after, tls.server.hash.sha256\n| SORT `Certificate Count` DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-4c3f53498f5a8fd4e7426b940c9dc57b88b8fe54b6ba5255587a1ab82502a04b",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| KEEP tls.server.x509.subject.common_name, tls.server.x509.issuer.common_name, tls.server.x509.not_after, tls.server.hash.sha256\n| STATS `Certificate Count` = COUNT(*) BY tls.server.x509.subject.common_name, tls.server.x509.issuer.common_name, tls.server.x509.not_after, tls.server.hash.sha256\n| SORT `Certificate Count` DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_3",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false,
+                                        "summaryLabel": "Total",
+                                        "summaryRow": "sum"
+                                    }
+                                ],
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "paging": {
+                                    "enabled": true,
+                                    "size": 20
+                                },
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "TLS Certificates in Stalkphish Phishing – Subject, Issuer, Expiry, SHA-256 Hash \u0026 Count",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "TLS Certificates in Stalkphish Phishing – Subject, Issuer, Expiry, SHA-256 Hash \u0026 Count"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "e4736bd6-8228-4a63-83a5-d89ceb9e1e85",
+                    "sectionId": "db07e9e8-3c24-4505-98a9-58c465ad10da",
+                    "w": 48,
+                    "x": 0,
+                    "y": 12
+                },
+                "panelIndex": "e4736bd6-8228-4a63-83a5-d89ceb9e1e85",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-stalkphish.phishing-default-00c9d3786dcfa1d28162f78460c0d01232f0245f1117beea6754b354aedd12e1": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-stalkphish.phishing-default-00c9d3786dcfa1d28162f78460c0d01232f0245f1117beea6754b354aedd12e1",
+                                    "name": "logs-stalkphish.phishing-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-stalkphish.phishing-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "@timestamp",
+                                                    "label": "Timestamp",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "threat.indicator.url.full",
+                                                    "label": "Phishing URL",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "threat.indicator.ip",
+                                                    "label": "IP",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "destination.as.organization.name",
+                                                    "label": "ASN / Org",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_4",
+                                                    "customLabel": true,
+                                                    "fieldName": "stalkphish.phishing.firstseencode",
+                                                    "label": "First Seen Code",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_5",
+                                                    "customLabel": true,
+                                                    "fieldName": "stalkphish.phishing.targeted_brand",
+                                                    "label": "Targeted Brand",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_6",
+                                                    "customLabel": true,
+                                                    "fieldName": "stalkphish.phishing.kit.family",
+                                                    "label": "Kit Family",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_7",
+                                                    "customLabel": true,
+                                                    "fieldName": "threat.indicator.marking.tlp",
+                                                    "label": "TLP Marking",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_8",
+                                                    "customLabel": true,
+                                                    "fieldName": "threat.indicator.confidence",
+                                                    "label": "Confidence",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "fieldName": "@timestamp",
+                                                    "inMetricDimension": true,
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-stalkphish.phishing-default-00c9d3786dcfa1d28162f78460c0d01232f0245f1117beea6754b354aedd12e1",
+                                            "query": {
+                                                "esql": "FROM logs-stalkphish.phishing-default\n| KEEP @timestamp, threat.indicator.url.full, threat.indicator.ip, destination.as.organization.name, stalkphish.phishing.firstseencode, stalkphish.phishing.targeted_brand, stalkphish.phishing.kit.family, threat.indicator.marking.tlp, threat.indicator.confidence\n| SORT @timestamp DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-stalkphish.phishing-default-00c9d3786dcfa1d28162f78460c0d01232f0245f1117beea6754b354aedd12e1",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-stalkphish.phishing-default\n| KEEP @timestamp, threat.indicator.url.full, threat.indicator.ip, destination.as.organization.name, stalkphish.phishing.firstseencode, stalkphish.phishing.targeted_brand, stalkphish.phishing.kit.family, threat.indicator.marking.tlp, threat.indicator.confidence\n| SORT @timestamp DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_3",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "center",
+                                        "columnId": "datatable_accessor_row_4",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_5",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "elastic_line_optimized",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_6",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "center",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_7",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "center",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_8",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": true,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "compact",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "paging": {
+                                    "enabled": true,
+                                    "size": 100
+                                },
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_row_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Latest Phishing IOC Records – Top 100 by Timestamp",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Latest Phishing IOC Records – Top 100 by Timestamp"
+                },
+                "gridData": {
+                    "h": 16,
+                    "i": "70f85c71-b48a-4f36-a45c-070e1de4f59d",
+                    "sectionId": "e546788e-66f0-41d1-a66a-45ae242e296f",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "70f85c71-b48a-4f36-a45c-070e1de4f59d",
+                "type": "vis"
+            }
+        ],
+        "pinned_panels": {
+            "panels": {
+                "0e6f4aeb-d528-48e4-b263-c89e962caf37": {
+                    "config": {
+                        "esql_query": "FROM logs-stalkphish.phishing-default | STATS BY `stalkphish.phishing.kit.family`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Phishing Kit Family",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 3,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "4696e32b-16de-4a3d-bcf8-3e12c9b7c02d": {
+                    "config": {
+                        "esql_query": "FROM logs-stalkphish.phishing-default | STATS BY `destination.geo.country_iso_code`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Country",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 4,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "6db76313-4302-42b2-846b-4679c0a7420e": {
+                    "config": {
+                        "esql_query": "FROM logs-stalkphish.phishing-default | STATS BY `stalkphish.phishing.targeted_brand`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Targeted Brand",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 2,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "e8797de7-728f-4967-af7a-5629384af4b3": {
+                    "config": {
+                        "esql_query": "FROM logs-stalkphish.phishing-default | STATS BY `stalkphish.phishing.firstseencode`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "First Seen HTTP Code",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 0,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "f98cadff-a777-47c3-b668-24ebfa2447c6": {
+                    "config": {
+                        "esql_query": "FROM logs-stalkphish.phishing-default | STATS BY `stalkphish.phishing.asn_registry`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "ASN Registry",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 1,
+                    "type": "options_list_control",
+                    "width": "medium"
+                }
+            }
+        },
+        "sections": [
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "4467e638-cf5a-4025-810e-3caf6880863e",
+                    "y": 0
+                },
+                "title": "Executive Overview"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "bd360f0f-5cb0-4370-bcaa-766db6a4d633",
+                    "y": 1
+                },
+                "title": "Temporal Activity \u0026 Feed Ingestion"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "576f9c63-201c-4c26-8871-dc10749f76c2",
+                    "y": 2
+                },
+                "title": "Network Infrastructure \u0026 Hosting"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "b4fcea75-a4a2-41cb-b524-44bcb9c3966e",
+                    "y": 3
+                },
+                "title": "Phishing Kit Intelligence \u0026 Attribution"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "db07e9e8-3c24-4505-98a9-58c465ad10da",
+                    "y": 4
+                },
+                "title": "TLS Certificate Analysis"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "e546788e-66f0-41d1-a66a-45ae242e296f",
+                    "y": 5
+                },
+                "title": "IOC Listings — URLs, Domains \u0026 Indicators"
+            }
+        ],
+        "timeRestore": false,
+        "title": "StalkPhish Phishing Threat Intelligence"
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2026-08-19T15:41:42.350Z",
+    "created_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0",
+    "id": "stalkphish-89bfa068-9c78-4dab-9c46-06682d4439fd",
+    "references": [],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+}
