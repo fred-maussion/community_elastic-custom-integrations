@@ -3,4 +3,4 @@
   changes:
     - description: Initial release — phishing URL detection data stream via StalkPhish REST API.
       type: enhancement
-      link: https://github.com/fred-maussion/community_elastic-custom-integrations/pull/99999
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/pull/78
