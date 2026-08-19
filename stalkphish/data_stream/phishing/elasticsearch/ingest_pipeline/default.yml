@@ -1,0 +1,429 @@
+---
+description: Pipeline for parsing StalkPhish phishing URL detection events.
+processors:
+  - set:
+      field: ecs.version
+      tag: set_ecs_version
+      value: '9.3.0'
+
+  # --- CEL input only ---
+  - remove:
+      field:
+        - organization
+        - division
+        - team
+      ignore_missing: true
+      if: ctx.organization instanceof String && ctx.division instanceof String && ctx.team instanceof String
+      tag: remove_agentless_tags
+      description: >-
+        Removes the fields added by Agentless as metadata,
+        as they can collide with ECS fields.
+  - terminate:
+      tag: data_collection_error
+      if: ctx.error?.message != null && ctx.message == null && ctx.event?.original == null
+      description: Error message set and no data to process.
+  # --- end CEL-only ---
+
+  - rename:
+      field: message
+      tag: rename_message_to_event_original
+      target_field: event.original
+      ignore_missing: true
+      description: >-
+        Renames the original `message` field to `event.original` to store a copy
+        of the original message. The `event.original` field is not touched if the
+        document already has one; it may happen when Logstash sends the document.
+      if: ctx.event?.original == null
+  - remove:
+      field: message
+      tag: remove_message
+      ignore_missing: true
+      description: The `message` field is no longer required if the document has an `event.original` field.
+      if: ctx.event?.original != null
+
+  - json:
+      field: event.original
+      target_field: json
+      tag: parse_json
+      if: ctx.event?.original != null
+
+  - fingerprint:
+      fields:
+        - event.original
+      target_field: _id
+      tag: fingerprint_event_id
+      description: Deduplicates records by hashing event.original.
+
+  # --- Timestamps ---
+  - date:
+      field: json.firstseentime
+      target_field: '@timestamp'
+      formats:
+        - ISO8601
+      tag: parse_firstseentime_to_timestamp
+      if: ctx.json?.firstseentime != null
+  - date:
+      field: json.firstseentime
+      target_field: threat.indicator.first_seen
+      formats:
+        - ISO8601
+      tag: parse_firstseentime_to_first_seen
+      if: ctx.json?.firstseentime != null
+  - date:
+      field: json.lastseentime
+      target_field: threat.indicator.last_seen
+      formats:
+        - ISO8601
+      tag: parse_lastseentime_to_last_seen
+      if: ctx.json?.lastseentime != null
+
+  # --- URL fields ---
+  - rename:
+      field: json.siteurl
+      target_field: url.full
+      tag: rename_siteurl_to_url_full
+      ignore_missing: true
+  - set:
+      field: threat.indicator.url.full
+      copy_from: url.full
+      tag: set_threat_indicator_url_full
+      if: ctx.url?.full != null
+  - rename:
+      field: json.sitedomain
+      target_field: url.domain
+      tag: rename_sitedomain_to_url_domain
+      ignore_missing: true
+  - set:
+      field: threat.indicator.url.domain
+      copy_from: url.domain
+      tag: set_threat_indicator_url_domain
+      if: ctx.url?.domain != null
+  - set:
+      field: destination.domain
+      copy_from: url.domain
+      tag: set_destination_domain
+      if: ctx.url?.domain != null
+
+  # --- IP and AS fields (with empty-string guards) ---
+  - rename:
+      field: json.ipaddress
+      target_field: destination.ip
+      tag: rename_ipaddress_to_destination_ip
+      ignore_missing: true
+      if: ctx.json?.ipaddress != null && ctx.json?.ipaddress != ''
+  - set:
+      field: threat.indicator.ip
+      copy_from: destination.ip
+      tag: set_threat_indicator_ip
+      if: ctx.destination?.ip != null
+  - convert:
+      field: json.asn
+      type: long
+      tag: convert_asn_to_long
+      ignore_missing: true
+      ignore_failure: true
+      if: ctx.json?.asn != null && ctx.json?.asn != ''
+  - rename:
+      field: json.asn
+      target_field: destination.as.number
+      tag: rename_asn_to_destination_as_number
+      ignore_missing: true
+      if: ctx.json?.asn != null && ctx.json?.asn != ''
+  - rename:
+      field: json.asndesc
+      target_field: destination.as.organization.name
+      tag: rename_asndesc_to_destination_as_organization_name
+      ignore_missing: true
+      if: ctx.json?.asndesc != null && ctx.json?.asndesc != ''
+  - geoip:
+      field: destination.ip
+      target_field: destination.geo
+      tag: geoip_destination_ip
+      ignore_missing: true
+      ignore_failure: true
+      if: ctx.destination?.ip != null
+
+  # --- Static threat indicator fields ---
+  - set:
+      field: threat.indicator.type
+      tag: set_threat_indicator_type
+      value: url
+  - set:
+      field: threat.indicator.provider
+      tag: set_threat_indicator_provider
+      value: stalkphish
+  - set:
+      field: threat.feed.name
+      tag: set_threat_feed_name
+      value: stalkphish
+  - set:
+      field: threat.feed.reference
+      tag: set_threat_feed_reference
+      value: https://stalkphish.io
+  - set:
+      field: threat.indicator.marking.tlp
+      tag: set_threat_indicator_marking_tlp
+      copy_from: tlp_marking
+      if: ctx.tlp_marking != null
+  - remove:
+      field: tlp_marking
+      tag: remove_tlp_marking
+      ignore_missing: true
+  - set:
+      field: threat.indicator.confidence
+      tag: set_threat_indicator_confidence_high
+      value: High
+      if: ctx.json?.phishing_score != null && ctx.json.phishing_score >= 75
+  - set:
+      field: threat.indicator.confidence
+      tag: set_threat_indicator_confidence_medium
+      value: Medium
+      if: ctx.json?.phishing_score != null && ctx.json.phishing_score >= 50 && ctx.json.phishing_score < 75
+
+  # --- ECS categorization ---
+  - set:
+      field: event.kind
+      tag: set_event_kind
+      value: enrichment
+  - append:
+      field: event.category
+      tag: append_event_category
+      value: threat
+      allow_duplicates: false
+  - append:
+      field: event.type
+      tag: append_event_type
+      value: indicator
+      allow_duplicates: false
+
+  # --- Custom stalkphish fields (free tier) ---
+  - rename:
+      field: json.firstseencode
+      target_field: stalkphish.phishing.firstseencode
+      tag: rename_firstseencode
+      ignore_missing: true
+  - rename:
+      field: json.asnreg
+      target_field: stalkphish.phishing.asn_registry
+      tag: rename_asnreg
+      ignore_missing: true
+  - rename:
+      field: json.pagetitle
+      target_field: stalkphish.phishing.page_title
+      tag: rename_pagetitle
+      ignore_missing: true
+  - rename:
+      field: json.extracted_emails
+      target_field: stalkphish.phishing.extracted_emails
+      tag: rename_extracted_emails
+      ignore_missing: true
+
+  # --- Standard+ tier fields ---
+  - rename:
+      field: json.phishing_score
+      target_field: stalkphish.phishing.score
+      tag: rename_phishing_score
+      ignore_missing: true
+  - rename:
+      field: json.GoogleSafebrowsing
+      target_field: stalkphish.phishing.google_safebrowsing
+      tag: rename_google_safebrowsing
+      ignore_missing: true
+      if: ctx.json?.GoogleSafebrowsing != null
+  - append:
+      field: tls.server.x509.subject.common_name
+      value: '{{{json.SSLcert_commonName}}}'
+      allow_duplicates: false
+      tag: append_sslcert_common_name
+      if: ctx.json?.SSLcert_commonName != null
+  - remove:
+      field: json.SSLcert_commonName
+      tag: remove_sslcert_common_name_source
+      ignore_missing: true
+      if: ctx.json?.SSLcert_commonName != null
+  - append:
+      field: tls.server.x509.subject.country
+      value: '{{{json.SSLcert_countryName}}}'
+      allow_duplicates: false
+      tag: append_sslcert_country
+      if: ctx.json?.SSLcert_countryName != null
+  - remove:
+      field: json.SSLcert_countryName
+      tag: remove_sslcert_country_source
+      ignore_missing: true
+      if: ctx.json?.SSLcert_countryName != null
+  - append:
+      field: tls.server.x509.issuer.common_name
+      value: '{{{json.SSLcert_Issuer}}}'
+      allow_duplicates: false
+      tag: append_sslcert_issuer_common_name
+      if: ctx.json?.SSLcert_Issuer != null
+  - remove:
+      field: json.SSLcert_Issuer
+      tag: remove_sslcert_issuer_source
+      ignore_missing: true
+      if: ctx.json?.SSLcert_Issuer != null
+  - rename:
+      field: json.SSLcert_serialNumber_hex
+      target_field: tls.server.x509.serial_number
+      tag: rename_sslcert_serial_number
+      ignore_missing: true
+      if: ctx.json?.SSLcert_serialNumber_hex != null
+  - rename:
+      field: json.SSLcert_subjectAltName
+      target_field: tls.server.x509.alternative_names
+      tag: rename_sslcert_san
+      ignore_missing: true
+      if: ctx.json?.SSLcert_subjectAltName != null
+  - date:
+      field: json.SSLcert_notBefore
+      target_field: tls.server.x509.not_before
+      formats:
+        - ISO8601
+      tag: parse_sslcert_not_before
+      if: ctx.json?.SSLcert_notBefore != null
+  - date:
+      field: json.SSLcert_notAfter
+      target_field: tls.server.x509.not_after
+      formats:
+        - ISO8601
+      tag: parse_sslcert_not_after
+      if: ctx.json?.SSLcert_notAfter != null
+  - rename:
+      field: json.SSLcert_sha1
+      target_field: tls.server.hash.sha1
+      tag: rename_sslcert_sha1
+      ignore_missing: true
+      if: ctx.json?.SSLcert_sha1 != null
+  - rename:
+      field: json.SSLcert_sha256
+      target_field: tls.server.hash.sha256
+      tag: rename_sslcert_sha256
+      ignore_missing: true
+      if: ctx.json?.SSLcert_sha256 != null
+
+  # --- Professional+ tier fields ---
+  - rename:
+      field: json.page_hash
+      target_field: stalkphish.phishing.page_hash
+      tag: rename_page_hash
+      ignore_missing: true
+      if: ctx.json?.page_hash != null
+  - rename:
+      field: json.favicon_mmh3
+      target_field: stalkphish.phishing.favicon_mmh3
+      tag: rename_favicon_mmh3
+      ignore_missing: true
+      if: ctx.json?.favicon_mmh3 != null
+  - rename:
+      field: json.targeted_brand
+      target_field: stalkphish.phishing.targeted_brand
+      tag: rename_targeted_brand
+      ignore_missing: true
+      if: ctx.json?.targeted_brand != null
+  - rename:
+      field: json.zipfilename
+      target_field: stalkphish.phishing.kit.filename
+      tag: rename_zipfilename
+      ignore_missing: true
+      if: ctx.json?.zipfilename != null
+  - rename:
+      field: json.zipfilehash
+      target_field: stalkphish.phishing.kit.hash
+      tag: rename_zipfilehash
+      ignore_missing: true
+      if: ctx.json?.zipfilehash != null
+  - rename:
+      field: json.phishingkit_family
+      target_field: stalkphish.phishing.kit.family
+      tag: rename_phishingkit_family
+      ignore_missing: true
+      if: ctx.json?.phishingkit_family != null
+  - rename:
+      field: json.extracted_telegram.botID
+      target_field: stalkphish.phishing.extracted_telegram.botID
+      tag: rename_telegram_bot_id
+      ignore_missing: true
+      if: ctx.json?.extracted_telegram?.botID != null
+  - rename:
+      field: json.extracted_telegram.channelID
+      target_field: stalkphish.phishing.extracted_telegram.channelID
+      tag: rename_telegram_channel_id
+      ignore_missing: true
+      if: ctx.json?.extracted_telegram?.channelID != null
+  - rename:
+      field: json.extracted_telegram.admins
+      target_field: stalkphish.phishing.extracted_telegram.admins
+      tag: rename_telegram_admins
+      ignore_missing: true
+      if: ctx.json?.extracted_telegram?.admins != null
+
+  # --- related.* enrichment ---
+  - append:
+      field: related.ip
+      value: '{{{destination.ip}}}'
+      allow_duplicates: false
+      tag: append_destination_ip_to_related_ip
+      if: ctx.destination?.ip != null
+  - append:
+      field: related.hosts
+      value: '{{{url.domain}}}'
+      allow_duplicates: false
+      tag: append_sitedomain_to_related_hosts
+      if: ctx.url?.domain != null
+  - append:
+      field: related.hash
+      value: '{{{stalkphish.phishing.kit.hash}}}'
+      allow_duplicates: false
+      tag: append_kit_hash_to_related_hash
+      if: ctx.stalkphish?.phishing?.kit?.hash != null
+  - append:
+      field: related.hash
+      value: '{{{tls.server.hash.sha1}}}'
+      allow_duplicates: false
+      tag: append_sha1_to_related_hash
+      if: ctx.tls?.server?.hash?.sha1 != null
+  - append:
+      field: related.hash
+      value: '{{{tls.server.hash.sha256}}}'
+      allow_duplicates: false
+      tag: append_sha256_to_related_hash
+      if: ctx.tls?.server?.hash?.sha256 != null
+  - append:
+      field: related.hash
+      value: '{{{stalkphish.phishing.page_hash}}}'
+      allow_duplicates: false
+      tag: append_page_hash_to_related_hash
+      if: ctx.stalkphish?.phishing?.page_hash != null
+
+  # --- Preserve original on collector error ---
+  - append:
+      field: tags
+      value: preserve_original_event
+      allow_duplicates: false
+      tag: append_preserve_original_event_on_error
+      if: ctx.error?.message != null
+
+  # --- Cleanup ---
+  - remove:
+      field: json
+      tag: cleanup_json
+      ignore_missing: true
+
+on_failure:
+  - append:
+      field: error.message
+      tag: append_error_message_on_failure
+      value: >-
+        Processor '{{{ _ingest.on_failure_processor_type }}}'
+        {{{#_ingest.on_failure_processor_tag}}}with tag '{{{ _ingest.on_failure_processor_tag }}}'
+        {{{/_ingest.on_failure_processor_tag}}}failed with message '{{{ _ingest.on_failure_message }}}'
+  - set:
+      field: event.kind
+      tag: set_pipeline_error_to_event_kind
+      value: pipeline_error
+  - append:
+      field: tags
+      tag: append_preserve_original_event_on_failure
+      value: preserve_original_event
+      allow_duplicates: false

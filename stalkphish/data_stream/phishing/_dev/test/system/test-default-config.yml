@@ -1,0 +1,13 @@
+wait_for_data_timeout: 1m
+input: cel
+service: stalkphish-phishing
+data_stream:
+  vars:
+    url: http://{{Hostname}}:{{Port}}/api/v1/last
+    api_token: test-token-xxxx
+    interval: 2s
+    initial_interval: 24h
+    http_client_timeout: 30s
+    preserve_original_event: true
+assert:
+  hit_count: 6

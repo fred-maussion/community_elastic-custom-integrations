@@ -1,0 +1,61 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2025-01-15T10:00:01.000Z",
+            "destination": {
+                "domain": "phishing-unreachable.test"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "kind": "enrichment",
+                "original": "{\"siteurl\":\"http://phishing-unreachable.test/page\",\"sitedomain\":\"phishing-unreachable.test\",\"pagetitle\":\"\",\"firstseentime\":\"2025-01-15T10:00:01Z\",\"firstseencode\":\"aborted\",\"ipaddress\":\"\",\"asn\":\"\",\"asndesc\":\"\",\"asnreg\":\"\",\"extracted_emails\":[]}",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "related": {
+                "hosts": [
+                    "phishing-unreachable.test"
+                ]
+            },
+            "stalkphish": {
+                "phishing": {
+                    "asn_registry": "",
+                    "extracted_emails": [],
+                    "firstseencode": "aborted",
+                    "page_title": ""
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ],
+            "threat": {
+                "feed": {
+                    "name": "stalkphish",
+                    "reference": "https://stalkphish.io"
+                },
+                "indicator": {
+                    "first_seen": "2025-01-15T10:00:01.000Z",
+                    "marking": {
+                        "tlp": "AMBER"
+                    },
+                    "provider": "stalkphish",
+                    "type": "url",
+                    "url": {
+                        "domain": "phishing-unreachable.test",
+                        "full": "http://phishing-unreachable.test/page"
+                    }
+                }
+            },
+            "url": {
+                "domain": "phishing-unreachable.test",
+                "full": "http://phishing-unreachable.test/page"
+            }
+        }
+    ]
+}

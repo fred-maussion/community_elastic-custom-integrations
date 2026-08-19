@@ -1,0 +1,77 @@
+{
+    "@timestamp": "2025-01-15T10:00:03.000Z",
+    "destination": {
+        "as": {
+            "number": 13335,
+            "organization": {
+                "name": "EXAMPLE-NET - Example Networks Inc, US"
+            }
+        },
+        "domain": "phishing-example.test",
+        "ip": "198.51.100.1"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "event": {
+        "category": [
+            "threat"
+        ],
+        "dataset": "stalkphish.phishing",
+        "kind": "enrichment",
+        "module": "stalkphish",
+        "original": "{\"siteurl\":\"https://phishing-example.test/login\",\"sitedomain\":\"phishing-example.test\",\"pagetitle\":\"Fake Bank Login\",\"firstseentime\":\"2025-01-15T10:00:03Z\",\"firstseencode\":\"200\",\"ipaddress\":\"198.51.100.1\",\"asn\":\"13335\",\"asndesc\":\"EXAMPLE-NET - Example Networks Inc, US\",\"asnreg\":\"arin\",\"extracted_emails\":[\"harvest@phishing-example.test\"]}",
+        "type": [
+            "indicator"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "related": {
+        "hosts": [
+            "phishing-example.test"
+        ],
+        "ip": [
+            "198.51.100.1"
+        ]
+    },
+    "stalkphish": {
+        "phishing": {
+            "asn_registry": "arin",
+            "extracted_emails": [
+                "harvest@phishing-example.test"
+            ],
+            "firstseencode": "200",
+            "page_title": "Fake Bank Login"
+        }
+    },
+    "tags": [
+        "forwarded",
+        "stalkphish-phishing",
+        "preserve_original_event"
+    ],
+    "threat": {
+        "feed": {
+            "name": "stalkphish",
+            "reference": "https://stalkphish.io"
+        },
+        "indicator": {
+                "first_seen": "2025-01-15T10:00:03.000Z",
+            "ip": "198.51.100.1",
+            "marking": {
+                "tlp": "AMBER"
+            },
+            "provider": "stalkphish",
+            "type": "url",
+            "url": {
+                "domain": "phishing-example.test",
+                "full": "https://phishing-example.test/login"
+            }
+        }
+    },
+    "url": {
+        "domain": "phishing-example.test",
+        "full": "https://phishing-example.test/login"
+    }
+}

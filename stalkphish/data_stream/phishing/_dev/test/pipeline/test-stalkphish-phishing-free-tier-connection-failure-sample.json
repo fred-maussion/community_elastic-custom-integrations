@@ -1,0 +1,8 @@
+{
+    "events": [
+        {
+            "message": "{\"siteurl\":\"http://phishing-unreachable.test/page\",\"sitedomain\":\"phishing-unreachable.test\",\"pagetitle\":\"\",\"firstseentime\":\"2025-01-15T10:00:01Z\",\"firstseencode\":\"aborted\",\"ipaddress\":\"\",\"asn\":\"\",\"asndesc\":\"\",\"asnreg\":\"\",\"extracted_emails\":[]}",
+            "tlp_marking": "AMBER"
+        }
+    ]
+}

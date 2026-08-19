@@ -1,0 +1,57 @@
+rules:
+  # Quota check: /me endpoint (test-api.py calls this first)
+  - path: /api/v1/me
+    methods: ['GET']
+    request_headers:
+      Authorization:
+        - 'Token test-token-xxxx'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '{"subscribed_plan":"Free","api_requests_today":1,"api_requests_remaining":49,"daily_api_limit":50}'
+  # Round 1 — initial fetch with last_hours (first run, no cursor)
+  - path: /api/v1/last
+    methods: ['GET']
+    query_params:
+      last_hours: '24'
+    request_headers:
+      Authorization:
+        - 'Token test-token-xxxx'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |
+          [{"siteurl":"https://phishing-example-1.test","sitedomain":"phishing-example-1.test","pagetitle":"Fake Login","firstseentime":"2025-01-15T10:00:03Z","firstseencode":"200","ipaddress":"198.51.100.1","asn":"13335","asndesc":"EXAMPLE-NET - Example Networks Inc, US","asnreg":"arin","extracted_emails":["harvest@phishing-example-1.test"]},{"siteurl":"http://phishing-example-2.test/login","sitedomain":"phishing-example-2.test","pagetitle":"","firstseentime":"2025-01-15T10:00:01Z","firstseencode":"aborted","ipaddress":"","asn":"","asndesc":"","asnreg":"","extracted_emails":[]},{"siteurl":"https://phishing-example-3.test/verify","sitedomain":"phishing-example-3.test","pagetitle":"","firstseentime":"2025-01-15T10:00:00Z","firstseencode":"timeout","ipaddress":"","asn":"","asndesc":"","asnreg":"","extracted_emails":[]}]
+  # Round 2 — cursor-resume fetch (from_date = round-1 max + 1s = 2025-01-15T10:00:04Z)
+  # This is the deterministic cursor-advance verification rule.
+  - path: /api/v1/last
+    methods: ['GET']
+    query_params:
+      from_date: '2025-01-15T10:00:04Z'
+    request_headers:
+      Authorization:
+        - 'Token test-token-xxxx'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |
+          [{"siteurl":"https://phishing-example-4.test","sitedomain":"phishing-example-4.test","pagetitle":"Account Verify","firstseentime":"2025-01-15T10:01:00Z","firstseencode":"200","ipaddress":"198.51.100.42","asn":"64496","asndesc":"EXAMPLE-ISP - Example ISP Ltd, DE","asnreg":"ripencc","extracted_emails":[]},{"siteurl":"http://phishing-example-5.test/reset","sitedomain":"phishing-example-5.test","pagetitle":"","firstseentime":"2025-01-15T10:00:59Z","firstseencode":"200","ipaddress":"203.0.113.10","asn":"64497","asndesc":"TEST-ISP-2 - Test Network 2, JP","asnreg":"apnic","extracted_emails":["exfil@phishing-example-5.test"]},{"siteurl":"https://phishing-example-6.test/auth","sitedomain":"phishing-example-6.test","pagetitle":"","firstseentime":"2025-01-15T10:00:58Z","firstseencode":"404","ipaddress":"192.0.2.1","asn":"64500","asndesc":"TEST-ISP-3 - Test Network 3, AU","asnreg":"arin","extracted_emails":[]}]
+  # Terminal / catch-all — any other from_date (after cursor advances past round-2 max)
+  # Returns empty array, which stops cursor from advancing further.
+  - path: /api/v1/last
+    methods: ['GET']
+    request_headers:
+      Authorization:
+        - 'Token test-token-xxxx'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '[]'
