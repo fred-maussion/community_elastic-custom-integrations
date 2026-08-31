@@ -10,7 +10,7 @@ OVHcloud AI Deploy hosts custom machine learning models as scalable inference AP
 
 ### Compatibility
 
-This integration is compatible with OVHcloud AI Deploy and AI Training in all supported regions. Authentication uses a static Bearer AI token with the **AI Reader** role — this is a separate credential from OVH OAuth2 IAM service accounts used by other OVHcloud integrations.
+This integration is compatible with OVHcloud AI Deploy and AI Training in all supported regions. Authentication uses a static Bearer AI token with the **AI Operator** role — this is a separate credential from OVH OAuth2 IAM service accounts used by other OVHcloud integrations.
 
 ### How it works
 
@@ -111,7 +111,7 @@ Collects AI Training job lifecycle state change events. Each event represents th
 ## What do I need to use this integration?
 
 - An OVHcloud account with at least one Public Cloud project using AI Deploy or AI Training.
-- An **AI token** with the **AI Reader** role, created in the OVHcloud AI Dashboard.
+- An **AI token** with the **AI Operator** role, created in the OVHcloud AI Dashboard.
 - The **regional AI API base URL** for your project (e.g., `https://gra.training.ai.cloud.ovh.net` for Gravelines, France).
 
 ## How do I deploy this integration?
@@ -132,7 +132,7 @@ Elastic Agent must be installed. For more details, check the Elastic Agent [inst
 |-------|-------|
 | Name | Any descriptive name (e.g., `elastic-package-ai-token`) |
 | Label selector | Leave empty to access all resources, or filter by `type=app` (Deploy only) or `type=job` (Training only) |
-| Role | **AI Reader** — the wizard defaults to *AI Operator* (read+write); you must change it to *AI Reader* |
+| Role | **AI Operator** (the default) — despite the name this is required for listing resources; *AI Reader* does not have sufficient permissions to list apps or jobs |
 | Region | Select the region where your AI resources are deployed (e.g., Gravelines) |
 
 4. Click **Generate** and copy the token value — it is shown only once.
@@ -166,7 +166,7 @@ After deploying, navigate to **Discover** in Kibana and filter on `data_stream.d
 
 ## Troubleshooting
 
-- **No data collected**: Verify the AI token has the **AI Reader** role and the base URL matches the token's region.
+- **No data collected**: Verify the AI token has the **AI Operator** role and the base URL matches the token's region. The *AI Reader* role does not have sufficient permissions to list apps or jobs.
 - **HTTP 401**: The token may have been revoked or created for a different region. Create a new token in the AI Dashboard with the correct region.
 - **HTTP 404**: Verify the base URL — it must include the region prefix and end before any path (`/v1/app` and `/v1/job` are added automatically by the integration).
 - **Multiple regions**: Each region requires a separate AI token and a separate integration instance.
