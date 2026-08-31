@@ -1,0 +1,22 @@
+- name: ovh.ai_ml.deploy
+  type: group
+  fields:
+    - name: state
+      type: keyword
+      description: >-
+        Current state of the AI Deploy app (INITIALIZING, SCALING, RUNNING, STOPPING, STOPPED, FAILED, DELETING, DELETED, ERROR).
+    - name: available_replicas
+      type: long
+      description: Number of running replicas.
+    - name: resources.gpu
+      type: long
+      description: Number of GPUs requested by the app.
+    - name: resources.cpu
+      type: long
+      description: Number of CPUs requested by the app.
+    - name: resources.memory_mb
+      type: long
+      description: Memory requested by the app in megabytes.
+    - name: monitoring_url
+      type: keyword
+      description: Grafana monitoring dashboard URL for the app.

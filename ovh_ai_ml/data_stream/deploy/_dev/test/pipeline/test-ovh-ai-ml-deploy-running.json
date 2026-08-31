@@ -1,0 +1,7 @@
+{
+    "events": [
+        {
+            "message": "{\"id\":\"a1b2c3d4-0001-0000-0000-000000000001\",\"user\":\"user-ovh-test\",\"created_at\":\"2025-08-01T08:00:00Z\",\"updated_at\":\"2025-08-01T10:05:30Z\",\"spec\":{\"name\":\"embedding-api-v2\",\"image\":\"registry.gra.ai.cloud.ovh.net/00000/embedding:v2\",\"resources\":{\"gpu\":1,\"cpu\":4,\"memory\":8192},\"labels\":{\"env\":\"prod\",\"model\":\"embedding-v2\"}},\"status\":{\"state\":\"RUNNING\",\"available_replicas\":2,\"url\":\"https://a1b2c3d4-0001-0000-0000-000000000001.app.gra.ai.cloud.ovh.net\",\"monitoring_url\":\"https://monitoring.gra.ai.cloud.ovh.net/d/app-gpu?var-app=a1b2c3d4-0001\",\"last_transition_date\":\"2025-08-01T10:05:30Z\",\"history\":[{\"state\":\"INITIALIZING\",\"date\":\"2025-08-01T08:00:00Z\"},{\"state\":\"RUNNING\",\"date\":\"2025-08-01T10:05:30Z\"}]}}"
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+wait_for_data_timeout: 1m
+input: cel
+service: ovh-ai-ml-mock
+vars:
+  ai_api_url: http://{{Hostname}}:{{Port}}
+  ai_token: test-ai-token
+data_stream:
+  vars:
+    interval: 2s
+    batch_size: 5
+    initial_interval: 720h
+    preserve_original_event: true
+assert:
+  hit_count: 3

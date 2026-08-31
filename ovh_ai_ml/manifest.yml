@@ -1,0 +1,49 @@
+format_version: "3.4.2"
+name: ovh_ai_ml
+title: "OVHcloud AI & Machine Learning"
+version: 0.1.0
+source:
+  license: "Apache-2.0"
+description: "Monitor OVHcloud AI Deploy app lifecycle and AI Training job state changes."
+type: integration
+categories:
+  - cloud
+  - containers
+conditions:
+  kibana:
+    version: "^8.19.0 || ^9.1.0"
+  elastic:
+    subscription: "basic"
+icons:
+  - src: /img/ovh-logo.svg
+    title: OVHcloud logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: ovh_ai_ml
+    title: OVHcloud AI & Machine Learning
+    description: Collect AI Deploy and AI Training lifecycle events from OVHcloud AI platform
+    inputs:
+      - type: cel
+        title: Collect OVHcloud AI & Machine Learning events via REST API
+        description: Collecting AI Deploy app and AI Training job lifecycle events from the OVHcloud AI API
+        vars:
+          - name: ai_api_url
+            type: url
+            title: AI API Base URL
+            description: >-
+              Regional AI API base URL, e.g. https://gra.training.ai.cloud.ovh.net
+            default: https://gra.training.ai.cloud.ovh.net
+            show_user: true
+            required: true
+          - name: ai_token
+            type: password
+            title: AI Token
+            description: >-
+              AI token with ai_training_read role, created in the OVHcloud Control Panel under AI & Machine Learning > AI Dashboard > Tokens.
+            show_user: true
+            required: true
+            secret: true
+owner:
+  github: fred-maussion/community_elastic-custom-integrations
+  type: community

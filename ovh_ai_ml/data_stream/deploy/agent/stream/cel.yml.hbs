@@ -1,0 +1,94 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+resource.url: {{ai_api_url}}
+auth.custom:
+  header: Authorization
+  value: 'Bearer {{ai_token}}'
+state:
+  ai_token: {{ai_token}}
+  batch_size: {{batch_size}}
+  initial_interval: {{initial_interval}}
+redact:
+  fields:
+    - ai_token
+program: |-
+  {
+    "last_updated": state.?cursor.last_updated.orValue(""),
+    "next_page": int(state.?cursor.next_page.orValue(0)),
+  }.as(cur,
+    state.with(
+      request(
+        "GET",
+        state.url.trim_right("/") + "/v1/app?" + "updatedAfter=" + string(
+          (cur.last_updated != "") ?
+            (int(timestamp(cur.last_updated)) * 1000)
+          :
+            int(now - duration(state.initial_interval)) * 1000
+        ) + "&size=" + string(int(state.batch_size)) + "&page=" + string(cur.next_page)
+      ).do_request().as(resp,
+        (resp.StatusCode == 200) ?
+          resp.Body.decode_json().as(items,
+            {
+              "events": items.map(e, {"message": e.encode_json()}),
+              "cursor": (size(items) == int(state.batch_size)) ?
+                {"last_updated": cur.last_updated, "next_page": cur.next_page + 1}
+              : (size(items) > 0) ?
+                {"last_updated": items[size(items) - 1].updated_at, "next_page": 0}
+              :
+                state.?cursor.orValue({"last_updated": string(now), "next_page": 0}),
+              "want_more": size(items) == int(state.batch_size),
+            }
+          )
+        : (resp.StatusCode == 429 || resp.StatusCode >= 500) ?
+          {
+            "events": {
+              "error": {
+                "code": string(resp.StatusCode),
+                "id": string(resp.Status),
+                "message": "GET /v1/app: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+              },
+            },
+            "want_more": false,
+          }
+        :
+          {
+            "events": [
+              {
+                "error": {
+                  "code": string(resp.StatusCode),
+                  "id": string(resp.Status),
+                  "message": "GET /v1/app: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+                },
+              },
+            ],
+            "want_more": false,
+          }
+      )
+    )
+  )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}
