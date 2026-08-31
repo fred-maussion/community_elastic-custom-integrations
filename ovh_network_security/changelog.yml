@@ -3,4 +3,4 @@
   changes:
     - description: Initial release of the OVHcloud Network Security integration (anti-hack, anti-DDoS mitigation, anti-spam, IP firewall).
       type: enhancement
-      link: https://github.com/elastic/integrations/pull/99999
+      link: https://github.com/elastic/integrations/issues/20970
