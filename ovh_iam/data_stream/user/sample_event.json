@@ -1,0 +1,35 @@
+{
+  "@timestamp": "2026-06-12T17:38:31.535Z",
+  "cloud": {
+    "provider": "ovh"
+  },
+  "ecs": {
+    "version": "9.3.0"
+  },
+  "event": {
+    "category": ["iam"],
+    "created": "2026-06-12T17:38:31.471Z",
+    "dataset": "ovh_iam.user",
+    "kind": "state",
+    "module": "ovh_iam",
+    "type": ["info"]
+  },
+  "ovh": {
+    "iam": {
+      "user": {
+        "description": "A user created for AI endpoints",
+        "group": "UNPRIVILEGED",
+        "password_last_update": "2026-06-12T17:38:31.531Z",
+        "status": "OK",
+        "type": "USER",
+        "urn": "urn:v1:eu:identity:user:qz2514-ovh/ai-endpoints-user"
+      }
+    }
+  },
+  "tags": ["forwarded", "ovh_iam-user"],
+  "user": {
+    "email": "ai-endpoints-user@ovhcloud.com",
+    "name": "ai-endpoints-user",
+    "roles": ["UNPRIVILEGED"]
+  }
+}

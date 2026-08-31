@@ -1,0 +1,76 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-06-19T07:48:14.960Z",
+            "cloud": {
+                "provider": "ovh"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "iam"
+                ],
+                "created": "2026-06-12T17:38:44.910Z",
+                "kind": "state",
+                "original": "{\"creation\":\"2026-06-12T19:38:44.910762+02:00\",\"description\":\"API key for Elastic AI endpoints\",\"expiresAt\":\"2106-01-01T00:59:59.999+01:00\",\"lastUsed\":\"2026-06-19T09:48:14.960974+02:00\",\"name\":\"capg-elastic-ai-key\",\"user_login\":\"ai-endpoints-user\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh": {
+                "iam": {
+                    "token": {
+                        "description": "API key for Elastic AI endpoints",
+                        "expires_at": "2105-12-31T23:59:59.999Z",
+                        "last_used": "2026-06-19T07:48:14.960Z",
+                        "name": "capg-elastic-ai-key"
+                    }
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ],
+            "user": {
+                "name": "ai-endpoints-user"
+            }
+        },
+        {
+            "@timestamp": "2026-08-01T06:30:00.000Z",
+            "cloud": {
+                "provider": "ovh"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "iam"
+                ],
+                "created": "2026-03-15T09:00:00.000Z",
+                "kind": "state",
+                "original": "{\"creation\":\"2026-03-15T10:00:00.000000+01:00\",\"description\":\"CI deployment token\",\"expiresAt\":\"2027-03-15T10:00:00.000000+01:00\",\"lastUsed\":\"2026-08-01T08:30:00.000000+02:00\",\"name\":\"ci-deploy-token\",\"user_login\":\"ci-service-account\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh": {
+                "iam": {
+                    "token": {
+                        "description": "CI deployment token",
+                        "expires_at": "2027-03-15T09:00:00.000Z",
+                        "last_used": "2026-08-01T06:30:00.000Z",
+                        "name": "ci-deploy-token"
+                    }
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ],
+            "user": {
+                "name": "ci-service-account"
+            }
+        }
+    ]
+}

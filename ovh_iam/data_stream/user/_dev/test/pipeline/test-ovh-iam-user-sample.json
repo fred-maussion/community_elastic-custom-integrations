@@ -1,0 +1,10 @@
+{
+  "events": [
+    {
+      "message": "{\"creation\":\"2026-06-12T19:38:31.471841+02:00\",\"description\":\"A user created for AI endpoints\",\"email\":\"ai-endpoints-user@ovhcloud.com\",\"group\":\"UNPRIVILEGED\",\"groups\":[\"UNPRIVILEGED\"],\"lastUpdate\":\"2026-06-12T19:38:31.535921+02:00\",\"login\":\"ai-endpoints-user\",\"passwordLastUpdate\":\"2026-06-12T19:38:31.531884+02:00\",\"status\":\"OK\",\"type\":\"USER\",\"urn\":\"urn:v1:eu:identity:user:qz2514-ovh/ai-endpoints-user\"}"
+    },
+    {
+      "message": "{\"creation\":\"2026-01-10T09:00:00.000000+01:00\",\"description\":\"Service account for CI pipeline\",\"email\":\"ci-service-account@ovhcloud.com\",\"group\":\"ADMIN\",\"groups\":[\"ADMIN\"],\"lastUpdate\":\"2026-07-01T12:00:00.000000+02:00\",\"login\":\"ci-service-account\",\"passwordLastUpdate\":\"2026-07-01T12:00:00.000000+02:00\",\"status\":\"OK\",\"type\":\"SERVICE_ACCOUNT\",\"urn\":\"urn:v1:eu:identity:user:qz2514-ovh/ci-service-account\"}"
+    }
+  ]
+}

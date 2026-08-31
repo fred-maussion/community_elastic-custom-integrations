@@ -1,0 +1,109 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+auth.oauth2:
+  client.id: {{client_id}}
+  client.secret: {{client_secret}}
+  token_url: {{token_url}}
+  scopes:
+    - all
+resource.url: {{url}}
+state:
+  users: []
+  user_idx: 0
+redact:
+  fields: ~
+program: |-
+  // Cursor-based: one user's tokens per tick, want_more drives immediate continuation.
+  // When user list is exhausted, re-fetch the user list to start a new pass.
+  (size(state.?cursor.users.orValue([])) == 0 || state.?cursor.user_idx.orValue(0) >= size(state.?cursor.users.orValue([]))) ?
+    // Fetch fresh user list
+    request("GET", state.url.trim_right("/") + "/me/identity/user").do_request().as(list_resp,
+      (list_resp.StatusCode != 200) ?
+        state.with({
+          "events": {"error": {"code": string(list_resp.StatusCode), "id": string(list_resp.Status), "message": "GET /me/identity/user: " + ((size(list_resp.Body) != 0) ? string(list_resp.Body) : string(list_resp.Status))}},
+          "want_more": false,
+        })
+      :
+        list_resp.Body.decode_json().as(users,
+          size(users) == 0 ?
+            state.with({"events": [], "cursor": {"users": [], "user_idx": 0}, "want_more": false})
+          :
+            // Collect tokens for the first user
+            request("GET", state.url.trim_right("/") + "/me/identity/user/" + users[0] + "/token").do_request().as(tok_list_resp,
+              (tok_list_resp.StatusCode == 200) ?
+                tok_list_resp.Body.decode_json().map(tok_name,
+                  request("GET", state.url.trim_right("/") + "/me/identity/user/" + users[0] + "/token/" + tok_name).do_request().as(tok_resp,
+                    (tok_resp.StatusCode == 200) ?
+                      tok_resp.Body.decode_json().with({"user_login": users[0]})
+                    :
+                      {"name": tok_name, "user_login": users[0], "_error": string(tok_resp.Status)}
+                  )
+                ).as(tokens,
+                  state.with({
+                    "events": tokens.map(t, {"message": t.encode_json()}),
+                    "cursor": {"users": users, "user_idx": 1},
+                    "want_more": size(users) > 1,
+                  })
+                )
+              :
+                state.with({
+                  "events": [],
+                  "cursor": {"users": users, "user_idx": 1},
+                  "want_more": size(users) > 1,
+                })
+            )
+        )
+    )
+  :
+    // Continue with next user from cursor
+    state.?cursor.users.orValue([])[int(state.?cursor.user_idx.orValue(0))].as(login,
+      request("GET", state.url.trim_right("/") + "/me/identity/user/" + login + "/token").do_request().as(tok_list_resp,
+        (tok_list_resp.StatusCode == 200) ?
+          tok_list_resp.Body.decode_json().map(tok_name,
+            request("GET", state.url.trim_right("/") + "/me/identity/user/" + login + "/token/" + tok_name).do_request().as(tok_resp,
+              (tok_resp.StatusCode == 200) ?
+                tok_resp.Body.decode_json().with({"user_login": login})
+              :
+                {"name": tok_name, "user_login": login, "_error": string(tok_resp.Status)}
+            )
+          ).as(tokens,
+            state.with({
+              "events": tokens.map(t, {"message": t.encode_json()}),
+              "cursor": {"users": state.?cursor.users.orValue([]), "user_idx": int(state.?cursor.user_idx.orValue(0)) + 1},
+              "want_more": int(state.?cursor.user_idx.orValue(0)) + 1 < size(state.?cursor.users.orValue([])),
+            })
+          )
+        :
+          state.with({
+            "events": [],
+            "cursor": {"users": state.?cursor.users.orValue([]), "user_idx": int(state.?cursor.user_idx.orValue(0)) + 1},
+            "want_more": int(state.?cursor.user_idx.orValue(0)) + 1 < size(state.?cursor.users.orValue([])),
+          })
+      )
+    )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}

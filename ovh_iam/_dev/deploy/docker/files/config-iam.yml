@@ -1,0 +1,80 @@
+rules:
+  # OAuth2 token endpoint
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+
+  # GET /me/identity/user — list of logins
+  - path: /me/identity/user
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["ai-endpoints-user","ci-service-account"]'
+
+  # GET /me/identity/user/ai-endpoints-user
+  - path: /me/identity/user/ai-endpoints-user
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"creation":"2026-06-12T19:38:31.471841+02:00","description":"A user created for AI endpoints","email":"ai-endpoints-user@ovhcloud.com","group":"UNPRIVILEGED","groups":["UNPRIVILEGED"],"lastUpdate":"2026-06-12T19:38:31.535921+02:00","login":"ai-endpoints-user","passwordLastUpdate":"2026-06-12T19:38:31.531884+02:00","status":"OK","type":"USER","urn":"urn:v1:eu:identity:user:qz2514-ovh/ai-endpoints-user"}'
+
+  # GET /me/identity/user/ci-service-account
+  - path: /me/identity/user/ci-service-account
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"creation":"2026-01-10T09:00:00.000000+01:00","description":"Service account for CI pipeline","email":"ci-service-account@ovhcloud.com","group":"ADMIN","groups":["ADMIN"],"lastUpdate":"2026-07-01T12:00:00.000000+02:00","login":"ci-service-account","passwordLastUpdate":"2026-07-01T12:00:00.000000+02:00","status":"OK","type":"SERVICE_ACCOUNT","urn":"urn:v1:eu:identity:user:qz2514-ovh/ci-service-account"}'
+
+  # GET /me/identity/user/ai-endpoints-user/token — list token names
+  - path: /me/identity/user/ai-endpoints-user/token
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["capg-elastic-ai-key"]'
+
+  # GET /me/identity/user/ci-service-account/token — list token names
+  - path: /me/identity/user/ci-service-account/token
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["ci-deploy-token"]'
+
+  # GET /me/identity/user/ai-endpoints-user/token/capg-elastic-ai-key
+  - path: /me/identity/user/ai-endpoints-user/token/capg-elastic-ai-key
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"creation":"2026-06-12T19:38:44.910762+02:00","description":"API key for Elastic AI endpoints","expiresAt":"2106-01-01T00:59:59.999+01:00","lastUsed":"2026-06-19T09:48:14.960974+02:00","name":"capg-elastic-ai-key"}'
+
+  # GET /me/identity/user/ci-service-account/token/ci-deploy-token
+  - path: /me/identity/user/ci-service-account/token/ci-deploy-token
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"creation":"2026-03-15T10:00:00.000000+01:00","description":"CI deployment token","expiresAt":"2027-03-15T10:00:00.000000+01:00","lastUsed":"2026-08-01T08:30:00.000000+02:00","name":"ci-deploy-token"}'
