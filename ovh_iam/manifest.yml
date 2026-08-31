@@ -19,6 +19,11 @@ icons:
     title: OVHcloud logo
     size: 32x32
     type: image/svg+xml
+screenshots:
+  - src: /img/Screenshot-ovh-iam.png
+    title: OVHcloud IAM dashboard
+    size: 3124x1796
+    type: image/png
 policy_templates:
   - name: ovh_iam
     title: OVHcloud IAM

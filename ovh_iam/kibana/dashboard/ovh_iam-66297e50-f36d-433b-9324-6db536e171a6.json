@@ -1,0 +1,1768 @@
+{
+    "accessControl": {
+        "accessMode": "default",
+        "owner": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+    },
+    "attributes": {
+        "description": "SRE dashboard for OVH IAM logs. Covers user and API token KPIs, status distributions, role breakdowns, password hygiene, and token activity over time.",
+        "esqlApproximation": false,
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "autoApplyFilters": true,
+            "hidePanelBorders": false,
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "content": "## OVH IAM — Identity \u0026 Access Management\nMonitors **users** (`ovh_iam.user`) and **API tokens** (`ovh_iam.token`) collected from the OVH cloud provider. Use the controls above to filter by user status, group, or dataset.",
+                    "settings": {
+                        "open_links_in_new_tab": true
+                    }
+                },
+                "gridData": {
+                    "h": 4,
+                    "i": "bfce5999-f7ce-4252-a600-0cb6d2a07e74",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "bfce5999-f7ce-4252-a600-0cb6d2a07e74",
+                "type": "markdown"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-9868cbefbff3becde5c1740688e4b95cc4c65dfb2812a242aa3014c6fb701e2b": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-9868cbefbff3becde5c1740688e4b95cc4c65dfb2812a242aa3014c6fb701e2b",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total IAM Records",
+                                                    "label": "Total IAM Records",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-9868cbefbff3becde5c1740688e4b95cc4c65dfb2812a242aa3014c6fb701e2b",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE event.category == \"iam\"\n| STATS `Total IAM Records` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-9868cbefbff3becde5c1740688e4b95cc4c65dfb2812a242aa3014c6fb701e2b",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE event.category == \"iam\"\n| STATS `Total IAM Records` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "b6b042bc-683c-4de1-9666-09fde62599a9",
+                    "sectionId": "98c3f08b-22fb-44a1-9332-a780a4d4ffae",
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "b6b042bc-683c-4de1-9666-09fde62599a9",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-2a3caa4190bcd05845fa594bb52309b42e9d91730afc685d87e69cc0cb4f6f57": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-2a3caa4190bcd05845fa594bb52309b42e9d91730afc685d87e69cc0cb4f6f57",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct IAM Users",
+                                                    "label": "Distinct IAM Users",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-2a3caa4190bcd05845fa594bb52309b42e9d91730afc685d87e69cc0cb4f6f57",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.user\"\n| STATS `Distinct IAM Users` = COUNT_DISTINCT(user.name)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-2a3caa4190bcd05845fa594bb52309b42e9d91730afc685d87e69cc0cb4f6f57",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.user\"\n| STATS `Distinct IAM Users` = COUNT_DISTINCT(user.name)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "2a21c958-abd3-4931-84c9-42e0f68b0484",
+                    "sectionId": "98c3f08b-22fb-44a1-9332-a780a4d4ffae",
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "panelIndex": "2a21c958-abd3-4931-84c9-42e0f68b0484",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-92c1930b91e0b28e817b8295c8cccd031db8fa278bce225a855e6ebac05e1bfc": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-92c1930b91e0b28e817b8295c8cccd031db8fa278bce225a855e6ebac05e1bfc",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total number of API tokens",
+                                                    "label": "Total number of API tokens",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-92c1930b91e0b28e817b8295c8cccd031db8fa278bce225a855e6ebac05e1bfc",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.token\"\n| STATS `Total number of API tokens` = COUNT()"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-92c1930b91e0b28e817b8295c8cccd031db8fa278bce225a855e6ebac05e1bfc",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.token\"\n| STATS `Total number of API tokens` = COUNT()"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "23346f13-1ad1-48d5-a37c-8018d46b70a8",
+                    "sectionId": "98c3f08b-22fb-44a1-9332-a780a4d4ffae",
+                    "w": 12,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "23346f13-1ad1-48d5-a37c-8018d46b70a8",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-1cd5b9811161e261ddb2cde33d61214d3f281e4607e53a13e5ff2bb1db18eb12": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-1cd5b9811161e261ddb2cde33d61214d3f281e4607e53a13e5ff2bb1db18eb12",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of distinct token names",
+                                                    "label": "Count of distinct token names",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-1cd5b9811161e261ddb2cde33d61214d3f281e4607e53a13e5ff2bb1db18eb12",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.token\"\n| STATS `Count of distinct token names` = COUNT_DISTINCT(ovh.iam.token.name)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-1cd5b9811161e261ddb2cde33d61214d3f281e4607e53a13e5ff2bb1db18eb12",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.token\"\n| STATS `Count of distinct token names` = COUNT_DISTINCT(ovh.iam.token.name)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "e1558c67-94ed-4d96-86e8-5ce6d53d371c",
+                    "sectionId": "98c3f08b-22fb-44a1-9332-a780a4d4ffae",
+                    "w": 12,
+                    "x": 36,
+                    "y": 0
+                },
+                "panelIndex": "e1558c67-94ed-4d96-86e8-5ce6d53d371c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-@timestamp",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "@timestamp",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_breakdown",
+                                                    "fieldName": "Dataset",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| STATS `Event Count` = COUNT() BY `@timestamp` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Dataset` = data_stream.dataset\n| SORT `@timestamp`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| STATS `Event Count` = COUNT() BY `@timestamp` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Dataset` = data_stream.dataset\n| SORT `@timestamp`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "splitAccessors": [
+                                            "line_0_breakdown"
+                                        ],
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "line",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "IAM Events Over Time by Dataset",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "IAM Events Over Time by Dataset"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "feac6094-2118-4a24-8da0-ab505ba476ab",
+                    "sectionId": "98c3f08b-22fb-44a1-9332-a780a4d4ffae",
+                    "w": 48,
+                    "x": 0,
+                    "y": 5
+                },
+                "panelIndex": "feac6094-2118-4a24-8da0-ab505ba476ab",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-0b04817ae15c6fc1f370d1637236cce345faf562db617da7ad045b0de0ca1645": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-0b04817ae15c6fc1f370d1637236cce345faf562db617da7ad045b0de0ca1645",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "User Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Status",
+                                                    "label": "User Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-0b04817ae15c6fc1f370d1637236cce345faf562db617da7ad045b0de0ca1645",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.user\"\n| STATS `User Count` = COUNT(*) BY `Status` = ovh.iam.user.status\n| SORT `User Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-0b04817ae15c6fc1f370d1637236cce345faf562db617da7ad045b0de0ca1645",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.user\"\n| STATS `User Count` = COUNT(*) BY `Status` = ovh.iam.user.status\n| SORT `User Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "0fc201db-6dfc-4ac2-930f-c0b4500b5f8d",
+                    "sectionId": "dc2f4764-a7d7-4156-b037-95cc1a69f039",
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "0fc201db-6dfc-4ac2-930f-c0b4500b5f8d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-1f816b1ca4fd6d246ebc9aa6193d42373ba37cce8236f08e04cf726cabb0bfed": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-1f816b1ca4fd6d246ebc9aa6193d42373ba37cce8236f08e04cf726cabb0bfed",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "User Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "fieldName": "Group",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-1f816b1ca4fd6d246ebc9aa6193d42373ba37cce8236f08e04cf726cabb0bfed",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.user\"\n| STATS `User Count` = COUNT(*) BY `Group` = `ovh.iam.user.group`\n| SORT `User Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-1f816b1ca4fd6d246ebc9aa6193d42373ba37cce8236f08e04cf726cabb0bfed",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.user\"\n| STATS `User Count` = COUNT(*) BY `Group` = `ovh.iam.user.group`\n| SORT `User Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "fd51f149-dbf5-4cf1-b620-227ead8af0aa",
+                    "sectionId": "dc2f4764-a7d7-4156-b037-95cc1a69f039",
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "panelIndex": "fd51f149-dbf5-4cf1-b620-227ead8af0aa",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-f5ab67a9ef46e07affc5714b65e6700db6799debe2e29f50659886c11e503fca": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-f5ab67a9ef46e07affc5714b65e6700db6799debe2e29f50659886c11e503fca",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "User Type",
+                                                    "label": "User Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-f5ab67a9ef46e07affc5714b65e6700db6799debe2e29f50659886c11e503fca",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.user\"\n| STATS `Count` = COUNT(*) BY `User Type` = ovh.iam.user.type\n| SORT `Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-f5ab67a9ef46e07affc5714b65e6700db6799debe2e29f50659886c11e503fca",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.user\"\n| STATS `Count` = COUNT(*) BY `User Type` = ovh.iam.user.type\n| SORT `Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "b53e1399-f535-4ee5-8ef9-d48ef5407736",
+                    "sectionId": "dc2f4764-a7d7-4156-b037-95cc1a69f039",
+                    "w": 12,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "b53e1399-f535-4ee5-8ef9-d48ef5407736",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-@timestamp",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "User Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "user.roles",
+                                                    "label": "Role",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.user\" AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `User Count` = COUNT() BY user.roles\n| SORT `User Count` DESC\n| LIMIT 10"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.user\" AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `User Count` = COUNT() BY user.roles\n| SORT `User Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "71fd156a-1a1b-4384-b3b6-78e65b715fea",
+                    "sectionId": "dc2f4764-a7d7-4156-b037-95cc1a69f039",
+                    "w": 12,
+                    "x": 36,
+                    "y": 0
+                },
+                "panelIndex": "71fd156a-1a1b-4384-b3b6-78e65b715fea",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-a1a9eae9c2dbfae0363c13249056a26b037ef6230c7b782b2a1d841d0e0116b1": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-a1a9eae9c2dbfae0363c13249056a26b037ef6230c7b782b2a1d841d0e0116b1",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Name",
+                                                    "label": "Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "Email",
+                                                    "label": "Email",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "Status",
+                                                    "label": "Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "Group",
+                                                    "label": "Group",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_4",
+                                                    "customLabel": true,
+                                                    "fieldName": "Type",
+                                                    "label": "Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_5",
+                                                    "customLabel": true,
+                                                    "fieldName": "Password Last Update",
+                                                    "label": "Password Last Update",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Latest Timestamp",
+                                                    "inMetricDimension": true,
+                                                    "label": "Latest Timestamp",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-a1a9eae9c2dbfae0363c13249056a26b037ef6230c7b782b2a1d841d0e0116b1",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.user\"\n| STATS `Email` = VALUES(user.email), `Status` = VALUES(ovh.iam.user.status), `Group` = VALUES(`ovh.iam.user.group`), `Type` = VALUES(ovh.iam.user.type), `Password Last Update` = VALUES(ovh.iam.user.password_last_update), `Latest Timestamp` = MAX(@timestamp) BY `Name` = user.name\n| KEEP `Name`, `Email`, `Status`, `Group`, `Type`, `Password Last Update`\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-a1a9eae9c2dbfae0363c13249056a26b037ef6230c7b782b2a1d841d0e0116b1",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.user\"\n| STATS `Email` = VALUES(user.email), `Status` = VALUES(ovh.iam.user.status), `Group` = VALUES(`ovh.iam.user.group`), `Type` = VALUES(ovh.iam.user.type), `Password Last Update` = VALUES(ovh.iam.user.password_last_update), `Latest Timestamp` = MAX(@timestamp) BY `Name` = user.name\n| KEEP `Name`, `Email`, `Status`, `Group`, `Type`, `Password Last Update`\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_3",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_4",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_5",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": true,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "normal",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "109983aa-0fdc-40eb-9302-e78cf8e63acf",
+                    "sectionId": "dc2f4764-a7d7-4156-b037-95cc1a69f039",
+                    "w": 48,
+                    "x": 0,
+                    "y": 10
+                },
+                "panelIndex": "109983aa-0fdc-40eb-9302-e78cf8e63acf",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-77dd1ffa407780b9ce7a858a813a9679b693f7cbed798375efc8984b1e56199b": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-77dd1ffa407780b9ce7a858a813a9679b693f7cbed798375efc8984b1e56199b",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of tokens used",
+                                                    "label": "Count of tokens used",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-77dd1ffa407780b9ce7a858a813a9679b693f7cbed798375efc8984b1e56199b",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.token\" AND ovh.iam.token.last_used IS NOT NULL\n| STATS `Count of tokens used` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-77dd1ffa407780b9ce7a858a813a9679b693f7cbed798375efc8984b1e56199b",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.token\" AND ovh.iam.token.last_used IS NOT NULL\n| STATS `Count of tokens used` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "d744df19-91de-4925-bc11-4d3ffc107cf2",
+                    "sectionId": "100bacd7-7d2a-488b-9bb9-1873bfc06f43",
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "d744df19-91de-4925-bc11-4d3ffc107cf2",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-bf81fe5adfd750389c3e9ab06368de4604c5c93a940448d9758aa3c32bcbfd14": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-bf81fe5adfd750389c3e9ab06368de4604c5c93a940448d9758aa3c32bcbfd14",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of Non-Expiring Tokens",
+                                                    "label": "Count of Non-Expiring Tokens",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-bf81fe5adfd750389c3e9ab06368de4604c5c93a940448d9758aa3c32bcbfd14",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.token\" AND DATE_EXTRACT(\"year\", ovh.iam.token.expires_at) \u003e= 2106\n| STATS `Count of Non-Expiring Tokens` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-bf81fe5adfd750389c3e9ab06368de4604c5c93a940448d9758aa3c32bcbfd14",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.token\" AND DATE_EXTRACT(\"year\", ovh.iam.token.expires_at) \u003e= 2106\n| STATS `Count of Non-Expiring Tokens` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "18ec72a4-08f0-4b09-aac0-4ea4bcf1fe22",
+                    "sectionId": "100bacd7-7d2a-488b-9bb9-1873bfc06f43",
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "panelIndex": "18ec72a4-08f0-4b09-aac0-4ea4bcf1fe22",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-ovh.iam.token.last_used": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-ovh.iam.token.last_used",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "ovh.iam.token.last_used",
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Token Activity Count",
+                                                    "label": "Token Activity Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "fieldName": "Token Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-ovh.iam.token.last_used",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.token\" AND ovh.iam.token.last_used \u003e= ?_tstart AND ovh.iam.token.last_used \u003c ?_tend\n| STATS `Token Activity Count` = COUNT(*) BY `Time Bucket` = BUCKET(ovh.iam.token.last_used, 75, ?_tstart, ?_tend), `Token Name` = ovh.iam.token.name\n| SORT `Time Bucket`, `Token Activity Count` DESC"
+                                            },
+                                            "timeField": "ovh.iam.token.last_used"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-ovh.iam.token.last_used",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.token\" AND ovh.iam.token.last_used \u003e= ?_tstart AND ovh.iam.token.last_used \u003c ?_tend\n| STATS `Token Activity Count` = COUNT(*) BY `Time Bucket` = BUCKET(ovh.iam.token.last_used, 75, ?_tstart, ?_tend), `Token Name` = ovh.iam.token.name\n| SORT `Time Bucket`, `Token Activity Count` DESC"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right",
+                                    "showSingleSeries": true
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "OVH IAM Token Last-Used Activity Over Time by Token Name",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "OVH IAM Token Last-Used Activity Over Time by Token Name"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "3bef4191-2330-44fd-b7c9-824e16fa7822",
+                    "sectionId": "100bacd7-7d2a-488b-9bb9-1873bfc06f43",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "3bef4191-2330-44fd-b7c9-824e16fa7822",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_*-4b16c3092388d4751252574343d6e4b1fe8c03a90b0cc7d74867f77592370d3f": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_*-4b16c3092388d4751252574343d6e4b1fe8c03a90b0cc7d74867f77592370d3f",
+                                    "name": "logs-ovh_*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.iam.token.name",
+                                                    "label": "Token Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.iam.token.description",
+                                                    "label": "Description",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "user.name",
+                                                    "label": "Owner",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.iam.token.last_used",
+                                                    "inMetricDimension": true,
+                                                    "label": "Last Used",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.iam.token.expires_at",
+                                                    "inMetricDimension": true,
+                                                    "label": "Expires At",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_*-4b16c3092388d4751252574343d6e4b1fe8c03a90b0cc7d74867f77592370d3f",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.token\"\n| KEEP `ovh.iam.token.name`, `ovh.iam.token.description`, user.name, `ovh.iam.token.last_used`, `ovh.iam.token.expires_at`\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_*-4b16c3092388d4751252574343d6e4b1fe8c03a90b0cc7d74867f77592370d3f",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_*\n| WHERE data_stream.dataset == \"ovh_iam.token\"\n| KEEP `ovh.iam.token.name`, `ovh.iam.token.description`, user.name, `ovh.iam.token.last_used`, `ovh.iam.token.expires_at`\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "normal",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true
+                            }
+                        },
+                        "title": "OVH IAM API Tokens",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "OVH IAM API Tokens"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "3a97a0fc-8970-4500-99f9-de5f8b91e445",
+                    "sectionId": "100bacd7-7d2a-488b-9bb9-1873bfc06f43",
+                    "w": 48,
+                    "x": 0,
+                    "y": 10
+                },
+                "panelIndex": "3a97a0fc-8970-4500-99f9-de5f8b91e445",
+                "type": "vis"
+            }
+        ],
+        "pinned_panels": {
+            "panels": {
+                "2c0d1d35-0a3b-4fc5-be32-655426dad6af": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_* | STATS BY `ovh.iam.user.type`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "User Type",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 3,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "41d2239b-3001-4098-a246-ff142f48e865": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_* | STATS BY `ovh.iam.user.group`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "User Group",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 2,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "9a599f81-161d-445c-b955-e0cf4ef7cd14": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_* | STATS BY `ovh.iam.user.status`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "User Status",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 1,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "b17e94be-2abe-4507-8067-6d96085e743a": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_* | STATS BY `data_stream.dataset`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Dataset",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 0,
+                    "type": "options_list_control",
+                    "width": "medium"
+                }
+            }
+        },
+        "sections": [
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "98c3f08b-22fb-44a1-9332-a780a4d4ffae",
+                    "y": 4
+                },
+                "title": "📊 Overview"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "dc2f4764-a7d7-4156-b037-95cc1a69f039",
+                    "y": 5
+                },
+                "title": "👤 Users"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "100bacd7-7d2a-488b-9bb9-1873bfc06f43",
+                    "y": 6
+                },
+                "title": "🔑 API Tokens"
+            }
+        ],
+        "timeRestore": false,
+        "title": "[OVH] IAM — Identity \u0026 Access Management"
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2026-08-31T02:05:17.477Z",
+    "created_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0",
+    "id": "ovh_iam-66297e50-f36d-433b-9324-6db536e171a6",
+    "references": [],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+}
