@@ -1,7 +1,7 @@
 format_version: "3.4.2"
 name: ovh_ai_ml
 title: "OVHcloud AI & Machine Learning"
-version: 0.1.0
+version: 1.0.0
 source:
   license: "Apache-2.0"
 description: "Monitor OVHcloud AI Deploy app lifecycle and AI Training job state changes."
@@ -19,6 +19,15 @@ icons:
     title: OVHcloud logo
     size: 32x32
     type: image/svg+xml
+screenshots:
+  - src: /img/Screenshot-ovh-ai-ml-deploy-training-1.png
+    title: OVHcloud AI & Machine Learning - Deploy & Training Overview
+    size: 1920x1080
+    type: image/png
+  - src: /img/Screenshot-ovh-ai-ml-deploy-training-2.png
+    title: OVHcloud AI & Machine Learning - Deploy & Training Details
+    size: 1920x1080
+    type: image/png
 policy_templates:
   - name: ovh_ai_ml
     title: OVHcloud AI & Machine Learning
