@@ -1,0 +1,151 @@
+---
+description: Pipeline for processing OVHcloud bill events.
+processors:
+  - remove:
+      field:
+        - organization
+        - division
+        - team
+      ignore_missing: true
+      if: ctx.organization instanceof String && ctx.division instanceof String && ctx.team instanceof String
+      tag: remove_agentless_tags
+
+  - terminate:
+      tag: data_collection_error
+      if: ctx.error?.message != null && ctx.message == null && ctx.event?.original == null
+
+  - rename:
+      field: message
+      tag: rename_message_to_event_original
+      target_field: event.original
+      ignore_missing: true
+      if: ctx.event?.original == null
+
+  - remove:
+      field: message
+      tag: remove_message
+      ignore_missing: true
+      if: ctx.event?.original != null
+
+  - json:
+      field: event.original
+      target_field: json
+      tag: parse_json
+      if: ctx.event?.original != null
+      on_failure:
+        - append:
+            field: error.message
+            value: 'parse_json: {{{ _ingest.on_failure_message }}}'
+
+  # ECS boilerplate
+  - set:
+      field: ecs.version
+      tag: set_ecs_version
+      value: '9.3.0'
+  - set:
+      field: event.kind
+      tag: set_event_kind
+      value: event
+  - append:
+      field: event.type
+      tag: append_event_type_info
+      value: info
+      allow_duplicates: false
+  - set:
+      field: cloud.provider
+      tag: set_cloud_provider
+      value: ovh
+
+  # Timestamp from bill date
+  - date:
+      field: json.date
+      target_field: '@timestamp'
+      formats:
+        - ISO8601
+      tag: parse_bill_date
+      ignore_failure: true
+
+  # ECS event fields
+  - rename:
+      field: json.billId
+      target_field: event.id
+      tag: rename_bill_id_to_event_id
+      ignore_missing: true
+  - rename:
+      field: json.url
+      target_field: event.url
+      tag: rename_url_to_event_url
+      ignore_missing: true
+
+  # OVH-specific bill fields
+  - set:
+      field: ovh.billing.bill.bill_id
+      tag: set_bill_id
+      copy_from: event.id
+      ignore_empty_value: true
+      if: ctx.event?.id != null
+  - rename:
+      field: json.orderId
+      target_field: ovh.billing.bill.order_id
+      tag: rename_order_id
+      ignore_missing: true
+  - set:
+      field: ovh.billing.bill.price_with_tax
+      tag: set_price_with_tax
+      copy_from: json.priceWithTax.value
+      ignore_empty_value: true
+      if: ctx.json?.priceWithTax?.value != null
+  - set:
+      field: ovh.billing.bill.price_without_tax
+      tag: set_price_without_tax
+      copy_from: json.priceWithoutTax.value
+      ignore_empty_value: true
+      if: ctx.json?.priceWithoutTax?.value != null
+  - set:
+      field: ovh.billing.bill.tax_amount
+      tag: set_tax_amount
+      copy_from: json.tax.value
+      ignore_empty_value: true
+      if: ctx.json?.tax?.value != null
+  - set:
+      field: ovh.billing.bill.currency_code
+      tag: set_currency_code
+      copy_from: json.priceWithTax.currencyCode
+      ignore_empty_value: true
+      if: ctx.json?.priceWithTax?.currencyCode != null
+  - rename:
+      field: json.pdfUrl
+      target_field: ovh.billing.bill.pdf_url
+      tag: rename_pdf_url
+      ignore_missing: true
+
+  # Cleanup
+  - remove:
+      field: json
+      tag: cleanup_json
+      ignore_missing: true
+
+  - append:
+      field: tags
+      tag: append_preserve_original_event_on_error
+      value: preserve_original_event
+      allow_duplicates: false
+      if: ctx.error?.message != null
+
+on_failure:
+  - append:
+      field: error.message
+      tag: on_failure_append_error_message
+      value: >-
+        Processor '{{{ _ingest.on_failure_processor_type }}}'
+        {{{#_ingest.on_failure_processor_tag}}}with tag '{{{ _ingest.on_failure_processor_tag }}}'
+        {{{/_ingest.on_failure_processor_tag}}}failed with message '{{{ _ingest.on_failure_message }}}'
+  - set:
+      field: event.kind
+      tag: set_pipeline_error_to_event_kind
+      value: pipeline_error
+  - append:
+      field: tags
+      tag: on_failure_append_preserve_original_event
+      value: preserve_original_event
+      allow_duplicates: false

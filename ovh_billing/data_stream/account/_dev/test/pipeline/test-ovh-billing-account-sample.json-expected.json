@@ -1,0 +1,47 @@
+{
+    "expected": [
+        {
+            "cloud": {
+                "provider": "ovh"
+            },
+            "data_stream": {
+                "dataset": "ovh_billing.account",
+                "namespace": "ep",
+                "type": "logs"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "iam"
+                ],
+                "kind": "state",
+                "original": "{\"nichandle\":\"example-acct-ovh\",\"firstname\":\"Example\",\"name\":\"Account\",\"email\":\"example-account@example.com\",\"phone\":\"+33100000000\",\"country\":\"FR\",\"currency\":{\"code\":\"EUR\",\"symbol\":\"\\u20ac\"},\"language\":\"fr_FR\",\"legalform\":\"individual\",\"state\":\"complete\",\"ovhSubsidiary\":\"FR\",\"phoneCountry\":\"FR\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh": {
+                "billing": {
+                    "account": {
+                        "country": "FR",
+                        "currency_code": "EUR",
+                        "firstname": "Example",
+                        "language": "fr_FR",
+                        "legal_form": "individual",
+                        "name": "Account",
+                        "ovh_subsidiary": "FR",
+                        "phone": "+33100000000",
+                        "state": "complete"
+                    }
+                }
+            },
+            "user": {
+                "email": "example-account@example.com",
+                "full_name": "Example Account",
+                "name": "example-acct-ovh"
+            }
+        }
+    ]
+}

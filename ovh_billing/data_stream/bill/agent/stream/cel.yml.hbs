@@ -1,0 +1,76 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+auth.oauth2:
+  client.id: {{client_id}}
+  client.secret: {{client_secret}}
+  token_url: {{token_url}}
+  scopes:
+    - all
+resource.url: {{url}}
+state:
+  seen_ids: []
+redact:
+  fields: ~
+program: |-
+  // Fetch list of all bill IDs, then retrieve details only for unseen ones.
+  state.?cursor.seen_ids.orValue([]).as(seen_ids,
+    request("GET", state.url.trim_right("/") + "/me/bill").do_request().as(list_resp,
+      (list_resp.StatusCode != 200) ?
+        state.with({
+          "events": {
+            "error": {
+              "code": string(list_resp.StatusCode),
+              "id": string(list_resp.Status),
+              "message": "GET /me/bill: " + ((size(list_resp.Body) != 0) ? string(list_resp.Body) : string(list_resp.Status)),
+            },
+          },
+          "want_more": false,
+        })
+      :
+        list_resp.Body.decode_json().filter(bid, !(bid in seen_ids)).as(new_ids,
+          size(new_ids) == 0 ?
+            state.with({"events": [], "want_more": false})
+          :
+            new_ids.map(bid,
+              request("GET", state.url.trim_right("/") + "/me/bill/" + bid).do_request().as(bill_resp,
+                (bill_resp.StatusCode == 200) ?
+                  bill_resp.Body.decode_json()
+                :
+                  {"billId": bid, "_error": string(bill_resp.Status)}
+              )
+            ).as(bills,
+              {
+                "events": bills.map(b, {"message": b.encode_json()}),
+                "cursor": {"seen_ids": seen_ids + new_ids},
+                "want_more": false,
+              }
+            )
+        )
+    )
+  )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}

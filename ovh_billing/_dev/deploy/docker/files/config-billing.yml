@@ -1,0 +1,55 @@
+rules:
+  # OAuth2 token endpoint
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+  # GET /me — account profile
+  - path: /me
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"nichandle":"example-acct-ovh","firstname":"Example","name":"Account","email":"example-account@example.com","phone":"+33100000000","country":"FR","currency":{"code":"EUR","symbol":"€"},"language":"fr_FR","legalform":"individual","state":"complete","ovhSubsidiary":"FR","phoneCountry":"FR"}'
+  # GET /me/bill — list of bill IDs
+  - path: /me/bill
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["LF20000001","LF20000002","LF20000003"]'
+  # GET /me/bill/LF20000001
+  - path: /me/bill/LF20000001
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"billId":"LF20000001","date":"2026-06-01T00:00:00+01:00","orderId":10000001,"priceWithTax":{"currencyCode":"EUR","text":"120.00 EUR","value":120.0},"priceWithoutTax":{"currencyCode":"EUR","text":"100.00 EUR","value":100.0},"tax":{"currencyCode":"EUR","text":"20.00 EUR","value":20.0},"password":"example-password","pdfUrl":"https://www.ovh.com/bills/example/LF20000001.pdf","url":"https://www.ovh.com/bills/LF20000001"}'
+  # GET /me/bill/LF20000002
+  - path: /me/bill/LF20000002
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"billId":"LF20000002","date":"2026-07-01T00:00:00+01:00","orderId":10000002,"priceWithTax":{"currencyCode":"EUR","text":"240.00 EUR","value":240.0},"priceWithoutTax":{"currencyCode":"EUR","text":"200.00 EUR","value":200.0},"tax":{"currencyCode":"EUR","text":"40.00 EUR","value":40.0},"password":"example-password","pdfUrl":"https://www.ovh.com/bills/example/LF20000002.pdf","url":"https://www.ovh.com/bills/LF20000002"}'
+  # GET /me/bill/LF20000003
+  - path: /me/bill/LF20000003
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"billId":"LF20000003","date":"2026-08-01T00:00:00+01:00","orderId":10000003,"priceWithTax":{"currencyCode":"EUR","text":"60.00 EUR","value":60.0},"priceWithoutTax":{"currencyCode":"EUR","text":"50.00 EUR","value":50.0},"tax":{"currencyCode":"EUR","text":"10.00 EUR","value":10.0},"password":"example-password","pdfUrl":"https://www.ovh.com/bills/example/LF20000003.pdf","url":"https://www.ovh.com/bills/LF20000003"}'

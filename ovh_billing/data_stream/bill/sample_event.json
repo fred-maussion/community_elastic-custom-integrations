@@ -1,0 +1,59 @@
+{
+    "@timestamp": "2026-05-31T23:00:00.000Z",
+    "agent": {
+        "ephemeral_id": "4086196c-4273-4de9-b0d5-48083c5856b7",
+        "id": "3d7f5a20-fdf7-4b6c-ba22-6da0151dc057",
+        "name": "elastic-agent-16017",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "cloud": {
+        "provider": "ovh"
+    },
+    "data_stream": {
+        "dataset": "ovh_billing.bill",
+        "namespace": "29764",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "3d7f5a20-fdf7-4b6c-ba22-6da0151dc057",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "dataset": "ovh_billing.bill",
+        "id": "LF20000001",
+        "ingested": "2026-08-31T10:05:23Z",
+        "kind": "event",
+        "module": "ovh_billing",
+        "original": "{\"billId\":\"LF20000001\",\"date\":\"2026-06-01T00:00:00+01:00\",\"orderId\":10000001,\"password\":\"example-password\",\"pdfUrl\":\"https://www.ovh.com/bills/example/LF20000001.pdf\",\"priceWithTax\":{\"currencyCode\":\"EUR\",\"text\":\"120.00 EUR\",\"value\":120},\"priceWithoutTax\":{\"currencyCode\":\"EUR\",\"text\":\"100.00 EUR\",\"value\":100},\"tax\":{\"currencyCode\":\"EUR\",\"text\":\"20.00 EUR\",\"value\":20},\"url\":\"https://www.ovh.com/bills/LF20000001\"}",
+        "type": [
+            "info"
+        ],
+        "url": "https://www.ovh.com/bills/LF20000001"
+    },
+    "input": {
+        "type": "cel"
+    },
+    "ovh": {
+        "billing": {
+            "bill": {
+                "bill_id": "LF20000001",
+                "currency_code": "EUR",
+                "order_id": 10000001,
+                "pdf_url": "https://www.ovh.com/bills/example/LF20000001.pdf",
+                "price_with_tax": 120,
+                "price_without_tax": 100,
+                "tax_amount": 20
+            }
+        }
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded",
+        "ovh_billing-bill"
+    ]
+}

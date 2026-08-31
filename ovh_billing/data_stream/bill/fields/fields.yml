@@ -1,0 +1,24 @@
+- name: ovh.billing.bill
+  type: group
+  fields:
+    - name: bill_id
+      type: keyword
+      description: OVHcloud invoice identifier (e.g. LF20000001).
+    - name: order_id
+      type: long
+      description: Order ID linked to this bill.
+    - name: price_with_tax
+      type: double
+      description: Total invoice amount including tax.
+    - name: price_without_tax
+      type: double
+      description: Total invoice amount excluding tax.
+    - name: tax_amount
+      type: double
+      description: Tax amount on this invoice.
+    - name: currency_code
+      type: keyword
+      description: Currency code for the invoice amounts (e.g. EUR).
+    - name: pdf_url
+      type: keyword
+      description: URL to the PDF version of the invoice.

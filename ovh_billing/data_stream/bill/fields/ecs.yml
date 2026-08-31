@@ -1,0 +1,10 @@
+- name: cloud.provider
+  external: ecs
+- name: event.id
+  external: ecs
+- name: event.kind
+  external: ecs
+- name: event.type
+  external: ecs
+- name: event.url
+  external: ecs

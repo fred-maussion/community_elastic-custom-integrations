@@ -1,0 +1,67 @@
+{
+    "@timestamp": "2026-08-31T10:03:32.400Z",
+    "agent": {
+        "ephemeral_id": "f238e9ef-86d6-476f-a81f-1a1932b1761c",
+        "id": "9a7b6709-6a84-4b33-8c62-d905fcf7c991",
+        "name": "elastic-agent-50364",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "cloud": {
+        "provider": "ovh"
+    },
+    "data_stream": {
+        "dataset": "ovh_billing.account",
+        "namespace": "20903",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "9a7b6709-6a84-4b33-8c62-d905fcf7c991",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "category": [
+            "iam"
+        ],
+        "dataset": "ovh_billing.account",
+        "ingested": "2026-08-31T10:03:45Z",
+        "kind": "state",
+        "module": "ovh_billing",
+        "original": "{\"country\":\"FR\",\"currency\":{\"code\":\"EUR\",\"symbol\":\"€\"},\"email\":\"example-account@example.com\",\"firstname\":\"Example\",\"language\":\"fr_FR\",\"legalform\":\"individual\",\"name\":\"Account\",\"nichandle\":\"example-acct-ovh\",\"ovhSubsidiary\":\"FR\",\"phone\":\"+33100000000\",\"phoneCountry\":\"FR\",\"state\":\"complete\"}",
+        "type": [
+            "info"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "ovh": {
+        "billing": {
+            "account": {
+                "country": "FR",
+                "currency_code": "EUR",
+                "firstname": "Example",
+                "language": "fr_FR",
+                "legal_form": "individual",
+                "name": "Account",
+                "ovh_subsidiary": "FR",
+                "phone": "+33100000000",
+                "state": "complete"
+            }
+        }
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded",
+        "ovh_billing-account"
+    ],
+    "user": {
+        "email": "example-account@example.com",
+        "full_name": "Example Account",
+        "name": "example-acct-ovh"
+    }
+}
