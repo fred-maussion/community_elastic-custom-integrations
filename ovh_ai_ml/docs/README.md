@@ -10,7 +10,7 @@ OVHcloud AI Deploy hosts custom machine learning models as scalable inference AP
 
 ### Compatibility
 
-This integration is compatible with OVHcloud AI Deploy and AI Training in all supported regions. Authentication uses a static Bearer AI token with the `ai_training_read` role — this is a separate credential from OVH OAuth2 IAM service accounts.
+This integration is compatible with OVHcloud AI Deploy and AI Training in all supported regions. Authentication uses a static Bearer AI token with the **AI Reader** role — this is a separate credential from OVH OAuth2 IAM service accounts used by other OVHcloud integrations.
 
 ### How it works
 
@@ -111,7 +111,7 @@ Collects AI Training job lifecycle state change events. Each event represents th
 ## What do I need to use this integration?
 
 - An OVHcloud account with at least one Public Cloud project using AI Deploy or AI Training.
-- An **AI token** with the `ai_training_read` role, created in the OVHcloud Control Panel.
+- An **AI token** with the **AI Reader** role, created in the OVHcloud AI Dashboard.
 - The **regional AI API base URL** for your project (e.g., `https://gra.training.ai.cloud.ovh.net` for Gravelines, France).
 
 ## How do I deploy this integration?
@@ -126,19 +126,30 @@ Elastic Agent must be installed. For more details, check the Elastic Agent [inst
 
 1. Log into the [OVHcloud Control Panel](https://www.ovhcloud.com/manager/).
 2. Navigate to **Public Cloud** → your project → **AI & Machine Learning** → **AI Dashboard** → **Tokens**.
-3. Create a new token with role `ai_training_read` (read-only). Optionally add a label selector to scope the token.
-4. Copy the token value — it is shown only once.
+3. Click **Generate an AI token** and fill in:
+
+| Field | Value |
+|-------|-------|
+| Name | Any descriptive name (e.g., `elastic-package-ai-token`) |
+| Label selector | Leave empty to access all resources, or filter by `type=app` (Deploy only) or `type=job` (Training only) |
+| Role | **AI Reader** (read-only) |
+| Region | Select the region where your AI resources are deployed (e.g., Gravelines) |
+
+4. Click **Generate** and copy the token value — it is shown only once.
 
 #### Step 2 — Find your regional API URL
 
-The AI API base URL depends on your region:
+The AI API base URL depends on the region you selected when creating the token:
 
 | Region | Base URL |
 |--------|----------|
 | Gravelines, France (GRA) | `https://gra.training.ai.cloud.ovh.net` |
 | Beauharnois, Canada (BHS) | `https://bhs.training.ai.cloud.ovh.net` |
+| Frankfurt, Germany (DE) | `https://de.training.ai.cloud.ovh.net` |
+| London, United Kingdom (UK) | `https://uk.training.ai.cloud.ovh.net` |
+| Warsaw, Poland (WAW) | `https://waw.training.ai.cloud.ovh.net` |
 
-If you use multiple regions, add one integration instance per region.
+The token region and the API URL region must match. If you use multiple regions, add one integration instance per region.
 
 #### Step 3 — Configure the integration in Kibana
 
@@ -155,10 +166,10 @@ After deploying, navigate to **Discover** in Kibana and filter on `data_stream.d
 
 ## Troubleshooting
 
-- No data collected: Verify the AI token has the `ai_training_read` role and the base URL is correct for your region.
-- HTTP 401: The token may have been revoked. Create a new token in the AI Dashboard.
-- HTTP 404: Verify the base URL — it must include the region prefix and end before any path (`/v1/app` is added automatically by the integration).
-- Customers with AI workloads in multiple regions need one integration instance per region.
+- **No data collected**: Verify the AI token has the **AI Reader** role and the base URL matches the token's region.
+- **HTTP 401**: The token may have been revoked or created for a different region. Create a new token in the AI Dashboard with the correct region.
+- **HTTP 404**: Verify the base URL — it must include the region prefix and end before any path (`/v1/app` and `/v1/job` are added automatically by the integration).
+- **Multiple regions**: Each region requires a separate AI token and a separate integration instance.
 
 ## Reference
 
