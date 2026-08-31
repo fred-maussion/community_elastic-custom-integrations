@@ -3,4 +3,4 @@
   changes:
     - description: Initial release of OVHcloud Load Balancer integration with HAProxy access log collection via LDP OpenSearch API.
       type: enhancement
-      link: https://github.com/fred-maussion/community_elastic-custom-integrations/pull/99999
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/85
