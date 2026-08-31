@@ -1,0 +1,63 @@
+- name: ovh.kubernetes.cluster
+  type: group
+  fields:
+    - name: created_at
+      type: date
+      description: Timestamp when the cluster was created.
+    - name: status
+      type: keyword
+      description: Cluster lifecycle status (e.g. READY, INSTALLING, UPDATING).
+    - name: update_policy
+      type: keyword
+      description: Cluster upgrade strategy (e.g. ALWAYS_UPDATE, MINIMAL_DOWNTIME).
+    - name: is_up_to_date
+      type: boolean
+      description: Whether the cluster nodes are running the latest version.
+    - name: control_plane_is_up_to_date
+      type: boolean
+      description: Whether the control plane is running the latest version.
+    - name: next_upgrade_versions
+      type: keyword
+      description: Available Kubernetes versions the cluster can be upgraded to.
+    - name: kube_proxy_mode
+      type: keyword
+      description: kube-proxy networking mode (e.g. iptables, ipvs).
+    - name: plan
+      type: keyword
+      description: Cluster billing plan (e.g. free, hour, month).
+    - name: audit_logs_subscribed
+      type: boolean
+      description: Whether audit log streaming is enabled for the cluster.
+    - name: url
+      type: keyword
+      description: API server endpoint hostname for the cluster.
+    - name: nodes_url
+      type: keyword
+      description: Node endpoint hostname for the cluster.
+    - name: nodes_subnet_id
+      type: keyword
+      description: Subnet ID used for cluster nodes (null when private network is not configured).
+    - name: ip_allocation_policy
+      type: group
+      fields:
+        - name: pods_ipv4_cidr
+          type: ip_range
+          description: IPv4 CIDR block allocated for pod networking.
+        - name: services_ipv4_cidr
+          type: ip_range
+          description: IPv4 CIDR block allocated for service networking.
+    - name: customization
+      type: group
+      fields:
+        - name: api_server
+          type: group
+          fields:
+            - name: admission_plugins
+              type: group
+              fields:
+                - name: enabled
+                  type: keyword
+                  description: List of enabled Kubernetes admission plugins.
+                - name: disabled
+                  type: keyword
+                  description: List of disabled Kubernetes admission plugins.

@@ -1,0 +1,52 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-01-15T10:30:00.100Z",
+            "cloud": {
+                "provider": "ovh",
+                "service": {
+                    "name": "Managed Kubernetes"
+                }
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "list",
+                "category": [
+                    "api"
+                ],
+                "id": "cccccccc-3333-4444-5555-dddddddddddd",
+                "kind": "event",
+                "original": "{\"_id\":\"aaaaaaaa-1111-2222-3333-bbbbbbbbbbbb\",\"timestamp\":\"2026-01-15T10:30:00.100Z\",\"level\":6,\"message\":\"list allow 200  /api/v1/namespaces/default/pods  RBAC: allowed by ClusterRoleBinding \\\"cluster-admin\\\" of ClusterRole \\\"cluster-admin\\\" to User \\\"developer@example.com\\\" kubectl/v1.32.0 (linux/amd64) kubernetes/abc1234 cccccccc-3333-4444-5555-dddddddddddd\"}",
+                "outcome": "success",
+                "type": [
+                    "access"
+                ]
+            },
+            "http": {
+                "response": {
+                    "status_code": 200
+                }
+            },
+            "orchestrator": {
+                "type": "kubernetes"
+            },
+            "ovh": {
+                "kubernetes": {
+                    "audit": {
+                        "level": 6,
+                        "log_id": "aaaaaaaa-1111-2222-3333-bbbbbbbbbbbb",
+                        "message": "list allow 200  /api/v1/namespaces/default/pods  RBAC: allowed by ClusterRoleBinding \"cluster-admin\" of ClusterRole \"cluster-admin\" to User \"developer@example.com\" kubectl/v1.32.0 (linux/amd64) kubernetes/abc1234 cccccccc-3333-4444-5555-dddddddddddd"
+                    }
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ],
+            "url": {
+                "original": "/api/v1/namespaces/default/pods"
+            }
+        }
+    ]
+}

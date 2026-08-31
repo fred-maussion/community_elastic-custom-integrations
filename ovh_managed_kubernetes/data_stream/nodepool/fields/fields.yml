@@ -1,0 +1,60 @@
+- name: ovh.kubernetes.nodepool
+  type: group
+  fields:
+    - name: created_at
+      type: date
+      description: Timestamp when the node pool was created.
+    - name: id
+      type: keyword
+      description: Node pool UUID.
+    - name: name
+      type: keyword
+      description: Node pool name.
+    - name: project_id
+      type: keyword
+      description: OVHcloud Public Cloud project ID.
+    - name: status
+      type: keyword
+      description: Node pool status (e.g. READY, INSTALLING, ERROR).
+    - name: size_status
+      type: keyword
+      description: Capacity status of the node pool (e.g. CAPACITY_OK, UNDER_CAPACITY).
+    - name: autoscale
+      type: boolean
+      description: Whether autoscaling is enabled for this node pool.
+    - name: monthly_billed
+      type: boolean
+      description: Whether nodes are billed monthly.
+    - name: anti_affinity
+      type: boolean
+      description: Whether anti-affinity is enabled for this node pool.
+    - name: desired_nodes
+      type: long
+      description: Desired number of nodes in the pool.
+    - name: min_nodes
+      type: long
+      description: Minimum number of nodes (used with autoscaling).
+    - name: max_nodes
+      type: long
+      description: Maximum number of nodes (used with autoscaling).
+    - name: current_nodes
+      type: long
+      description: Current number of nodes in the pool.
+    - name: available_nodes
+      type: long
+      description: Number of nodes currently available (Ready).
+    - name: up_to_date_nodes
+      type: long
+      description: Number of nodes running the latest version.
+    - name: autoscaling
+      type: group
+      fields:
+        - name: scale_down_utilization_threshold
+          type: float
+          description: CPU/memory utilization threshold below which a node is considered for scale-down.
+        - name: scale_down_unneeded_time_seconds
+          type: long
+          description: Time (seconds) a node must be unneeded before it is eligible for scale-down.
+        - name: scale_down_unready_time_seconds
+          type: long
+          description: Time (seconds) an unready node must be unneeded before it is eligible for scale-down.

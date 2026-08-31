@@ -1,0 +1,2559 @@
+{
+    "accessControl": {
+        "accessMode": "default",
+        "owner": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+    },
+    "attributes": {
+        "description": "SRE monitoring dashboard for OVH Managed Kubernetes individual nodes. Covers node status, version currency, pool membership, cloud instance details, deployment timelines, and per-node breakdowns.",
+        "esqlApproximation": false,
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "autoApplyFilters": true,
+            "hidePanelBorders": false,
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-55453c1814c6b38d71ac9a40ab8c1db45259201e44791886cdfa429a7e1e7ddd": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-55453c1814c6b38d71ac9a40ab8c1db45259201e44791886cdfa429a7e1e7ddd",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Node Count",
+                                                    "label": "Distinct Kubernetes Nodes",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-55453c1814c6b38d71ac9a40ab8c1db45259201e44791886cdfa429a7e1e7ddd",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Distinct Node Count` = COUNT_DISTINCT(ovh.kubernetes.node.id)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-55453c1814c6b38d71ac9a40ab8c1db45259201e44791886cdfa429a7e1e7ddd",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Distinct Node Count` = COUNT_DISTINCT(ovh.kubernetes.node.id)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "a4e04a8b-a6f8-4d6e-91a4-7a8e17b6fb90",
+                    "sectionId": "fdf79b64-77e2-4136-9afb-1db42a7f750c",
+                    "w": 8,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "a4e04a8b-a6f8-4d6e-91a4-7a8e17b6fb90",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-719c5ef6699935aa4625fd04e267523c60c857590b13dbd866f1221625e499e5": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-719c5ef6699935aa4625fd04e267523c60c857590b13dbd866f1221625e499e5",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Node Pool IDs",
+                                                    "label": "Distinct Node Pool IDs",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-719c5ef6699935aa4625fd04e267523c60c857590b13dbd866f1221625e499e5",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Distinct Node Pool IDs` = COUNT_DISTINCT(ovh.kubernetes.node.node_pool_id)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-719c5ef6699935aa4625fd04e267523c60c857590b13dbd866f1221625e499e5",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Distinct Node Pool IDs` = COUNT_DISTINCT(ovh.kubernetes.node.node_pool_id)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "7fce6d0f-5708-434c-a4ed-d13746ad2744",
+                    "sectionId": "fdf79b64-77e2-4136-9afb-1db42a7f750c",
+                    "w": 8,
+                    "x": 8,
+                    "y": 0
+                },
+                "panelIndex": "7fce6d0f-5708-434c-a4ed-d13746ad2744",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-b6bbb3eebb50cc9362117a3ba3af0f2665f3b5ff130cad690c65c0185821e91a": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-b6bbb3eebb50cc9362117a3ba3af0f2665f3b5ff130cad690c65c0185821e91a",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of nodes",
+                                                    "label": "Up-to-date Nodes",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-b6bbb3eebb50cc9362117a3ba3af0f2665f3b5ff130cad690c65c0185821e91a",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| WHERE ovh.kubernetes.node.is_up_to_date == true\n| STATS `Count of nodes` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-b6bbb3eebb50cc9362117a3ba3af0f2665f3b5ff130cad690c65c0185821e91a",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| WHERE ovh.kubernetes.node.is_up_to_date == true\n| STATS `Count of nodes` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "1efd9307-c48a-432c-9f6b-5c6b5274a0bd",
+                    "sectionId": "fdf79b64-77e2-4136-9afb-1db42a7f750c",
+                    "w": 8,
+                    "x": 16,
+                    "y": 0
+                },
+                "panelIndex": "1efd9307-c48a-432c-9f6b-5c6b5274a0bd",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-23e10b30c1acd52f71983726f4d9002b1450d40a284cb4ef96799c5df8bdd2f5": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-23e10b30c1acd52f71983726f4d9002b1450d40a284cb4ef96799c5df8bdd2f5",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Node Versions",
+                                                    "label": "Distinct Node Versions",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-23e10b30c1acd52f71983726f4d9002b1450d40a284cb4ef96799c5df8bdd2f5",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Distinct Node Versions` = COUNT_DISTINCT(`ovh.kubernetes.node.version`)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-23e10b30c1acd52f71983726f4d9002b1450d40a284cb4ef96799c5df8bdd2f5",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Distinct Node Versions` = COUNT_DISTINCT(`ovh.kubernetes.node.version`)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "f2bc9400-c9f3-4887-9eec-a8e1557c5bff",
+                    "sectionId": "fdf79b64-77e2-4136-9afb-1db42a7f750c",
+                    "w": 8,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "f2bc9400-c9f3-4887-9eec-a8e1557c5bff",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-7979e09d907ea300d585d802500d256e0b488ea757ec53b038eea424a3a9c530": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-7979e09d907ea300d585d802500d256e0b488ea757ec53b038eea424a3a9c530",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Cloud Instance IDs",
+                                                    "label": "Distinct Cloud Instance IDs",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-7979e09d907ea300d585d802500d256e0b488ea757ec53b038eea424a3a9c530",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Distinct Cloud Instance IDs` = COUNT_DISTINCT(cloud.instance.id)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-7979e09d907ea300d585d802500d256e0b488ea757ec53b038eea424a3a9c530",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Distinct Cloud Instance IDs` = COUNT_DISTINCT(cloud.instance.id)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "4e30912c-6f55-44f4-87dd-892670669be5",
+                    "sectionId": "fdf79b64-77e2-4136-9afb-1db42a7f750c",
+                    "w": 8,
+                    "x": 32,
+                    "y": 0
+                },
+                "panelIndex": "4e30912c-6f55-44f4-87dd-892670669be5",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-03f2524122073855ed503a06f5e0fa003d21571b36998be96cf87d9440245132": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-03f2524122073855ed503a06f5e0fa003d21571b36998be96cf87d9440245132",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Cloud Machine Types",
+                                                    "label": "Distinct Cloud Machine Types",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-03f2524122073855ed503a06f5e0fa003d21571b36998be96cf87d9440245132",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Distinct Cloud Machine Types` = COUNT_DISTINCT(cloud.machine.type)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-03f2524122073855ed503a06f5e0fa003d21571b36998be96cf87d9440245132",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Distinct Cloud Machine Types` = COUNT_DISTINCT(cloud.machine.type)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "9c7ba6f3-64bd-4d53-bada-2e787d6f81ef",
+                    "sectionId": "fdf79b64-77e2-4136-9afb-1db42a7f750c",
+                    "w": 8,
+                    "x": 40,
+                    "y": 0
+                },
+                "panelIndex": "9c7ba6f3-64bd-4d53-bada-2e787d6f81ef",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "fieldName": "Total Node Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_breakdown",
+                                                    "fieldName": "Node Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Total Node Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Node Status` = ovh.kubernetes.node.status"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Total Node Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Node Status` = ovh.kubernetes.node.status"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "splitAccessors": [
+                                            "line_0_breakdown"
+                                        ],
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "line",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Node Count Over Time by Status",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Node Count Over Time by Status"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "d444b36d-2d5e-4cda-8ca1-a7f12b2dc163",
+                    "sectionId": "4101e1fa-aad6-4e54-919a-b2b06085ac6d",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "d444b36d-2d5e-4cda-8ca1-a7f12b2dc163",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "Time",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "fieldName": "Node Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_breakdown",
+                                                    "fieldName": "ovh.kubernetes.node.version",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Node Count` = COUNT() BY `Time` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `ovh.kubernetes.node.version`\n| SORT `Time`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Node Count` = COUNT() BY `Time` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `ovh.kubernetes.node.version`\n| SORT `Time`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "splitAccessors": [
+                                            "line_0_breakdown"
+                                        ],
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right",
+                                    "showSingleSeries": true
+                                },
+                                "preferredSeriesType": "line",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Node Count Over Time by Kubernetes Node Version",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Node Count Over Time by Kubernetes Node Version"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "843a2a9f-16b3-47bd-97bd-a5be71ed380f",
+                    "sectionId": "4101e1fa-aad6-4e54-919a-b2b06085ac6d",
+                    "w": 24,
+                    "x": 0,
+                    "y": 10
+                },
+                "panelIndex": "843a2a9f-16b3-47bd-97bd-a5be71ed380f",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "fieldName": "Node Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "fieldName": "Machine Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT() BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Machine Type` = cloud.machine.type"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT() BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Machine Type` = cloud.machine.type"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right",
+                                    "showSingleSeries": true
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Node Count Over Time by Machine Type",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Node Count Over Time by Machine Type"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "9fb95ad4-0f9d-47e5-8f94-9a8080b9036e",
+                    "sectionId": "4101e1fa-aad6-4e54-919a-b2b06085ac6d",
+                    "w": 24,
+                    "x": 24,
+                    "y": 10
+                },
+                "panelIndex": "9fb95ad4-0f9d-47e5-8f94-9a8080b9036e",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-737d6429fadf68e2c35ef51ea1ba65f4785afb29503bb79b093c561936f124ec": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-737d6429fadf68e2c35ef51ea1ba65f4785afb29503bb79b093c561936f124ec",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Node Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.kubernetes.node.status",
+                                                    "label": "Node Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-737d6429fadf68e2c35ef51ea1ba65f4785afb29503bb79b093c561936f124ec",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT() BY `ovh.kubernetes.node.status`\n| SORT `Node Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-737d6429fadf68e2c35ef51ea1ba65f4785afb29503bb79b093c561936f124ec",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT() BY `ovh.kubernetes.node.status`\n| SORT `Node Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "ae799ff0-1598-4b26-8bba-a682b92f4851",
+                    "sectionId": "d68a7dba-4556-4c7b-a5c5-490e1e42a10f",
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "ae799ff0-1598-4b26-8bba-a682b92f4851",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Node Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Is Up To Date",
+                                                    "label": "Is Up To Date",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Node Count` = COUNT() BY `Is Up To Date` = ovh.kubernetes.node.is_up_to_date\n| SORT `Node Count` DESC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Node Count` = COUNT() BY `Is Up To Date` = ovh.kubernetes.node.is_up_to_date\n| SORT `Node Count` DESC"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "b4ed5dc0-0055-4e88-9a5c-c88332635cb5",
+                    "sectionId": "d68a7dba-4556-4c7b-a5c5-490e1e42a10f",
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "panelIndex": "b4ed5dc0-0055-4e88-9a5c-c88332635cb5",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-5c6bc4cfc9a9de2163e14c0cf98e37a735326b892d13bb423c5fc2d31dee7325": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-5c6bc4cfc9a9de2163e14c0cf98e37a735326b892d13bb423c5fc2d31dee7325",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Node Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.kubernetes.node.version",
+                                                    "label": "Node Version",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-5c6bc4cfc9a9de2163e14c0cf98e37a735326b892d13bb423c5fc2d31dee7325",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT() BY `ovh.kubernetes.node.version`\n| SORT `Node Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-5c6bc4cfc9a9de2163e14c0cf98e37a735326b892d13bb423c5fc2d31dee7325",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT() BY `ovh.kubernetes.node.version`\n| SORT `Node Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "value",
+                                        "percentDecimals": 2,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "e86b1229-144b-4524-b82b-ba57fcc2576c",
+                    "sectionId": "d68a7dba-4556-4c7b-a5c5-490e1e42a10f",
+                    "w": 12,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "e86b1229-144b-4524-b82b-ba57fcc2576c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-c0a2f7c62e1444037cdc834308744575f40487da24953f48f60a8f89a31a7899": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-c0a2f7c62e1444037cdc834308744575f40487da24953f48f60a8f89a31a7899",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Node Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "cloud.machine.type",
+                                                    "label": "Machine Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-c0a2f7c62e1444037cdc834308744575f40487da24953f48f60a8f89a31a7899",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT() BY `cloud.machine.type` = cloud.machine.type\n| SORT `Node Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-c0a2f7c62e1444037cdc834308744575f40487da24953f48f60a8f89a31a7899",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT() BY `cloud.machine.type` = cloud.machine.type\n| SORT `Node Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "ef7135a5-5043-4536-94de-4e2ef4fa6103",
+                    "sectionId": "d68a7dba-4556-4c7b-a5c5-490e1e42a10f",
+                    "w": 12,
+                    "x": 36,
+                    "y": 0
+                },
+                "panelIndex": "ef7135a5-5043-4536-94de-4e2ef4fa6103",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-cf5fa2ee6cd9fc6b42ef3f0a017af60c7915e502831381121f93b4d4102f8fc7": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-cf5fa2ee6cd9fc6b42ef3f0a017af60c7915e502831381121f93b4d4102f8fc7",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.kubernetes.node.id",
+                                                    "label": "Node ID",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.kubernetes.node.status",
+                                                    "label": "Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.kubernetes.node.version",
+                                                    "label": "Version",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.kubernetes.node.is_up_to_date",
+                                                    "label": "Up to Date",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_4",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.kubernetes.node.node_pool_id",
+                                                    "label": "Node Pool ID",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_5",
+                                                    "customLabel": true,
+                                                    "fieldName": "cloud.machine.type",
+                                                    "label": "Machine Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_6",
+                                                    "customLabel": true,
+                                                    "fieldName": "cloud.instance.id",
+                                                    "label": "Instance ID",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_7",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.kubernetes.node.created_at",
+                                                    "label": "Created At",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_8",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.kubernetes.node.deployed_at",
+                                                    "label": "Deployed At",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "fieldName": "ovh.kubernetes.node.id",
+                                                    "inMetricDimension": true,
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-cf5fa2ee6cd9fc6b42ef3f0a017af60c7915e502831381121f93b4d4102f8fc7",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| KEEP ovh.kubernetes.node.id, ovh.kubernetes.node.status, ovh.kubernetes.node.version, ovh.kubernetes.node.is_up_to_date, ovh.kubernetes.node.node_pool_id, cloud.machine.type, cloud.instance.id, ovh.kubernetes.node.created_at, ovh.kubernetes.node.deployed_at\n| SORT ovh.kubernetes.node.status\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-cf5fa2ee6cd9fc6b42ef3f0a017af60c7915e502831381121f93b4d4102f8fc7",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| KEEP ovh.kubernetes.node.id, ovh.kubernetes.node.status, ovh.kubernetes.node.version, ovh.kubernetes.node.is_up_to_date, ovh.kubernetes.node.node_pool_id, cloud.machine.type, cloud.instance.id, ovh.kubernetes.node.created_at, ovh.kubernetes.node.deployed_at\n| SORT ovh.kubernetes.node.status\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "center",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_3",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_4",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_5",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_6",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_7",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_8",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": true,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "normal",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "paging": {
+                                    "enabled": true,
+                                    "size": 20
+                                },
+                                "showRowNumbers": false,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_row_1",
+                                    "direction": "asc"
+                                }
+                            }
+                        },
+                        "title": "OVH Managed Kubernetes Nodes",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "OVH Managed Kubernetes Nodes"
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "95e69717-584f-4db1-931a-e5a805b7db28",
+                    "sectionId": "9622859b-a344-4cb2-8ef2-63e1a4e0fa63",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "95e69717-584f-4db1-931a-e5a805b7db28",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-b4af260a6f7671dfbf553f20d2a3f4a832b8ea3e09dff3be24c19568cc2e6d21": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-b4af260a6f7671dfbf553f20d2a3f4a832b8ea3e09dff3be24c19568cc2e6d21",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Node Pool ID",
+                                                    "label": "Node Pool ID",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Node Count",
+                                                    "label": "Node Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-b4af260a6f7671dfbf553f20d2a3f4a832b8ea3e09dff3be24c19568cc2e6d21",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT(*) BY `Node Pool ID` = ovh.kubernetes.node.node_pool_id\n| SORT `Node Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-b4af260a6f7671dfbf553f20d2a3f4a832b8ea3e09dff3be24c19568cc2e6d21",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT(*) BY `Node Pool ID` = ovh.kubernetes.node.node_pool_id\n| SORT `Node Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Top 10 Node Pools by Node Count",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 10 Node Pools by Node Count"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "5a8ff027-078e-491b-9d9a-a19621c7f226",
+                    "sectionId": "9622859b-a344-4cb2-8ef2-63e1a4e0fa63",
+                    "w": 24,
+                    "x": 0,
+                    "y": 14
+                },
+                "panelIndex": "5a8ff027-078e-491b-9d9a-a19621c7f226",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-e967f2b4b0772da7630f3683594297f3fad706755c711332465b7effbddb95cf": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-e967f2b4b0772da7630f3683594297f3fad706755c711332465b7effbddb95cf",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Node Pool ID",
+                                                    "label": "Node Pool ID",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Node Count",
+                                                    "label": "Node Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "customLabel": true,
+                                                    "fieldName": "Status",
+                                                    "label": "Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-e967f2b4b0772da7630f3683594297f3fad706755c711332465b7effbddb95cf",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT(*) BY `Node Pool ID` = ovh.kubernetes.node.node_pool_id, `Status` = ovh.kubernetes.node.status\n| SORT `Node Pool ID`\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-e967f2b4b0772da7630f3683594297f3fad706755c711332465b7effbddb95cf",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT(*) BY `Node Pool ID` = ovh.kubernetes.node.node_pool_id, `Status` = ovh.kubernetes.node.status\n| SORT `Node Pool ID`\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right",
+                                    "showSingleSeries": true
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Node Status Breakdown per Node Pool ID (Top 10)",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Node Status Breakdown per Node Pool ID (Top 10)"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "30f2c01e-98c9-4668-b5ed-90daf0c93c91",
+                    "sectionId": "9622859b-a344-4cb2-8ef2-63e1a4e0fa63",
+                    "w": 24,
+                    "x": 24,
+                    "y": 14
+                },
+                "panelIndex": "30f2c01e-98c9-4668-b5ed-90daf0c93c91",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-9016fe90668d6af5855164fcdbd622afe0d5e17928ef45497fdd5e34aaee9fa5": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-9016fe90668d6af5855164fcdbd622afe0d5e17928ef45497fdd5e34aaee9fa5",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "fieldName": "Node Pool ID",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Node Count",
+                                                    "label": "Node Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "fieldName": "Up to Date",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-9016fe90668d6af5855164fcdbd622afe0d5e17928ef45497fdd5e34aaee9fa5",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT(*) BY `Node Pool ID` = ovh.kubernetes.node.node_pool_id, `Up to Date` = ovh.kubernetes.node.is_up_to_date\n| SORT `Node Pool ID`\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-9016fe90668d6af5855164fcdbd622afe0d5e17928ef45497fdd5e34aaee9fa5",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT(*) BY `Node Pool ID` = ovh.kubernetes.node.node_pool_id, `Up to Date` = ovh.kubernetes.node.is_up_to_date\n| SORT `Node Pool ID`\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Node Count by Pool: Up-to-Date vs Not Up-to-Date (Top 10 Pools)",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Node Count by Pool: Up-to-Date vs Not Up-to-Date (Top 10 Pools)"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "f0f49dc0-774c-4e19-96e5-909d06b3d8ba",
+                    "sectionId": "7febb8da-10d8-4f16-9956-4c965dc231d3",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "f0f49dc0-774c-4e19-96e5-909d06b3d8ba",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-ovh.kubernetes.node.deployed_at": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-ovh.kubernetes.node.deployed_at",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "ovh.kubernetes.node.deployed_at",
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Deployed Date",
+                                                    "label": "Deployed Date",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Node Deployments",
+                                                    "label": "Node Deployments",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-ovh.kubernetes.node.deployed_at",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Deployments` = COUNT(*) BY `Deployed Date` = BUCKET(ovh.kubernetes.node.deployed_at, 75, ?_tstart, ?_tend)\n| SORT `Deployed Date`"
+                                            },
+                                            "timeField": "ovh.kubernetes.node.deployed_at"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-ovh.kubernetes.node.deployed_at",
+                                    "name": "indexpattern-datasource-layer-bar_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Deployments` = COUNT(*) BY `Deployed Date` = BUCKET(ovh.kubernetes.node.deployed_at, 75, ?_tstart, ?_tend)\n| SORT `Deployed Date`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_0_y_0"
+                                        ],
+                                        "layerId": "bar_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar",
+                                        "xAccessor": "bar_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Node Deployments Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Node Deployments Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "640deff5-1efb-4215-96bd-17b15adb7796",
+                    "sectionId": "7febb8da-10d8-4f16-9956-4c965dc231d3",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "640deff5-1efb-4215-96bd-17b15adb7796",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "heatmap_value_accessor_value",
+                                                    "customLabel": true,
+                                                    "fieldName": "Node Count",
+                                                    "label": "Node Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "heatmap_value_accessor_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Node Version",
+                                                    "label": "Node Version",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "heatmap_value_accessor_y",
+                                                    "customLabel": true,
+                                                    "fieldName": "Node Status",
+                                                    "label": "Node Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Node Count` = COUNT(*) BY `Node Version` = ovh.kubernetes.node.version, `Node Status` = ovh.kubernetes.node.status\n| SORT `Node Count` DESC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Node Count` = COUNT(*) BY `Node Version` = ovh.kubernetes.node.version, `Node Status` = ovh.kubernetes.node.status\n| SORT `Node Count` DESC"
+                            },
+                            "visualization": {
+                                "gridConfig": {
+                                    "isCellLabelVisible": true,
+                                    "isXAxisLabelVisible": true,
+                                    "isXAxisTitleVisible": false,
+                                    "isYAxisLabelVisible": true,
+                                    "isYAxisTitleVisible": false,
+                                    "type": "heatmap_grid",
+                                    "xAxisLabelRotation": -45
+                                },
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "legend": {
+                                    "isVisible": true,
+                                    "maxLines": 1,
+                                    "position": "right",
+                                    "shouldTruncate": true,
+                                    "type": "heatmap_legend"
+                                },
+                                "shape": "heatmap",
+                                "valueAccessor": "heatmap_value_accessor_value",
+                                "xAccessor": "heatmap_value_accessor_x",
+                                "yAccessor": "heatmap_value_accessor_y"
+                            }
+                        },
+                        "title": "Node Count by Version and Status",
+                        "version": 2,
+                        "visualizationType": "lnsHeatmap"
+                    },
+                    "drilldowns": [],
+                    "title": "Node Count by Version and Status"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "050fee97-671e-46a1-9841-61c577b94197",
+                    "sectionId": "7febb8da-10d8-4f16-9956-4c965dc231d3",
+                    "w": 24,
+                    "x": 0,
+                    "y": 10
+                },
+                "panelIndex": "050fee97-671e-46a1-9841-61c577b94197",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.node-*-b4af260a6f7671dfbf553f20d2a3f4a832b8ea3e09dff3be24c19568cc2e6d21": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.node-*-b4af260a6f7671dfbf553f20d2a3f4a832b8ea3e09dff3be24c19568cc2e6d21",
+                                    "name": "logs-ovh_managed_kubernetes.node-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.node-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "tagcloud_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Node Count",
+                                                    "label": "Node Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "tagcloud_accessor_tag",
+                                                    "customLabel": true,
+                                                    "fieldName": "Node Pool ID",
+                                                    "label": "Node Pool ID",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.node-*-b4af260a6f7671dfbf553f20d2a3f4a832b8ea3e09dff3be24c19568cc2e6d21",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT(*) BY `Node Pool ID` = ovh.kubernetes.node.node_pool_id\n| SORT `Node Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.node-*-b4af260a6f7671dfbf553f20d2a3f4a832b8ea3e09dff3be24c19568cc2e6d21",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.node-*\n| STATS `Node Count` = COUNT(*) BY `Node Pool ID` = ovh.kubernetes.node.node_pool_id\n| SORT `Node Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "colorMapping": {
+                                    "assignments": [],
+                                    "colorMode": {
+                                        "type": "categorical"
+                                    },
+                                    "paletteId": "default",
+                                    "specialAssignments": [
+                                        {
+                                            "color": {
+                                                "type": "loop"
+                                            },
+                                            "rules": [
+                                                {
+                                                    "type": "other"
+                                                }
+                                            ],
+                                            "touched": false
+                                        }
+                                    ]
+                                },
+                                "layerId": "layer_0",
+                                "maxFontSize": 72,
+                                "minFontSize": 18,
+                                "orientation": "single",
+                                "showLabel": true,
+                                "tagAccessor": "tagcloud_accessor_tag",
+                                "valueAccessor": "tagcloud_accessor_metric"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsTagcloud"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "cf3a8edd-9b96-4efd-8b76-cc9ad52d4fca",
+                    "sectionId": "7febb8da-10d8-4f16-9956-4c965dc231d3",
+                    "w": 24,
+                    "x": 24,
+                    "y": 10
+                },
+                "panelIndex": "cf3a8edd-9b96-4efd-8b76-cc9ad52d4fca",
+                "type": "vis"
+            }
+        ],
+        "pinned_panels": {
+            "panels": {
+                "1ad1350d-880e-4ca5-b8d8-e3f30c89a0fb": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.node-* | STATS BY `ovh.kubernetes.node.status`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Node Status",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 0,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "5e279f9b-1149-4e87-a39e-c7927d32a060": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.node-* | STATS BY `ovh.kubernetes.node.node_pool_id`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Node Pool",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 1,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "6567d711-c0ac-4708-a594-269db41a0002": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.node-* | STATS BY `cloud.machine.type`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Machine Type",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 3,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "dad56c6e-9938-485a-85da-f144b5393eab": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.node-* | STATS BY `ovh.kubernetes.node.version`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Node Version",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 2,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "e004b142-f5ed-4a6d-a635-8b3e8daedf9e": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.node-* | STATS BY `host.name`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Host",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 4,
+                    "type": "options_list_control",
+                    "width": "medium"
+                }
+            }
+        },
+        "sections": [
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "fdf79b64-77e2-4136-9afb-1db42a7f750c",
+                    "y": 0
+                },
+                "title": "📊 Overview — Key Metrics"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "4101e1fa-aad6-4e54-919a-b2b06085ac6d",
+                    "y": 1
+                },
+                "title": "📈 Node Activity Trends"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "d68a7dba-4556-4c7b-a5c5-490e1e42a10f",
+                    "y": 2
+                },
+                "title": "🔍 Status \u0026 Breakdowns"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "9622859b-a344-4cb2-8ef2-63e1a4e0fa63",
+                    "y": 3
+                },
+                "title": "⚡ Per-Node Details"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "7febb8da-10d8-4f16-9956-4c965dc231d3",
+                    "y": 4
+                },
+                "title": "🛡️ Version Currency \u0026 Deployment"
+            }
+        ],
+        "timeRestore": false,
+        "title": "[OVH] Kubernetes Node — SRE Dashboard"
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2026-08-31T00:43:10.241Z",
+    "created_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0",
+    "id": "ovh_managed_kubernetes-b4818a1d-33ba-4dbe-b2af-1f910a18262f",
+    "references": [],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+}

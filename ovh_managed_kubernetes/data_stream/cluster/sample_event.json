@@ -1,0 +1,99 @@
+{
+    "@timestamp": "2026-01-14T09:00:00.000Z",
+    "agent": {
+        "ephemeral_id": "bf8121fe-3a17-41a5-8453-83b3bf76aada",
+        "id": "e2be05a7-53c9-48c5-9140-04af964c9c2c",
+        "name": "elastic-agent-37588",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "cloud": {
+        "provider": "ovh",
+        "region": "SBG5",
+        "service": {
+            "name": "Managed Kubernetes"
+        }
+    },
+    "data_stream": {
+        "dataset": "ovh_managed_kubernetes.cluster",
+        "namespace": "83572",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "e2be05a7-53c9-48c5-9140-04af964c9c2c",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "agent_id_status": "verified",
+        "category": [
+            "host"
+        ],
+        "created": "2026-01-10T08:00:00.000Z",
+        "dataset": "ovh_managed_kubernetes.cluster",
+        "ingested": "2026-08-30T21:42:28Z",
+        "kind": "state",
+        "module": "ovh_managed_kubernetes",
+        "original": "{\"id\":\"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\"region\":\"SBG5\",\"name\":\"test-cluster-2\",\"url\":\"def456.c1.sbg5.k8s.ovh.net\",\"nodesUrl\":\"def456.nodes.c1.sbg5.k8s.ovh.net\",\"version\":\"1.31.0-1\",\"plan\":\"free\",\"nextUpgradeVersions\":[\"1.32\",\"1.33\"],\"kubeProxyMode\":\"iptables\",\"customization\":{\"apiServer\":{\"admissionPlugins\":{\"enabled\":[\"NodeRestriction\",\"AlwaysPullImages\"],\"disabled\":[]}},\"kubeProxy\":{\"iptables\":{},\"ipvs\":{}}},\"status\":\"READY\",\"updatePolicy\":\"ALWAYS_UPDATE\",\"isUpToDate\":false,\"controlPlaneIsUpToDate\":true,\"privateNetworkId\":null,\"nodesSubnetId\":null,\"ipAllocationPolicy\":{\"podsIpv4Cidr\":\"10.2.0.0/16\",\"servicesIpv4Cidr\":\"10.3.0.0/16\"},\"createdAt\":\"2026-01-10T08:00:00Z\",\"updatedAt\":\"2026-01-14T09:00:00Z\",\"auditLogsSubscribed\":true}",
+        "type": [
+            "info"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "orchestrator": {
+        "cluster": {
+            "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "name": "test-cluster-2",
+            "version": "1.31.0-1"
+        },
+        "type": "kubernetes"
+    },
+    "ovh": {
+        "kubernetes": {
+            "cluster": {
+                "audit_logs_subscribed": true,
+                "control_plane_is_up_to_date": true,
+                "customization": {
+                    "api_server": {
+                        "admission_plugins": {
+                            "enabled": [
+                                "NodeRestriction",
+                                "AlwaysPullImages"
+                            ]
+                        }
+                    }
+                },
+                "ip_allocation_policy": {
+                    "pods_ipv4_cidr": {
+                        "gte": "10.2.0.0",
+                        "lte": "10.2.255.255"
+                    },
+                    "services_ipv4_cidr": {
+                        "gte": "10.3.0.0",
+                        "lte": "10.3.255.255"
+                    }
+                },
+                "is_up_to_date": false,
+                "kube_proxy_mode": "iptables",
+                "next_upgrade_versions": [
+                    "1.32",
+                    "1.33"
+                ],
+                "nodes_url": "def456.nodes.c1.sbg5.k8s.ovh.net",
+                "plan": "free",
+                "status": "READY",
+                "update_policy": "ALWAYS_UPDATE",
+                "url": "def456.c1.sbg5.k8s.ovh.net"
+            }
+        }
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded"
+    ]
+}

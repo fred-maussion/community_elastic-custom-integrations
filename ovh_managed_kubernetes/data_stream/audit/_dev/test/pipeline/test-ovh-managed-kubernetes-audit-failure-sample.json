@@ -1,0 +1,7 @@
+{
+  "events": [
+    {
+      "message": "{\"_id\":\"dddddddd-4444-5555-6666-eeeeeeeeeeee\",\"timestamp\":\"2026-01-15T10:31:00.200Z\",\"level\":6,\"message\":\"get deny 403  /api/v1/namespaces/kube-system/secrets/admin-token  RBAC: allowed by ClusterRoleBinding \\\"cluster-admin\\\" of ClusterRole \\\"cluster-admin\\\" to User \\\"readonly-user\\\" kubectl/v1.31.0 (linux/amd64) kubernetes/abc1234 ffffffff-5555-6666-7777-aaaaaaaaaaaa\"}"
+    }
+  ]
+}

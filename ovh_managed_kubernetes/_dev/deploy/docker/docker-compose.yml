@@ -1,0 +1,53 @@
+services:
+  ovh-managed-kubernetes-mock:
+    image: docker.elastic.co/observability/stream:v0.22.0
+    hostname: ovh-managed-kubernetes-mock
+    ports:
+      - 8090
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8090'
+    command:
+      - http-server
+      - --addr=:8090
+      - --config=/files/config-cluster.yml
+  ovh-managed-kubernetes-nodepool-mock:
+    image: docker.elastic.co/observability/stream:v0.22.0
+    hostname: ovh-managed-kubernetes-nodepool-mock
+    ports:
+      - 8090
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8090'
+    command:
+      - http-server
+      - --addr=:8090
+      - --config=/files/config-nodepool.yml
+  ovh-managed-kubernetes-node-mock:
+    image: docker.elastic.co/observability/stream:v0.22.0
+    hostname: ovh-managed-kubernetes-node-mock
+    ports:
+      - 8090
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8090'
+    command:
+      - http-server
+      - --addr=:8090
+      - --config=/files/config-node.yml
+  ovh-managed-kubernetes-audit-mock:
+    image: docker.elastic.co/observability/stream:v0.22.0
+    hostname: ovh-managed-kubernetes-audit-mock
+    ports:
+      - 8090
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8090'
+    command:
+      - http-server
+      - --addr=:8090
+      - --config=/files/config-audit.yml

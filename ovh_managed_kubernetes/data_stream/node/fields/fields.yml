@@ -1,0 +1,27 @@
+- name: ovh.kubernetes.node
+  type: group
+  fields:
+    - name: created_at
+      type: date
+      description: Timestamp when the node was created.
+    - name: id
+      type: keyword
+      description: Node UUID.
+    - name: node_pool_id
+      type: keyword
+      description: Parent node pool UUID.
+    - name: project_id
+      type: keyword
+      description: OVHcloud Public Cloud project ID.
+    - name: status
+      type: keyword
+      description: Node status (e.g. READY, INSTALLING, ERROR).
+    - name: is_up_to_date
+      type: boolean
+      description: Whether the node is running the latest Kubernetes version.
+    - name: version
+      type: keyword
+      description: Kubernetes version running on the node.
+    - name: deployed_at
+      type: date
+      description: Timestamp when the node was successfully deployed.

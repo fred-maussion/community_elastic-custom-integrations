@@ -1,0 +1,7 @@
+{
+  "events": [
+    {
+      "message": "{\"_id\":\"aaaaaaaa-1111-2222-3333-bbbbbbbbbbbb\",\"timestamp\":\"2026-01-15T10:30:00.100Z\",\"level\":6,\"message\":\"list allow 200  /api/v1/namespaces/default/pods  RBAC: allowed by ClusterRoleBinding \\\"cluster-admin\\\" of ClusterRole \\\"cluster-admin\\\" to User \\\"developer@example.com\\\" kubectl/v1.32.0 (linux/amd64) kubernetes/abc1234 cccccccc-3333-4444-5555-dddddddddddd\"}"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+auth.oauth2:
+  client.id: {{client_id}}
+  client.secret: {{client_secret}}
+  token_url: {{token_url}}
+  scopes:
+    - all
+resource.url: {{url}}
+state:
+  service_name: {{service_name}}
+  kube_id: {{kube_id}}
+redact:
+  fields: ~
+program: |-
+  state.with(
+    request("POST", state.url.trim_right("/") + "/cloud/project/" + state.service_name + "/kube/" + state.kube_id + "/log/url").with({"Header": {"Content-Type": ["application/json"]}, "Body": "{\"kind\":\"audit\"}"}).do_request().as(resp,
+      (resp.StatusCode == 200) ?
+        resp.Body.decode_json().url.as(log_url,
+        request("GET", log_url + (log_url.contains("?") ? "&" : "?") + "limit=1000").do_request()).as(logs_resp,
+          (logs_resp.StatusCode == 200) ?
+            logs_resp.Body.decode_json().messages.map(m, m.message).filter(e,
+              e.timestamp > state.?cursor.last_timestamp.orValue("")
+            ).as(events,
+              {
+                "events": events.map(e, {"message": e.encode_json()}),
+                "cursor": (size(events) > 0) ?
+                  {"last_timestamp": events.map(e, e.timestamp).max()}
+                :
+                  state.?cursor.orValue({}),
+                "want_more": false,
+              }
+            )
+          :
+            {
+              "events": {
+                "error": {
+                  "code": string(logs_resp.StatusCode),
+                  "id": string(logs_resp.Status),
+                  "message": "GET audit logs URL: " + ((size(logs_resp.Body) != 0) ? string(logs_resp.Body) : string(logs_resp.Status)),
+                },
+              },
+              "want_more": false,
+            }
+        )
+      :
+        {
+          "events": {
+            "error": {
+              "code": string(resp.StatusCode),
+              "id": string(resp.Status),
+              "message": "POST /cloud/project/" + state.service_name + "/kube/" + state.kube_id + "/log/url: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+            },
+          },
+          "want_more": false,
+        }
+    )
+  )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}

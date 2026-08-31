@@ -1,0 +1,79 @@
+{
+    "@timestamp": "2026-06-15T09:35:00.000Z",
+    "agent": {
+        "ephemeral_id": "9b47dac9-7296-4ec3-9bbd-356232e2a4b1",
+        "id": "a48a4341-6409-4aa9-b30d-1bb9806acb0a",
+        "name": "elastic-agent-11895",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "cloud": {
+        "instance": {
+            "id": "c3c3c3c3-d4d4-e5e5-f6f6-a7a7a7a7a7a7"
+        },
+        "machine": {
+            "type": "b3-16"
+        },
+        "provider": "ovh",
+        "service": {
+            "name": "Managed Kubernetes"
+        }
+    },
+    "data_stream": {
+        "dataset": "ovh_managed_kubernetes.node",
+        "namespace": "11904",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "a48a4341-6409-4aa9-b30d-1bb9806acb0a",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "agent_id_status": "verified",
+        "category": [
+            "host"
+        ],
+        "created": "2026-06-15T09:30:00.000Z",
+        "dataset": "ovh_managed_kubernetes.node",
+        "ingested": "2026-08-30T22:06:06Z",
+        "kind": "state",
+        "module": "ovh_managed_kubernetes",
+        "original": "{\"cluster_id\":\"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\"createdAt\":\"2026-06-15T09:30:00Z\",\"deployedAt\":\"2026-06-15T09:35:00Z\",\"flavor\":\"b3-16\",\"id\":\"a3b4c5d6-e7f8-9012-ab34-c5d6e7f8a9b0\",\"instanceId\":\"c3c3c3c3-d4d4-e5e5-f6f6-a7a7a7a7a7a7\",\"isUpToDate\":true,\"name\":\"test-workers-2-node-a3b4c5\",\"nodePoolId\":\"e5f6a7b8-c9d0-1234-efab-234567890bcd\",\"projectId\":\"test-project-id\",\"status\":\"READY\",\"updatedAt\":\"2026-06-15T09:35:00Z\",\"version\":\"1.32.13-1615\"}",
+        "type": [
+            "info"
+        ]
+    },
+    "host": {
+        "name": "test-workers-2-node-a3b4c5"
+    },
+    "input": {
+        "type": "cel"
+    },
+    "orchestrator": {
+        "cluster": {
+            "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+        },
+        "type": "kubernetes"
+    },
+    "ovh": {
+        "kubernetes": {
+            "node": {
+                "deployed_at": "2026-06-15T09:35:00.000Z",
+                "id": "a3b4c5d6-e7f8-9012-ab34-c5d6e7f8a9b0",
+                "is_up_to_date": true,
+                "node_pool_id": "e5f6a7b8-c9d0-1234-efab-234567890bcd",
+                "project_id": "test-project-id",
+                "status": "READY",
+                "version": "1.32.13-1615"
+            }
+        }
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded"
+    ]
+}

@@ -1,0 +1,39 @@
+rules:
+  # OAuth2 token endpoint — used by auth.oauth2 framework during system tests
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+  # Cluster list — returns two synthetic cluster IDs (nodepool stream fetches this first)
+  - path: /cloud/project/test-project-id/kube
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["a1b2c3d4-e5f6-7890-abcd-ef1234567890","b2c3d4e5-f6a7-8901-bcde-f12345678901"]'
+  # Nodepool list for cluster 1
+  - path: /cloud/project/test-project-id/kube/a1b2c3d4-e5f6-7890-abcd-ef1234567890/nodepool
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          [{"id":"d4e5f6a7-b8c9-0123-defa-123456789abc","projectId":"test-project-id","name":"test-workers-1","flavor":"b3-8","status":"READY","sizeStatus":"CAPACITY_OK","autoscale":false,"monthlyBilled":false,"antiAffinity":false,"desiredNodes":3,"minNodes":3,"maxNodes":6,"currentNodes":3,"availableNodes":3,"upToDateNodes":3,"createdAt":"2026-07-10T14:16:45Z","updatedAt":"2026-07-10T14:19:37Z","autoscaling":{"scaleDownUtilizationThreshold":0.5,"scaleDownUnneededTimeSeconds":600,"scaleDownUnreadyTimeSeconds":1200}}]
+  # Nodepool list for cluster 2
+  - path: /cloud/project/test-project-id/kube/b2c3d4e5-f6a7-8901-bcde-f12345678901/nodepool
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          [{"id":"e5f6a7b8-c9d0-1234-efab-234567890bcd","projectId":"test-project-id","name":"test-workers-2","flavor":"b3-16","status":"READY","sizeStatus":"CAPACITY_OK","autoscale":true,"monthlyBilled":false,"antiAffinity":false,"desiredNodes":2,"minNodes":1,"maxNodes":5,"currentNodes":2,"availableNodes":2,"upToDateNodes":2,"createdAt":"2026-06-15T09:30:00Z","updatedAt":"2026-06-15T09:35:00Z","autoscaling":{"scaleDownUtilizationThreshold":0.5,"scaleDownUnneededTimeSeconds":600,"scaleDownUnreadyTimeSeconds":1200}}]

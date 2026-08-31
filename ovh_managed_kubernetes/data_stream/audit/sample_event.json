@@ -1,0 +1,120 @@
+{
+    "@timestamp": "2026-01-15T10:30:00.100Z",
+    "agent": {
+        "ephemeral_id": "0b994a4d-c84a-4673-ac01-7d2a6e4656cf",
+        "id": "b95c340b-4db7-4bae-a349-d95ec67694c6",
+        "name": "elastic-agent-55180",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "cloud": {
+        "provider": "ovh",
+        "service": {
+            "name": "Managed Kubernetes"
+        }
+    },
+    "data_stream": {
+        "dataset": "ovh_managed_kubernetes.audit",
+        "namespace": "16592",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "b95c340b-4db7-4bae-a349-d95ec67694c6",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "action": "list",
+        "agent_id_status": "verified",
+        "category": [
+            "api"
+        ],
+        "dataset": "ovh_managed_kubernetes.audit",
+        "id": "00000001-0000-0000-0000-000000000001",
+        "ingested": "2026-08-30T22:27:37Z",
+        "kind": "event",
+        "module": "ovh_managed_kubernetes",
+        "original": "{\"apiVersion\":\"audit.k8s.io/v1\",\"auditID\":\"00000001-0000-0000-0000-000000000001\",\"kind\":\"Event\",\"level\":\"Metadata\",\"objectRef\":{\"apiVersion\":\"v1\",\"namespace\":\"default\",\"resource\":\"pods\"},\"requestReceivedTimestamp\":\"2026-01-15T10:30:00.000000000Z\",\"requestURI\":\"/api/v1/namespaces/default/pods\",\"responseStatus\":{\"code\":200,\"metadata\":{}},\"sourceIPs\":[\"203.0.113.1\"],\"stage\":\"ResponseComplete\",\"stageTimestamp\":\"2026-01-15T10:30:00.100000000Z\",\"user\":{\"groups\":[\"system:authenticated\"],\"username\":\"developer@example.com\"},\"userAgent\":\"kubectl/v1.32.0\",\"verb\":\"list\"}",
+        "outcome": "success",
+        "start": "2026-01-15T10:30:00.000Z",
+        "type": [
+            "access"
+        ]
+    },
+    "http": {
+        "response": {
+            "status_code": 200
+        }
+    },
+    "input": {
+        "type": "cel"
+    },
+    "orchestrator": {
+        "namespace": "default",
+        "type": "kubernetes"
+    },
+    "ovh": {
+        "kubernetes": {
+            "audit": {
+                "audit_id": "00000001-0000-0000-0000-000000000001",
+                "level": "Metadata",
+                "object_ref": {
+                    "api_version": "v1",
+                    "resource": "pods"
+                },
+                "request_uri": "/api/v1/namespaces/default/pods",
+                "stage": "ResponseComplete",
+                "user_agent": "kubectl/v1.32.0",
+                "verb": "list"
+            }
+        }
+    },
+    "related": {
+        "ip": [
+            "203.0.113.1"
+        ],
+        "user": [
+            "developer@example.com"
+        ]
+    },
+    "source": {
+        "as": {
+            "number": 64502,
+            "organization": {
+                "name": "Documentation ASN"
+            }
+        },
+        "geo": {
+            "city_name": "Madrid",
+            "continent_name": "Europe",
+            "country_iso_code": "ES",
+            "country_name": "Spain",
+            "location": {
+                "coordinates": [
+                    -3.702500034123659,
+                    40.416389987803996
+                ],
+                "type": "Point"
+            },
+            "region_iso_code": "ES-M",
+            "region_name": "Madrid"
+        },
+        "ip": "203.0.113.1"
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded"
+    ],
+    "url": {
+        "original": "/api/v1/namespaces/default/pods"
+    },
+    "user": {
+        "name": "developer@example.com",
+        "roles": [
+            "system:authenticated"
+        ]
+    }
+}

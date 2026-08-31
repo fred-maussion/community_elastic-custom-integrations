@@ -1,0 +1,64 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-01-15T10:10:00.000Z",
+            "cloud": {
+                "machine": {
+                    "type": "b3-8"
+                },
+                "provider": "ovh",
+                "service": {
+                    "name": "Managed Kubernetes"
+                }
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "host"
+                ],
+                "kind": "state",
+                "original": "{\"id\":\"d4e5f6a7-b8c9-0123-defa-123456789abc\",\"cluster_id\":\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\"projectId\":\"test-project-id\",\"name\":\"test-nodepool-1\",\"flavor\":\"b3-8\",\"status\":\"READY\",\"sizeStatus\":\"CAPACITY_OK\",\"autoscale\":true,\"monthlyBilled\":false,\"antiAffinity\":false,\"desiredNodes\":3,\"minNodes\":1,\"maxNodes\":10,\"currentNodes\":3,\"availableNodes\":3,\"upToDateNodes\":3,\"createdAt\":\"2026-01-15T10:05:00Z\",\"updatedAt\":\"2026-01-15T10:10:00Z\",\"autoscaling\":{\"scaleDownUtilizationThreshold\":0.5,\"scaleDownUnneededTimeSeconds\":600,\"scaleDownUnreadyTimeSeconds\":1200},\"template\":{\"metadata\":{\"labels\":{\"env\":\"prod\"},\"annotations\":{},\"finalizers\":[]},\"spec\":{\"unschedulable\":false,\"taints\":[]}}}",
+                "type": [
+                    "info"
+                ]
+            },
+            "orchestrator": {
+                "cluster": {
+                    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                },
+                "type": "kubernetes"
+            },
+            "ovh": {
+                "kubernetes": {
+                    "nodepool": {
+                        "anti_affinity": false,
+                        "autoscale": true,
+                        "autoscaling": {
+                            "scale_down_unneeded_time_seconds": 600,
+                            "scale_down_unready_time_seconds": 1200,
+                            "scale_down_utilization_threshold": 0.5
+                        },
+                        "available_nodes": 3,
+                        "created_at": "2026-01-15T10:05:00.000Z",
+                        "current_nodes": 3,
+                        "desired_nodes": 3,
+                        "id": "d4e5f6a7-b8c9-0123-defa-123456789abc",
+                        "max_nodes": 10,
+                        "min_nodes": 1,
+                        "monthly_billed": false,
+                        "name": "test-nodepool-1",
+                        "project_id": "test-project-id",
+                        "size_status": "CAPACITY_OK",
+                        "status": "READY",
+                        "up_to_date_nodes": 3
+                    }
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

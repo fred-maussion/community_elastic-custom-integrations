@@ -1,0 +1,85 @@
+{
+    "@timestamp": "2026-06-15T09:35:00.000Z",
+    "agent": {
+        "ephemeral_id": "d8b5511a-dcae-4fc2-9d28-23f6f8003d89",
+        "id": "44a83b63-7610-45ae-ac9a-6c94b03b3a3d",
+        "name": "elastic-agent-84106",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "cloud": {
+        "machine": {
+            "type": "b3-16"
+        },
+        "provider": "ovh",
+        "service": {
+            "name": "Managed Kubernetes"
+        }
+    },
+    "data_stream": {
+        "dataset": "ovh_managed_kubernetes.nodepool",
+        "namespace": "36612",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "44a83b63-7610-45ae-ac9a-6c94b03b3a3d",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "agent_id_status": "verified",
+        "category": [
+            "host"
+        ],
+        "created": "2026-06-15T09:30:00.000Z",
+        "dataset": "ovh_managed_kubernetes.nodepool",
+        "ingested": "2026-08-30T21:54:56Z",
+        "kind": "state",
+        "module": "ovh_managed_kubernetes",
+        "original": "{\"antiAffinity\":false,\"autoscale\":true,\"autoscaling\":{\"scaleDownUnneededTimeSeconds\":600,\"scaleDownUnreadyTimeSeconds\":1200,\"scaleDownUtilizationThreshold\":0.5},\"availableNodes\":2,\"cluster_id\":\"b2c3d4e5-f6a7-8901-bcde-f12345678901\",\"createdAt\":\"2026-06-15T09:30:00Z\",\"currentNodes\":2,\"desiredNodes\":2,\"flavor\":\"b3-16\",\"id\":\"e5f6a7b8-c9d0-1234-efab-234567890bcd\",\"maxNodes\":5,\"minNodes\":1,\"monthlyBilled\":false,\"name\":\"test-workers-2\",\"projectId\":\"test-project-id\",\"sizeStatus\":\"CAPACITY_OK\",\"status\":\"READY\",\"upToDateNodes\":2,\"updatedAt\":\"2026-06-15T09:35:00Z\"}",
+        "type": [
+            "info"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "orchestrator": {
+        "cluster": {
+            "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+        },
+        "type": "kubernetes"
+    },
+    "ovh": {
+        "kubernetes": {
+            "nodepool": {
+                "anti_affinity": false,
+                "autoscale": true,
+                "autoscaling": {
+                    "scale_down_unneeded_time_seconds": 600,
+                    "scale_down_unready_time_seconds": 1200,
+                    "scale_down_utilization_threshold": 0.5
+                },
+                "available_nodes": 2,
+                "current_nodes": 2,
+                "desired_nodes": 2,
+                "id": "e5f6a7b8-c9d0-1234-efab-234567890bcd",
+                "max_nodes": 5,
+                "min_nodes": 1,
+                "monthly_billed": false,
+                "name": "test-workers-2",
+                "project_id": "test-project-id",
+                "size_status": "CAPACITY_OK",
+                "status": "READY",
+                "up_to_date_nodes": 2
+            }
+        }
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded"
+    ]
+}

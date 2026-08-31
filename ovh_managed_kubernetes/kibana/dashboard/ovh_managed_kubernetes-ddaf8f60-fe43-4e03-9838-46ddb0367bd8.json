@@ -1,0 +1,2850 @@
+{
+    "accessControl": {
+        "accessMode": "default",
+        "owner": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+    },
+    "attributes": {
+        "description": "Comprehensive SRE monitoring dashboard for OVH Managed Kubernetes cluster-level logs. Covers cluster status, upgrade readiness, version distribution, plan breakdown, kube-proxy modes, network policies, update policies, and time-series trends.",
+        "esqlApproximation": false,
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "autoApplyFilters": true,
+            "hidePanelBorders": false,
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-459ce2287b15d4e1075324925db70e701a8e26ac4395d3823b1902ff5d6ff50b": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-459ce2287b15d4e1075324925db70e701a8e26ac4395d3823b1902ff5d6ff50b",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Events",
+                                                    "label": "Total Cluster Log Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-459ce2287b15d4e1075324925db70e701a8e26ac4395d3823b1902ff5d6ff50b",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Total Events` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-459ce2287b15d4e1075324925db70e701a8e26ac4395d3823b1902ff5d6ff50b",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Total Events` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "272af6a6-f68e-4eb9-a0ab-34ff9ab2e57b",
+                    "sectionId": "16062afa-2a44-47a6-b4e1-8c4f34c90f84",
+                    "w": 8,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "272af6a6-f68e-4eb9-a0ab-34ff9ab2e57b",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-fa240a87feedc992caf96bacbe6463aebcb268e8bba4f1eed4b2c31f28049622": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-fa240a87feedc992caf96bacbe6463aebcb268e8bba4f1eed4b2c31f28049622",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Unique Clusters",
+                                                    "label": "Unique Clusters",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-fa240a87feedc992caf96bacbe6463aebcb268e8bba4f1eed4b2c31f28049622",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Unique Clusters` = COUNT_DISTINCT(orchestrator.cluster.id)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-fa240a87feedc992caf96bacbe6463aebcb268e8bba4f1eed4b2c31f28049622",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Unique Clusters` = COUNT_DISTINCT(orchestrator.cluster.id)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "8eb109c7-e8f0-4b77-88f4-1edee604825f",
+                    "sectionId": "16062afa-2a44-47a6-b4e1-8c4f34c90f84",
+                    "w": 8,
+                    "x": 8,
+                    "y": 0
+                },
+                "panelIndex": "8eb109c7-e8f0-4b77-88f4-1edee604825f",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-d88bd2a7dcc1359ab71a8822d494ce3c347708c80dbc81ffa849447ade4347b5": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-d88bd2a7dcc1359ab71a8822d494ce3c347708c80dbc81ffa849447ade4347b5",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of Clusters",
+                                                    "label": "Up-to-Date Clusters",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-d88bd2a7dcc1359ab71a8822d494ce3c347708c80dbc81ffa849447ade4347b5",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.is_up_to_date == true\n| STATS `Count of Clusters` = COUNT_DISTINCT(orchestrator.cluster.name)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-d88bd2a7dcc1359ab71a8822d494ce3c347708c80dbc81ffa849447ade4347b5",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.is_up_to_date == true\n| STATS `Count of Clusters` = COUNT_DISTINCT(orchestrator.cluster.name)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "7e95fc18-aadf-4171-b36d-2cd5846bd7f0",
+                    "sectionId": "16062afa-2a44-47a6-b4e1-8c4f34c90f84",
+                    "w": 8,
+                    "x": 16,
+                    "y": 0
+                },
+                "panelIndex": "7e95fc18-aadf-4171-b36d-2cd5846bd7f0",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-c7c26f63e28a4b19307630fa30939aff633fcc8976cb2028750724faf74aac80": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-c7c26f63e28a4b19307630fa30939aff633fcc8976cb2028750724faf74aac80",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Outdated Clusters",
+                                                    "label": "Outdated Clusters",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-c7c26f63e28a4b19307630fa30939aff633fcc8976cb2028750724faf74aac80",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.is_up_to_date == false\n| STATS `Outdated Clusters` = COUNT_DISTINCT(orchestrator.cluster.id)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-c7c26f63e28a4b19307630fa30939aff633fcc8976cb2028750724faf74aac80",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.is_up_to_date == false\n| STATS `Outdated Clusters` = COUNT_DISTINCT(orchestrator.cluster.id)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "8c4be23f-4853-428f-be12-ba9a32490e7c",
+                    "sectionId": "16062afa-2a44-47a6-b4e1-8c4f34c90f84",
+                    "w": 8,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "8c4be23f-4853-428f-be12-ba9a32490e7c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-ae64f965ca981743b1d31735f5d6485af4d1aaec89bf3a77eaa670e5b1ea8016": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-ae64f965ca981743b1d31735f5d6485af4d1aaec89bf3a77eaa670e5b1ea8016",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of clusters",
+                                                    "label": "Clusters with Up-to-Date Control Plane",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-ae64f965ca981743b1d31735f5d6485af4d1aaec89bf3a77eaa670e5b1ea8016",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.control_plane_is_up_to_date == true\n| STATS `Count of clusters` = COUNT_DISTINCT(orchestrator.cluster.name)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-ae64f965ca981743b1d31735f5d6485af4d1aaec89bf3a77eaa670e5b1ea8016",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.control_plane_is_up_to_date == true\n| STATS `Count of clusters` = COUNT_DISTINCT(orchestrator.cluster.name)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "0da2db89-2b49-4a22-a704-b33745078c0f",
+                    "sectionId": "16062afa-2a44-47a6-b4e1-8c4f34c90f84",
+                    "w": 8,
+                    "x": 32,
+                    "y": 0
+                },
+                "panelIndex": "0da2db89-2b49-4a22-a704-b33745078c0f",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-50b5b7896c6a4a735057e50b622ececa216d8847b3342a4753b23aab3f2ad4b7": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-50b5b7896c6a4a735057e50b622ececa216d8847b3342a4753b23aab3f2ad4b7",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of clusters",
+                                                    "label": "Clusters with Audit Logs Subscribed",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-50b5b7896c6a4a735057e50b622ececa216d8847b3342a4753b23aab3f2ad4b7",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.audit_logs_subscribed == true\n| STATS `Count of clusters` = COUNT_DISTINCT(orchestrator.cluster.name)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-50b5b7896c6a4a735057e50b622ececa216d8847b3342a4753b23aab3f2ad4b7",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.audit_logs_subscribed == true\n| STATS `Count of clusters` = COUNT_DISTINCT(orchestrator.cluster.name)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    }
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "2d4e5009-4261-428d-9f24-a6672d6d69f0",
+                    "sectionId": "16062afa-2a44-47a6-b4e1-8c4f34c90f84",
+                    "w": 8,
+                    "x": 40,
+                    "y": 0
+                },
+                "panelIndex": "2d4e5009-4261-428d-9f24-a6672d6d69f0",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "fieldName": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "line",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Cluster Log Event Count Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Cluster Log Event Count Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "46747931-8b39-4eb0-8b76-1a21a2a9890a",
+                    "sectionId": "434d3e96-590c-4ac9-aeaf-a0a415b73251",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "46747931-8b39-4eb0-8b76-1a21a2a9890a",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_breakdown",
+                                                    "customLabel": true,
+                                                    "fieldName": "Cluster Status",
+                                                    "label": "Cluster Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Event Count` = COUNT() BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Cluster Status` = ovh.kubernetes.cluster.status"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Event Count` = COUNT() BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Cluster Status` = ovh.kubernetes.cluster.status"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "splitAccessors": [
+                                            "line_0_breakdown"
+                                        ],
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "line",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Cluster Log Event Count Over Time by Cluster Status",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Cluster Log Event Count Over Time by Cluster Status"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "4d9bb252-e093-4249-a724-059db6b2dd7e",
+                    "sectionId": "434d3e96-590c-4ac9-aeaf-a0a415b73251",
+                    "w": 24,
+                    "x": 0,
+                    "y": 10
+                },
+                "panelIndex": "4d9bb252-e093-4249-a724-059db6b2dd7e",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "fieldName": "Log Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_breakdown",
+                                                    "fieldName": "cloud.region",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Log Event Count` = COUNT() BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), cloud.region"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Log Event Count` = COUNT() BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), cloud.region"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "splitAccessors": [
+                                            "line_0_breakdown"
+                                        ],
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right",
+                                    "showSingleSeries": true
+                                },
+                                "preferredSeriesType": "line",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Cluster Log Event Count Over Time by Cloud Region",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Cluster Log Event Count Over Time by Cloud Region"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "911f8612-c366-45a1-8bb3-14c6174e2072",
+                    "sectionId": "434d3e96-590c-4ac9-aeaf-a0a415b73251",
+                    "w": 24,
+                    "x": 24,
+                    "y": 10
+                },
+                "panelIndex": "911f8612-c366-45a1-8bb3-14c6174e2072",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-476c92fd0582902cb629c856dc329b9adb2986b17317360e35749ec84b79c3da": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-476c92fd0582902cb629c856dc329b9adb2986b17317360e35749ec84b79c3da",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Status",
+                                                    "label": "Cluster Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-476c92fd0582902cb629c856dc329b9adb2986b17317360e35749ec84b79c3da",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Count` = COUNT(*) BY `Status` = ovh.kubernetes.cluster.status\n| SORT `Count` DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-476c92fd0582902cb629c856dc329b9adb2986b17317360e35749ec84b79c3da",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Count` = COUNT(*) BY `Status` = ovh.kubernetes.cluster.status\n| SORT `Count` DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    }
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "ff7a27b8-6159-43b3-8735-c543499ab5df",
+                    "sectionId": "8a045ca8-5da6-434d-b992-3c21354ee953",
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "ff7a27b8-6159-43b3-8735-c543499ab5df",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-9d9a8acacea3e284357c5dfacfc9624cfbc1a484d2f17aa3c1e718377ee2c546": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-9d9a8acacea3e284357c5dfacfc9624cfbc1a484d2f17aa3c1e718377ee2c546",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Plan Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Plan",
+                                                    "label": "Cluster Plan",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-9d9a8acacea3e284357c5dfacfc9624cfbc1a484d2f17aa3c1e718377ee2c546",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Plan Count` = COUNT(*) BY `Plan` = ovh.kubernetes.cluster.plan\n| SORT `Plan Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-9d9a8acacea3e284357c5dfacfc9624cfbc1a484d2f17aa3c1e718377ee2c546",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Plan Count` = COUNT(*) BY `Plan` = ovh.kubernetes.cluster.plan\n| SORT `Plan Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    }
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "e6b699d2-b77e-4ad0-8a5b-e63734cc937b",
+                    "sectionId": "8a045ca8-5da6-434d-b992-3c21354ee953",
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "panelIndex": "e6b699d2-b77e-4ad0-8a5b-e63734cc937b",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-2f210702182de06933112c5151afcaafa4027e8a9f8dd383f5d407b5c8094d85": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-2f210702182de06933112c5151afcaafa4027e8a9f8dd383f5d407b5c8094d85",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "kube_proxy_mode",
+                                                    "label": "Kube Proxy Mode",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-2f210702182de06933112c5151afcaafa4027e8a9f8dd383f5d407b5c8094d85",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Count` = COUNT(*) BY `kube_proxy_mode` = ovh.kubernetes.cluster.kube_proxy_mode\n| SORT `Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-2f210702182de06933112c5151afcaafa4027e8a9f8dd383f5d407b5c8094d85",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Count` = COUNT(*) BY `kube_proxy_mode` = ovh.kubernetes.cluster.kube_proxy_mode\n| SORT `Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    }
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "376e358e-6f72-4edb-9721-3645130bca37",
+                    "sectionId": "8a045ca8-5da6-434d-b992-3c21354ee953",
+                    "w": 12,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "376e358e-6f72-4edb-9721-3645130bca37",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-e400cd5aa6552e0328a50156ca56e3f9bfc4527a1c13ab6c60f748b4460010f8": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-e400cd5aa6552e0328a50156ca56e3f9bfc4527a1c13ab6c60f748b4460010f8",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Update Policy",
+                                                    "label": "Update Policy",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-e400cd5aa6552e0328a50156ca56e3f9bfc4527a1c13ab6c60f748b4460010f8",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS Count = COUNT(*) BY `Update Policy` = ovh.kubernetes.cluster.update_policy\n| SORT Count DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-e400cd5aa6552e0328a50156ca56e3f9bfc4527a1c13ab6c60f748b4460010f8",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS Count = COUNT(*) BY `Update Policy` = ovh.kubernetes.cluster.update_policy\n| SORT Count DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    }
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "3d940ff4-c5e8-441b-82ae-b9d0ddb3df82",
+                    "sectionId": "8a045ca8-5da6-434d-b992-3c21354ee953",
+                    "w": 12,
+                    "x": 36,
+                    "y": 0
+                },
+                "panelIndex": "3d940ff4-c5e8-441b-82ae-b9d0ddb3df82",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "cloud.region",
+                                                    "label": "Cloud Region",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Cluster count",
+                                                    "label": "Cluster Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Cluster count` = COUNT(*) BY `cloud.region` = cloud.region\n| SORT `Cluster count` DESC\n| LIMIT 10"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Cluster count` = COUNT(*) BY `cloud.region` = cloud.region\n| SORT `Cluster count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Cluster Count by Cloud Region",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Cluster Count by Cloud Region"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "7d17d88b-df3d-4de3-8b09-538d83287479",
+                    "sectionId": "3f629d32-9697-4a22-98d3-f4057bad1412",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "7d17d88b-df3d-4de3-8b09-538d83287479",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "fieldName": "orchestrator.cluster.version",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "fieldName": "Cluster Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Cluster Count` = COUNT(*) BY `orchestrator.cluster.version`\n| SORT `Cluster Count` DESC\n| LIMIT 10"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Cluster Count` = COUNT(*) BY `orchestrator.cluster.version`\n| SORT `Cluster Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Cluster Count by Kubernetes Version",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Cluster Count by Kubernetes Version"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "45d6bf6e-67be-420a-8e97-3a538053ad8c",
+                    "sectionId": "3f629d32-9697-4a22-98d3-f4057bad1412",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "45d6bf6e-67be-420a-8e97-3a538053ad8c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-c4ff06169d068f37a6622db6a92d25200a506486e3a840ff9edbdfcf1e20b4ec": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-c4ff06169d068f37a6622db6a92d25200a506486e3a840ff9edbdfcf1e20b4ec",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Cluster Name",
+                                                    "label": "Cluster Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "Region",
+                                                    "label": "Region",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "Plan",
+                                                    "label": "Plan",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "Status",
+                                                    "label": "Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_4",
+                                                    "customLabel": true,
+                                                    "fieldName": "Is Up To Date",
+                                                    "label": "Up To Date",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_5",
+                                                    "customLabel": true,
+                                                    "fieldName": "Control Plane Is Up To Date",
+                                                    "label": "Control Plane Up To Date",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Version",
+                                                    "inMetricDimension": true,
+                                                    "label": "Version",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-c4ff06169d068f37a6622db6a92d25200a506486e3a840ff9edbdfcf1e20b4ec",
+                                            "query": {
+                                                "esql": "FROM \"logs-ovh_managed_kubernetes.cluster-*\"\n| KEEP orchestrator.cluster.name, orchestrator.cluster.version, ovh.kubernetes.cluster.status, ovh.kubernetes.cluster.plan, cloud.region, ovh.kubernetes.cluster.is_up_to_date, ovh.kubernetes.cluster.control_plane_is_up_to_date\n| RENAME orchestrator.cluster.name AS `Cluster Name`, orchestrator.cluster.version AS `Version`, ovh.kubernetes.cluster.status AS `Status`, ovh.kubernetes.cluster.plan AS `Plan`, cloud.region AS `Region`, ovh.kubernetes.cluster.is_up_to_date AS `Is Up To Date`, ovh.kubernetes.cluster.control_plane_is_up_to_date AS `Control Plane Is Up To Date`\n| SORT `Cluster Name`\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-c4ff06169d068f37a6622db6a92d25200a506486e3a840ff9edbdfcf1e20b4ec",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM \"logs-ovh_managed_kubernetes.cluster-*\"\n| KEEP orchestrator.cluster.name, orchestrator.cluster.version, ovh.kubernetes.cluster.status, ovh.kubernetes.cluster.plan, cloud.region, ovh.kubernetes.cluster.is_up_to_date, ovh.kubernetes.cluster.control_plane_is_up_to_date\n| RENAME orchestrator.cluster.name AS `Cluster Name`, orchestrator.cluster.version AS `Version`, ovh.kubernetes.cluster.status AS `Status`, ovh.kubernetes.cluster.plan AS `Plan`, cloud.region AS `Region`, ovh.kubernetes.cluster.is_up_to_date AS `Is Up To Date`, ovh.kubernetes.cluster.control_plane_is_up_to_date AS `Control Plane Is Up To Date`\n| SORT `Cluster Name`\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_3",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "alignment": "center",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_4",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "alignment": "center",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_5",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "normal",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "paging": {
+                                    "enabled": true,
+                                    "size": 20
+                                },
+                                "showRowNumbers": false,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_row_0",
+                                    "direction": "asc"
+                                }
+                            }
+                        },
+                        "title": "OVH Managed Kubernetes Clusters Overview",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "title": "OVH Managed Kubernetes Clusters Overview"
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "80d760f3-8309-443a-bcc6-6fbe6ccd5d7b",
+                    "sectionId": "3f629d32-9697-4a22-98d3-f4057bad1412",
+                    "w": 48,
+                    "x": 0,
+                    "y": 10
+                },
+                "panelIndex": "80d760f3-8309-443a-bcc6-6fbe6ccd5d7b",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "Time",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "fieldName": "Count of outdated clusters",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.is_up_to_date == false AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count of outdated clusters` = COUNT(*) BY `Time` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| SORT `Time`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.is_up_to_date == false AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count of outdated clusters` = COUNT(*) BY `Time` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| SORT `Time`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "line",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Count of Outdated OVH Kubernetes Clusters Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Count of Outdated OVH Kubernetes Clusters Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "55ddfca5-dedb-4c99-b3ac-287f5344f7c8",
+                    "sectionId": "f3f5d868-5cea-4aa8-984d-f9223a678865",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "55ddfca5-dedb-4c99-b3ac-287f5344f7c8",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Cluster Count",
+                                                    "label": "Cluster Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.control_plane_is_up_to_date == false AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Cluster Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.control_plane_is_up_to_date == false AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Cluster Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_0_y_0"
+                                        ],
+                                        "layerId": "bar_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar",
+                                        "xAccessor": "bar_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Clusters with Control Plane Not Up to Date Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Clusters with Control Plane Not Up to Date Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "fbd3b0f7-d045-442c-9261-dad60423d305",
+                    "sectionId": "f3f5d868-5cea-4aa8-984d-f9223a678865",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "fbd3b0f7-d045-442c-9261-dad60423d305",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-0f8a7e459eb41d7a204f5fe5bc7ef21f256becb4c825f4e4086598003478b623": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-0f8a7e459eb41d7a204f5fe5bc7ef21f256becb4c825f4e4086598003478b623",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "orchestrator.cluster.name",
+                                                    "label": "Cluster Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "orchestrator.cluster.version",
+                                                    "label": "Current Version",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.kubernetes.cluster.next_upgrade_versions",
+                                                    "label": "Next Upgrade Versions",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "cloud.region",
+                                                    "label": "Region",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_4",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.kubernetes.cluster.status",
+                                                    "label": "Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-0f8a7e459eb41d7a204f5fe5bc7ef21f256becb4c825f4e4086598003478b623",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.is_up_to_date == false\n| KEEP orchestrator.cluster.name, orchestrator.cluster.version, ovh.kubernetes.cluster.next_upgrade_versions, cloud.region, ovh.kubernetes.cluster.status\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-0f8a7e459eb41d7a204f5fe5bc7ef21f256becb4c825f4e4086598003478b623",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE ovh.kubernetes.cluster.is_up_to_date == false\n| KEEP orchestrator.cluster.name, orchestrator.cluster.version, ovh.kubernetes.cluster.next_upgrade_versions, cloud.region, ovh.kubernetes.cluster.status\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_3",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_4",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    }
+                                ],
+                                "density": "normal",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true
+                            }
+                        },
+                        "title": "Kubernetes Clusters Not Up to Date",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "title": "Kubernetes Clusters Not Up to Date"
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "156f34a3-8352-4f34-80b4-cac3e228035a",
+                    "sectionId": "f3f5d868-5cea-4aa8-984d-f9223a678865",
+                    "w": 24,
+                    "x": 0,
+                    "y": 10
+                },
+                "panelIndex": "156f34a3-8352-4f34-80b4-cac3e228035a",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-1a49d680961fd0c9fb81a482d0947f1bbdeca2229dc29e13046c4689b97d0a2f": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-1a49d680961fd0c9fb81a482d0947f1bbdeca2229dc29e13046c4689b97d0a2f",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Cluster Name",
+                                                    "label": "Cluster Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Enabled Plugins",
+                                                    "inMetricDimension": true,
+                                                    "label": "Enabled Plugins",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "Disabled Plugins",
+                                                    "inMetricDimension": true,
+                                                    "label": "Disabled Plugins",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-1a49d680961fd0c9fb81a482d0947f1bbdeca2229dc29e13046c4689b97d0a2f",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| KEEP orchestrator.cluster.name, ovh.kubernetes.cluster.customization.api_server.admission_plugins.enabled, ovh.kubernetes.cluster.customization.api_server.admission_plugins.disabled\n| STATS `Enabled Plugins` = VALUES(ovh.kubernetes.cluster.customization.api_server.admission_plugins.enabled), `Disabled Plugins` = VALUES(ovh.kubernetes.cluster.customization.api_server.admission_plugins.disabled) BY `Cluster Name` = orchestrator.cluster.name\n| SORT `Cluster Name`\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-1a49d680961fd0c9fb81a482d0947f1bbdeca2229dc29e13046c4689b97d0a2f",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| KEEP orchestrator.cluster.name, ovh.kubernetes.cluster.customization.api_server.admission_plugins.enabled, ovh.kubernetes.cluster.customization.api_server.admission_plugins.disabled\n| STATS `Enabled Plugins` = VALUES(ovh.kubernetes.cluster.customization.api_server.admission_plugins.enabled), `Disabled Plugins` = VALUES(ovh.kubernetes.cluster.customization.api_server.admission_plugins.disabled) BY `Cluster Name` = orchestrator.cluster.name\n| SORT `Cluster Name`\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "elastic_line_optimized",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "normal",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_row_0",
+                                    "direction": "asc"
+                                }
+                            }
+                        },
+                        "title": "Top Clusters: API Server Admission Plugins (Enabled \u0026 Disabled)",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "title": "Top Clusters: API Server Admission Plugins (Enabled \u0026 Disabled)"
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "f68fa7c8-be23-4257-a1c1-8fec5f858512",
+                    "sectionId": "f3f5d868-5cea-4aa8-984d-f9223a678865",
+                    "w": 24,
+                    "x": 24,
+                    "y": 10
+                },
+                "panelIndex": "f68fa7c8-be23-4257-a1c1-8fec5f858512",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "Time",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "fieldName": "Cluster Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_breakdown",
+                                                    "fieldName": "Audit Logs Subscribed",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Cluster Count` = COUNT() BY `Audit Logs Subscribed` = ovh.kubernetes.cluster.audit_logs_subscribed, `Time` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| SORT `Time` ASC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| STATS `Cluster Count` = COUNT() BY `Audit Logs Subscribed` = ovh.kubernetes.cluster.audit_logs_subscribed, `Time` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| SORT `Time` ASC"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "splitAccessors": [
+                                            "line_0_breakdown"
+                                        ],
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "line",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Cluster Count by Audit Logs Subscribed Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "title": "Cluster Count by Audit Logs Subscribed Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "13e330c3-e195-44b0-b2bf-378bf1480592",
+                    "sectionId": "f3f5d868-5cea-4aa8-984d-f9223a678865",
+                    "w": 24,
+                    "x": 0,
+                    "y": 24
+                },
+                "panelIndex": "13e330c3-e195-44b0-b2bf-378bf1480592",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.cluster-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.cluster-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "heatmap_value_accessor_value",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count Density",
+                                                    "label": "Count Density",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "heatmap_value_accessor_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "cloud.region",
+                                                    "label": "Cloud Region",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "heatmap_value_accessor_y",
+                                                    "customLabel": true,
+                                                    "fieldName": "Cluster Status",
+                                                    "label": "Cluster Status",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count Density` = COUNT() BY cloud.region, `Cluster Status` = ovh.kubernetes.cluster.status\n| SORT `Count Density` DESC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.cluster-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.cluster-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count Density` = COUNT() BY cloud.region, `Cluster Status` = ovh.kubernetes.cluster.status\n| SORT `Count Density` DESC"
+                            },
+                            "visualization": {
+                                "gridConfig": {
+                                    "isCellLabelVisible": false,
+                                    "isXAxisLabelVisible": true,
+                                    "isXAxisTitleVisible": false,
+                                    "isYAxisLabelVisible": true,
+                                    "isYAxisTitleVisible": false,
+                                    "type": "heatmap_grid",
+                                    "xAxisLabelRotation": -45
+                                },
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "legend": {
+                                    "isVisible": true,
+                                    "maxLines": 1,
+                                    "position": "right",
+                                    "shouldTruncate": true,
+                                    "type": "heatmap_legend"
+                                },
+                                "shape": "heatmap",
+                                "valueAccessor": "heatmap_value_accessor_value",
+                                "xAccessor": "heatmap_value_accessor_x",
+                                "yAccessor": "heatmap_value_accessor_y"
+                            }
+                        },
+                        "title": "Cluster Status by Cloud Region — Count Density",
+                        "version": 2,
+                        "visualizationType": "lnsHeatmap"
+                    },
+                    "title": "Cluster Status by Cloud Region — Count Density"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "67c7058d-7ba5-451a-892a-fea289c6fcdd",
+                    "sectionId": "f3f5d868-5cea-4aa8-984d-f9223a678865",
+                    "w": 24,
+                    "x": 24,
+                    "y": 24
+                },
+                "panelIndex": "67c7058d-7ba5-451a-892a-fea289c6fcdd",
+                "type": "vis"
+            }
+        ],
+        "pinned_panels": {
+            "panels": {
+                "0dcdabe9-dfa2-4fe1-bf45-e468f4224983": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.cluster-* | STATS BY `cloud.region`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Region",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 1,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "495a03db-1ebf-4607-8511-d6dd9700dca2": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.cluster-* | STATS BY `orchestrator.cluster.version`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "K8s Version",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 3,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "6aa971f9-787c-47f2-956b-7b9f3e29263f": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.cluster-* | STATS BY `ovh.kubernetes.cluster.update_policy`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Update Policy",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 4,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "78689839-e4e1-40af-8990-42af4dd83549": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.cluster-* | STATS BY `ovh.kubernetes.cluster.plan`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Plan",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 2,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "8be162b1-3c62-4bbf-b2e2-c3554f34f88d": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.cluster-* | STATS BY `ovh.kubernetes.cluster.status`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Cluster Status",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 0,
+                    "type": "options_list_control",
+                    "width": "medium"
+                }
+            }
+        },
+        "sections": [
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "16062afa-2a44-47a6-b4e1-8c4f34c90f84",
+                    "y": 0
+                },
+                "title": "📊 Overview — Key Metrics"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "434d3e96-590c-4ac9-aeaf-a0a415b73251",
+                    "y": 1
+                },
+                "title": "📈 Activity Trends"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "8a045ca8-5da6-434d-b992-3c21354ee953",
+                    "y": 2
+                },
+                "title": "🔍 Cluster State Breakdowns"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "3f629d32-9697-4a22-98d3-f4057bad1412",
+                    "y": 3
+                },
+                "title": "🌍 Regional \u0026 Version Distribution"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "f3f5d868-5cea-4aa8-984d-f9223a678865",
+                    "y": 4
+                },
+                "title": "🛡️ Advanced — Upgrade Readiness \u0026 Security"
+            }
+        ],
+        "timeRestore": false,
+        "title": "[OVH] Kubernetes Cluster Logs — SRE Dashboard"
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2026-08-31T00:36:26.864Z",
+    "created_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0",
+    "id": "ovh_managed_kubernetes-ddaf8f60-fe43-4e03-9838-46ddb0367bd8",
+    "references": [],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+}

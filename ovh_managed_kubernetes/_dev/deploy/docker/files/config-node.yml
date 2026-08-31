@@ -1,0 +1,39 @@
+rules:
+  # OAuth2 token endpoint — used by auth.oauth2 framework during system tests
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+  # Cluster list — returns two synthetic cluster IDs
+  - path: /cloud/project/test-project-id/kube
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["a1b2c3d4-e5f6-7890-abcd-ef1234567890","b2c3d4e5-f6a7-8901-bcde-f12345678901"]'
+  # Node list for cluster 1 — 2 synthetic nodes
+  - path: /cloud/project/test-project-id/kube/a1b2c3d4-e5f6-7890-abcd-ef1234567890/node
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          [{"id":"e1f2a3b4-c5d6-7890-ef12-a3b4c5d6e7f8","projectId":"test-project-id","instanceId":"a1a1a1a1-b2b2-c3c3-d4d4-e5e5e5e5e5e5","nodePoolId":"d4e5f6a7-b8c9-0123-defa-123456789abc","name":"test-workers-1-node-e1f2a3","flavor":"b3-8","status":"READY","isUpToDate":true,"version":"1.32.13-1615","createdAt":"2026-07-10T14:16:45Z","updatedAt":"2026-07-10T14:19:22Z","deployedAt":"2026-07-10T14:19:22Z"},{"id":"f2a3b4c5-d6e7-8901-fa23-b4c5d6e7f8a9","projectId":"test-project-id","instanceId":"b2b2b2b2-c3c3-d4d4-e5e5-f6f6f6f6f6f6","nodePoolId":"d4e5f6a7-b8c9-0123-defa-123456789abc","name":"test-workers-1-node-f2a3b4","flavor":"b3-8","status":"READY","isUpToDate":true,"version":"1.32.13-1615","createdAt":"2026-07-10T14:16:46Z","updatedAt":"2026-07-10T14:19:25Z","deployedAt":"2026-07-10T14:19:25Z"}]
+  # Node list for cluster 2 — 1 synthetic node
+  - path: /cloud/project/test-project-id/kube/b2c3d4e5-f6a7-8901-bcde-f12345678901/node
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          [{"id":"a3b4c5d6-e7f8-9012-ab34-c5d6e7f8a9b0","projectId":"test-project-id","instanceId":"c3c3c3c3-d4d4-e5e5-f6f6-a7a7a7a7a7a7","nodePoolId":"e5f6a7b8-c9d0-1234-efab-234567890bcd","name":"test-workers-2-node-a3b4c5","flavor":"b3-16","status":"READY","isUpToDate":true,"version":"1.32.13-1615","createdAt":"2026-06-15T09:30:00Z","updatedAt":"2026-06-15T09:35:00Z","deployedAt":"2026-06-15T09:35:00Z"}]

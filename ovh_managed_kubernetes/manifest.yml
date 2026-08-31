@@ -1,0 +1,85 @@
+format_version: "3.4.2"
+name: ovh_managed_kubernetes
+title: "OVHcloud Managed Kubernetes"
+version: 1.0.0
+source:
+  license: "Apache-2.0"
+description: "Monitor OVHcloud Managed Kubernetes clusters, node pools, nodes, and audit logs via the OVHcloud REST API."
+type: integration
+categories:
+  - security
+  - infrastructure
+conditions:
+  kibana:
+    version: "^8.19.0 || ^9.1.0"
+  elastic:
+    subscription: "basic"
+screenshots:
+  - src: /img/Screenshot-ovh-k8s-cluster-logs.png
+    title: OVHcloud Managed Kubernetes — Cluster Dashboard
+    size: 3122x1826
+    type: image/png
+  - src: /img/Screenshot-ovh-k8s-node-pool.png
+    title: OVHcloud Managed Kubernetes — Node Pool Dashboard
+    size: 3124x1744
+    type: image/png
+  - src: /img/Screenshot-ovh-k8s-nodes.png
+    title: OVHcloud Managed Kubernetes — Node Dashboard
+    size: 3128x1738
+    type: image/png
+  - src: /img/Screenshot-ovh-k8s-audit-logs.png
+    title: OVHcloud Managed Kubernetes — Audit Logs Dashboard
+    size: 3132x1618
+    type: image/png
+icons:
+  - src: /img/ovh-logo.svg
+    title: OVHcloud logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: ovh_managed_kubernetes
+    title: OVHcloud Managed Kubernetes
+    description: Collect cluster state, node pool, node, and audit log data from OVHcloud Managed Kubernetes
+    inputs:
+      - type: cel
+        title: Collect OVHcloud Managed Kubernetes data via API
+        description: Collecting cluster, nodepool, node, and audit data using the OVHcloud REST API (OAuth2)
+        vars:
+          - name: url
+            type: url
+            title: OVHcloud API URL
+            description: >-
+              Regional OVHcloud API base URL. EU: https://eu.api.ovh.com/1.0 CA: https://ca.api.ovh.com/1.0 US: https://api.us.ovhcloud.com/1.0
+            default: https://eu.api.ovh.com/1.0
+            show_user: true
+            required: true
+          - name: service_name
+            type: text
+            title: OVHcloud Project ID
+            description: Public Cloud project ID (serviceName) from the OVHcloud Control Panel.
+            show_user: true
+            required: true
+          - name: client_id
+            type: text
+            title: OAuth2 Client ID
+            description: OVHcloud service account client ID (from IAM → Service Accounts).
+            show_user: true
+            required: true
+          - name: client_secret
+            type: password
+            title: OAuth2 Client Secret
+            description: OVHcloud service account client secret.
+            show_user: true
+            required: true
+            secret: true
+          - name: token_url
+            type: url
+            title: OAuth2 Token URL
+            description: >-
+              Regional OAuth2 token endpoint. EU: https://www.ovh.com/auth/oauth2/token CA: https://ca.ovh.com/auth/oauth2/token US: https://us.ovhcloud.com/auth/oauth2/token
+            default: https://www.ovh.com/auth/oauth2/token
+            show_user: true
+            required: true
+owner:
+  github: fred-maussion/community_elastic-custom-integrations
+  type: community
