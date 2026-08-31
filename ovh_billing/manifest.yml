@@ -1,7 +1,7 @@
 format_version: "3.4.2"
 name: ovh_billing
 title: "OVHcloud Billing"
-version: 0.1.0
+version: 1.0.0
 source:
   license: "Apache-2.0"
 description: "Monitor OVHcloud account details and billing activity via the OVHcloud REST API."
@@ -13,6 +13,27 @@ conditions:
     version: "^8.19.0 || ^9.1.0"
   elastic:
     subscription: "basic"
+screenshots:
+  - src: /img/Screenshot-ovh-billing-finops-1.png
+    title: "OVH FinOps — Cloud Spend & Cost Optimization: Cost summary, monthly gross spend vs credits, service cost allocation by category"
+    size: 1280x941
+    type: image/png
+  - src: /img/Screenshot-ovh-billing-finops-2.png
+    title: "OVH FinOps — Invoice Cost Efficiency: Gross cost vs credits per invoice, service breakdown by bill ID, invoice summary table"
+    size: 1280x596
+    type: image/png
+  - src: /img/Screenshot-ovh-billing-finops-3.png
+    title: "OVH FinOps — Credit Burn Rate & Unit Economics: Credit consumption treemap, monthly credit chart, unit price per service"
+    size: 1280x856
+    type: image/png
+  - src: /img/Screenshot-ovh-billing-finops-4.png
+    title: "OVH FinOps — AI/ML Spend Tracking: Total AI endpoints spend, token consumption by model, unit economics breakdown"
+    size: 1280x632
+    type: image/png
+  - src: /img/Screenshot-ovh-billing-sre-1.png
+    title: "OVH Billing — Cost & Account Overview: Compute, network, storage and AI endpoints spend with account profile"
+    size: 1280x941
+    type: image/png
 icons:
   - src: /img/ovh-logo.svg
     title: OVHcloud logo

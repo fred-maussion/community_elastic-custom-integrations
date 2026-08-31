@@ -24,18 +24,17 @@ state:
 redact:
   fields: ~
 program: |-
-  // Fetch list of all bill IDs, then retrieve details only for unseen ones.
+  // Fetch bill list, skip already-seen bills, then for each new bill fetch all
+  // line-item details and emit one event per charge line.
   state.?cursor.seen_ids.orValue([]).as(seen_ids,
     request("GET", state.url.trim_right("/") + "/me/bill").do_request().as(list_resp,
       (list_resp.StatusCode != 200) ?
         state.with({
-          "events": {
-            "error": {
-              "code": string(list_resp.StatusCode),
-              "id": string(list_resp.Status),
-              "message": "GET /me/bill: " + ((size(list_resp.Body) != 0) ? string(list_resp.Body) : string(list_resp.Status)),
-            },
-          },
+          "events": [{"error": {
+            "code": string(list_resp.StatusCode),
+            "id": string(list_resp.Status),
+            "message": "GET /me/bill: " + string(list_resp.Body),
+          }}],
           "want_more": false,
         })
       :
@@ -44,18 +43,23 @@ program: |-
             state.with({"events": [], "want_more": false})
           :
             new_ids.map(bid,
-              request("GET", state.url.trim_right("/") + "/me/bill/" + bid).do_request().as(bill_resp,
-                (bill_resp.StatusCode == 200) ?
-                  bill_resp.Body.decode_json()
-                :
-                  {"billId": bid, "_error": string(bill_resp.Status)}
+              request("GET", state.url.trim_right("/") + "/me/bill/" + bid + "/details").do_request().as(det_list_resp,
+                (det_list_resp.StatusCode != 200) ? [] :
+                  det_list_resp.Body.decode_json().map(did,
+                    request("GET", state.url.trim_right("/") + "/me/bill/" + bid + "/details/" + did).do_request().as(d_resp,
+                      (d_resp.StatusCode == 200) ?
+                        d_resp.Body.decode_json().with({"bill_id": bid})
+                      :
+                        {"billDetailId": did, "bill_id": bid, "_error": string(d_resp.Status)}
+                    )
+                  )
               )
-            ).as(bills,
-              {
-                "events": bills.map(b, {"message": b.encode_json()}),
+            ).flatten().as(all_details,
+              state.with({
+                "events": all_details.map(d, {"message": d.encode_json()}),
                 "cursor": {"seen_ids": seen_ids + new_ids},
                 "want_more": false,
-              }
+              })
             )
         )
     )

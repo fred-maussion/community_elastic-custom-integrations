@@ -17,7 +17,7 @@ rules:
           Content-Type:
             - application/json
         body: '{"nichandle":"example-acct-ovh","firstname":"Example","name":"Account","email":"example-account@example.com","phone":"+33100000000","country":"FR","currency":{"code":"EUR","symbol":"€"},"language":"fr_FR","legalform":"individual","state":"complete","ovhSubsidiary":"FR","phoneCountry":"FR"}'
-  # GET /me/bill — list of bill IDs
+  # GET /me/bill — list of bill IDs (2 bills to keep test fast)
   - path: /me/bill
     methods: [GET]
     responses:
@@ -25,31 +25,58 @@ rules:
         headers:
           Content-Type:
             - application/json
-        body: '["LF20000001","LF20000002","LF20000003"]'
-  # GET /me/bill/LF20000001
-  - path: /me/bill/LF20000001
+        body: '["LF20000001","LF20000002"]'
+  # GET /me/bill/LF20000001/details — line item IDs
+  - path: /me/bill/LF20000001/details
     methods: [GET]
     responses:
       - status_code: 200
         headers:
           Content-Type:
             - application/json
-        body: '{"billId":"LF20000001","date":"2026-06-01T00:00:00+01:00","orderId":10000001,"priceWithTax":{"currencyCode":"EUR","text":"120.00 EUR","value":120.0},"priceWithoutTax":{"currencyCode":"EUR","text":"100.00 EUR","value":100.0},"tax":{"currencyCode":"EUR","text":"20.00 EUR","value":20.0},"password":"example-password","pdfUrl":"https://www.ovh.com/bills/example/LF20000001.pdf","url":"https://www.ovh.com/bills/LF20000001"}'
-  # GET /me/bill/LF20000002
-  - path: /me/bill/LF20000002
+        body: '["FR10000001","FR10000002"]'
+  # GET /me/bill/LF20000002/details
+  - path: /me/bill/LF20000002/details
     methods: [GET]
     responses:
       - status_code: 200
         headers:
           Content-Type:
             - application/json
-        body: '{"billId":"LF20000002","date":"2026-07-01T00:00:00+01:00","orderId":10000002,"priceWithTax":{"currencyCode":"EUR","text":"240.00 EUR","value":240.0},"priceWithoutTax":{"currencyCode":"EUR","text":"200.00 EUR","value":200.0},"tax":{"currencyCode":"EUR","text":"40.00 EUR","value":40.0},"password":"example-password","pdfUrl":"https://www.ovh.com/bills/example/LF20000002.pdf","url":"https://www.ovh.com/bills/LF20000002"}'
-  # GET /me/bill/LF20000003
-  - path: /me/bill/LF20000003
+        body: '["FR20000001","FR20000002"]'
+  # GET /me/bill/LF20000001/details/FR10000001
+  - path: /me/bill/LF20000001/details/FR10000001
     methods: [GET]
     responses:
       - status_code: 200
         headers:
           Content-Type:
             - application/json
-        body: '{"billId":"LF20000003","date":"2026-08-01T00:00:00+01:00","orderId":10000003,"priceWithTax":{"currencyCode":"EUR","text":"60.00 EUR","value":60.0},"priceWithoutTax":{"currencyCode":"EUR","text":"50.00 EUR","value":50.0},"tax":{"currencyCode":"EUR","text":"10.00 EUR","value":10.0},"password":"example-password","pdfUrl":"https://www.ovh.com/bills/example/LF20000003.pdf","url":"https://www.ovh.com/bills/LF20000003"}'
+        body: '{"billDetailId":"FR10000001","description":"Public Cloud Gateway Small","domain":"abcdef1234567890abcdef1234567890","quantity":"720","periodStart":"2026-05-01","periodEnd":"2026-06-01","totalPrice":{"value":2.02,"currencyCode":"EUR","text":"2.02 €"},"unitPrice":{"value":0.0028,"currencyCode":"EUR","text":"0.0028 €"}}'
+  # GET /me/bill/LF20000001/details/FR10000002
+  - path: /me/bill/LF20000001/details/FR10000002
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"billDetailId":"FR10000002","description":"Public Cloud Floating IP","domain":"abcdef1234567890abcdef1234567890","quantity":"3067","periodStart":"2026-05-01","periodEnd":"2026-06-01","totalPrice":{"value":8.28,"currencyCode":"EUR","text":"8.28 €"},"unitPrice":{"value":0.0027,"currencyCode":"EUR","text":"0.0027 €"}}'
+  # GET /me/bill/LF20000002/details/FR20000001
+  - path: /me/bill/LF20000002/details/FR20000001
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"billDetailId":"FR20000001","description":"Managed Kubernetes - Control plane","domain":"1234567890abcdef1234567890abcdef","quantity":"744","periodStart":"2026-06-01","periodEnd":"2026-07-01","totalPrice":{"value":0.0,"currencyCode":"EUR","text":"0.00 €"},"unitPrice":{"value":0.0,"currencyCode":"EUR","text":"0.00 €"}}'
+  # GET /me/bill/LF20000002/details/FR20000002
+  - path: /me/bill/LF20000002/details/FR20000002
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"billDetailId":"FR20000002","description":"Public Cloud Object Storage - waw","domain":"1234567890abcdef1234567890abcdef","quantity":"512","periodStart":"2026-06-01","periodEnd":"2026-07-01","totalPrice":{"value":1.54,"currencyCode":"EUR","text":"1.54 €"},"unitPrice":{"value":0.003,"currencyCode":"EUR","text":"0.003 €"}}'

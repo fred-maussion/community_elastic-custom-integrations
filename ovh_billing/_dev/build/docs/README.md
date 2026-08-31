@@ -15,7 +15,7 @@ This integration is compatible with the OVHcloud API v1. Supported regions: EU (
 
 The integration authenticates with the OVHcloud API using OAuth2 client credentials (service account). It polls:
 - `/me` — for account profile information on each interval
-- `/me/bill` + `/me/bill/{billId}` — to discover and fetch new invoices, tracking already-seen bill IDs via a cursor
+- `/me/bill` → `/me/bill/{billId}/details` → `/me/bill/{billId}/details/{detailId}` — to discover invoices and collect per-service charge line items, tracking already-seen bill IDs via a cursor
 
 ## What data does this integration collect?
 
@@ -31,9 +31,11 @@ Collects the OVHcloud account profile (NIC handle, name, email, country, currenc
 
 ### `bill` data stream
 
-Collects invoice/bill records. Each event represents a single invoice with amount, tax, currency, and linked order. New bills are tracked via a cursor of seen bill IDs so each invoice is collected only once.
+Collects per-service charge line items from OVHcloud invoices. Each event represents one charge line from a bill, containing the service description, cloud project identifier, quantity consumed, unit price, total price, and the billing period dates. New bills are tracked via a cursor so each bill's line items are collected only once.
 
-**ECS fields set**: `event.id` (bill ID), `event.url`, `cloud.provider`.
+This enables cost breakdown by service type (`ovh.billing.bill_detail.description`), by project (`ovh.billing.bill_detail.domain`), and over time (`@timestamp` = period end date).
+
+**ECS fields set**: `event.id` (line item ID), `cloud.provider`.
 
 {{ fields "bill" }}
 
@@ -57,7 +59,15 @@ Elastic Agent must be installed. See [installation instructions](https://www.ela
 1. Log into the [OVHcloud Control Panel](https://www.ovhcloud.com/manager/).
 2. Navigate to **IAM** → **Service Accounts** → **Create a service account**.
 3. Note the **Client ID** and **Client Secret** (shown only once).
-4. Assign an IAM policy granting `GET /me` and `GET /me/bill*` read access.
+4. Create an IAM policy and assign it to the service account with the following permissions:
+
+**Product**: `OVHcloud customer account`
+
+| Permission | Description |
+|---|---|
+| `account:apiovh:me/GET` | Read account profile (`/me`) |
+| `account:apiovh:me/bill/GET` | List invoices (`/me/bill`) |
+| `account:apiovh:me/bill/*/GET` | Read individual invoice details (`/me/bill/{billId}`) |
 
 #### Step 2 — Configure the integration in Kibana
 

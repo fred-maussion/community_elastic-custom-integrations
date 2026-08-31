@@ -1,24 +1,30 @@
-- name: ovh.billing.bill
+- name: ovh.billing.bill_detail
   type: group
   fields:
     - name: bill_id
       type: keyword
-      description: OVHcloud invoice identifier (e.g. LF20000001).
-    - name: order_id
-      type: long
-      description: Order ID linked to this bill.
-    - name: price_with_tax
+      description: Parent invoice identifier (e.g. LF20000001).
+    - name: description
+      type: keyword
+      description: Human-readable service name for this charge line (e.g. "Public Cloud Gateway Small").
+    - name: domain
+      type: keyword
+      description: OVHcloud project or resource identifier associated with this charge.
+    - name: quantity
       type: double
-      description: Total invoice amount including tax.
-    - name: price_without_tax
+      description: Quantity of the service unit consumed during the billing period.
+    - name: unit_price
       type: double
-      description: Total invoice amount excluding tax.
-    - name: tax_amount
+      description: Price per unit of service.
+    - name: total_price
       type: double
-      description: Tax amount on this invoice.
+      description: Total charge for this line item (quantity × unit_price).
     - name: currency_code
       type: keyword
-      description: Currency code for the invoice amounts (e.g. EUR).
-    - name: pdf_url
+      description: Currency code for all price fields (e.g. EUR).
+    - name: period_start
       type: keyword
-      description: URL to the PDF version of the invoice.
+      description: Start date of the billing period covered by this line item (YYYY-MM-DD).
+    - name: period_end
+      type: keyword
+      description: End date of the billing period covered by this line item (YYYY-MM-DD).

@@ -1,0 +1,3106 @@
+{
+    "accessControl": {
+        "accessMode": "default",
+        "owner": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+    },
+    "attributes": {
+        "description": "SRE dashboard for OVH billing data. Tracks spend per invoice, cost breakdown by service/description, AI Endpoints usage, cloud credit consumption, and account health from logs-ovh_billing.bill-* and logs-ovh_billing.account-*.",
+        "esqlApproximation": false,
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "autoApplyFilters": true,
+            "hidePanelBorders": false,
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "content": "## OVH Billing — Cost \u0026 Account Overview\nMonitors **billing line items** (`ovh_billing.bill`) and **account details** (`ovh_billing.account`) ingested from the OVH cloud provider. Use the controls above to filter by Bill ID, domain, or description.",
+                    "settings": {
+                        "open_links_in_new_tab": true
+                    }
+                },
+                "gridData": {
+                    "h": 4,
+                    "i": "482600fd-6094-4e60-814c-ae536cf35047",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "482600fd-6094-4e60-814c-ae536cf35047",
+                "type": "markdown"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-6825170fc489e0f7dff71afad2829ffc4b1afe05394845150141e3f19f93df00": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-6825170fc489e0f7dff71afad2829ffc4b1afe05394845150141e3f19f93df00",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total spend",
+                                                    "label": "Total Spend (EUR)",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": true,
+                                                                "decimals": 2,
+                                                                "suffix": " €"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-6825170fc489e0f7dff71afad2829ffc4b1afe05394845150141e3f19f93df00",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE ovh.billing.bill_detail.currency_code == \"EUR\"\n| STATS `Total spend` = SUM(ovh.billing.bill_detail.total_price)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-6825170fc489e0f7dff71afad2829ffc4b1afe05394845150141e3f19f93df00",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE ovh.billing.bill_detail.currency_code == \"EUR\"\n| STATS `Total spend` = SUM(ovh.billing.bill_detail.total_price)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "ddb5a8ef-6017-42ef-ac50-9888fb4f39c7",
+                    "sectionId": "08ccf5e9-a365-456a-bafa-ce576de27448",
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "ddb5a8ef-6017-42ef-ac50-9888fb4f39c7",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-62afe7c6b38a11c8b4d1b7397007454c15959bc9acbd7a819228d8ffd48daed7": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-62afe7c6b38a11c8b4d1b7397007454c15959bc9acbd7a819228d8ffd48daed7",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Invoices",
+                                                    "label": "Distinct Invoices",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-62afe7c6b38a11c8b4d1b7397007454c15959bc9acbd7a819228d8ffd48daed7",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| STATS `Distinct Invoices` = COUNT_DISTINCT(ovh.billing.bill_detail.bill_id)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-62afe7c6b38a11c8b4d1b7397007454c15959bc9acbd7a819228d8ffd48daed7",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| STATS `Distinct Invoices` = COUNT_DISTINCT(ovh.billing.bill_detail.bill_id)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "ce1d3c17-be12-4483-a3ab-f236b00ffc71",
+                    "sectionId": "08ccf5e9-a365-456a-bafa-ce576de27448",
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "panelIndex": "ce1d3c17-be12-4483-a3ab-f236b00ffc71",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-d9fe4b1522df8a94de358c907b8530eb5dd145f56fb0c24948b282a74086d0fa": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-d9fe4b1522df8a94de358c907b8530eb5dd145f56fb0c24948b282a74086d0fa",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Billing Line Items",
+                                                    "label": "Total Billing Line Items",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-d9fe4b1522df8a94de358c907b8530eb5dd145f56fb0c24948b282a74086d0fa",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| STATS `Total Billing Line Items` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-d9fe4b1522df8a94de358c907b8530eb5dd145f56fb0c24948b282a74086d0fa",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| STATS `Total Billing Line Items` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "7507d3ee-ffd2-48e2-8026-4623c7296e92",
+                    "sectionId": "08ccf5e9-a365-456a-bafa-ce576de27448",
+                    "w": 12,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "7507d3ee-ffd2-48e2-8026-4623c7296e92",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-@timestamp",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total cloud credit applied",
+                                                    "label": "Total Cloud Credit Applied",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend AND ovh.billing.bill_detail.total_price \u003c 0\n| STATS `Total cloud credit applied` = SUM(ovh.billing.bill_detail.total_price)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend AND ovh.billing.bill_detail.total_price \u003c 0\n| STATS `Total cloud credit applied` = SUM(ovh.billing.bill_detail.total_price)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "2649daa1-e9f5-4f9b-b532-c45e0c6af506",
+                    "sectionId": "08ccf5e9-a365-456a-bafa-ce576de27448",
+                    "w": 12,
+                    "x": 36,
+                    "y": 0
+                },
+                "panelIndex": "2649daa1-e9f5-4f9b-b532-c45e0c6af506",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-@timestamp",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Month",
+                                                    "label": "Month",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Spend",
+                                                    "label": "Total Spend",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Month` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Month` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_0_y_0"
+                                        ],
+                                        "layerId": "bar_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar",
+                                        "xAccessor": "bar_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Total OVH Billing Spend by Month",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Total OVH Billing Spend by Month"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "ac775ff3-3094-4041-962c-68314ceccd3b",
+                    "sectionId": "08ccf5e9-a365-456a-bafa-ce576de27448",
+                    "w": 48,
+                    "x": 0,
+                    "y": 5
+                },
+                "panelIndex": "ac775ff3-3094-4041-962c-68314ceccd3b",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-9b231add7fbcc4cbcd4877fb2cd4ef36c15a8d151ecfa320030409d19b361a49": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-9b231add7fbcc4cbcd4877fb2cd4ef36c15a8d151ecfa320030409d19b361a49",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Spend",
+                                                    "label": "Total Spend",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Invoice",
+                                                    "label": "Invoice",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-9b231add7fbcc4cbcd4877fb2cd4ef36c15a8d151ecfa320030409d19b361a49",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Invoice` = ovh.billing.bill_detail.bill_id\n| SORT `Total Spend` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-9b231add7fbcc4cbcd4877fb2cd4ef36c15a8d151ecfa320030409d19b361a49",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Invoice` = ovh.billing.bill_detail.bill_id\n| SORT `Total Spend` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "4017b9b4-4547-488c-b5dc-c3208bf9193c",
+                    "sectionId": "1d28c4d5-1b6e-43a7-8b24-ae24f5a4707f",
+                    "w": 16,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "4017b9b4-4547-488c-b5dc-c3208bf9193c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-e97b5bbe64cbbe4c22e4d6fc2bd2be65b7742bd1f418d87367643ea415378c24": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-e97b5bbe64cbbe4c22e4d6fc2bd2be65b7742bd1f418d87367643ea415378c24",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Spend",
+                                                    "label": "Total Spend",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": true,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Service Description",
+                                                    "label": "Service Description",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-e97b5bbe64cbbe4c22e4d6fc2bd2be65b7742bd1f418d87367643ea415378c24",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE ovh.billing.bill_detail.total_price \u003e= 0\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Service Description` = ovh.billing.bill_detail.description\n| SORT `Total Spend` DESC\n| LIMIT 15"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-e97b5bbe64cbbe4c22e4d6fc2bd2be65b7742bd1f418d87367643ea415378c24",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE ovh.billing.bill_detail.total_price \u003e= 0\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Service Description` = ovh.billing.bill_detail.description\n| SORT `Total Spend` DESC\n| LIMIT 15"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "hide",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "value",
+                                        "percentDecimals": 2,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "treemap"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "397b7c56-3b47-42a0-824c-3c36570c6b80",
+                    "sectionId": "1d28c4d5-1b6e-43a7-8b24-ae24f5a4707f",
+                    "w": 32,
+                    "x": 16,
+                    "y": 0
+                },
+                "panelIndex": "397b7c56-3b47-42a0-824c-3c36570c6b80",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-a1f8d3c4753bb04fef3b4f65ee68ed8c6265c5e20cfef576d4f0b9cd8474cc1c": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-a1f8d3c4753bb04fef3b4f65ee68ed8c6265c5e20cfef576d4f0b9cd8474cc1c",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Service Description",
+                                                    "label": "Service Description",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Spend",
+                                                    "label": "Total Spend",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-a1f8d3c4753bb04fef3b4f65ee68ed8c6265c5e20cfef576d4f0b9cd8474cc1c",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Service Description` = ovh.billing.bill_detail.description\n| SORT `Total Spend` DESC\n| LIMIT 8"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-a1f8d3c4753bb04fef3b4f65ee68ed8c6265c5e20cfef576d4f0b9cd8474cc1c",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Service Description` = ovh.billing.bill_detail.description\n| SORT `Total Spend` DESC\n| LIMIT 8"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Top 8 Most Expensive OVH Service Descriptions by Total Spend",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 8 Most Expensive OVH Service Descriptions by Total Spend"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "b03bbd3c-262d-478a-83e1-610f29e2616d",
+                    "sectionId": "1d28c4d5-1b6e-43a7-8b24-ae24f5a4707f",
+                    "w": 48,
+                    "x": 0,
+                    "y": 12
+                },
+                "panelIndex": "b03bbd3c-262d-478a-83e1-610f29e2616d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-@timestamp",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "bucket",
+                                                    "label": "Time",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Spend",
+                                                    "label": "Total Spend",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "customLabel": true,
+                                                    "fieldName": "Bill ID",
+                                                    "label": "Bill ID",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"instances\") AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Bill ID` = ovh.billing.bill_detail.bill_id, bucket = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| SORT bucket ASC, `Total Spend` DESC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"instances\") AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Bill ID` = ovh.billing.bill_detail.bill_id, bucket = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| SORT bucket ASC, `Total Spend` DESC"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right",
+                                    "showSingleSeries": true
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Total Compute Instance Spend Over Time by Bill ID",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Total Compute Instance Spend Over Time by Bill ID"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "7f3e4abb-6ef3-4623-b2c0-7e712be3ee88",
+                    "sectionId": "955d3d3c-b445-441b-9e75-6b8f22b8c86e",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "7f3e4abb-6ef3-4623-b2c0-7e712be3ee88",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-@timestamp",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Time Bucket",
+                                                    "label": "Time",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Spend",
+                                                    "label": "Total Spend",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "customLabel": true,
+                                                    "fieldName": "Description",
+                                                    "label": "Description",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE (@timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend)\n  AND (ovh.billing.bill_detail.description LIKE \"*Gateway*\" \n    OR ovh.billing.bill_detail.description LIKE \"*Floating IP*\"\n    OR ovh.billing.bill_detail.description LIKE \"*Loadbalancer*\"\n    OR ovh.billing.bill_detail.description LIKE \"*Octavia*\")\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Description` = ovh.billing.bill_detail.description\n| SORT `Time Bucket`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE (@timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend)\n  AND (ovh.billing.bill_detail.description LIKE \"*Gateway*\" \n    OR ovh.billing.bill_detail.description LIKE \"*Floating IP*\"\n    OR ovh.billing.bill_detail.description LIKE \"*Loadbalancer*\"\n    OR ovh.billing.bill_detail.description LIKE \"*Octavia*\")\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Description` = ovh.billing.bill_detail.description\n| SORT `Time Bucket`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Total Network Services Spend by Description Over Time (Gateway, Floating IP, Loadbalancer, Octavia)",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Total Network Services Spend by Description Over Time (Gateway, Floating IP, Loadbalancer, Octavia)"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "cc64cc9f-5a94-486f-9b86-6fd785f105df",
+                    "sectionId": "955d3d3c-b445-441b-9e75-6b8f22b8c86e",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "cc64cc9f-5a94-486f-9b86-6fd785f105df",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-836b160366f9b6566a5f48951c306331ad5a6b3dfde8fa7ea467e34ffe1e01f7": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-836b160366f9b6566a5f48951c306331ad5a6b3dfde8fa7ea467e34ffe1e01f7",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "fieldName": "Description",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Spend",
+                                                    "label": "Total Spend",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-836b160366f9b6566a5f48951c306331ad5a6b3dfde8fa7ea467e34ffe1e01f7",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"Disques\") OR CONTAINS(ovh.billing.bill_detail.description, \"stockage\") OR CONTAINS(ovh.billing.bill_detail.description, \"object\")\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Description` = ovh.billing.bill_detail.description\n| SORT `Total Spend` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-836b160366f9b6566a5f48951c306331ad5a6b3dfde8fa7ea467e34ffe1e01f7",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"Disques\") OR CONTAINS(ovh.billing.bill_detail.description, \"stockage\") OR CONTAINS(ovh.billing.bill_detail.description, \"object\")\n| STATS `Total Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Description` = ovh.billing.bill_detail.description\n| SORT `Total Spend` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Top 10 Storage Descriptions by Total Spend",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 10 Storage Descriptions by Total Spend"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "31c88772-1025-4e17-9790-e4e2f5a5e735",
+                    "sectionId": "955d3d3c-b445-441b-9e75-6b8f22b8c86e",
+                    "w": 24,
+                    "x": 0,
+                    "y": 10
+                },
+                "panelIndex": "31c88772-1025-4e17-9790-e4e2f5a5e735",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-dc2f5c3080b291e4c1b0bb3641de0bb824b293e08f9d8de5618bc75d4ef48579": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-dc2f5c3080b291e4c1b0bb3641de0bb824b293e08f9d8de5618bc75d4ef48579",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.description",
+                                                    "label": "Service Description",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total quantity consumed",
+                                                    "label": "Total Quantity Consumed",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-dc2f5c3080b291e4c1b0bb3641de0bb824b293e08f9d8de5618bc75d4ef48579",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| STATS `Total quantity consumed` = SUM(ovh.billing.bill_detail.quantity) BY ovh.billing.bill_detail.description\n| SORT `Total quantity consumed` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-dc2f5c3080b291e4c1b0bb3641de0bb824b293e08f9d8de5618bc75d4ef48579",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| STATS `Total quantity consumed` = SUM(ovh.billing.bill_detail.quantity) BY ovh.billing.bill_detail.description\n| SORT `Total quantity consumed` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Top 10 Services by Total Quantity Consumed",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 10 Services by Total Quantity Consumed"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "b34d0b7b-94e5-4fbc-8b27-3d2704dae2f4",
+                    "sectionId": "955d3d3c-b445-441b-9e75-6b8f22b8c86e",
+                    "w": 24,
+                    "x": 24,
+                    "y": 10
+                },
+                "panelIndex": "b34d0b7b-94e5-4fbc-8b27-3d2704dae2f4",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-b9d7d95f795f4c6a07bd6a9e9c2278ed88a7874e21f272443eae5e7f2c779a8f": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-b9d7d95f795f4c6a07bd6a9e9c2278ed88a7874e21f272443eae5e7f2c779a8f",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total AI Endpoints spend",
+                                                    "label": "Total AI Endpoints Spend",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-b9d7d95f795f4c6a07bd6a9e9c2278ed88a7874e21f272443eae5e7f2c779a8f",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"AI Endpoints\")\n| STATS `Total AI Endpoints spend` = SUM(ovh.billing.bill_detail.total_price)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-b9d7d95f795f4c6a07bd6a9e9c2278ed88a7874e21f272443eae5e7f2c779a8f",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"AI Endpoints\")\n| STATS `Total AI Endpoints spend` = SUM(ovh.billing.bill_detail.total_price)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "397f3288-d875-4c39-8338-819d9a0316b4",
+                    "sectionId": "0acdde19-7eaf-4a5d-a998-5f869cc7f6bd",
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "397f3288-d875-4c39-8338-819d9a0316b4",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-c3aefd02a13117f3741c30238aa5548ab4620afeb707c302d765bf3e5180dc2b": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-c3aefd02a13117f3741c30238aa5548ab4620afeb707c302d765bf3e5180dc2b",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total AI Endpoints input tokens consumed",
+                                                    "label": "Total AI Endpoints Input Tokens Consumed",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": true,
+                                                                "decimals": 0
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-c3aefd02a13117f3741c30238aa5548ab4620afeb707c302d765bf3e5180dc2b",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"tokens d entrée\") OR CONTAINS(ovh.billing.bill_detail.description, \"tokens d'entrée\")\n| STATS `Total AI Endpoints input tokens consumed` = SUM(ovh.billing.bill_detail.quantity)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-c3aefd02a13117f3741c30238aa5548ab4620afeb707c302d765bf3e5180dc2b",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"tokens d entrée\") OR CONTAINS(ovh.billing.bill_detail.description, \"tokens d'entrée\")\n| STATS `Total AI Endpoints input tokens consumed` = SUM(ovh.billing.bill_detail.quantity)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "84e0e3b5-5a83-4677-920e-3da9692dd77c",
+                    "sectionId": "0acdde19-7eaf-4a5d-a998-5f869cc7f6bd",
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "panelIndex": "84e0e3b5-5a83-4677-920e-3da9692dd77c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-cdd4d7ab1c14ff150b2d6a58604da4ea58cd19cd8ffea7e8767fceb310d56fa0": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-cdd4d7ab1c14ff150b2d6a58604da4ea58cd19cd8ffea7e8767fceb310d56fa0",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total AI Endpoints output tokens consumed",
+                                                    "label": "Total AI Endpoints Output Tokens Consumed",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": true,
+                                                                "decimals": 0
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-cdd4d7ab1c14ff150b2d6a58604da4ea58cd19cd8ffea7e8767fceb310d56fa0",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"tokens de sortie\")\n| STATS `Total AI Endpoints output tokens consumed` = SUM(ovh.billing.bill_detail.quantity)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-cdd4d7ab1c14ff150b2d6a58604da4ea58cd19cd8ffea7e8767fceb310d56fa0",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"tokens de sortie\")\n| STATS `Total AI Endpoints output tokens consumed` = SUM(ovh.billing.bill_detail.quantity)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "704e1d6a-89f3-4be6-a886-3381a9ae9db8",
+                    "sectionId": "0acdde19-7eaf-4a5d-a998-5f869cc7f6bd",
+                    "w": 12,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "704e1d6a-89f3-4be6-a886-3381a9ae9db8",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-195be2ccf3f2db6d377b00ce03cb6e184d7eddb4ea63c7af98a9f65fee539f84": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-195be2ccf3f2db6d377b00ce03cb6e184d7eddb4ea63c7af98a9f65fee539f84",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "AI Endpoints Spend",
+                                                    "label": "AI Endpoints Spend",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": true,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Model",
+                                                    "label": "Model",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-195be2ccf3f2db6d377b00ce03cb6e184d7eddb4ea63c7af98a9f65fee539f84",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"AI Endpoints\")\n| STATS `AI Endpoints Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Model` = ovh.billing.bill_detail.description\n| SORT `AI Endpoints Spend` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-195be2ccf3f2db6d377b00ce03cb6e184d7eddb4ea63c7af98a9f65fee539f84",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"AI Endpoints\")\n| STATS `AI Endpoints Spend` = SUM(ovh.billing.bill_detail.total_price) BY `Model` = ovh.billing.bill_detail.description\n| SORT `AI Endpoints Spend` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "27817dbd-a34a-4bca-926f-20b44200d7bf",
+                    "sectionId": "0acdde19-7eaf-4a5d-a998-5f869cc7f6bd",
+                    "w": 12,
+                    "x": 36,
+                    "y": 0
+                },
+                "panelIndex": "27817dbd-a34a-4bca-926f-20b44200d7bf",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-bc9c7dd18645a3bde429f39d9bee270e5600929685709569e24c7eb160d4dbf6": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-bc9c7dd18645a3bde429f39d9bee270e5600929685709569e24c7eb160d4dbf6",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.description",
+                                                    "label": "Description",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.quantity",
+                                                    "inMetricDimension": true,
+                                                    "label": "Quantity (Tokens)",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 0
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.unit_price",
+                                                    "inMetricDimension": true,
+                                                    "label": "Unit Price",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 6
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.total_price",
+                                                    "inMetricDimension": true,
+                                                    "label": "Total Price",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-bc9c7dd18645a3bde429f39d9bee270e5600929685709569e24c7eb160d4dbf6",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"AI Endpoints\")\n| KEEP ovh.billing.bill_detail.description, ovh.billing.bill_detail.quantity, ovh.billing.bill_detail.unit_price, ovh.billing.bill_detail.total_price\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-bc9c7dd18645a3bde429f39d9bee270e5600929685709569e24c7eb160d4dbf6",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| WHERE CONTAINS(ovh.billing.bill_detail.description, \"AI Endpoints\")\n| KEEP ovh.billing.bill_detail.description, ovh.billing.bill_detail.quantity, ovh.billing.bill_detail.unit_price, ovh.billing.bill_detail.total_price\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_2",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "normal",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_2",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "AI Endpoints Billing Lines — Description, Quantity, Unit Price \u0026 Total Price",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "AI Endpoints Billing Lines — Description, Quantity, Unit Price \u0026 Total Price"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "5b6a06da-06f1-4d66-a75e-c7058a2241f4",
+                    "sectionId": "0acdde19-7eaf-4a5d-a998-5f869cc7f6bd",
+                    "w": 36,
+                    "x": 0,
+                    "y": 5
+                },
+                "panelIndex": "5b6a06da-06f1-4d66-a75e-c7058a2241f4",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.bill-*-47e100c8b728d2d487a104501af70246c05c837e539015eb792c70c04f2979dd": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.bill-*-47e100c8b728d2d487a104501af70246c05c837e539015eb792c70c04f2979dd",
+                                    "name": "logs-ovh_billing.bill-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.bill-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.bill_id",
+                                                    "label": "Bill ID",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.description",
+                                                    "label": "Description",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.domain",
+                                                    "label": "Domain",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.period_start",
+                                                    "label": "Period Start",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_4",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.period_end",
+                                                    "label": "Period End",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_5",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.currency_code",
+                                                    "label": "Currency",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.quantity",
+                                                    "inMetricDimension": true,
+                                                    "label": "Quantity",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.unit_price",
+                                                    "inMetricDimension": true,
+                                                    "label": "Unit Price",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.bill_detail.total_price",
+                                                    "inMetricDimension": true,
+                                                    "label": "Total Price",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.bill-*-47e100c8b728d2d487a104501af70246c05c837e539015eb792c70c04f2979dd",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.bill-*\n| KEEP ovh.billing.bill_detail.bill_id, ovh.billing.bill_detail.description, ovh.billing.bill_detail.domain, ovh.billing.bill_detail.period_start, ovh.billing.bill_detail.period_end, ovh.billing.bill_detail.quantity, ovh.billing.bill_detail.unit_price, ovh.billing.bill_detail.total_price, ovh.billing.bill_detail.currency_code\n| SORT ovh.billing.bill_detail.total_price DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.bill-*-47e100c8b728d2d487a104501af70246c05c837e539015eb792c70c04f2979dd",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.bill-*\n| KEEP ovh.billing.bill_detail.bill_id, ovh.billing.bill_detail.description, ovh.billing.bill_detail.domain, ovh.billing.bill_detail.period_start, ovh.billing.bill_detail.period_end, ovh.billing.bill_detail.quantity, ovh.billing.bill_detail.unit_price, ovh.billing.bill_detail.total_price, ovh.billing.bill_detail.currency_code\n| SORT ovh.billing.bill_detail.total_price DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_3",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_4",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "center",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_5",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_2",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "normal",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "paging": {
+                                    "enabled": true,
+                                    "size": 20
+                                },
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_2",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "OVH Billing Line Items – Sorted by Total Price Descending",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "OVH Billing Line Items – Sorted by Total Price Descending"
+                },
+                "gridData": {
+                    "h": 16,
+                    "i": "7b0e9ab2-e314-4db4-b035-3ccbb8a3bd6d",
+                    "sectionId": "0b7dcd80-fd49-4fe8-bc5f-2dbcdcf40996",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "7b0e9ab2-e314-4db4-b035-3ccbb8a3bd6d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.account-*-80ed68f060073c9e175e17dad85e307ecb7772eb10ef2de1c147dddd9c323eff": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.account-*-80ed68f060073c9e175e17dad85e307ecb7772eb10ef2de1c147dddd9c323eff",
+                                    "name": "logs-ovh_billing.account-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.account-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Account Nichandles",
+                                                    "label": "Distinct Account Nichandles",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.account-*-80ed68f060073c9e175e17dad85e307ecb7772eb10ef2de1c147dddd9c323eff",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.account-*\n| STATS `Distinct Account Nichandles` = COUNT_DISTINCT(ovh.billing.account.nichandle)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.account-*-80ed68f060073c9e175e17dad85e307ecb7772eb10ef2de1c147dddd9c323eff",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.account-*\n| STATS `Distinct Account Nichandles` = COUNT_DISTINCT(ovh.billing.account.nichandle)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "f4ff3aa9-6e2e-4fb3-9007-6ef2e7f71413",
+                    "sectionId": "5d440f96-902c-4dc8-91e8-ef86e09d60d0",
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "f4ff3aa9-6e2e-4fb3-9007-6ef2e7f71413",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.account-*-530b98dda70db9c90fef2a54510df7c354ac30b118a2edfbd82f72c3b5b6547b": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.account-*-530b98dda70db9c90fef2a54510df7c354ac30b118a2edfbd82f72c3b5b6547b",
+                                    "name": "logs-ovh_billing.account-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.account-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Account Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "State",
+                                                    "label": "Account State",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.account-*-530b98dda70db9c90fef2a54510df7c354ac30b118a2edfbd82f72c3b5b6547b",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.account-*\n| STATS `Account Count` = COUNT(*) BY `State` = ovh.billing.account.state\n| SORT `Account Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.account-*-530b98dda70db9c90fef2a54510df7c354ac30b118a2edfbd82f72c3b5b6547b",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.account-*\n| STATS `Account Count` = COUNT(*) BY `State` = ovh.billing.account.state\n| SORT `Account Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "9649798b-5aec-4d78-8dba-85c8d8996430",
+                    "sectionId": "5d440f96-902c-4dc8-91e8-ef86e09d60d0",
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "panelIndex": "9649798b-5aec-4d78-8dba-85c8d8996430",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.account-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.account-*-@timestamp",
+                                    "name": "logs-ovh_billing.account-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_billing.account-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Account Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Legal Form",
+                                                    "label": "Legal Form",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.account-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.account-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Account Count` = COUNT(*) BY `Legal Form` = ovh.billing.account.legal_form\n| SORT `Account Count` DESC\n| LIMIT 10"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.account-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.account-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Account Count` = COUNT(*) BY `Legal Form` = ovh.billing.account.legal_form\n| SORT `Account Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "e7b39e79-e0d6-4a07-9d07-7d151e4977e5",
+                    "sectionId": "5d440f96-902c-4dc8-91e8-ef86e09d60d0",
+                    "w": 12,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "e7b39e79-e0d6-4a07-9d07-7d151e4977e5",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.account-*-1acf9889fae2d29d65098b27d05aec1fd31afe15cc0ace8be9539d6c85b76f40": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.account-*-1acf9889fae2d29d65098b27d05aec1fd31afe15cc0ace8be9539d6c85b76f40",
+                                    "name": "logs-ovh_billing.account-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.account-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Account Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "OVH Subsidiary",
+                                                    "label": "OVH Subsidiary",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.account-*-1acf9889fae2d29d65098b27d05aec1fd31afe15cc0ace8be9539d6c85b76f40",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_billing.account-*\n| STATS `Account Count` = COUNT(*) BY `OVH Subsidiary` = ovh.billing.account.ovh_subsidiary\n| SORT `Account Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.account-*-1acf9889fae2d29d65098b27d05aec1fd31afe15cc0ace8be9539d6c85b76f40",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_billing.account-*\n| STATS `Account Count` = COUNT(*) BY `OVH Subsidiary` = ovh.billing.account.ovh_subsidiary\n| SORT `Account Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "bdd48680-8109-4163-9638-58263e98c654",
+                    "sectionId": "5d440f96-902c-4dc8-91e8-ef86e09d60d0",
+                    "w": 12,
+                    "x": 36,
+                    "y": 0
+                },
+                "panelIndex": "bdd48680-8109-4163-9638-58263e98c654",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_billing.account-*-d623ccbbced4e6b1d87d03efd62912a2d6c53c5fbbca021eac23dfe11c3b073e": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_billing.account-*-d623ccbbced4e6b1d87d03efd62912a2d6c53c5fbbca021eac23dfe11c3b073e",
+                                    "name": "logs-ovh_billing.account-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_billing.account-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.account.nichandle",
+                                                    "label": "NIC Handle",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.account.name",
+                                                    "label": "Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.account.organisation",
+                                                    "label": "Organisation",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.account.state",
+                                                    "label": "State",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_4",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.account.legal_form",
+                                                    "label": "Legal Form",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_5",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.account.country",
+                                                    "label": "Country",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_6",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.account.currency_code",
+                                                    "label": "Currency",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_7",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.account.ovh_subsidiary",
+                                                    "label": "OVH Subsidiary",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_8",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.billing.account.language",
+                                                    "label": "Language",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_9",
+                                                    "customLabel": true,
+                                                    "fieldName": "user.email",
+                                                    "label": "Email",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_10",
+                                                    "customLabel": true,
+                                                    "fieldName": "user.full_name",
+                                                    "label": "Full Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "fieldName": "ovh.billing.account.nichandle",
+                                                    "inMetricDimension": true,
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_billing.account-*-d623ccbbced4e6b1d87d03efd62912a2d6c53c5fbbca021eac23dfe11c3b073e",
+                                            "query": {
+                                                "esql": "FROM \"logs-ovh_billing.account-*\"\n| KEEP `ovh.billing.account.nichandle`, `ovh.billing.account.name`, `ovh.billing.account.organisation`, `ovh.billing.account.state`, `ovh.billing.account.legal_form`, `ovh.billing.account.country`, `ovh.billing.account.currency_code`, `ovh.billing.account.ovh_subsidiary`, `ovh.billing.account.language`, `user.email`, `user.full_name`\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_billing.account-*-d623ccbbced4e6b1d87d03efd62912a2d6c53c5fbbca021eac23dfe11c3b073e",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM \"logs-ovh_billing.account-*\"\n| KEEP `ovh.billing.account.nichandle`, `ovh.billing.account.name`, `ovh.billing.account.organisation`, `ovh.billing.account.state`, `ovh.billing.account.legal_form`, `ovh.billing.account.country`, `ovh.billing.account.currency_code`, `ovh.billing.account.ovh_subsidiary`, `ovh.billing.account.language`, `user.email`, `user.full_name`\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_3",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_4",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_5",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_6",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_7",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_8",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_9",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_10",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": true,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "compact",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "4e7658e3-63d9-4ad1-9b3e-607dc71e37e7",
+                    "sectionId": "5d440f96-902c-4dc8-91e8-ef86e09d60d0",
+                    "w": 48,
+                    "x": 0,
+                    "y": 10
+                },
+                "panelIndex": "4e7658e3-63d9-4ad1-9b3e-607dc71e37e7",
+                "type": "vis"
+            }
+        ],
+        "pinned_panels": {
+            "panels": {
+                "506d833e-9442-462b-9ee6-a18a3fe71adc": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_billing.bill-* | STATS BY `ovh.billing.bill_detail.currency_code`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Currency",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 2,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "91ff9f40-5311-4629-98fd-dda72ddf4b05": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_billing.account-* | STATS BY `ovh.billing.account.state`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Account State",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 3,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "9f1e5ba2-64c2-4392-8217-1a22f90224e9": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_billing.bill-* | STATS BY `ovh.billing.bill_detail.bill_id`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Invoice ID",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 0,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "d0664048-6cef-425f-adf3-6ba0fd859abc": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_billing.bill-* | STATS BY `ovh.billing.bill_detail.domain`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Domain",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 1,
+                    "type": "options_list_control",
+                    "width": "medium"
+                }
+            }
+        },
+        "sections": [
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "08ccf5e9-a365-456a-bafa-ce576de27448",
+                    "y": 4
+                },
+                "title": "💰 Spend Overview"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "1d28c4d5-1b6e-43a7-8b24-ae24f5a4707f",
+                    "y": 5
+                },
+                "title": "🧾 Invoice Breakdown"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "955d3d3c-b445-441b-9e75-6b8f22b8c86e",
+                    "y": 6
+                },
+                "title": "🖥️ Compute \u0026 Infrastructure Costs"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "0acdde19-7eaf-4a5d-a998-5f869cc7f6bd",
+                    "y": 7
+                },
+                "title": "🤖 AI Endpoints Spend"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "0b7dcd80-fd49-4fe8-bc5f-2dbcdcf40996",
+                    "y": 8
+                },
+                "title": "📋 Billing Line Items Detail"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "5d440f96-902c-4dc8-91e8-ef86e09d60d0",
+                    "y": 9
+                },
+                "title": "🏢 Account Details"
+            }
+        ],
+        "timeRestore": false,
+        "title": "[OVH] Billing — Cost \u0026 Account Overview"
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2026-08-31T13:28:24.469Z",
+    "created_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0",
+    "id": "ovh_billing-05270717-8c18-4ed3-abb1-63b98f871b48",
+    "references": [],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+}

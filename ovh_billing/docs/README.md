@@ -16,7 +16,7 @@ This integration is compatible with the OVHcloud API v1. Supported regions: EU (
 
 The integration authenticates with the OVHcloud API using OAuth2 client credentials (service account). It polls:
 - `/me` — for account profile information on each interval
-- `/me/bill` + `/me/bill/{billId}` — to discover and fetch new invoices, tracking already-seen bill IDs via a cursor
+- `/me/bill` → `/me/bill/{billId}/details` → `/me/bill/{billId}/details/{detailId}` — to discover invoices and collect per-service charge line items, tracking already-seen bill IDs via a cursor
 
 ## What data does this integration collect?
 
@@ -134,9 +134,11 @@ An example event for `account` looks as following:
 
 ### `bill` data stream
 
-Collects invoice/bill records. Each event represents a single invoice with amount, tax, currency, and linked order. New bills are tracked via a cursor of seen bill IDs so each invoice is collected only once.
+Collects per-service charge line items from OVHcloud invoices. Each event represents one charge line from a bill, containing the service description, cloud project identifier, quantity consumed, unit price, total price, and the billing period dates. New bills are tracked via a cursor so each bill's line items are collected only once.
 
-**ECS fields set**: `event.id` (bill ID), `event.url`, `cloud.provider`.
+This enables cost breakdown by service type (`ovh.billing.bill_detail.description`), by project (`ovh.billing.bill_detail.domain`), and over time (`@timestamp` = period end date).
+
+**ECS fields set**: `event.id` (line item ID), `cloud.provider`.
 
 **Exported fields**
 
@@ -155,13 +157,15 @@ Collects invoice/bill records. Each event represents a single invoice with amoun
 | event.url | URL linking to an external system to continue investigation of this event. This URL links to another system where in-depth investigation of the specific occurrence of this event can take place. Alert events, indicated by `event.kind:alert`, are a common use case for this field. | keyword |
 | input.type | Type of filebeat input. | keyword |
 | log.offset | Log offset. | long |
-| ovh.billing.bill.bill_id | OVHcloud invoice identifier (e.g. LF20000001). | keyword |
-| ovh.billing.bill.currency_code | Currency code for the invoice amounts (e.g. EUR). | keyword |
-| ovh.billing.bill.order_id | Order ID linked to this bill. | long |
-| ovh.billing.bill.pdf_url | URL to the PDF version of the invoice. | keyword |
-| ovh.billing.bill.price_with_tax | Total invoice amount including tax. | double |
-| ovh.billing.bill.price_without_tax | Total invoice amount excluding tax. | double |
-| ovh.billing.bill.tax_amount | Tax amount on this invoice. | double |
+| ovh.billing.bill_detail.bill_id | Parent invoice identifier (e.g. LF20000001). | keyword |
+| ovh.billing.bill_detail.currency_code | Currency code for all price fields (e.g. EUR). | keyword |
+| ovh.billing.bill_detail.description | Human-readable service name for this charge line (e.g. "Public Cloud Gateway Small"). | keyword |
+| ovh.billing.bill_detail.domain | OVHcloud project or resource identifier associated with this charge. | keyword |
+| ovh.billing.bill_detail.period_end | End date of the billing period covered by this line item (YYYY-MM-DD). | keyword |
+| ovh.billing.bill_detail.period_start | Start date of the billing period covered by this line item (YYYY-MM-DD). | keyword |
+| ovh.billing.bill_detail.quantity | Quantity of the service unit consumed during the billing period. | double |
+| ovh.billing.bill_detail.total_price | Total charge for this line item (quantity × unit_price). | double |
+| ovh.billing.bill_detail.unit_price | Price per unit of service. | double |
 
 
 An example event for `bill` looks as following:
@@ -246,7 +250,15 @@ Elastic Agent must be installed. See [installation instructions](https://www.ela
 1. Log into the [OVHcloud Control Panel](https://www.ovhcloud.com/manager/).
 2. Navigate to **IAM** → **Service Accounts** → **Create a service account**.
 3. Note the **Client ID** and **Client Secret** (shown only once).
-4. Assign an IAM policy granting `GET /me` and `GET /me/bill*` read access.
+4. Create an IAM policy and assign it to the service account with the following permissions:
+
+**Product**: `OVHcloud customer account`
+
+| Permission | Description |
+|---|---|
+| `account:apiovh:me/GET` | Read account profile (`/me`) |
+| `account:apiovh:me/bill/GET` | List invoices (`/me/bill`) |
+| `account:apiovh:me/bill/*/GET` | Read individual invoice details (`/me/bill/{billId}`) |
 
 #### Step 2 — Configure the integration in Kibana
 
