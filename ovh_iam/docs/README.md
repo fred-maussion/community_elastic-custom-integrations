@@ -182,10 +182,11 @@ An example event for `token` looks as following:
 1. Navigate to **IAM → Policies** and click **Create a policy**.
 2. Give the policy a name (e.g. `elastic-iam-read`).
 3. Under **Products**, select **OVHcloud customer account** (this covers all `/me/…` endpoints).
-4. Add the following actions:
+4. Under **Resources**, select **All resources** (or explicitly add your account NIC handle). **This step is mandatory** — leaving resources empty means the policy grants nothing, regardless of what actions are listed.
+5. Add the following actions:
    - `account:apiovh:me/identity/user/get`
    - `account:apiovh:me/identity/user/token/get`
-5. Save the policy.
+6. Save the policy.
 
 ### 3. Attach the policy to the service account
 
