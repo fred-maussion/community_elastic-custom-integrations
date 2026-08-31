@@ -37,7 +37,7 @@ program: |-
           :
             int(now - duration(state.initial_interval)) * 1000
         ) + "&size=" + string(int(state.batch_size)) + "&page=" + string(cur.next_page)
-      ).do_request().as(resp,
+      ).with({"Header": {"Authorization": ["Bearer " + state.ai_token]}}).do_request().as(resp,
         (resp.StatusCode == 200) ?
           resp.Body.decode_json().items.as(items,
             {
