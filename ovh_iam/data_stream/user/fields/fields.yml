@@ -1,0 +1,21 @@
+- name: ovh.iam.user
+  type: group
+  fields:
+    - name: status
+      type: keyword
+      description: Account status (OK, DISABLED).
+    - name: type
+      type: keyword
+      description: Identity type (USER, SERVICE_ACCOUNT).
+    - name: urn
+      type: keyword
+      description: OVHcloud URN uniquely identifying this identity user.
+    - name: description
+      type: keyword
+      description: Human-readable description of the user.
+    - name: group
+      type: keyword
+      description: Primary IAM group of the user (e.g. UNPRIVILEGED, ADMIN).
+    - name: password_last_update
+      type: date
+      description: Timestamp of the last password change.

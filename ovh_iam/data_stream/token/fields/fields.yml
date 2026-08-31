@@ -1,0 +1,15 @@
+- name: ovh.iam.token
+  type: group
+  fields:
+    - name: name
+      type: keyword
+      description: Name of the personal access token.
+    - name: description
+      type: keyword
+      description: Human-readable description of the token.
+    - name: expires_at
+      type: date
+      description: Expiry date of the token (far future if non-expiring).
+    - name: last_used
+      type: date
+      description: Timestamp of the most recent use of the token.

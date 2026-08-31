@@ -1,0 +1,10 @@
+{
+  "events": [
+    {
+      "message": "{\"creation\":\"2026-06-12T19:38:44.910762+02:00\",\"description\":\"API key for Elastic AI endpoints\",\"expiresAt\":\"2106-01-01T00:59:59.999+01:00\",\"lastUsed\":\"2026-06-19T09:48:14.960974+02:00\",\"name\":\"capg-elastic-ai-key\",\"user_login\":\"ai-endpoints-user\"}"
+    },
+    {
+      "message": "{\"creation\":\"2026-03-15T10:00:00.000000+01:00\",\"description\":\"CI deployment token\",\"expiresAt\":\"2027-03-15T10:00:00.000000+01:00\",\"lastUsed\":\"2026-08-01T08:30:00.000000+02:00\",\"name\":\"ci-deploy-token\",\"user_login\":\"ci-service-account\"}"
+    }
+  ]
+}

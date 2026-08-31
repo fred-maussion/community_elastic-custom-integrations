@@ -1,0 +1,67 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+auth.oauth2:
+  client.id: {{client_id}}
+  client.secret: {{client_secret}}
+  token_url: {{token_url}}
+  scopes:
+    - all
+resource.url: {{url}}
+redact:
+  fields: ~
+program: |-
+  state.with(
+    request("GET", state.url.trim_right("/") + "/me/identity/user").do_request().as(list_resp,
+      (list_resp.StatusCode == 200) ?
+        list_resp.Body.decode_json().map(login,
+          request("GET", state.url.trim_right("/") + "/me/identity/user/" + login).do_request().as(user_resp,
+            (user_resp.StatusCode == 200) ?
+              user_resp.Body.decode_json()
+            :
+              {"login": login, "_error": "GET /me/identity/user/" + login + ": " + string(user_resp.Status)}
+          )
+        ).as(users,
+          {
+            "events": users.map(u, {"message": u.encode_json()}),
+            "want_more": false,
+          }
+        )
+      :
+        {
+          "events": {
+            "error": {
+              "code": string(list_resp.StatusCode),
+              "id": string(list_resp.Status),
+              "message": "GET /me/identity/user: " + ((size(list_resp.Body) != 0) ? string(list_resp.Body) : string(list_resp.Status)),
+            },
+          },
+          "want_more": false,
+        }
+    )
+  )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}

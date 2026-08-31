@@ -1,0 +1,31 @@
+{
+  "@timestamp": "2026-06-19T07:48:14.960Z",
+  "cloud": {
+    "provider": "ovh"
+  },
+  "ecs": {
+    "version": "9.3.0"
+  },
+  "event": {
+    "category": ["iam"],
+    "created": "2026-06-12T17:38:44.910Z",
+    "dataset": "ovh_iam.token",
+    "kind": "state",
+    "module": "ovh_iam",
+    "type": ["info"]
+  },
+  "ovh": {
+    "iam": {
+      "token": {
+        "description": "API key for Elastic AI endpoints",
+        "expires_at": "2106-01-01T00:59:59.999Z",
+        "last_used": "2026-06-19T07:48:14.960Z",
+        "name": "capg-elastic-ai-key"
+      }
+    }
+  },
+  "tags": ["forwarded", "ovh_iam-token"],
+  "user": {
+    "name": "ai-endpoints-user"
+  }
+}
