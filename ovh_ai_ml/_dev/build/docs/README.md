@@ -57,7 +57,7 @@ Elastic Agent must be installed. For more details, check the Elastic Agent [inst
 |-------|-------|
 | Name | Any descriptive name (e.g., `elastic-package-ai-token`) |
 | Label selector | Leave empty to access all resources, or filter by `type=app` (Deploy only) or `type=job` (Training only) |
-| Role | **AI Reader** (read-only) |
+| Role | **AI Reader** — the wizard defaults to *AI Operator* (read+write); you must change it to *AI Reader* |
 | Region | Select the region where your AI resources are deployed (e.g., Gravelines) |
 
 4. Click **Generate** and copy the token value — it is shown only once.
