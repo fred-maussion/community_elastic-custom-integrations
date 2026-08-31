@@ -1,0 +1,112 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+resource.url: {{ldp_url}}
+auth.custom:
+  header: Authorization
+  value: 'Bearer {{ldp_token}}'
+state:
+  ldp_alias: {{ldp_alias}}
+  ldp_token: {{ldp_token}}
+  batch_size: {{batch_size}}
+  initial_interval: {{initial_interval}}
+redact:
+  fields:
+    - ldp_token
+program: |-
+  {
+    "last_ts": state.?cursor.last_timestamp,
+    "last_id": state.?cursor.last_id,
+  }.as(cur,
+    state.with(
+      request("POST", state.url.trim_right("/") + "/" + state.ldp_alias + "/_search").with(
+        {
+          "Header": {
+            "Content-Type": ["application/json"],
+          },
+          "Body": (
+            (cur.last_id.orValue("") != "") ?
+              {
+                "query": {"range": {"@timestamp": {"gte": cur.last_ts.orValue("")}}},
+                "sort": [{"@timestamp": "asc"}, {"_id": "asc"}],
+                "search_after": [cur.last_ts.orValue(""), cur.last_id.orValue("")],
+                "size": int(state.batch_size),
+              }
+            :
+              {
+                "query": {"range": {"@timestamp": {"gt": cur.last_ts.orValue(string(now - duration(state.initial_interval)))}}},
+                "sort": [{"@timestamp": "asc"}, {"_id": "asc"}],
+                "size": int(state.batch_size),
+              }
+          ).encode_json(),
+        }
+      ).do_request().as(resp,
+        (resp.StatusCode == 200) ?
+          resp.Body.decode_json().hits.hits.as(
+            hits,
+            {
+              "events": hits.map(e, {"message": e["_source"].encode_json()}),
+              "cursor": (size(hits) > 0) ?
+                {
+                  "last_timestamp": string(hits[size(hits) - 1].sort[0]),
+                  "last_id": string(hits[size(hits) - 1].sort[1]),
+                }
+              :
+                state.?cursor.orValue({}),
+              "want_more": size(hits) > 0 && size(hits) == int(state.batch_size),
+            }
+          )
+        : (resp.StatusCode == 429 || resp.StatusCode >= 500) ?
+          // Transient error — object shape resets cursor and triggers retry
+          {
+            "events": {
+              "error": {
+                "code": string(resp.StatusCode),
+                "id": string(resp.Status),
+                "message": "POST /" + state.ldp_alias + "/_search: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+              },
+            },
+            "want_more": false,
+          }
+        :
+          // Non-transient 4xx — array shape preserves cursor and indexes the error
+          {
+            "events": [
+              {
+                "error": {
+                  "code": string(resp.StatusCode),
+                  "id": string(resp.Status),
+                  "message": "POST /" + state.ldp_alias + "/_search: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+                },
+              },
+            ],
+            "want_more": false,
+          }
+      )
+    )
+  )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}

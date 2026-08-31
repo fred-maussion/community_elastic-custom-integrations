@@ -1,0 +1,46 @@
+- name: ovh
+  type: group
+  fields:
+    - name: load_balancer
+      type: group
+      fields:
+        - name: lb_id
+          type: keyword
+          description: >-
+            UUID of the OVHcloud Public Cloud Load Balancer resource.
+        - name: listener_id
+          type: keyword
+          description: >-
+            UUID of the listener that received the connection.
+        - name: pool_id
+          type: keyword
+          description: >-
+            UUID of the backend pool that handled the request.
+        - name: member_id
+          type: keyword
+          description: >-
+            UUID of the pool member (backend server) that served the request.
+        - name: region
+          type: keyword
+          description: >-
+            OVHcloud region where the load balancer is deployed (e.g. GRA11).
+        - name: termination_state
+          type: keyword
+          description: >-
+            HAProxy session termination state flags. Two characters for TCP listeners (e.g. --) and four characters for HTTP/HTTPS listeners (e.g. ----).
+        - name: tcp_session_duration_ms
+          type: long
+          description: >-
+            Total TCP session duration in milliseconds as reported by HAProxy.
+        - name: accept_date
+          type: keyword
+          description: >-
+            Connection acceptance date/time as formatted by HAProxy (e.g. 25/Mar/2024:14:07:19.536).
+        - name: http_version
+          type: float
+          description: >-
+            HTTP protocol version as a number (e.g. 1.1). Present on HTTP/HTTPS listeners only.
+        - name: message
+          type: keyword
+          description: >-
+            Raw HAProxy log line as emitted in the LDP source message field.

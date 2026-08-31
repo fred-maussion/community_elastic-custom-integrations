@@ -1,0 +1,241 @@
+---
+description: Pipeline for processing OVHcloud Load Balancer HAProxy access logs
+processors:
+  # === CEL-only: remove agentless metadata when present ===
+  - remove:
+      tag: remove_agentless_metadata
+      field:
+        - organization
+        - division
+        - team
+      ignore_missing: true
+      if: >-
+        ctx.organization instanceof String &&
+        ctx.division instanceof String &&
+        ctx.team instanceof String
+
+  # === CEL-only: terminate on collector error placeholder ===
+  - terminate:
+      tag: terminate_on_collector_error
+      if: ctx.error?.message != null && ctx.message == null
+
+  # === CEL input: preserve original, parse JSON (JSE00001) ===
+  - rename:
+      tag: rename_message_to_event_original
+      field: message
+      target_field: event.original
+      if: ctx.event?.original == null
+      ignore_missing: true
+  - remove:
+      tag: remove_message_if_original_exists
+      field: message
+      if: ctx.event?.original != null
+      ignore_missing: true
+  - json:
+      tag: parse_json_message
+      field: event.original
+      target_field: json
+
+  # === ECS boilerplate ===
+  - set:
+      tag: set_ecs_version
+      field: ecs.version
+      value: "9.3.0"
+  - set:
+      tag: set_event_kind
+      field: event.kind
+      value: event
+  - set:
+      tag: set_cloud_provider
+      field: cloud.provider
+      value: ovh
+
+  # === Timestamp from log data ===
+  - date:
+      tag: set_timestamp_from_json
+      field: json.@timestamp
+      formats:
+        - ISO8601
+      target_field: '@timestamp'
+      ignore_failure: true
+
+  # === Network entity fields ===
+  - rename:
+      tag: rename_client_ip
+      field: json.client_ip
+      target_field: client.ip
+      ignore_missing: true
+  - rename:
+      tag: rename_source_port
+      field: json.client_port_int
+      target_field: source.port
+      ignore_missing: true
+  - rename:
+      tag: rename_client_geo_country
+      field: json.client_ip_country_code
+      target_field: client.geo.country_iso_code
+      ignore_missing: true
+  - rename:
+      tag: rename_client_geo_city
+      field: json.client_ip_city_name
+      target_field: client.geo.city_name
+      ignore_missing: true
+  - rename:
+      tag: rename_destination_bytes
+      field: json.bytes_read_int
+      target_field: destination.bytes
+      ignore_missing: true
+  - rename:
+      tag: rename_source_bytes
+      field: json.bytes_uploaded_int
+      target_field: source.bytes
+      ignore_missing: true
+
+  # === Cloud fields ===
+  - rename:
+      tag: rename_cloud_project_id
+      field: json.project_id
+      target_field: cloud.project.id
+      ignore_missing: true
+  - rename:
+      tag: rename_cloud_region
+      field: json.region
+      target_field: cloud.region
+      ignore_missing: true
+
+  # === Custom OVH Load Balancer fields ===
+  - rename:
+      tag: rename_lb_id
+      field: json.load_balancer_id
+      target_field: ovh.load_balancer.lb_id
+      ignore_missing: true
+  - rename:
+      tag: rename_listener_id
+      field: json.listener_id
+      target_field: ovh.load_balancer.listener_id
+      ignore_missing: true
+  - rename:
+      tag: rename_pool_id
+      field: json.pool
+      target_field: ovh.load_balancer.pool_id
+      ignore_missing: true
+  - rename:
+      tag: rename_member_id
+      field: json.member
+      target_field: ovh.load_balancer.member_id
+      ignore_missing: true
+  - rename:
+      tag: rename_termination_state
+      field: json.termination_state
+      target_field: ovh.load_balancer.termination_state
+      ignore_missing: true
+  - rename:
+      tag: rename_tcp_session_duration
+      field: json.tcp_total_session_duration_time_int
+      target_field: ovh.load_balancer.tcp_session_duration_ms
+      ignore_missing: true
+  - rename:
+      tag: rename_accept_date
+      field: json.accept_date
+      target_field: ovh.load_balancer.accept_date
+      ignore_missing: true
+  - set:
+      tag: set_ovh_region
+      field: ovh.load_balancer.region
+      copy_from: cloud.region
+      ignore_empty_value: true
+  - rename:
+      tag: rename_haproxy_message
+      field: json.message
+      target_field: ovh.load_balancer.message
+      ignore_missing: true
+
+  # === Conditional HTTP fields (present on HTTP/HTTPS listeners only) ===
+  - rename:
+      tag: rename_http_method
+      field: json.http_verb
+      target_field: http.request.method
+      if: ctx.json?.http_verb != null
+      ignore_missing: true
+  - rename:
+      tag: rename_http_status
+      field: json.http_status_int
+      target_field: http.response.status_code
+      if: ctx.http?.request?.method != null
+      ignore_missing: true
+  - rename:
+      tag: rename_url_path
+      field: json.http_request
+      target_field: url.path
+      if: ctx.http?.request?.method != null
+      ignore_missing: true
+  - rename:
+      tag: rename_http_version
+      field: json.http_version_num
+      target_field: ovh.load_balancer.http_version
+      if: ctx.http?.request?.method != null
+      ignore_missing: true
+
+  # === ECS categorization (Pattern B — 2 cases) ===
+  - append:
+      tag: append_event_category_network
+      field: event.category
+      value: network
+      allow_duplicates: false
+  - append:
+      tag: append_event_type_connection
+      field: event.type
+      value: connection
+      allow_duplicates: false
+  - append:
+      tag: append_event_category_web
+      field: event.category
+      value: web
+      allow_duplicates: false
+      if: ctx.http?.request?.method != null
+  - append:
+      tag: append_event_type_access
+      field: event.type
+      value: access
+      allow_duplicates: false
+      if: ctx.http?.request?.method != null
+
+  # === Related fields ===
+  - append:
+      tag: append_related_ip_client
+      field: related.ip
+      value: '{{{client.ip}}}'
+      allow_duplicates: false
+      if: ctx.client?.ip != null
+
+  # === Preserve original on partial errors ===
+  - append:
+      tag: append_preserve_original_on_error
+      field: tags
+      value: preserve_original_event
+      allow_duplicates: false
+      if: ctx.error?.message != null
+
+  # === Cleanup temporary json namespace ===
+  - remove:
+      tag: cleanup_json_namespace
+      field: json
+      ignore_missing: true
+
+on_failure:
+  - append:
+      tag: on_failure_append_error_message
+      field: error.message
+      value: >-
+        Processor '{{{ _ingest.on_failure_processor_type }}}'
+        {{{#_ingest.on_failure_processor_tag}}}with tag '{{{ _ingest.on_failure_processor_tag }}}'
+        {{{/_ingest.on_failure_processor_tag}}}failed with message '{{{ _ingest.on_failure_message }}}'
+  - set:
+      tag: set_pipeline_error_to_event_kind
+      field: event.kind
+      value: pipeline_error
+  - append:
+      tag: on_failure_append_preserve_original_event
+      field: tags
+      value: preserve_original_event
+      allow_duplicates: false

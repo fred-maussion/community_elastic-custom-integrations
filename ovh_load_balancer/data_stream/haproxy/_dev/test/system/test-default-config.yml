@@ -1,0 +1,16 @@
+wait_for_data_timeout: 1m
+input: cel
+service: ovh_load_balancer-haproxy
+vars:
+  ldp_url: http://{{Hostname}}:{{Port}}
+  ldp_alias: lb-alias
+  ldp_token: test-ldp-token
+data_stream:
+  vars:
+    interval: 2s
+    batch_size: 5
+    initial_interval: 720h
+    preserve_original_event: true
+assert:
+  # Round 1 page 1: 5 hits + round 1 page 2: 3 hits + round 2: 2 hits = 10
+  hit_count: 10

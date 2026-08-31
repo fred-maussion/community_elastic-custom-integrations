@@ -1,0 +1,56 @@
+format_version: "3.4.2"
+name: ovh_load_balancer
+title: "OVHcloud Load Balancer"
+version: 0.1.0
+source:
+  license: "Apache-2.0"
+description: "Monitor OVHcloud Public Cloud Load Balancer access logs via Logs Data Platform (LDP)."
+type: integration
+categories:
+  - network
+  - web
+conditions:
+  kibana:
+    version: "^8.19.0 || ^9.1.0"
+  elastic:
+    subscription: "basic"
+icons:
+  - src: /img/ovh-logo.svg
+    title: OVHcloud logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: ovh_load_balancer
+    title: OVHcloud Load Balancer
+    description: Collect HAProxy access logs from OVHcloud Load Balancer via Logs Data Platform
+    inputs:
+      - type: cel
+        title: Collect OVHcloud Load Balancer logs via LDP OpenSearch API
+        description: Collecting HAProxy access logs from the Logs Data Platform (LDP) OpenSearch endpoint
+        vars:
+          - name: ldp_url
+            type: url
+            title: LDP Cluster URL
+            description: >-
+              Logs Data Platform cluster URL including port, e.g. https://gra1.logs.ovh.com:9200
+            default: https://gra1.logs.ovh.com:9200
+            show_user: true
+            required: true
+          - name: ldp_alias
+            type: text
+            title: LDP OpenSearch Alias
+            description: >-
+              Name of the OpenSearch alias in your LDP account that maps to the stream receiving Load Balancer logs.
+            show_user: true
+            required: true
+          - name: ldp_token
+            type: password
+            title: LDP API Token
+            description: >-
+              LDP API token used to authenticate against the OpenSearch endpoint. Create one in the OVHcloud Control Panel under your LDP account settings.
+            show_user: true
+            required: true
+            secret: true
+owner:
+  github: fred-maussion/community_elastic-custom-integrations
+  type: community

@@ -1,0 +1,8 @@
+{
+    "events": [
+        {
+            "@timestamp": "2024-03-25T14:00:00.000Z",
+            "message": "{\"@timestamp\":\"2024-03-25T14:00:00.000Z\",\"accept_date\":\"25/Mar/2024:14:00:00.000\",\"bytes_read_int\":1024,\"bytes_uploaded_int\":512,\"client_ip\":\"203.0.113.1\",\"client_ip_city_name\":\"Paris\",\"client_ip_country_code\":\"FR\",\"client_ip_geolocation\":\"48.8566,2.3522\",\"client_port_int\":50000,\"listener_id\":\"aaaaaaaa-0000-cccc-dddd-eeeeeeeeeeee\",\"load_balancer_id\":\"bbbbbbbb-cccc-dddd-eeee-ffffffffffff\",\"member\":\"cccccccc-dddd-eeee-ffff-aaaaaaaaaaaa\",\"message\":\"203.0.113.1:50000 [25/Mar/2024:14:00:00.000] front back/member1 0/0/0/5/5 200 1024 - - ---- 1/1/0/0/0 0/0 \\\"GET /api/v1/resource.html HTTP/1.1\\\"\",\"pool\":\"dddddddd-eeee-ffff-aaaa-bbbbbbbbbbbb\",\"project_id\":\"example-project-id-1234\",\"region\":\"GRA11\",\"tcp_total_session_duration_time_int\":5,\"termination_state\":\"----\",\"timestamp\":\"2024-03-25T14:00:00.000Z\",\"http_request\":\"/api/v1/resource.html\",\"http_status_int\":200,\"http_verb\":\"GET\",\"http_version_num\":1.1}"
+        }
+    ]
+}
