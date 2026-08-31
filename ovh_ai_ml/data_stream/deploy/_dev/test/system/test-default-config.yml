@@ -6,7 +6,7 @@ vars:
   ai_token: test-ai-token
 data_stream:
   vars:
-    interval: 2s
+    interval: 30s
     batch_size: 5
     initial_interval: 720h
     preserve_original_event: true

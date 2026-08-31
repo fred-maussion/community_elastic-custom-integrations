@@ -2,9 +2,6 @@ rules:
   # GET /v1/app — AI Deploy app list
   - path: /v1/app
     methods: [GET]
-    request_headers:
-      Authorization:
-        - 'Bearer test-ai-token'
     responses:
       - status_code: 200
         headers:
@@ -15,9 +12,6 @@ rules:
   # GET /v1/job — AI Training job list
   - path: /v1/job
     methods: [GET]
-    request_headers:
-      Authorization:
-        - 'Bearer test-ai-token'
     responses:
       - status_code: 200
         headers:

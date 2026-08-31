@@ -1,0 +1,62 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2025-08-01T07:30:00.000Z",
+            "cloud": {
+                "instance": {
+                    "id": "j1b2c3d4-0001-0000-0000-000000000001",
+                    "name": "fine-tune-llm-run5"
+                },
+                "provider": "ovh"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "process"
+                ],
+                "created": "2025-08-01T06:00:00Z",
+                "duration": 5400000000000,
+                "end": "2025-08-01T07:31:00Z",
+                "kind": "event",
+                "original": "{\"id\":\"j1b2c3d4-0001-0000-0000-000000000001\",\"user\":\"user-ovh-test\",\"created_at\":\"2025-08-01T06:00:00Z\",\"updated_at\":\"2025-08-01T07:30:00Z\",\"spec\":{\"name\":\"fine-tune-llm-run5\",\"image\":\"pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime\",\"resources\":{\"gpu\":4,\"cpu\":12},\"timeout\":86400,\"labels\":{\"project\":\"llm-finetune\",\"run\":\"5\"}},\"status\":{\"state\":\"DONE\",\"exit_code\":0,\"duration\":5400,\"queued_at\":\"2025-08-01T06:00:00Z\",\"started_at\":\"2025-08-01T06:01:00Z\",\"stopped_at\":\"2025-08-01T07:31:00Z\",\"finalized_at\":\"2025-08-01T07:35:00Z\",\"last_transition_date\":\"2025-08-01T07:31:00Z\",\"history\":[{\"state\":\"QUEUED\",\"date\":\"2025-08-01T06:00:00Z\"},{\"state\":\"INITIALIZING\",\"date\":\"2025-08-01T06:00:30Z\"},{\"state\":\"RUNNING\",\"date\":\"2025-08-01T06:01:00Z\"},{\"state\":\"DONE\",\"date\":\"2025-08-01T07:31:00Z\"}]}}",
+                "outcome": "success",
+                "start": "2025-08-01T06:01:00Z",
+                "type": [
+                    "end"
+                ]
+            },
+            "labels": {
+                "project": "llm-finetune",
+                "run": "5"
+            },
+            "ovh": {
+                "ai_ml": {
+                    "training": {
+                        "queued_at": "2025-08-01T06:00:00Z",
+                        "resources": {
+                            "cpu": 12,
+                            "gpu": 4
+                        },
+                        "state": "DONE"
+                    }
+                }
+            },
+            "process": {
+                "exit_code": 0
+            },
+            "related": {
+                "user": [
+                    "user-ovh-test"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ],
+            "user": {
+                "name": "user-ovh-test"
+            }
+        }
+    ]
+}

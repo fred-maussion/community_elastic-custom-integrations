@@ -134,9 +134,9 @@ processors:
 
   # === ECS categorization ===
   - append:
-      tag: append_event_category_cloud
+      tag: append_event_category_host
       field: event.category
-      value: cloud
+      value: host
       allow_duplicates: false
   - append:
       tag: append_event_type_change
