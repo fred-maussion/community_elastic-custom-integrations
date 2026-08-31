@@ -1,0 +1,7 @@
+{
+    "events": [
+        {
+            "message": "{\"nichandle\":\"example-acct-ovh\",\"firstname\":\"Example\",\"name\":\"Account\",\"email\":\"example-account@example.com\",\"phone\":\"+33100000000\",\"country\":\"FR\",\"currency\":{\"code\":\"EUR\",\"symbol\":\"\\u20ac\"},\"language\":\"fr_FR\",\"legalform\":\"individual\",\"state\":\"complete\",\"ovhSubsidiary\":\"FR\",\"phoneCountry\":\"FR\"}"
+        }
+    ]
+}

@@ -1,0 +1,4 @@
+fields:
+  data_stream.type: logs
+  data_stream.dataset: ovh_billing.account
+  data_stream.namespace: ep

@@ -1,0 +1,80 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+auth.oauth2:
+  client.id: {{client_id}}
+  client.secret: {{client_secret}}
+  token_url: {{token_url}}
+  scopes:
+    - all
+resource.url: {{url}}
+state:
+  seen_ids: []
+redact:
+  fields: ~
+program: |-
+  // Fetch bill list, skip already-seen bills, then for each new bill fetch all
+  // line-item details and emit one event per charge line.
+  state.?cursor.seen_ids.orValue([]).as(seen_ids,
+    request("GET", state.url.trim_right("/") + "/me/bill").do_request().as(list_resp,
+      (list_resp.StatusCode != 200) ?
+        state.with({
+          "events": [{"error": {
+            "code": string(list_resp.StatusCode),
+            "id": string(list_resp.Status),
+            "message": "GET /me/bill: " + string(list_resp.Body),
+          }}],
+          "want_more": false,
+        })
+      :
+        list_resp.Body.decode_json().filter(bid, !(bid in seen_ids)).as(new_ids,
+          size(new_ids) == 0 ?
+            state.with({"events": [], "want_more": false})
+          :
+            new_ids.map(bid,
+              request("GET", state.url.trim_right("/") + "/me/bill/" + bid + "/details").do_request().as(det_list_resp,
+                (det_list_resp.StatusCode != 200) ? [] :
+                  det_list_resp.Body.decode_json().map(did,
+                    request("GET", state.url.trim_right("/") + "/me/bill/" + bid + "/details/" + did).do_request().as(d_resp,
+                      (d_resp.StatusCode == 200) ?
+                        d_resp.Body.decode_json().with({"bill_id": bid})
+                      :
+                        {"billDetailId": did, "bill_id": bid, "_error": string(d_resp.Status)}
+                    )
+                  )
+              )
+            ).flatten().as(all_details,
+              state.with({
+                "events": all_details.map(d, {"message": d.encode_json()}),
+                "cursor": {"seen_ids": seen_ids + new_ids},
+                "want_more": false,
+              })
+            )
+        )
+    )
+  )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}

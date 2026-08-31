@@ -1,0 +1,19 @@
+- name: ovh.ai_ml.training
+  type: group
+  fields:
+    - name: state
+      type: keyword
+      description: >-
+        Current state of the AI Training job (QUEUED, INITIALIZING, PENDING, RUNNING, INTERRUPTING, INTERRUPTED, DONE, ERROR, TIMEOUT, FAILED).
+    - name: queued_at
+      type: date
+      description: Timestamp when the job entered the queue.
+    - name: resources.gpu
+      type: long
+      description: Number of GPUs requested by the job.
+    - name: resources.cpu
+      type: long
+      description: Number of CPUs requested by the job.
+    - name: monitoring_url
+      type: keyword
+      description: Grafana monitoring dashboard URL for the job.

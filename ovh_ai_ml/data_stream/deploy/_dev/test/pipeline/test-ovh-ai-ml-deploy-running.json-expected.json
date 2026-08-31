@@ -1,0 +1,62 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2025-08-01T10:05:30.000Z",
+            "cloud": {
+                "instance": {
+                    "id": "a1b2c3d4-0001-0000-0000-000000000001",
+                    "name": "embedding-api-v2"
+                },
+                "provider": "ovh"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "host"
+                ],
+                "created": "2025-08-01T08:00:00Z",
+                "kind": "event",
+                "original": "{\"id\":\"a1b2c3d4-0001-0000-0000-000000000001\",\"user\":\"user-ovh-test\",\"createdAt\":\"2025-08-01T08:00:00Z\",\"updatedAt\":\"2025-08-01T10:05:30Z\",\"spec\":{\"name\":\"embedding-api-v2\",\"image\":\"registry.gra.ai.cloud.ovh.net/00000/embedding:v2\",\"resources\":{\"gpu\":1,\"cpu\":4,\"memory\":8192},\"labels\":{\"env\":\"prod\",\"model\":\"embedding-v2\"}},\"status\":{\"state\":\"RUNNING\",\"availableReplicas\":2,\"url\":\"https://a1b2c3d4-0001-0000-0000-000000000001.app.gra.ai.cloud.ovh.net\",\"monitoringUrl\":\"https://monitoring.gra.ai.cloud.ovh.net/d/app-gpu?var-app=a1b2c3d4-0001\",\"lastTransitionDate\":\"2025-08-01T10:05:30Z\",\"history\":[{\"state\":\"INITIALIZING\",\"date\":\"2025-08-01T08:00:00Z\"},{\"state\":\"RUNNING\",\"date\":\"2025-08-01T10:05:30Z\"}]}}",
+                "outcome": "success",
+                "start": "2025-08-01T10:05:30Z",
+                "type": [
+                    "info"
+                ]
+            },
+            "labels": {
+                "env": "prod",
+                "model": "embedding-v2"
+            },
+            "ovh": {
+                "ai_ml": {
+                    "deploy": {
+                        "available_replicas": 2,
+                        "monitoring_url": "https://monitoring.gra.ai.cloud.ovh.net/d/app-gpu?var-app=a1b2c3d4-0001",
+                        "resources": {
+                            "cpu": 4,
+                            "gpu": 1,
+                            "memory_mb": 8192
+                        },
+                        "state": "RUNNING"
+                    }
+                }
+            },
+            "related": {
+                "user": [
+                    "user-ovh-test"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ],
+            "url": {
+                "full": "https://a1b2c3d4-0001-0000-0000-000000000001.app.gra.ai.cloud.ovh.net"
+            },
+            "user": {
+                "name": "user-ovh-test"
+            }
+        }
+    ]
+}

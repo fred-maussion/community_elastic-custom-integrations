@@ -1,0 +1,10 @@
+{
+    "events": [
+        {
+            "message": "{\"billDetailId\":\"FR10000001\",\"bill_id\":\"LF20000001\",\"description\":\"Public Cloud Gateway Small\",\"domain\":\"abcdef1234567890abcdef1234567890\",\"quantity\":\"720\",\"periodStart\":\"2026-05-01\",\"periodEnd\":\"2026-06-01\",\"totalPrice\":{\"value\":2.02,\"currencyCode\":\"EUR\",\"text\":\"2.02 €\"},\"unitPrice\":{\"value\":0.0028,\"currencyCode\":\"EUR\",\"text\":\"0.0028 €\"}}"
+        },
+        {
+            "message": "{\"billDetailId\":\"FR10000002\",\"bill_id\":\"LF20000001\",\"description\":\"Public Cloud Floating IP\",\"domain\":\"abcdef1234567890abcdef1234567890\",\"quantity\":\"3067\",\"periodStart\":\"2026-05-01\",\"periodEnd\":\"2026-06-01\",\"totalPrice\":{\"value\":8.28,\"currencyCode\":\"EUR\",\"text\":\"8.28 €\"},\"unitPrice\":{\"value\":0.0027,\"currencyCode\":\"EUR\",\"text\":\"0.0027 €\"}}"
+        }
+    ]
+}

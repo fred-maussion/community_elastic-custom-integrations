@@ -1,0 +1,11 @@
+# newer versions go on top
+- version: "1.0.0"
+  changes:
+    - description: Promote to v1.0.0. Add AI Deploy & Training overview Kibana dashboard and screenshots. Fix updatedAfter cursor to use Unix seconds (not milliseconds) for OVH job API. Require AI Operator role for token (AI Reader insufficient).
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/88
+- version: "0.1.0"
+  changes:
+    - description: Initial release of OVHcloud AI & Machine Learning integration with AI Deploy app and AI Training job lifecycle monitoring.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/88

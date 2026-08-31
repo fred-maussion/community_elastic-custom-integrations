@@ -1,0 +1,169 @@
+---
+description: Pipeline for processing OVHcloud bill line-item events.
+processors:
+  - remove:
+      field:
+        - organization
+        - division
+        - team
+      ignore_missing: true
+      if: ctx.organization instanceof String && ctx.division instanceof String && ctx.team instanceof String
+      tag: remove_agentless_tags
+
+  - terminate:
+      tag: data_collection_error
+      if: ctx.error?.message != null && ctx.message == null && ctx.event?.original == null
+
+  - rename:
+      field: message
+      tag: rename_message_to_event_original
+      target_field: event.original
+      ignore_missing: true
+      if: ctx.event?.original == null
+
+  - remove:
+      field: message
+      tag: remove_message
+      ignore_missing: true
+      if: ctx.event?.original != null
+
+  - json:
+      field: event.original
+      target_field: json
+      tag: parse_json
+      if: ctx.event?.original != null
+      on_failure:
+        - append:
+            field: error.message
+            value: 'parse_json: {{{ _ingest.on_failure_message }}}'
+
+  # ECS boilerplate
+  - set:
+      field: ecs.version
+      tag: set_ecs_version
+      value: '9.3.0'
+  - set:
+      field: event.kind
+      tag: set_event_kind
+      value: event
+  - append:
+      field: event.category
+      tag: append_event_category_configuration
+      value: configuration
+      allow_duplicates: false
+  - append:
+      field: event.type
+      tag: append_event_type_info
+      value: info
+      allow_duplicates: false
+  - set:
+      field: cloud.provider
+      tag: set_cloud_provider
+      value: ovh
+
+  # Timestamp: end of the billing period this line item covers
+  - date:
+      field: json.periodEnd
+      target_field: '@timestamp'
+      formats:
+        - yyyy-MM-dd
+      tag: parse_period_end
+      ignore_failure: true
+
+  # Event identity
+  - rename:
+      field: json.billDetailId
+      target_field: event.id
+      tag: rename_detail_id
+      ignore_missing: true
+
+  # Parent bill reference
+  - rename:
+      field: json.bill_id
+      target_field: ovh.billing.bill_detail.bill_id
+      tag: rename_bill_id
+      ignore_missing: true
+
+  # Service description and project
+  - rename:
+      field: json.description
+      target_field: ovh.billing.bill_detail.description
+      tag: rename_description
+      ignore_missing: true
+  - rename:
+      field: json.domain
+      target_field: ovh.billing.bill_detail.domain
+      tag: rename_domain
+      ignore_missing: true
+
+  # Billing period
+  - rename:
+      field: json.periodStart
+      target_field: ovh.billing.bill_detail.period_start
+      tag: rename_period_start
+      ignore_missing: true
+  - rename:
+      field: json.periodEnd
+      target_field: ovh.billing.bill_detail.period_end
+      tag: rename_period_end
+      ignore_missing: true
+
+  # Pricing
+  - set:
+      field: ovh.billing.bill_detail.total_price
+      tag: set_total_price
+      copy_from: json.totalPrice.value
+      ignore_empty_value: true
+      if: ctx.json?.totalPrice?.value != null
+  - set:
+      field: ovh.billing.bill_detail.unit_price
+      tag: set_unit_price
+      copy_from: json.unitPrice.value
+      ignore_empty_value: true
+      if: ctx.json?.unitPrice?.value != null
+  - set:
+      field: ovh.billing.bill_detail.currency_code
+      tag: set_currency_code
+      copy_from: json.totalPrice.currencyCode
+      ignore_empty_value: true
+      if: ctx.json?.totalPrice?.currencyCode != null
+
+  # Quantity — OVH returns this as a string, convert to double
+  - convert:
+      field: json.quantity
+      target_field: ovh.billing.bill_detail.quantity
+      type: double
+      tag: convert_quantity
+      ignore_missing: true
+      ignore_failure: true
+
+  # Cleanup
+  - remove:
+      field: json
+      tag: cleanup_json
+      ignore_missing: true
+
+  - append:
+      field: tags
+      tag: append_preserve_original_event_on_error
+      value: preserve_original_event
+      allow_duplicates: false
+      if: ctx.error?.message != null
+
+on_failure:
+  - append:
+      field: error.message
+      tag: on_failure_append_error_message
+      value: >-
+        Processor '{{{ _ingest.on_failure_processor_type }}}'
+        {{{#_ingest.on_failure_processor_tag}}}with tag '{{{ _ingest.on_failure_processor_tag }}}'
+        {{{/_ingest.on_failure_processor_tag}}}failed with message '{{{ _ingest.on_failure_message }}}'
+  - set:
+      field: event.kind
+      tag: set_pipeline_error_to_event_kind
+      value: pipeline_error
+  - append:
+      field: tags
+      tag: on_failure_append_preserve_original_event
+      value: preserve_original_event
+      allow_duplicates: false

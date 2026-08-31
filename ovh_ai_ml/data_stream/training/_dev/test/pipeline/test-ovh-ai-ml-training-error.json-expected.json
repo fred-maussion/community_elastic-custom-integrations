@@ -1,0 +1,62 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2025-08-01T08:45:00.000Z",
+            "cloud": {
+                "instance": {
+                    "id": "j1b2c3d4-0002-0000-0000-000000000002",
+                    "name": "eval-benchmark-run1"
+                },
+                "provider": "ovh"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "process"
+                ],
+                "created": "2025-08-01T08:00:00Z",
+                "duration": 2700000000000,
+                "end": "2025-08-01T08:46:00Z",
+                "kind": "event",
+                "original": "{\"id\":\"j1b2c3d4-0002-0000-0000-000000000002\",\"user\":\"user-ovh-test\",\"createdAt\":\"2025-08-01T08:00:00Z\",\"updatedAt\":\"2025-08-01T08:45:00Z\",\"spec\":{\"name\":\"eval-benchmark-run1\",\"image\":\"python:3.11-slim\",\"resources\":{\"gpu\":1,\"cpu\":4},\"timeout\":3600,\"labels\":{\"project\":\"benchmark\",\"run\":\"1\"}},\"status\":{\"state\":\"ERROR\",\"exitCode\":1,\"duration\":2700,\"queuedAt\":\"2025-08-01T08:00:00Z\",\"startedAt\":\"2025-08-01T08:01:00Z\",\"stoppedAt\":\"2025-08-01T08:46:00Z\",\"finalizedAt\":\"2025-08-01T08:50:00Z\",\"lastTransitionDate\":\"2025-08-01T08:45:00Z\",\"history\":[{\"state\":\"QUEUED\",\"date\":\"2025-08-01T08:00:00Z\"},{\"state\":\"INITIALIZING\",\"date\":\"2025-08-01T08:00:30Z\"},{\"state\":\"RUNNING\",\"date\":\"2025-08-01T08:01:00Z\"},{\"state\":\"ERROR\",\"date\":\"2025-08-01T08:45:00Z\"}]}}",
+                "outcome": "failure",
+                "start": "2025-08-01T08:01:00Z",
+                "type": [
+                    "end"
+                ]
+            },
+            "labels": {
+                "project": "benchmark",
+                "run": "1"
+            },
+            "ovh": {
+                "ai_ml": {
+                    "training": {
+                        "queued_at": "2025-08-01T08:00:00Z",
+                        "resources": {
+                            "cpu": 4,
+                            "gpu": 1
+                        },
+                        "state": "ERROR"
+                    }
+                }
+            },
+            "process": {
+                "exit_code": 1
+            },
+            "related": {
+                "user": [
+                    "user-ovh-test"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ],
+            "user": {
+                "name": "user-ovh-test"
+            }
+        }
+    ]
+}

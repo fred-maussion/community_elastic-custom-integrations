@@ -1,0 +1,7 @@
+{
+    "events": [
+        {
+            "message": "{\"id\":\"a1b2c3d4-0002-0000-0000-000000000002\",\"user\":\"user-ovh-test\",\"createdAt\":\"2025-08-01T09:00:00Z\",\"updatedAt\":\"2025-08-01T09:30:00Z\",\"spec\":{\"name\":\"llm-inference\",\"image\":\"registry.gra.ai.cloud.ovh.net/00000/llm:v1\",\"resources\":{\"gpu\":2,\"cpu\":8,\"memory\":32768},\"labels\":{\"env\":\"staging\",\"model\":\"llm-v1\"}},\"status\":{\"state\":\"FAILED\",\"availableReplicas\":0,\"monitoringUrl\":\"https://monitoring.gra.ai.cloud.ovh.net/d/app-gpu?var-app=a1b2c3d4-0002\",\"lastTransitionDate\":\"2025-08-01T09:30:00Z\",\"history\":[{\"state\":\"INITIALIZING\",\"date\":\"2025-08-01T09:00:00Z\"},{\"state\":\"FAILED\",\"date\":\"2025-08-01T09:30:00Z\"}]}}"
+        }
+    ]
+}

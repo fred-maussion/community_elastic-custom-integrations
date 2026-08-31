@@ -1,0 +1,11 @@
+# newer versions go on top
+- version: "1.0.0"
+  changes:
+    - description: Promote to v1.0.0. Rework bill data stream to collect per-service charge line items (description, domain, quantity, unit_price, total_price, period) instead of invoice header totals. Add FinOps and Cost & Account Overview Kibana dashboards. Add screenshots.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/87
+- version: "0.1.0"
+  changes:
+    - description: Initial release of OVHcloud Billing integration with account profile and bill history collection via OVHcloud REST API.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/87

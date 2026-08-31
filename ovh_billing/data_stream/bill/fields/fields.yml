@@ -1,0 +1,30 @@
+- name: ovh.billing.bill_detail
+  type: group
+  fields:
+    - name: bill_id
+      type: keyword
+      description: Parent invoice identifier (e.g. LF20000001).
+    - name: description
+      type: keyword
+      description: Human-readable service name for this charge line (e.g. "Public Cloud Gateway Small").
+    - name: domain
+      type: keyword
+      description: OVHcloud project or resource identifier associated with this charge.
+    - name: quantity
+      type: double
+      description: Quantity of the service unit consumed during the billing period.
+    - name: unit_price
+      type: double
+      description: Price per unit of service.
+    - name: total_price
+      type: double
+      description: Total charge for this line item (quantity × unit_price).
+    - name: currency_code
+      type: keyword
+      description: Currency code for all price fields (e.g. EUR).
+    - name: period_start
+      type: keyword
+      description: Start date of the billing period covered by this line item (YYYY-MM-DD).
+    - name: period_end
+      type: keyword
+      description: End date of the billing period covered by this line item (YYYY-MM-DD).

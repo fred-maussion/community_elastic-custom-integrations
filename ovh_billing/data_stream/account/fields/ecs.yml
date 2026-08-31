@@ -1,0 +1,14 @@
+- name: cloud.provider
+  external: ecs
+- name: event.category
+  external: ecs
+- name: event.kind
+  external: ecs
+- name: event.type
+  external: ecs
+- name: user.email
+  external: ecs
+- name: user.full_name
+  external: ecs
+- name: user.name
+  external: ecs

@@ -1,0 +1,82 @@
+rules:
+  # OAuth2 token endpoint
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+  # GET /me — account profile
+  - path: /me
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"nichandle":"example-acct-ovh","firstname":"Example","name":"Account","email":"example-account@example.com","phone":"+33100000000","country":"FR","currency":{"code":"EUR","symbol":"€"},"language":"fr_FR","legalform":"individual","state":"complete","ovhSubsidiary":"FR","phoneCountry":"FR"}'
+  # GET /me/bill — list of bill IDs (2 bills to keep test fast)
+  - path: /me/bill
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["LF20000001","LF20000002"]'
+  # GET /me/bill/LF20000001/details — line item IDs
+  - path: /me/bill/LF20000001/details
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["FR10000001","FR10000002"]'
+  # GET /me/bill/LF20000002/details
+  - path: /me/bill/LF20000002/details
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["FR20000001","FR20000002"]'
+  # GET /me/bill/LF20000001/details/FR10000001
+  - path: /me/bill/LF20000001/details/FR10000001
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"billDetailId":"FR10000001","description":"Public Cloud Gateway Small","domain":"abcdef1234567890abcdef1234567890","quantity":"720","periodStart":"2026-05-01","periodEnd":"2026-06-01","totalPrice":{"value":2.02,"currencyCode":"EUR","text":"2.02 €"},"unitPrice":{"value":0.0028,"currencyCode":"EUR","text":"0.0028 €"}}'
+  # GET /me/bill/LF20000001/details/FR10000002
+  - path: /me/bill/LF20000001/details/FR10000002
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"billDetailId":"FR10000002","description":"Public Cloud Floating IP","domain":"abcdef1234567890abcdef1234567890","quantity":"3067","periodStart":"2026-05-01","periodEnd":"2026-06-01","totalPrice":{"value":8.28,"currencyCode":"EUR","text":"8.28 €"},"unitPrice":{"value":0.0027,"currencyCode":"EUR","text":"0.0027 €"}}'
+  # GET /me/bill/LF20000002/details/FR20000001
+  - path: /me/bill/LF20000002/details/FR20000001
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"billDetailId":"FR20000001","description":"Managed Kubernetes - Control plane","domain":"1234567890abcdef1234567890abcdef","quantity":"744","periodStart":"2026-06-01","periodEnd":"2026-07-01","totalPrice":{"value":0.0,"currencyCode":"EUR","text":"0.00 €"},"unitPrice":{"value":0.0,"currencyCode":"EUR","text":"0.00 €"}}'
+  # GET /me/bill/LF20000002/details/FR20000002
+  - path: /me/bill/LF20000002/details/FR20000002
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"billDetailId":"FR20000002","description":"Public Cloud Object Storage - waw","domain":"1234567890abcdef1234567890abcdef","quantity":"512","periodStart":"2026-06-01","periodEnd":"2026-07-01","totalPrice":{"value":1.54,"currencyCode":"EUR","text":"1.54 €"},"unitPrice":{"value":0.003,"currencyCode":"EUR","text":"0.003 €"}}'

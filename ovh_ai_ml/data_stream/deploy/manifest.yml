@@ -1,0 +1,88 @@
+title: "OVHcloud AI Deploy App Lifecycle"
+type: logs
+streams:
+  - input: cel
+    title: AI Deploy app lifecycle events via OVHcloud AI API
+    description: >-
+      Collect AI Deploy app state change events from the OVHcloud AI API.
+    template_path: cel.yml.hbs
+    vars:
+      - name: interval
+        type: text
+        title: Interval
+        description: >-
+          How often the API is polled for state changes. Supports duration units (e.g. 1m, 5m, 1h).
+        required: true
+        show_user: true
+        default: 5m
+      - name: initial_interval
+        type: text
+        title: Initial Interval
+        description: >-
+          How far back to collect events on the first run (e.g. 24h for one day).
+        required: true
+        show_user: false
+        default: 24h
+      - name: batch_size
+        type: integer
+        title: Batch Size
+        description: >-
+          Number of resources to request per page.
+        required: true
+        show_user: false
+        default: 100
+      - name: enable_request_tracer
+        type: bool
+        title: Enable Request Tracer
+        description: >-
+          Enable HTTP request tracing for debugging. Do not enable in production.
+        required: false
+        show_user: false
+        default: false
+      - name: http_client_timeout
+        type: text
+        title: HTTP Client Timeout
+        description: Duration before the HTTP client times out (e.g. 30s).
+        required: false
+        show_user: false
+      - name: proxy_url
+        type: text
+        title: Proxy URL
+        description: >-
+          HTTP proxy URL in the form http[s]://user:pass@host:port.
+        required: false
+        show_user: false
+      - name: ssl
+        type: yaml
+        title: SSL Configuration
+        description: >-
+          TLS/SSL settings (certificate_authorities, verification_mode, etc.).
+        required: false
+        show_user: false
+      - name: tags
+        type: text
+        title: Tags
+        multi: true
+        required: true
+        show_user: false
+        default:
+          - forwarded
+      - name: preserve_original_event
+        type: bool
+        title: Preserve Original Event
+        description: >-
+          Keep the raw API response as event.original. Increases storage usage.
+        required: true
+        show_user: true
+        default: false
+      - name: processors
+        type: yaml
+        title: Processors
+        description: >-
+          Beat processors to apply before the event is sent to the pipeline.
+        required: false
+        show_user: false
+elasticsearch:
+  index_template:
+    mappings:
+      subobjects: false

@@ -1,0 +1,36 @@
+- name: ovh.billing.account
+  type: group
+  fields:
+    - name: nichandle
+      type: keyword
+      description: OVHcloud NIC handle (account identifier).
+    - name: firstname
+      type: keyword
+      description: Account holder first name.
+    - name: name
+      type: keyword
+      description: Account holder last name.
+    - name: phone
+      type: keyword
+      description: Account phone number.
+    - name: country
+      type: keyword
+      description: Account country code (ISO 3166-1 alpha-2).
+    - name: currency_code
+      type: keyword
+      description: Currency code for the account (e.g. EUR).
+    - name: language
+      type: keyword
+      description: Account language and locale (e.g. fr_FR).
+    - name: state
+      type: keyword
+      description: Account state (complete, incomplete).
+    - name: ovh_subsidiary
+      type: keyword
+      description: OVHcloud subsidiary handling this account (e.g. FR, CA, US).
+    - name: legal_form
+      type: keyword
+      description: Legal form of the account holder (individual, corporation, etc.).
+    - name: organisation
+      type: keyword
+      description: Organisation name for corporate accounts.

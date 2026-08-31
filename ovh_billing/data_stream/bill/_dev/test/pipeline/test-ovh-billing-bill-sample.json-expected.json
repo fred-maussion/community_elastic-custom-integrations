@@ -1,0 +1,84 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-06-01T00:00:00.000Z",
+            "cloud": {
+                "provider": "ovh"
+            },
+            "data_stream": {
+                "dataset": "ovh_billing.bill",
+                "namespace": "ep",
+                "type": "logs"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "id": "FR10000001",
+                "kind": "event",
+                "original": "{\"billDetailId\":\"FR10000001\",\"bill_id\":\"LF20000001\",\"description\":\"Public Cloud Gateway Small\",\"domain\":\"abcdef1234567890abcdef1234567890\",\"quantity\":\"720\",\"periodStart\":\"2026-05-01\",\"periodEnd\":\"2026-06-01\",\"totalPrice\":{\"value\":2.02,\"currencyCode\":\"EUR\",\"text\":\"2.02 €\"},\"unitPrice\":{\"value\":0.0028,\"currencyCode\":\"EUR\",\"text\":\"0.0028 €\"}}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh": {
+                "billing": {
+                    "bill_detail": {
+                        "bill_id": "LF20000001",
+                        "currency_code": "EUR",
+                        "description": "Public Cloud Gateway Small",
+                        "domain": "abcdef1234567890abcdef1234567890",
+                        "period_end": "2026-06-01",
+                        "period_start": "2026-05-01",
+                        "quantity": 720.0,
+                        "total_price": 2.02,
+                        "unit_price": 0.0028
+                    }
+                }
+            }
+        },
+        {
+            "@timestamp": "2026-06-01T00:00:00.000Z",
+            "cloud": {
+                "provider": "ovh"
+            },
+            "data_stream": {
+                "dataset": "ovh_billing.bill",
+                "namespace": "ep",
+                "type": "logs"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "id": "FR10000002",
+                "kind": "event",
+                "original": "{\"billDetailId\":\"FR10000002\",\"bill_id\":\"LF20000001\",\"description\":\"Public Cloud Floating IP\",\"domain\":\"abcdef1234567890abcdef1234567890\",\"quantity\":\"3067\",\"periodStart\":\"2026-05-01\",\"periodEnd\":\"2026-06-01\",\"totalPrice\":{\"value\":8.28,\"currencyCode\":\"EUR\",\"text\":\"8.28 €\"},\"unitPrice\":{\"value\":0.0027,\"currencyCode\":\"EUR\",\"text\":\"0.0027 €\"}}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh": {
+                "billing": {
+                    "bill_detail": {
+                        "bill_id": "LF20000001",
+                        "currency_code": "EUR",
+                        "description": "Public Cloud Floating IP",
+                        "domain": "abcdef1234567890abcdef1234567890",
+                        "period_end": "2026-06-01",
+                        "period_start": "2026-05-01",
+                        "quantity": 3067.0,
+                        "total_price": 8.28,
+                        "unit_price": 0.0027
+                    }
+                }
+            }
+        }
+    ]
+}

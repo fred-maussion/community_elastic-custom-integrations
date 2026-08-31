@@ -1,0 +1,202 @@
+---
+description: Pipeline for processing OVHcloud AI Deploy app lifecycle events
+processors:
+  # === CEL-only: remove agentless metadata when present ===
+  - remove:
+      tag: remove_agentless_metadata
+      field:
+        - organization
+        - division
+        - team
+      ignore_missing: true
+      if: >-
+        ctx.organization instanceof String &&
+        ctx.division instanceof String &&
+        ctx.team instanceof String
+
+  # === CEL-only: terminate on collector error placeholder ===
+  - terminate:
+      tag: terminate_on_collector_error
+      if: ctx.error?.message != null && ctx.message == null
+
+  # === CEL input: preserve original, parse JSON (JSE00001) ===
+  - rename:
+      tag: rename_message_to_event_original
+      field: message
+      target_field: event.original
+      if: ctx.event?.original == null
+      ignore_missing: true
+  - remove:
+      tag: remove_message_if_original_exists
+      field: message
+      if: ctx.event?.original != null
+      ignore_missing: true
+  - json:
+      tag: parse_json_message
+      field: event.original
+      target_field: json
+
+  # === ECS boilerplate ===
+  - set:
+      tag: set_ecs_version
+      field: ecs.version
+      value: "9.3.0"
+  - set:
+      tag: set_event_kind
+      field: event.kind
+      value: event
+  - set:
+      tag: set_cloud_provider
+      field: cloud.provider
+      value: ovh
+
+  # === Timestamp: use updated_at as primary event timestamp ===
+  - date:
+      tag: set_timestamp_from_updated_at
+      field: json.updatedAt
+      formats:
+        - ISO8601
+      target_field: '@timestamp'
+      ignore_failure: true
+
+  # === Identity and resource fields ===
+  - rename:
+      tag: rename_instance_id
+      field: json.id
+      target_field: cloud.instance.id
+      ignore_missing: true
+  - rename:
+      tag: rename_instance_name
+      field: json.spec.name
+      target_field: cloud.instance.name
+      ignore_missing: true
+  - rename:
+      tag: rename_user_name
+      field: json.user
+      target_field: user.name
+      ignore_missing: true
+  - rename:
+      tag: rename_event_created
+      field: json.createdAt
+      target_field: event.created
+      ignore_missing: true
+  - rename:
+      tag: rename_event_start
+      field: json.status.lastTransitionDate
+      target_field: event.start
+      ignore_missing: true
+
+  # === URL ===
+  - rename:
+      tag: rename_url_full
+      field: json.status.url
+      target_field: url.full
+      ignore_missing: true
+
+  # === Custom OVH AI Deploy fields ===
+  - rename:
+      tag: rename_deploy_state
+      field: json.status.state
+      target_field: ovh.ai_ml.deploy.state
+      ignore_missing: true
+  - rename:
+      tag: rename_available_replicas
+      field: json.status.availableReplicas
+      target_field: ovh.ai_ml.deploy.available_replicas
+      ignore_missing: true
+  - rename:
+      tag: rename_monitoring_url
+      field: json.status.monitoringUrl
+      target_field: ovh.ai_ml.deploy.monitoring_url
+      ignore_missing: true
+  - rename:
+      tag: rename_gpu
+      field: json.spec.resources.gpu
+      target_field: ovh.ai_ml.deploy.resources.gpu
+      ignore_missing: true
+  - rename:
+      tag: rename_cpu
+      field: json.spec.resources.cpu
+      target_field: ovh.ai_ml.deploy.resources.cpu
+      ignore_missing: true
+  - rename:
+      tag: rename_memory
+      field: json.spec.resources.memory
+      target_field: ovh.ai_ml.deploy.resources.memory_mb
+      ignore_missing: true
+
+  # === Labels ===
+  - rename:
+      tag: rename_labels
+      field: json.spec.labels
+      target_field: labels
+      ignore_missing: true
+
+  # === ECS categorization ===
+  - append:
+      tag: append_event_category_host
+      field: event.category
+      value: host
+      allow_duplicates: false
+  - append:
+      tag: append_event_type_change
+      field: event.type
+      value: change
+      allow_duplicates: false
+      if: "['FAILED', 'ERROR'].contains(ctx.ovh?.ai_ml?.deploy?.state)"
+  - append:
+      tag: append_event_type_info
+      field: event.type
+      value: info
+      allow_duplicates: false
+      if: "!['FAILED', 'ERROR'].contains(ctx.ovh?.ai_ml?.deploy?.state)"
+  - set:
+      tag: set_outcome_failure
+      field: event.outcome
+      value: failure
+      if: "['FAILED', 'ERROR', 'TIMEOUT'].contains(ctx.ovh?.ai_ml?.deploy?.state)"
+  - set:
+      tag: set_outcome_success
+      field: event.outcome
+      value: success
+      if: "['RUNNING', 'DONE'].contains(ctx.ovh?.ai_ml?.deploy?.state)"
+
+  # === Related fields ===
+  - append:
+      tag: append_related_user
+      field: related.user
+      value: '{{{user.name}}}'
+      allow_duplicates: false
+      if: ctx.user?.name != null
+
+  # === Preserve original on partial errors ===
+  - append:
+      tag: append_preserve_original_on_error
+      field: tags
+      value: preserve_original_event
+      allow_duplicates: false
+      if: ctx.error?.message != null
+
+  # === Cleanup temporary json namespace ===
+  - remove:
+      tag: cleanup_json_namespace
+      field: json
+      ignore_missing: true
+
+on_failure:
+  - append:
+      tag: on_failure_append_error_message
+      field: error.message
+      value: >-
+        Processor '{{{ _ingest.on_failure_processor_type }}}'
+        {{{#_ingest.on_failure_processor_tag}}}with tag '{{{ _ingest.on_failure_processor_tag }}}'
+        {{{/_ingest.on_failure_processor_tag}}}failed with message '{{{ _ingest.on_failure_message }}}'
+  - set:
+      tag: set_pipeline_error_to_event_kind
+      field: event.kind
+      value: pipeline_error
+  - append:
+      tag: on_failure_append_preserve_original_event
+      field: tags
+      value: preserve_original_event
+      allow_duplicates: false
