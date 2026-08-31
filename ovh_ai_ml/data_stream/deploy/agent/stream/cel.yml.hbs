@@ -45,7 +45,7 @@ program: |-
               "cursor": (size(items) == int(state.batch_size)) ?
                 {"last_updated": cur.last_updated, "next_page": cur.next_page + 1}
               : (size(items) > 0) ?
-                {"last_updated": items[size(items) - 1].updated_at, "next_page": 0}
+                {"last_updated": items[size(items) - 1].updatedAt, "next_page": 0}
               :
                 state.?cursor.orValue({"last_updated": string(now), "next_page": 0}),
               "want_more": size(items) == int(state.batch_size),

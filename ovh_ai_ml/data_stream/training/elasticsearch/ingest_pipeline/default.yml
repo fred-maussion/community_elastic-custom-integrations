@@ -53,7 +53,7 @@ processors:
   # === Timestamp: use updated_at as primary event timestamp ===
   - date:
       tag: set_timestamp_from_updated_at
-      field: json.updated_at
+      field: json.updatedAt
       formats:
         - ISO8601
       target_field: '@timestamp'
@@ -77,17 +77,17 @@ processors:
       ignore_missing: true
   - rename:
       tag: rename_event_created
-      field: json.created_at
+      field: json.createdAt
       target_field: event.created
       ignore_missing: true
   - rename:
       tag: rename_event_start
-      field: json.status.started_at
+      field: json.status.startedAt
       target_field: event.start
       ignore_missing: true
   - rename:
       tag: rename_event_end
-      field: json.status.stopped_at
+      field: json.status.stoppedAt
       target_field: event.end
       ignore_missing: true
 
@@ -105,7 +105,7 @@ processors:
   # === Exit code ===
   - rename:
       tag: rename_exit_code
-      field: json.status.exit_code
+      field: json.status.exitCode
       target_field: process.exit_code
       ignore_missing: true
 
@@ -117,12 +117,12 @@ processors:
       ignore_missing: true
   - rename:
       tag: rename_queued_at
-      field: json.status.queued_at
+      field: json.status.queuedAt
       target_field: ovh.ai_ml.training.queued_at
       ignore_missing: true
   - rename:
       tag: rename_monitoring_url
-      field: json.status.monitoring_url
+      field: json.status.monitoringUrl
       target_field: ovh.ai_ml.training.monitoring_url
       ignore_missing: true
   - rename:
