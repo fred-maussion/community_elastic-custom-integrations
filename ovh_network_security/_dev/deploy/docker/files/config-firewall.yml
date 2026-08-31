@@ -1,0 +1,83 @@
+rules:
+  # OAuth2 token endpoint — used by auth.oauth2 framework during system tests
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+  # IP block list — returns two synthetic CIDR blocks
+  - path: /ip
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["203.0.113.0/28","198.51.100.64/27"]'
+  # Firewall-enabled IP list for first block — one firewall IP
+  # Path uses decoded CIDR: the CEL program encodes / as %2F, but Go's net/http decodes to /
+  - path: /ip/203.0.113.0/28/firewall
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["203.0.113.1"]'
+  # Firewall-enabled IP list for second block — one firewall IP
+  - path: /ip/198.51.100.64/27/firewall
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["198.51.100.65"]'
+  # Rule sequence list for 203.0.113.1 — two rules
+  - path: /ip/203.0.113.0/28/firewall/203.0.113.1/rule
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '[0,1]'
+  # Rule sequence list for 198.51.100.65 — one rule
+  - path: /ip/198.51.100.64/27/firewall/198.51.100.65/rule
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '[0]'
+  # Rule detail: 203.0.113.0/28 / 203.0.113.1 / sequence 0
+  - path: /ip/203.0.113.0/28/firewall/203.0.113.1/rule/0
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"sequence":0,"action":"deny","protocol":"tcp","source":"0.0.0.0/0","destination":null,"sourcePort":null,"destinationPort":"22","tcpOption":"syn","fragments":null,"l3PacketLength":null,"rule":"rule-abc001","creationDate":"2026-01-01T00:00:00+00:00","state":"ok"}'
+  # Rule detail: 203.0.113.0/28 / 203.0.113.1 / sequence 1
+  - path: /ip/203.0.113.0/28/firewall/203.0.113.1/rule/1
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"sequence":1,"action":"permit","protocol":"tcp","source":"203.0.113.0/28","destination":null,"sourcePort":null,"destinationPort":"443","tcpOption":null,"fragments":null,"l3PacketLength":null,"rule":"rule-abc002","creationDate":"2026-02-01T00:00:00+00:00","state":"ok"}'
+  # Rule detail: 198.51.100.64/27 / 198.51.100.65 / sequence 0
+  - path: /ip/198.51.100.64/27/firewall/198.51.100.65/rule/0
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"sequence":0,"action":"deny","protocol":"icmp","source":"0.0.0.0/0","destination":null,"sourcePort":null,"destinationPort":null,"tcpOption":null,"fragments":null,"l3PacketLength":null,"rule":"rule-def001","creationDate":"2026-03-01T00:00:00+00:00","state":"creationPending"}'

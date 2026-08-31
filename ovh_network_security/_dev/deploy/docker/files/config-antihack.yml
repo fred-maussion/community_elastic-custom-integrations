@@ -1,0 +1,65 @@
+rules:
+  # OAuth2 token endpoint — used by auth.oauth2 framework during system tests
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+  # IP block list — returns two synthetic CIDR blocks
+  - path: /ip
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["203.0.113.0/28","198.51.100.64/27"]'
+  # Antihack blocked IP list for first block — two blocked IPs
+  # Path uses decoded CIDR: the CEL program encodes / as %2F, but Go's net/http decodes to /
+  - path: /ip/203.0.113.0/28/antihack
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["203.0.113.42","203.0.113.55"]'
+  # Antihack blocked IP list for second block — one blocked IP
+  - path: /ip/198.51.100.64/27/antihack
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["198.51.100.70"]'
+  # Detail for 203.0.113.42 in 203.0.113.0/28
+  - path: /ip/203.0.113.0/28/antihack/203.0.113.42
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"ipBlocked":"203.0.113.42","state":"blocked","blockedSince":"2026-08-01T10:15:00+00:00","time":3600,"logs":null}'
+  # Detail for 203.0.113.55 in 203.0.113.0/28
+  - path: /ip/203.0.113.0/28/antihack/203.0.113.55
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"ipBlocked":"203.0.113.55","state":"unblocking","blockedSince":"2026-08-02T14:30:00+00:00","time":1800,"logs":null}'
+  # Detail for 198.51.100.70 in 198.51.100.64/27
+  - path: /ip/198.51.100.64/27/antihack/198.51.100.70
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"ipBlocked":"198.51.100.70","state":"blocked","blockedSince":"2026-08-03T08:00:00+00:00","time":7200,"logs":"Detected outbound port scanning activity"}'

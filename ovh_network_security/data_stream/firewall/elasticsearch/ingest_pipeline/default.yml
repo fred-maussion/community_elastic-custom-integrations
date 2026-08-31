@@ -1,0 +1,290 @@
+---
+description: Pipeline for processing OVH Network Security firewall events.
+processors:
+  - set:
+      field: ecs.version
+      tag: set_ecs_version
+      value: '9.3.0'
+
+  # CEL/Agentless metadata removal
+  - remove:
+      field:
+        - organization
+        - division
+        - team
+      ignore_missing: true
+      if: ctx.organization instanceof String && ctx.division instanceof String && ctx.team instanceof String
+      tag: remove_agentless_tags
+      description: >-
+        Removes the fields added by Agentless as metadata,
+        as they can collide with ECS fields.
+
+  - terminate:
+      tag: data_collection_error
+      if: ctx.error?.message != null && ctx.message == null && ctx.event?.original == null
+      description: error message set and no data to process.
+
+  # JSE00001
+  - rename:
+      field: message
+      tag: rename_message_to_event_original
+      target_field: event.original
+      ignore_missing: true
+      description: Renames the original `message` field to `event.original` to store a copy of the original message. The `event.original` field is not touched if the document already has one; it may happen when Logstash sends the document.
+      if: ctx.event?.original == null
+
+  - remove:
+      field: message
+      tag: remove_message
+      ignore_missing: true
+      description: The `message` field is no longer required if the document has an `event.original` field.
+      if: ctx.event?.original != null
+
+  # JSON parsing
+  - json:
+      field: event.original
+      target_field: json
+      tag: parse_json
+      if: ctx.event?.original != null
+
+  # Custom fields — always-present fields
+  - rename:
+      field: json.ip_block
+      target_field: ovh_network_security.firewall.ip_block
+      ignore_missing: true
+      tag: rename_ip_block
+
+  - rename:
+      field: json.ip_on_firewall
+      target_field: ovh_network_security.firewall.ip_on_firewall
+      ignore_missing: true
+      tag: rename_ip_on_firewall
+
+  - rename:
+      field: json.sequence
+      target_field: ovh_network_security.firewall.sequence
+      ignore_missing: true
+      tag: rename_sequence
+
+  - rename:
+      field: json.action
+      target_field: ovh_network_security.firewall.action
+      ignore_missing: true
+      tag: rename_action
+
+  - rename:
+      field: json.protocol
+      target_field: ovh_network_security.firewall.protocol
+      ignore_missing: true
+      tag: rename_protocol
+
+  - rename:
+      field: json.rule
+      target_field: ovh_network_security.firewall.rule
+      ignore_missing: true
+      tag: rename_rule
+
+  - rename:
+      field: json.creationDate
+      target_field: ovh_network_security.firewall.creation_date
+      ignore_missing: true
+      tag: rename_creation_date
+
+  - rename:
+      field: json.state
+      target_field: ovh_network_security.firewall.state
+      ignore_missing: true
+      tag: rename_state
+
+  # Custom fields — nullable fields (only rename when non-null)
+  - rename:
+      field: json.source
+      target_field: ovh_network_security.firewall.source
+      ignore_missing: true
+      if: ctx.json?.source != null
+      tag: rename_source
+
+  - rename:
+      field: json.destination
+      target_field: ovh_network_security.firewall.destination
+      ignore_missing: true
+      if: ctx.json?.destination != null
+      tag: rename_destination
+
+  - rename:
+      field: json.sourcePort
+      target_field: ovh_network_security.firewall.source_port
+      ignore_missing: true
+      if: ctx.json?.sourcePort != null
+      tag: rename_source_port
+
+  - rename:
+      field: json.destinationPort
+      target_field: ovh_network_security.firewall.destination_port
+      ignore_missing: true
+      if: ctx.json?.destinationPort != null
+      tag: rename_destination_port
+
+  - rename:
+      field: json.tcpOption
+      target_field: ovh_network_security.firewall.tcp_option
+      ignore_missing: true
+      if: ctx.json?.tcpOption != null
+      tag: rename_tcp_option
+
+  - rename:
+      field: json.fragments
+      target_field: ovh_network_security.firewall.fragments
+      ignore_missing: true
+      if: ctx.json?.fragments != null
+      tag: rename_fragments
+
+  - rename:
+      field: json.l3PacketLength
+      target_field: ovh_network_security.firewall.l3_packet_length
+      ignore_missing: true
+      if: ctx.json?.l3PacketLength != null
+      tag: rename_l3_packet_length
+
+  # @timestamp from creationDate
+  - date:
+      field: ovh_network_security.firewall.creation_date
+      target_field: '@timestamp'
+      formats:
+        - ISO8601
+      tag: parse_timestamp
+      if: ctx.ovh_network_security?.firewall?.creation_date != null
+
+  # ECS fields from custom fields
+  - append:
+      field: observer.ip
+      tag: append_observer_ip
+      value: '{{{ovh_network_security.firewall.ip_on_firewall}}}'
+      allow_duplicates: false
+      if: ctx.ovh_network_security?.firewall?.ip_on_firewall != null
+
+  - set:
+      field: event.action
+      copy_from: ovh_network_security.firewall.action
+      tag: set_event_action
+      if: ctx.ovh_network_security?.firewall?.action != null
+
+  - set:
+      field: network.transport
+      copy_from: ovh_network_security.firewall.protocol
+      tag: set_network_transport
+      if: ctx.ovh_network_security?.firewall?.protocol != null
+
+  - set:
+      field: rule.id
+      copy_from: ovh_network_security.firewall.rule
+      tag: set_rule_id
+      if: ctx.ovh_network_security?.firewall?.rule != null
+
+  # source.ip: set from source CIDR, then strip CIDR prefix mask
+  - set:
+      field: source.ip
+      copy_from: ovh_network_security.firewall.source
+      tag: set_source_ip
+      if: ctx.ovh_network_security?.firewall?.source != null
+
+  - gsub:
+      field: source.ip
+      pattern: "/\\d+$"
+      replacement: ""
+      tag: strip_cidr_prefix_source_ip
+      ignore_missing: true
+
+  # destination.port: copy string value then convert to integer
+  - set:
+      field: destination.port
+      copy_from: ovh_network_security.firewall.destination_port
+      tag: set_destination_port
+      if: ctx.ovh_network_security?.firewall?.destination_port != null
+
+  - convert:
+      field: destination.port
+      type: integer
+      ignore_missing: true
+      tag: convert_destination_port
+
+  # source.port: copy string value then convert to integer
+  - set:
+      field: source.port
+      copy_from: ovh_network_security.firewall.source_port
+      tag: set_source_port
+      if: ctx.ovh_network_security?.firewall?.source_port != null
+
+  - convert:
+      field: source.port
+      type: integer
+      ignore_missing: true
+      tag: convert_source_port
+
+  # ECS categorization
+  - set:
+      field: event.kind
+      tag: set_event_kind
+      value: state
+
+  - append:
+      field: event.category
+      tag: append_event_category_network
+      value: network
+      allow_duplicates: false
+
+  - append:
+      field: event.category
+      tag: append_event_category_configuration
+      value: configuration
+      allow_duplicates: false
+
+  - append:
+      field: event.type
+      tag: append_event_type_info
+      value: info
+      allow_duplicates: false
+
+  # related.ip
+  - append:
+      field: related.ip
+      tag: append_source_ip_to_related
+      value: '{{{source.ip}}}'
+      allow_duplicates: false
+      if: ctx.source?.ip != null
+
+  - append:
+      field: related.ip
+      tag: append_ip_on_firewall_to_related
+      value: '{{{ovh_network_security.firewall.ip_on_firewall}}}'
+      allow_duplicates: false
+      if: ctx.ovh_network_security?.firewall?.ip_on_firewall != null
+
+  # Cleanup
+  - remove:
+      field: json
+      ignore_missing: true
+      tag: cleanup_json
+
+  - append:
+      field: tags
+      tag: append_preserve_on_collector_error
+      value: preserve_original_event
+      allow_duplicates: false
+      if: ctx.error?.message != null
+
+on_failure:
+  - append:
+      field: error.message
+      value: >-
+        Processor '{{{ _ingest.on_failure_processor_type }}}'
+        {{{#_ingest.on_failure_processor_tag}}}with tag '{{{ _ingest.on_failure_processor_tag }}}'
+        {{{/_ingest.on_failure_processor_tag}}}failed with message '{{{ _ingest.on_failure_message }}}'
+  - set:
+      field: event.kind
+      tag: set_pipeline_error_to_event_kind
+      value: pipeline_error
+  - append:
+      field: tags
+      value: preserve_original_event
+      allow_duplicates: false

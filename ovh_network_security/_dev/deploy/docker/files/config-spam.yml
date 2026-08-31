@@ -1,0 +1,65 @@
+rules:
+  # OAuth2 token endpoint — used by auth.oauth2 framework during system tests
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+  # IP block list — returns two synthetic CIDR blocks
+  - path: /ip
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["203.0.113.0/28","198.51.100.64/27"]'
+  # Spam-blocked IP list for first block — two blocked IPs
+  # Path uses decoded CIDR: the CEL program encodes / as %2F, but Go's net/http decodes to /
+  - path: /ip/203.0.113.0/28/spam
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["203.0.113.22","203.0.113.33"]'
+  # Spam-blocked IP list for second block — one blocked IP
+  - path: /ip/198.51.100.64/27/spam
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["198.51.100.80"]'
+  # Detail for 203.0.113.22 in 203.0.113.0/28
+  - path: /ip/203.0.113.0/28/spam/203.0.113.22
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"ipSpamming":"203.0.113.22","state":"blockedForSpam","date":"2026-08-15T08:00:00+00:00","time":86400}'
+  # Detail for 203.0.113.33 in 203.0.113.0/28
+  - path: /ip/203.0.113.0/28/spam/203.0.113.33
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"ipSpamming":"203.0.113.33","state":"unblocking","date":"2026-08-14T12:00:00+00:00","time":43200}'
+  # Detail for 198.51.100.80 in 198.51.100.64/27
+  - path: /ip/198.51.100.64/27/spam/198.51.100.80
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"ipSpamming":"198.51.100.80","state":"unblocked","date":"2026-08-10T06:00:00+00:00","time":21600}'

@@ -1,0 +1,82 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+auth.oauth2:
+  client.id: {{client_id}}
+  client.secret: {{client_secret}}
+  token_url: {{token_url}}
+  scopes:
+    - all
+resource.url: {{url}}
+redact:
+  fields: ~
+program: |-
+  state.with(
+    request("GET", state.url.trim_right("/") + "/ip").do_request().as(resp,
+      (resp.StatusCode == 200) ?
+        {
+          "events": resp.Body.decode_json().map(ip_block,
+            string(ip_block).split("/").join("%2F").as(ip_enc,
+              request("GET", state.url.trim_right("/") + "/ip/" + ip_enc + "/mitigation").do_request().as(mit,
+                (mit.StatusCode == 200) ?
+                  mit.Body.decode_json().map(ip_on_mit,
+                    request("GET", state.url.trim_right("/") + "/ip/" + ip_enc + "/mitigation/" + string(ip_on_mit)).do_request().as(d,
+                      (d.StatusCode == 200) ?
+                        {"message": d.Body.decode_json().with({"ip_block": string(ip_block)}).encode_json()}
+                      :
+                        {
+                          "message": {
+                            "error": {
+                              "code": string(d.StatusCode),
+                              "id": string(d.Status),
+                              "message": "GET /ip/.../mitigation/" + string(ip_on_mit) + ": " + ((size(d.Body) != 0) ? string(d.Body) : string(d.Status)),
+                            },
+                          }.encode_json(),
+                        }
+                    )
+                  )
+                :
+                  []
+              )
+            )
+          ).flatten(),
+          "want_more": false,
+        }
+      :
+        {
+          "events": {
+            "error": {
+              "code": string(resp.StatusCode),
+              "id": string(resp.Status),
+              "message": "GET /ip: " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+            },
+          },
+          "want_more": false,
+        }
+    )
+  )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}

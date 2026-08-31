@@ -1,0 +1,18 @@
+- name: ovh_network_security.mitigation
+  type: group
+  fields:
+    - name: ip_block
+      type: keyword
+      description: The CIDR block that owns the mitigated IP.
+    - name: ip_on_mitigation
+      type: ip
+      description: The IPv4 address currently under DDoS mitigation.
+    - name: state
+      type: keyword
+      description: Current mitigation state (creationPending, ok, removalPending).
+    - name: auto
+      type: boolean
+      description: True if mitigation was triggered automatically by OVH VAC infrastructure.
+    - name: permanent
+      type: boolean
+      description: Deprecated field, always false, no operational effect.

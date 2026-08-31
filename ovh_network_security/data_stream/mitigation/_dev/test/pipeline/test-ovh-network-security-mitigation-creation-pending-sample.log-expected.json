@@ -1,0 +1,41 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2024-06-01T12:00:00.000Z",
+            "destination": {
+                "ip": "203.0.113.11"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "creationPending",
+                "category": [
+                    "network"
+                ],
+                "kind": "event",
+                "original": "{\"ipOnMitigation\":\"203.0.113.11\",\"state\":\"creationPending\",\"auto\":false,\"permanent\":false,\"ip_block\":\"203.0.113.0/28\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh_network_security": {
+                "mitigation": {
+                    "auto": false,
+                    "ip_block": "203.0.113.0/28",
+                    "ip_on_mitigation": "203.0.113.11",
+                    "permanent": false,
+                    "state": "creationPending"
+                }
+            },
+            "related": {
+                "ip": [
+                    "203.0.113.11"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

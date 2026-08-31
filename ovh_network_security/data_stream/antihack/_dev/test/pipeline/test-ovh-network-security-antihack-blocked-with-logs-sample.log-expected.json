@@ -1,0 +1,43 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-08-03T08:00:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "blocked",
+                "category": [
+                    "network",
+                    "intrusion_detection"
+                ],
+                "kind": "event",
+                "original": "{\"ipBlocked\":\"198.51.100.70\",\"state\":\"blocked\",\"blockedSince\":\"2026-08-03T08:00:00+00:00\",\"time\":7200,\"logs\":\"Detected outbound port scanning activity\",\"ip_block\":\"198.51.100.64/27\"}",
+                "type": [
+                    "denied"
+                ]
+            },
+            "ovh_network_security": {
+                "antihack": {
+                    "blocked_since": "2026-08-03T08:00:00+00:00",
+                    "ip_block": "198.51.100.64/27",
+                    "ip_blocked": "198.51.100.70",
+                    "logs": "Detected outbound port scanning activity",
+                    "state": "blocked",
+                    "time": 7200
+                }
+            },
+            "related": {
+                "ip": [
+                    "198.51.100.70"
+                ]
+            },
+            "source": {
+                "ip": "198.51.100.70"
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

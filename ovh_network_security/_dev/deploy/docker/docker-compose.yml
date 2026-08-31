@@ -1,0 +1,53 @@
+services:
+  ovh-network-security-antihack-mock:
+    image: docker.elastic.co/observability/stream:v0.22.0
+    hostname: ovh-network-security-antihack-mock
+    ports:
+      - 8090
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8090'
+    command:
+      - http-server
+      - --addr=:8090
+      - --config=/files/config-antihack.yml
+  ovh-network-security-mitigation-mock:
+    image: docker.elastic.co/observability/stream:v0.22.0
+    hostname: ovh-network-security-mitigation-mock
+    ports:
+      - 8090
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8090'
+    command:
+      - http-server
+      - --addr=:8090
+      - --config=/files/config-mitigation.yml
+  ovh-network-security-spam-mock:
+    image: docker.elastic.co/observability/stream:v0.22.0
+    hostname: ovh-network-security-spam-mock
+    ports:
+      - 8100
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8100'
+    command:
+      - http-server
+      - --addr=:8100
+      - --config=/files/config-spam.yml
+  ovh-network-security-firewall-mock:
+    image: docker.elastic.co/observability/stream:v0.22.0
+    hostname: ovh-network-security-firewall-mock
+    ports:
+      - 8110
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8110'
+    command:
+      - http-server
+      - --addr=:8110
+      - --config=/files/config-firewall.yml

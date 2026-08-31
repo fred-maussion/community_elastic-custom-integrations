@@ -1,0 +1,42 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-08-02T14:30:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "unblocking",
+                "category": [
+                    "network",
+                    "intrusion_detection"
+                ],
+                "kind": "event",
+                "original": "{\"ipBlocked\":\"203.0.113.55\",\"state\":\"unblocking\",\"blockedSince\":\"2026-08-02T14:30:00+00:00\",\"time\":1800,\"logs\":null,\"ip_block\":\"203.0.113.0/28\"}",
+                "type": [
+                    "denied"
+                ]
+            },
+            "ovh_network_security": {
+                "antihack": {
+                    "blocked_since": "2026-08-02T14:30:00+00:00",
+                    "ip_block": "203.0.113.0/28",
+                    "ip_blocked": "203.0.113.55",
+                    "state": "unblocking",
+                    "time": 1800
+                }
+            },
+            "related": {
+                "ip": [
+                    "203.0.113.55"
+                ]
+            },
+            "source": {
+                "ip": "203.0.113.55"
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

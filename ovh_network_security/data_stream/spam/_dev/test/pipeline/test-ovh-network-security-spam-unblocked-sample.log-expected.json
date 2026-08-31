@@ -1,0 +1,42 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-08-10T06:00:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "unblocked",
+                "category": [
+                    "network",
+                    "email"
+                ],
+                "kind": "event",
+                "original": "{\"ipSpamming\":\"198.51.100.80\",\"state\":\"unblocked\",\"date\":\"2026-08-10T06:00:00+00:00\",\"time\":21600,\"ip_block\":\"198.51.100.64/27\"}",
+                "type": [
+                    "denied"
+                ]
+            },
+            "ovh_network_security": {
+                "spam": {
+                    "date": "2026-08-10T06:00:00+00:00",
+                    "ip_block": "198.51.100.64/27",
+                    "ip_spamming": "198.51.100.80",
+                    "state": "unblocked",
+                    "time": 21600
+                }
+            },
+            "related": {
+                "ip": [
+                    "198.51.100.80"
+                ]
+            },
+            "source": {
+                "ip": "198.51.100.80"
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}
