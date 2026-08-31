@@ -1,0 +1,52 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-01-15T10:31:00.200Z",
+            "cloud": {
+                "provider": "ovh",
+                "service": {
+                    "name": "Managed Kubernetes"
+                }
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "get",
+                "category": [
+                    "api"
+                ],
+                "id": "ffffffff-5555-6666-7777-aaaaaaaaaaaa",
+                "kind": "event",
+                "original": "{\"_id\":\"dddddddd-4444-5555-6666-eeeeeeeeeeee\",\"timestamp\":\"2026-01-15T10:31:00.200Z\",\"level\":6,\"message\":\"get deny 403  /api/v1/namespaces/kube-system/secrets/admin-token  RBAC: allowed by ClusterRoleBinding \\\"cluster-admin\\\" of ClusterRole \\\"cluster-admin\\\" to User \\\"readonly-user\\\" kubectl/v1.31.0 (linux/amd64) kubernetes/abc1234 ffffffff-5555-6666-7777-aaaaaaaaaaaa\"}",
+                "outcome": "failure",
+                "type": [
+                    "access"
+                ]
+            },
+            "http": {
+                "response": {
+                    "status_code": 403
+                }
+            },
+            "orchestrator": {
+                "type": "kubernetes"
+            },
+            "ovh": {
+                "kubernetes": {
+                    "audit": {
+                        "level": 6,
+                        "log_id": "dddddddd-4444-5555-6666-eeeeeeeeeeee",
+                        "message": "get deny 403  /api/v1/namespaces/kube-system/secrets/admin-token  RBAC: allowed by ClusterRoleBinding \"cluster-admin\" of ClusterRole \"cluster-admin\" to User \"readonly-user\" kubectl/v1.31.0 (linux/amd64) kubernetes/abc1234 ffffffff-5555-6666-7777-aaaaaaaaaaaa"
+                    }
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ],
+            "url": {
+                "original": "/api/v1/namespaces/kube-system/secrets/admin-token"
+            }
+        }
+    ]
+}

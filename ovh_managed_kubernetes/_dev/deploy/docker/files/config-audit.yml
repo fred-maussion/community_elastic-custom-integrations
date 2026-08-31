@@ -1,0 +1,29 @@
+rules:
+  # OAuth2 token endpoint — used by auth.oauth2 framework during system tests
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+  # POST /log/url — returns a presigned Graylog URL for the target cluster
+  - path: /cloud/project/test-project-id/kube/a1b2c3d4-e5f6-7890-abcd-ef1234567890/log/url
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"url":"http://{{ hostname }}:{{ env "PORT" }}/mock-audit-logs","expirationDate":"2030-01-01T00:00:00Z"}'
+  # GET presigned URL → returns Graylog JSON search response with audit log messages
+  - path: /mock-audit-logs
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >
+          {"time":100,"from_date":"2026-01-15T10:29:00.000Z","to_date":"2026-01-15T10:34:00.000Z","total_results":3,"messages":[{"message":{"_id":"00000001-0000-0000-0000-000000000001","timestamp":"2026-01-15T10:30:00.100Z","level":6,"message":"list allow 200  /api/v1/namespaces/default/pods  RBAC: allowed by ClusterRoleBinding \"cluster-admin\" of ClusterRole \"cluster-admin\" to User \"developer@example.com\" kubectl/v1.32.0 (linux/amd64) kubernetes/abc1234 aaaaaaaa-1111-2222-3333-bbbbbbbbbbbb"}},{"message":{"_id":"00000001-0000-0000-0000-000000000002","timestamp":"2026-01-15T10:31:00.200Z","level":6,"message":"create allow 201  /api/v1/namespaces/production/configmaps  RBAC: allowed by ClusterRoleBinding \"cluster-admin\" of ClusterRole \"cluster-admin\" to User \"ci-bot@example.com\" kubectl/v1.32.0 (linux/amd64) kubernetes/abc1234 bbbbbbbb-2222-3333-4444-cccccccccccc"}},{"message":{"_id":"00000001-0000-0000-0000-000000000003","timestamp":"2026-01-15T10:32:00.300Z","level":6,"message":"get deny 403  /api/v1/namespaces/kube-system/secrets/admin-token  RBAC: allowed by ClusterRoleBinding \"cluster-admin\" of ClusterRole \"cluster-admin\" to User \"readonly-user\" kubectl/v1.31.0 (linux/amd64) kubernetes/abc1234 cccccccc-3333-4444-5555-dddddddddddd"}}]}

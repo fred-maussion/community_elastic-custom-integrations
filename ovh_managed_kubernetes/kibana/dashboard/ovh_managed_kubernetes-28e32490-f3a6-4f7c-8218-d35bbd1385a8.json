@@ -1,0 +1,2620 @@
+{
+    "accessControl": {
+        "accessMode": "default",
+        "owner": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+    },
+    "attributes": {
+        "description": "Comprehensive SRE monitoring dashboard for OVH Managed Kubernetes audit logs. Covers event volumes, outcomes, HTTP status codes, top actions, URL patterns, audit levels, and time-series trends.",
+        "esqlApproximation": false,
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "autoApplyFilters": true,
+            "hidePanelBorders": false,
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-e81a842df5048fd748e6df1d08d82be4c1ca2e343c0848a9c9e3d3ec0c5301a4": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-e81a842df5048fd748e6df1d08d82be4c1ca2e343c0848a9c9e3d3ec0c5301a4",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Audit Events",
+                                                    "label": "Total Audit Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-e81a842df5048fd748e6df1d08d82be4c1ca2e343c0848a9c9e3d3ec0c5301a4",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Total Audit Events` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-e81a842df5048fd748e6df1d08d82be4c1ca2e343c0848a9c9e3d3ec0c5301a4",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Total Audit Events` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "92487acd-8cd9-47e6-9081-3aab27ac3aab",
+                    "sectionId": "e6275c59-b9d3-445b-a96b-beabf67e7683",
+                    "w": 8,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "92487acd-8cd9-47e6-9081-3aab27ac3aab",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of audit events",
+                                                    "label": "Successful Audit Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE event.outcome == \"success\" AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count of audit events` = COUNT(*)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE event.outcome == \"success\" AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count of audit events` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "a240574a-3048-4d46-bf74-e61262897398",
+                    "sectionId": "e6275c59-b9d3-445b-a96b-beabf67e7683",
+                    "w": 8,
+                    "x": 8,
+                    "y": 0
+                },
+                "panelIndex": "a240574a-3048-4d46-bf74-e61262897398",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of Failures",
+                                                    "label": "Count of Failures",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE event.outcome == \"failure\" AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count of Failures` = COUNT(*)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE event.outcome == \"failure\" AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count of Failures` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "eb567d8f-f55e-4aa1-b5fe-e516a8f97e7e",
+                    "sectionId": "e6275c59-b9d3-445b-a96b-beabf67e7683",
+                    "w": 8,
+                    "x": 16,
+                    "y": 0
+                },
+                "panelIndex": "eb567d8f-f55e-4aa1-b5fe-e516a8f97e7e",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of HTTP 4xx responses",
+                                                    "label": "HTTP 4xx Responses",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend AND http.response.status_code \u003e= 400 AND http.response.status_code \u003c 500\n| STATS `Count of HTTP 4xx responses` = COUNT()"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend AND http.response.status_code \u003e= 400 AND http.response.status_code \u003c 500\n| STATS `Count of HTTP 4xx responses` = COUNT()"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "ff76beb1-5183-4394-8d2e-ae6eeb00eb73",
+                    "sectionId": "e6275c59-b9d3-445b-a96b-beabf67e7683",
+                    "w": 8,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "ff76beb1-5183-4394-8d2e-ae6eeb00eb73",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count of HTTP 5xx responses",
+                                                    "label": "Count of HTTP 5xx responses",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE http.response.status_code \u003e= 500 AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count of HTTP 5xx responses` = COUNT(*)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE http.response.status_code \u003e= 500 AND @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count of HTTP 5xx responses` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "02e586c3-992e-4a91-b29d-3c5dde1a190f",
+                    "sectionId": "e6275c59-b9d3-445b-a96b-beabf67e7683",
+                    "w": 8,
+                    "x": 32,
+                    "y": 0
+                },
+                "panelIndex": "02e586c3-992e-4a91-b29d-3c5dde1a190f",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-3a659b82bc1e95a4d13cf9e67f393c72f748a0022fb6161fda085fc7598fb6a1": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-3a659b82bc1e95a4d13cf9e67f393c72f748a0022fb6161fda085fc7598fb6a1",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Unique Audit Events",
+                                                    "label": "Unique Audit Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-3a659b82bc1e95a4d13cf9e67f393c72f748a0022fb6161fda085fc7598fb6a1",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Unique Audit Events` = COUNT_DISTINCT(event.id)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-3a659b82bc1e95a4d13cf9e67f393c72f748a0022fb6161fda085fc7598fb6a1",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Unique Audit Events` = COUNT_DISTINCT(event.id)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "07a3fbfc-1ca4-46de-a85c-764b4a8443f9",
+                    "sectionId": "e6275c59-b9d3-445b-a96b-beabf67e7683",
+                    "w": 8,
+                    "x": 40,
+                    "y": 0
+                },
+                "panelIndex": "07a3fbfc-1ca4-46de-a85c-764b4a8443f9",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "fieldName": "Audit Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Audit Event Count` = COUNT(event.id) BY bucket = BUCKET(@timestamp, 75, ?_tstart, ?_tend)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Audit Event Count` = COUNT(event.id) BY bucket = BUCKET(@timestamp, 75, ?_tstart, ?_tend)"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "line",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Audit Event Count Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Audit Event Count Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "d6ad8439-299d-4e6c-be96-414d4b826fea",
+                    "sectionId": "fc903f75-4c11-4280-a30f-c2908878b79b",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "d6ad8439-299d-4e6c-be96-414d4b826fea",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "fieldName": "Audit Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_breakdown",
+                                                    "fieldName": "Event Outcome",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Audit Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Event Outcome` = event.outcome"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Audit Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Event Outcome` = event.outcome"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "splitAccessors": [
+                                            "line_0_breakdown"
+                                        ],
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "line",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Audit Event Count Over Time by Event Outcome",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Audit Event Count Over Time by Event Outcome"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "22229639-f108-458a-8f06-a1138ecb4e49",
+                    "sectionId": "fc903f75-4c11-4280-a30f-c2908878b79b",
+                    "w": 24,
+                    "x": 0,
+                    "y": 10
+                },
+                "panelIndex": "22229639-f108-458a-8f06-a1138ecb4e49",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Time Bucket",
+                                                    "label": "Time",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Request Count",
+                                                    "label": "Request Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "customLabel": true,
+                                                    "fieldName": "Status Code",
+                                                    "label": "Status Code",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Request Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Status Code` = http.response.status_code\n| SORT `Time Bucket`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Request Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Status Code` = http.response.status_code\n| SORT `Time Bucket`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "HTTP Response Status Code Distribution Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "HTTP Response Status Code Distribution Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "55ab3451-4dc6-483e-8450-fa4d45dc9e0c",
+                    "sectionId": "fc903f75-4c11-4280-a30f-c2908878b79b",
+                    "w": 24,
+                    "x": 24,
+                    "y": 10
+                },
+                "panelIndex": "55ab3451-4dc6-483e-8450-fa4d45dc9e0c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-cf0f4373a3644cc44713ca4c0cfb46a5b262f99d416a107a284de3c2ece300b2": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-cf0f4373a3644cc44713ca4c0cfb46a5b262f99d416a107a284de3c2ece300b2",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Audit Event Count",
+                                                    "label": "Audit Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.outcome",
+                                                    "label": "Event Outcome",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-cf0f4373a3644cc44713ca4c0cfb46a5b262f99d416a107a284de3c2ece300b2",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Audit Event Count` = COUNT(*) BY `event.outcome`\n| SORT `Audit Event Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-cf0f4373a3644cc44713ca4c0cfb46a5b262f99d416a107a284de3c2ece300b2",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Audit Event Count` = COUNT(*) BY `event.outcome`\n| SORT `Audit Event Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "1837161c-c72c-438e-93f8-cb10696160a3",
+                    "sectionId": "6c82ed2c-fc60-4c70-bf03-a78fbedd69fc",
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "1837161c-c72c-438e-93f8-cb10696160a3",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "HTTP Status Code",
+                                                    "label": "HTTP Status Code",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count` = COUNT(*) BY `HTTP Status Code` = http.response.status_code\n| SORT `Count` DESC\n| LIMIT 100"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count` = COUNT(*) BY `HTTP Status Code` = http.response.status_code\n| SORT `Count` DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "3f0a84d7-2f77-40f8-90fb-1bf850bac55a",
+                    "sectionId": "6c82ed2c-fc60-4c70-bf03-a78fbedd69fc",
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                },
+                "panelIndex": "3f0a84d7-2f77-40f8-90fb-1bf850bac55a",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-3baa66109f6a283f00ddc2ef0ca45a7897ff3ddc4f3888f11b6efaf172cc7355": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-3baa66109f6a283f00ddc2ef0ca45a7897ff3ddc4f3888f11b6efaf172cc7355",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.type",
+                                                    "label": "Event Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-3baa66109f6a283f00ddc2ef0ca45a7897ff3ddc4f3888f11b6efaf172cc7355",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS Count = COUNT(*) BY `event.type`\n| SORT Count DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-3baa66109f6a283f00ddc2ef0ca45a7897ff3ddc4f3888f11b6efaf172cc7355",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS Count = COUNT(*) BY `event.type`\n| SORT Count DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "217e394f-e647-4925-8f2d-dd0a33b2a7e0",
+                    "sectionId": "6c82ed2c-fc60-4c70-bf03-a78fbedd69fc",
+                    "w": 12,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "217e394f-e647-4925-8f2d-dd0a33b2a7e0",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-8478dd6227fb07b2b7929a144d35246a19b3ea4cd828be7405ff6f945701e6b8": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-8478dd6227fb07b2b7929a144d35246a19b3ea4cd828be7405ff6f945701e6b8",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.kind",
+                                                    "label": "Event Kind",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-8478dd6227fb07b2b7929a144d35246a19b3ea4cd828be7405ff6f945701e6b8",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Count` = COUNT() BY `event.kind`\n| SORT `Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-8478dd6227fb07b2b7929a144d35246a19b3ea4cd828be7405ff6f945701e6b8",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Count` = COUNT() BY `event.kind`\n| SORT `Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "f9b783ed-7491-42d8-bbae-cc1ded5331e2",
+                    "sectionId": "6c82ed2c-fc60-4c70-bf03-a78fbedd69fc",
+                    "w": 12,
+                    "x": 36,
+                    "y": 0
+                },
+                "panelIndex": "f9b783ed-7491-42d8-bbae-cc1ded5331e2",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-fe665ffb914fd388162dabd077a89aea397e5f830c511bd16af3dd658e5b2a47": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-fe665ffb914fd388162dabd077a89aea397e5f830c511bd16af3dd658e5b2a47",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.action",
+                                                    "label": "Event Action",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-fe665ffb914fd388162dabd077a89aea397e5f830c511bd16af3dd658e5b2a47",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Count` = COUNT(*) BY `event.action`\n| SORT `Count` DESC\n| LIMIT 20"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-fe665ffb914fd388162dabd077a89aea397e5f830c511bd16af3dd658e5b2a47",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Count` = COUNT(*) BY `event.action`\n| SORT `Count` DESC\n| LIMIT 20"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false,
+                                        "summaryLabel": "Total",
+                                        "summaryRow": "sum"
+                                    }
+                                ],
+                                "density": "normal",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Top 20 Kubernetes Audit Event Actions by Count",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 20 Kubernetes Audit Event Actions by Count"
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "8254a26d-9668-4382-8a7c-92483c1e043a",
+                    "sectionId": "edf7816d-b87b-426c-9eae-fea18181e86c",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "8254a26d-9668-4382-8a7c-92483c1e043a",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-d641ee4c2813877bfecb632517b2e13a7c49da7f8f53c7740a24f7a187a5f745": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-d641ee4c2813877bfecb632517b2e13a7c49da7f8f53c7740a24f7a187a5f745",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "url.original",
+                                                    "label": "URL Path",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Request Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-d641ee4c2813877bfecb632517b2e13a7c49da7f8f53c7740a24f7a187a5f745",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Count` = COUNT() BY `url.original`\n| SORT `Count` DESC\n| LIMIT 20"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-d641ee4c2813877bfecb632517b2e13a7c49da7f8f53c7740a24f7a187a5f745",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Count` = COUNT() BY `url.original`\n| SORT `Count` DESC\n| LIMIT 20"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false,
+                                        "summaryLabel": "Total",
+                                        "summaryRow": "sum"
+                                    }
+                                ],
+                                "density": "compact",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "paging": {
+                                    "enabled": true,
+                                    "size": 20
+                                },
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Top 20 URL Paths by Request Count",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 20 URL Paths by Request Count"
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "557d8fe9-f2f7-4e55-b4f2-abd1d4d8d89f",
+                    "sectionId": "edf7816d-b87b-426c-9eae-fea18181e86c",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "557d8fe9-f2f7-4e55-b4f2-abd1d4d8d89f",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-ec6fc78f77318f98f5d6add8d7ed24d10c85de6d966ec36573da7e5745b7cd9a": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-ec6fc78f77318f98f5d6add8d7ed24d10c85de6d966ec36573da7e5745b7cd9a",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.action",
+                                                    "label": "Event Action",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "count",
+                                                    "label": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-ec6fc78f77318f98f5d6add8d7ed24d10c85de6d966ec36573da7e5745b7cd9a",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS count = COUNT(*) BY `event.action`\n| SORT count DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-ec6fc78f77318f98f5d6add8d7ed24d10c85de6d966ec36573da7e5745b7cd9a",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS count = COUNT(*) BY `event.action`\n| SORT count DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Top 10 Event Actions by Count – OVH Managed Kubernetes Audit",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 10 Event Actions by Count – OVH Managed Kubernetes Audit"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "803576b4-2403-4ed9-a739-0030a80ff21b",
+                    "sectionId": "edf7816d-b87b-426c-9eae-fea18181e86c",
+                    "w": 48,
+                    "x": 0,
+                    "y": 14
+                },
+                "panelIndex": "803576b4-2403-4ed9-a739-0030a80ff21b",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "heatmap_value_accessor_value",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count",
+                                                    "label": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "heatmap_value_accessor_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Hour of Day",
+                                                    "label": "Hour of Day",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "heatmap_value_accessor_y",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.action",
+                                                    "label": "Event Action",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| EVAL `Hour of Day` = DATE_EXTRACT(\"hour_of_day\", @timestamp)\n| STATS `Count` = COUNT(*) BY `event.action`, `Hour of Day`\n| SORT `event.action`, `Hour of Day`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| EVAL `Hour of Day` = DATE_EXTRACT(\"hour_of_day\", @timestamp)\n| STATS `Count` = COUNT(*) BY `event.action`, `Hour of Day`\n| SORT `event.action`, `Hour of Day`"
+                            },
+                            "visualization": {
+                                "gridConfig": {
+                                    "isCellLabelVisible": false,
+                                    "isXAxisLabelVisible": true,
+                                    "isXAxisTitleVisible": false,
+                                    "isYAxisLabelVisible": true,
+                                    "isYAxisTitleVisible": false,
+                                    "type": "heatmap_grid",
+                                    "xAxisLabelRotation": 0
+                                },
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "legend": {
+                                    "isVisible": true,
+                                    "maxLines": 1,
+                                    "position": "right",
+                                    "shouldTruncate": true,
+                                    "type": "heatmap_legend"
+                                },
+                                "shape": "heatmap",
+                                "valueAccessor": "heatmap_value_accessor_value",
+                                "xAccessor": "heatmap_value_accessor_x",
+                                "yAccessor": "heatmap_value_accessor_y"
+                            }
+                        },
+                        "title": "Event Action Count Density by Hour of Day",
+                        "version": 2,
+                        "visualizationType": "lnsHeatmap"
+                    },
+                    "drilldowns": [],
+                    "title": "Event Action Count Density by Hour of Day"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "0977d6ed-369e-4fc1-bb2b-29b6be57481e",
+                    "sectionId": "0d9a0cd3-f117-4abc-9154-97ee5a30a700",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "0977d6ed-369e-4fc1-bb2b-29b6be57481e",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "line_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "line_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Time Bucket",
+                                                    "label": "Time",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "line_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Failure Rate %",
+                                                    "label": "Failure Rate",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "number",
+                                                            "params": {
+                                                                "compact": false,
+                                                                "decimals": 2
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Total Events` = COUNT(*), `Failure Count` = COUNT(*) WHERE event.outcome == \"failure\" BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| EVAL `Failure Rate %` = ROUND(`Failure Count` / `Total Events` * 100, 2)\n| SORT `Time Bucket`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-line_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Total Events` = COUNT(*), `Failure Count` = COUNT(*) WHERE event.outcome == \"failure\" BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)\n| EVAL `Failure Rate %` = ROUND(`Failure Count` / `Total Events` * 100, 2)\n| SORT `Time Bucket`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "line_0_y_0"
+                                        ],
+                                        "layerId": "line_0",
+                                        "layerType": "data",
+                                        "seriesType": "line",
+                                        "xAccessor": "line_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "line_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "line",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Failure Rate Over Time (OVH Managed Kubernetes Audit Logs)",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Failure Rate Over Time (OVH Managed Kubernetes Audit Logs)"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "d815fc14-0c26-47ca-b9f6-b85423fc3967",
+                    "sectionId": "0d9a0cd3-f117-4abc-9154-97ee5a30a700",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "d815fc14-0c26-47ca-b9f6-b85423fc3967",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "area_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "area_stacked_0_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "bucket",
+                                                    "label": "Time",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "area_stacked_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Count",
+                                                    "label": "Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "area_stacked_0_breakdown",
+                                                    "customLabel": true,
+                                                    "fieldName": "ovh.kubernetes.audit.level",
+                                                    "label": "Audit Level",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count` = COUNT(*) BY `bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `ovh.kubernetes.audit.level`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-@timestamp",
+                                    "name": "indexpattern-datasource-layer-area_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Count` = COUNT(*) BY `bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `ovh.kubernetes.audit.level`"
+                            },
+                            "visualization": {
+                                "areaFill": "solid",
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "fillOpacity": 0.3,
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "area_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "area_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "area_stacked",
+                                        "splitAccessors": [
+                                            "area_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "area_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "area_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "bottom",
+                                    "showSingleSeries": true
+                                },
+                                "preferredSeriesType": "area_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Audit Event Count by Level Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Audit Event Count by Level Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "40362d8d-bf75-4e6f-a4dd-75bd2ed0b40a",
+                    "sectionId": "0d9a0cd3-f117-4abc-9154-97ee5a30a700",
+                    "w": 24,
+                    "x": 0,
+                    "y": 12
+                },
+                "panelIndex": "40362d8d-bf75-4e6f-a4dd-75bd2ed0b40a",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-b4d2a753e7bbda10151e1b2f54cc03e6990146a31ecddacf690b45dd0a89ddd0": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-b4d2a753e7bbda10151e1b2f54cc03e6990146a31ecddacf690b45dd0a89ddd0",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "tagcloud_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Frequency",
+                                                    "label": "Frequency",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "tagcloud_accessor_tag",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.action",
+                                                    "label": "Event Action",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-b4d2a753e7bbda10151e1b2f54cc03e6990146a31ecddacf690b45dd0a89ddd0",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Frequency` = COUNT(*) BY `event.action`\n| SORT `Frequency` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-b4d2a753e7bbda10151e1b2f54cc03e6990146a31ecddacf690b45dd0a89ddd0",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Frequency` = COUNT(*) BY `event.action`\n| SORT `Frequency` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "colorMapping": {
+                                    "assignments": [],
+                                    "colorMode": {
+                                        "type": "categorical"
+                                    },
+                                    "paletteId": "default",
+                                    "specialAssignments": [
+                                        {
+                                            "color": {
+                                                "type": "loop"
+                                            },
+                                            "rules": [
+                                                {
+                                                    "type": "other"
+                                                }
+                                            ],
+                                            "touched": false
+                                        }
+                                    ]
+                                },
+                                "layerId": "layer_0",
+                                "maxFontSize": 72,
+                                "minFontSize": 18,
+                                "orientation": "single",
+                                "showLabel": true,
+                                "tagAccessor": "tagcloud_accessor_tag",
+                                "valueAccessor": "tagcloud_accessor_metric"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsTagcloud"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "d3288ff9-3b7f-4a9e-8520-7a9e4dbdd31c",
+                    "sectionId": "0d9a0cd3-f117-4abc-9154-97ee5a30a700",
+                    "w": 24,
+                    "x": 24,
+                    "y": 12
+                },
+                "panelIndex": "d3288ff9-3b7f-4a9e-8520-7a9e4dbdd31c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-10cc35e35ddc84edcf5a84455cb0f3b22bfe737385b22d463277e5a62291f1ab": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-10cc35e35ddc84edcf5a84455cb0f3b22bfe737385b22d463277e5a62291f1ab",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.action",
+                                                    "label": "Event Action",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Failure Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-10cc35e35ddc84edcf5a84455cb0f3b22bfe737385b22d463277e5a62291f1ab",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE event.outcome == \"failure\"\n| STATS count = COUNT(*) BY event.action\n| SORT count DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-10cc35e35ddc84edcf5a84455cb0f3b22bfe737385b22d463277e5a62291f1ab",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| WHERE event.outcome == \"failure\"\n| STATS count = COUNT(*) BY event.action\n| SORT count DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false,
+                                        "summaryLabel": "Total",
+                                        "summaryRow": "sum"
+                                    }
+                                ],
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Top Event Actions Resulting in Failure — OVH Managed Kubernetes Audit Logs",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Top Event Actions Resulting in Failure — OVH Managed Kubernetes Audit Logs"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "d3640123-307e-431c-a403-bdcd562d9189",
+                    "sectionId": "0d9a0cd3-f117-4abc-9154-97ee5a30a700",
+                    "w": 24,
+                    "x": 0,
+                    "y": 22
+                },
+                "panelIndex": "d3640123-307e-431c-a403-bdcd562d9189",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-ovh_managed_kubernetes.audit-*-3b8df50bab9cdc8698a74fd3d1da6cb117691d6928f2a078d1d82e70a21cbeb1": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-3b8df50bab9cdc8698a74fd3d1da6cb117691d6928f2a078d1d82e70a21cbeb1",
+                                    "name": "logs-ovh_managed_kubernetes.audit-*",
+                                    "sourceFilters": [],
+                                    "title": "logs-ovh_managed_kubernetes.audit-*",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "http.response.status_code",
+                                                    "label": "HTTP Status Code",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "event.action",
+                                                    "label": "Event Action",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Status Code Count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Status Code Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-ovh_managed_kubernetes.audit-*-3b8df50bab9cdc8698a74fd3d1da6cb117691d6928f2a078d1d82e70a21cbeb1",
+                                            "query": {
+                                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Status Code Count` = COUNT(*) BY http.response.status_code, event.action\n| SORT `Status Code Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-ovh_managed_kubernetes.audit-*-3b8df50bab9cdc8698a74fd3d1da6cb117691d6928f2a078d1d82e70a21cbeb1",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-ovh_managed_kubernetes.audit-*\n| STATS `Status Code Count` = COUNT(*) BY http.response.status_code, event.action\n| SORT `Status Code Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "severity",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false,
+                                        "summaryLabel": "Total",
+                                        "summaryRow": "sum"
+                                    }
+                                ],
+                                "density": "normal",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "HTTP Status Code Counts by Event Action (Top 10)",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "HTTP Status Code Counts by Event Action (Top 10)"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "fdb35cd9-f1a3-46f6-8cba-36dfd7b628bd",
+                    "sectionId": "0d9a0cd3-f117-4abc-9154-97ee5a30a700",
+                    "w": 24,
+                    "x": 24,
+                    "y": 22
+                },
+                "panelIndex": "fdb35cd9-f1a3-46f6-8cba-36dfd7b628bd",
+                "type": "vis"
+            }
+        ],
+        "pinned_panels": {
+            "panels": {
+                "222a5c0d-7b6b-4c48-9487-65966ed21ad9": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.audit-* | STATS BY `http.response.status_code`",
+                        "ignore_validations": false,
+                        "step": 1,
+                        "title": "HTTP Status",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 4,
+                    "type": "range_slider_control",
+                    "width": "medium"
+                },
+                "66cf9701-68d3-4f69-9932-35c6da984c5e": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.audit-* | STATS BY `event.type`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Event Type",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 2,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "b79b186c-2432-4ced-bab7-d16c8822c0df": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.audit-* | STATS BY `event.action`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Action",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 1,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "ca0c0d73-fff2-4777-a349-9dcb102337f3": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.audit-* | STATS BY `event.outcome`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Outcome",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 0,
+                    "type": "options_list_control",
+                    "width": "medium"
+                },
+                "f64c5636-f2d8-4840-a72c-4e35f377f0e4": {
+                    "config": {
+                        "esql_query": "FROM logs-ovh_managed_kubernetes.audit-* | STATS BY `host.name`",
+                        "exclude": false,
+                        "exists_selected": false,
+                        "ignore_validations": false,
+                        "run_past_timeout": false,
+                        "search_technique": "wildcard",
+                        "selected_options": [],
+                        "single_select": false,
+                        "sort": {
+                            "by": "_key",
+                            "direction": "desc"
+                        },
+                        "title": "Host",
+                        "use_global_filters": true,
+                        "values_source": "esql"
+                    },
+                    "grow": true,
+                    "order": 3,
+                    "type": "options_list_control",
+                    "width": "medium"
+                }
+            }
+        },
+        "sections": [
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "e6275c59-b9d3-445b-a96b-beabf67e7683",
+                    "y": 0
+                },
+                "title": "📊 Overview — Key Metrics"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "fc903f75-4c11-4280-a30f-c2908878b79b",
+                    "y": 1
+                },
+                "title": "📈 Activity Trends"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "6c82ed2c-fc60-4c70-bf03-a78fbedd69fc",
+                    "y": 2
+                },
+                "title": "🔍 Event Breakdowns"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "edf7816d-b87b-426c-9eae-fea18181e86c",
+                    "y": 3
+                },
+                "title": "⚡ Top Actions \u0026 Resources"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "0d9a0cd3-f117-4abc-9154-97ee5a30a700",
+                    "y": 4
+                },
+                "title": "🛡️ Advanced — Audit Intelligence"
+            }
+        ],
+        "timeRestore": false,
+        "title": "[OVH] Kubernetes Audit Logs — SRE Dashboard"
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2026-08-31T00:33:52.771Z",
+    "created_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0",
+    "id": "ovh_managed_kubernetes-28e32490-f3a6-4f7c-8218-d35bbd1385a8",
+    "references": [],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+}

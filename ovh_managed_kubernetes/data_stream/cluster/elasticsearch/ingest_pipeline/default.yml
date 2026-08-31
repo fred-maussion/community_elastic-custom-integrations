@@ -1,0 +1,225 @@
+---
+description: Pipeline for processing OVH Managed Kubernetes cluster state events.
+processors:
+  - set:
+      field: ecs.version
+      tag: set_ecs_version
+      value: '9.3.0'
+
+  # --- CEL input only (Agentless metadata and error-only documents) ---
+  - remove:
+      field:
+        - organization
+        - division
+        - team
+      ignore_missing: true
+      if: ctx.organization instanceof String && ctx.division instanceof String && ctx.team instanceof String
+      tag: remove_agentless_tags
+      description: >-
+        Removes the fields added by Agentless as metadata,
+        as they can collide with ECS fields.
+  - terminate:
+      tag: data_collection_error
+      if: ctx.error?.message != null && ctx.message == null && ctx.event?.original == null
+      description: Error message set and no data to process.
+  # --- end CEL-only ---
+
+  - rename:
+      field: message
+      tag: rename_message_to_event_original
+      target_field: event.original
+      ignore_missing: true
+      description: >-
+        Renames the original `message` field to `event.original` to store a copy
+        of the original message. The `event.original` field is not touched if the
+        document already has one; it may happen when Logstash sends the document.
+      if: ctx.event?.original == null
+  - remove:
+      field: message
+      tag: remove_message
+      ignore_missing: true
+      description: The `message` field is no longer required if the document has an `event.original` field.
+      if: ctx.event?.original != null
+
+  - json:
+      field: event.original
+      target_field: json
+      tag: parse_json
+      if: ctx.event?.original != null
+
+  # --- Timestamp normalization ---
+  - date:
+      field: json.updatedAt
+      target_field: '@timestamp'
+      formats:
+        - ISO8601
+      tag: parse_updated_at_to_timestamp
+      if: ctx.json?.updatedAt != null
+  - date:
+      field: json.createdAt
+      target_field: ovh.kubernetes.cluster.created_at
+      formats:
+        - ISO8601
+      tag: parse_created_at
+      if: ctx.json?.createdAt != null
+
+  # --- ECS field mapping ---
+  - rename:
+      field: json.id
+      target_field: orchestrator.cluster.id
+      tag: rename_cluster_id
+      ignore_missing: true
+  - rename:
+      field: json.name
+      target_field: orchestrator.cluster.name
+      tag: rename_cluster_name
+      ignore_missing: true
+  - rename:
+      field: json.region
+      target_field: cloud.region
+      tag: rename_cloud_region
+      ignore_missing: true
+  - rename:
+      field: json.version
+      target_field: orchestrator.cluster.version
+      tag: rename_cluster_version
+      ignore_missing: true
+
+  # --- Static ECS fields ---
+  - set:
+      field: cloud.provider
+      tag: set_cloud_provider
+      value: ovh
+  - set:
+      field: cloud.service.name
+      tag: set_cloud_service_name
+      value: Managed Kubernetes
+  - set:
+      field: orchestrator.type
+      tag: set_orchestrator_type
+      value: kubernetes
+
+  # --- ECS categorization ---
+  - set:
+      field: event.kind
+      tag: set_event_kind
+      value: state
+  - append:
+      field: event.category
+      tag: append_event_category_host
+      value: host
+      allow_duplicates: false
+  - append:
+      field: event.type
+      tag: append_event_type_info
+      value: info
+      allow_duplicates: false
+
+  # --- Custom OVH fields ---
+  - rename:
+      field: json.status
+      target_field: ovh.kubernetes.cluster.status
+      tag: rename_status
+      ignore_missing: true
+  - rename:
+      field: json.updatePolicy
+      target_field: ovh.kubernetes.cluster.update_policy
+      tag: rename_update_policy
+      ignore_missing: true
+  - rename:
+      field: json.isUpToDate
+      target_field: ovh.kubernetes.cluster.is_up_to_date
+      tag: rename_is_up_to_date
+      ignore_missing: true
+  - rename:
+      field: json.controlPlaneIsUpToDate
+      target_field: ovh.kubernetes.cluster.control_plane_is_up_to_date
+      tag: rename_control_plane_is_up_to_date
+      ignore_missing: true
+  - rename:
+      field: json.nextUpgradeVersions
+      target_field: ovh.kubernetes.cluster.next_upgrade_versions
+      tag: rename_next_upgrade_versions
+      ignore_missing: true
+  - rename:
+      field: json.kubeProxyMode
+      target_field: ovh.kubernetes.cluster.kube_proxy_mode
+      tag: rename_kube_proxy_mode
+      ignore_missing: true
+  - rename:
+      field: json.plan
+      target_field: ovh.kubernetes.cluster.plan
+      tag: rename_plan
+      ignore_missing: true
+  - rename:
+      field: json.auditLogsSubscribed
+      target_field: ovh.kubernetes.cluster.audit_logs_subscribed
+      tag: rename_audit_logs_subscribed
+      ignore_missing: true
+  - rename:
+      field: json.url
+      target_field: ovh.kubernetes.cluster.url
+      tag: rename_url
+      ignore_missing: true
+  - rename:
+      field: json.nodesUrl
+      target_field: ovh.kubernetes.cluster.nodes_url
+      tag: rename_nodes_url
+      ignore_missing: true
+  - rename:
+      field: json.nodesSubnetId
+      target_field: ovh.kubernetes.cluster.nodes_subnet_id
+      tag: rename_nodes_subnet_id
+      ignore_missing: true
+      if: ctx.json?.nodesSubnetId != null
+  - rename:
+      field: json.ipAllocationPolicy.podsIpv4Cidr
+      target_field: ovh.kubernetes.cluster.ip_allocation_policy.pods_ipv4_cidr
+      tag: rename_pods_ipv4_cidr
+      ignore_missing: true
+  - rename:
+      field: json.ipAllocationPolicy.servicesIpv4Cidr
+      target_field: ovh.kubernetes.cluster.ip_allocation_policy.services_ipv4_cidr
+      tag: rename_services_ipv4_cidr
+      ignore_missing: true
+  - rename:
+      field: json.customization.apiServer.admissionPlugins.enabled
+      target_field: ovh.kubernetes.cluster.customization.api_server.admission_plugins.enabled
+      tag: rename_admission_plugins_enabled
+      ignore_missing: true
+  - rename:
+      field: json.customization.apiServer.admissionPlugins.disabled
+      target_field: ovh.kubernetes.cluster.customization.api_server.admission_plugins.disabled
+      tag: rename_admission_plugins_disabled
+      ignore_missing: true
+
+  # --- Cleanup ---
+  - remove:
+      field: json
+      tag: remove_json
+      ignore_missing: true
+
+  - append:
+      field: tags
+      tag: append_preserve_original_event_on_error
+      value: preserve_original_event
+      allow_duplicates: false
+      if: ctx.error?.message != null
+
+on_failure:
+  - append:
+      field: error.message
+      tag: on_failure_append_error_message
+      value: >-
+        Processor '{{{ _ingest.on_failure_processor_type }}}'
+        {{{#_ingest.on_failure_processor_tag}}}with tag '{{{ _ingest.on_failure_processor_tag }}}'
+        {{{/_ingest.on_failure_processor_tag}}}failed with message '{{{ _ingest.on_failure_message }}}'
+  - set:
+      field: event.kind
+      tag: set_pipeline_error_to_event_kind
+      value: pipeline_error
+  - append:
+      field: tags
+      tag: on_failure_append_preserve_original_event
+      value: preserve_original_event
+      allow_duplicates: false

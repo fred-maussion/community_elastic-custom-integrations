@@ -1,0 +1,8 @@
+{
+    "events": [
+        {
+            "@timestamp": "2026-01-15T10:10:00.000Z",
+            "message": "{\"id\":\"d4e5f6a7-b8c9-0123-defa-123456789abc\",\"cluster_id\":\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\"projectId\":\"test-project-id\",\"name\":\"test-nodepool-1\",\"flavor\":\"b3-8\",\"status\":\"READY\",\"sizeStatus\":\"CAPACITY_OK\",\"autoscale\":true,\"monthlyBilled\":false,\"antiAffinity\":false,\"desiredNodes\":3,\"minNodes\":1,\"maxNodes\":10,\"currentNodes\":3,\"availableNodes\":3,\"upToDateNodes\":3,\"createdAt\":\"2026-01-15T10:05:00Z\",\"updatedAt\":\"2026-01-15T10:10:00Z\",\"autoscaling\":{\"scaleDownUtilizationThreshold\":0.5,\"scaleDownUnneededTimeSeconds\":600,\"scaleDownUnreadyTimeSeconds\":1200},\"template\":{\"metadata\":{\"labels\":{\"env\":\"prod\"},\"annotations\":{},\"finalizers\":[]},\"spec\":{\"unschedulable\":false,\"taints\":[]}}}"
+        }
+    ]
+}

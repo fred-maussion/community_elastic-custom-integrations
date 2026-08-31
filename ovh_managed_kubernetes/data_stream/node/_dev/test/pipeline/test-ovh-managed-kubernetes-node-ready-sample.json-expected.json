@@ -1,0 +1,58 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-01-15T10:10:00.000Z",
+            "cloud": {
+                "instance": {
+                    "id": "f3a4b5c6-d7e8-9012-fa34-b5c6d7e8f9a0"
+                },
+                "machine": {
+                    "type": "b3-8"
+                },
+                "provider": "ovh",
+                "service": {
+                    "name": "Managed Kubernetes"
+                }
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "host"
+                ],
+                "kind": "state",
+                "original": "{\"id\":\"e1f2a3b4-c5d6-7890-ef12-a3b4c5d6e7f8\",\"cluster_id\":\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\"projectId\":\"test-project-id\",\"instanceId\":\"f3a4b5c6-d7e8-9012-fa34-b5c6d7e8f9a0\",\"nodePoolId\":\"d4e5f6a7-b8c9-0123-defa-123456789abc\",\"name\":\"test-cluster-1-workers-node-e1f2a3\",\"flavor\":\"b3-8\",\"status\":\"READY\",\"isUpToDate\":true,\"version\":\"1.32.13-1615\",\"createdAt\":\"2026-01-15T10:05:00Z\",\"updatedAt\":\"2026-01-15T10:10:00Z\",\"deployedAt\":\"2026-01-15T10:09:00Z\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "host": {
+                "name": "test-cluster-1-workers-node-e1f2a3"
+            },
+            "orchestrator": {
+                "cluster": {
+                    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                },
+                "type": "kubernetes"
+            },
+            "ovh": {
+                "kubernetes": {
+                    "node": {
+                        "created_at": "2026-01-15T10:05:00.000Z",
+                        "deployed_at": "2026-01-15T10:09:00.000Z",
+                        "id": "e1f2a3b4-c5d6-7890-ef12-a3b4c5d6e7f8",
+                        "is_up_to_date": true,
+                        "node_pool_id": "d4e5f6a7-b8c9-0123-defa-123456789abc",
+                        "project_id": "test-project-id",
+                        "status": "READY",
+                        "version": "1.32.13-1615"
+                    }
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

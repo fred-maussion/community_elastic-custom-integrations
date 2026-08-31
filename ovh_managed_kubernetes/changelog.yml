@@ -1,0 +1,6 @@
+# newer versions go on top
+- version: "1.0.0"
+  changes:
+    - description: Initial release of the OVHcloud Managed Kubernetes integration with cluster, nodepool, node, and audit data streams.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/79

@@ -1,0 +1,12 @@
+- name: ovh.kubernetes.audit
+  type: group
+  fields:
+    - name: log_id
+      type: keyword
+      description: Unique Graylog message ID for this audit log entry.
+    - name: level
+      type: long
+      description: Graylog severity level (6 = informational).
+    - name: message
+      type: keyword
+      description: Raw audit log line as stored in OVH Logs Data Platform.

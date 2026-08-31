@@ -1,0 +1,7 @@
+{
+    "events": [
+        {
+            "message": "{\"id\":\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\"region\":\"GRA9\",\"name\":\"test-cluster-1\",\"url\":\"abc123.c1.gra9.k8s.ovh.net\",\"nodesUrl\":\"abc123.nodes.c1.gra9.k8s.ovh.net\",\"version\":\"1.32.0-1\",\"plan\":\"free\",\"nextUpgradeVersions\":[\"1.33\",\"1.34\"],\"kubeProxyMode\":\"iptables\",\"customization\":{\"apiServer\":{\"admissionPlugins\":{\"enabled\":[\"NodeRestriction\"],\"disabled\":[]}},\"kubeProxy\":{\"iptables\":{},\"ipvs\":{}}},\"status\":\"READY\",\"updatePolicy\":\"ALWAYS_UPDATE\",\"isUpToDate\":true,\"controlPlaneIsUpToDate\":true,\"privateNetworkId\":null,\"nodesSubnetId\":null,\"ipAllocationPolicy\":{\"podsIpv4Cidr\":\"10.2.0.0/16\",\"servicesIpv4Cidr\":\"10.3.0.0/16\"},\"createdAt\":\"2026-01-15T10:00:00Z\",\"updatedAt\":\"2026-01-15T10:05:00Z\",\"auditLogsSubscribed\":false}"
+        }
+    ]
+}
