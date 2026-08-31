@@ -1,0 +1,175 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2026-01-01T00:00:00.000Z",
+            "destination": {
+                "port": 22
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "deny",
+                "category": [
+                    "network",
+                    "configuration"
+                ],
+                "kind": "state",
+                "original": "{\"sequence\":0,\"action\":\"deny\",\"protocol\":\"tcp\",\"source\":\"0.0.0.0/0\",\"destination\":null,\"sourcePort\":null,\"destinationPort\":\"22\",\"tcpOption\":\"syn\",\"fragments\":null,\"l3PacketLength\":null,\"rule\":\"rule-abc001\",\"creationDate\":\"2026-01-01T00:00:00+00:00\",\"state\":\"ok\",\"ip_block\":\"203.0.113.0/28\",\"ip_on_firewall\":\"203.0.113.1\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "network": {
+                "transport": "tcp"
+            },
+            "observer": {
+                "ip": [
+                    "203.0.113.1"
+                ]
+            },
+            "ovh_network_security": {
+                "firewall": {
+                    "action": "deny",
+                    "creation_date": "2026-01-01T00:00:00+00:00",
+                    "destination_port": "22",
+                    "ip_block": "203.0.113.0/28",
+                    "ip_on_firewall": "203.0.113.1",
+                    "protocol": "tcp",
+                    "rule": "rule-abc001",
+                    "sequence": 0,
+                    "source": "0.0.0.0/0",
+                    "state": "ok",
+                    "tcp_option": "syn"
+                }
+            },
+            "related": {
+                "ip": [
+                    "0.0.0.0",
+                    "203.0.113.1"
+                ]
+            },
+            "rule": {
+                "id": "rule-abc001"
+            },
+            "source": {
+                "ip": "0.0.0.0"
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        },
+        {
+            "@timestamp": "2026-02-01T00:00:00.000Z",
+            "destination": {
+                "port": 443
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "permit",
+                "category": [
+                    "network",
+                    "configuration"
+                ],
+                "kind": "state",
+                "original": "{\"sequence\":1,\"action\":\"permit\",\"protocol\":\"tcp\",\"source\":\"203.0.113.0/28\",\"destination\":null,\"sourcePort\":null,\"destinationPort\":\"443\",\"tcpOption\":null,\"fragments\":null,\"l3PacketLength\":null,\"rule\":\"rule-abc002\",\"creationDate\":\"2026-02-01T00:00:00+00:00\",\"state\":\"ok\",\"ip_block\":\"203.0.113.0/28\",\"ip_on_firewall\":\"203.0.113.1\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "network": {
+                "transport": "tcp"
+            },
+            "observer": {
+                "ip": [
+                    "203.0.113.1"
+                ]
+            },
+            "ovh_network_security": {
+                "firewall": {
+                    "action": "permit",
+                    "creation_date": "2026-02-01T00:00:00+00:00",
+                    "destination_port": "443",
+                    "ip_block": "203.0.113.0/28",
+                    "ip_on_firewall": "203.0.113.1",
+                    "protocol": "tcp",
+                    "rule": "rule-abc002",
+                    "sequence": 1,
+                    "source": "203.0.113.0/28",
+                    "state": "ok"
+                }
+            },
+            "related": {
+                "ip": [
+                    "203.0.113.0",
+                    "203.0.113.1"
+                ]
+            },
+            "rule": {
+                "id": "rule-abc002"
+            },
+            "source": {
+                "ip": "203.0.113.0"
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        },
+        {
+            "@timestamp": "2026-03-01T00:00:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "deny",
+                "category": [
+                    "network",
+                    "configuration"
+                ],
+                "kind": "state",
+                "original": "{\"sequence\":0,\"action\":\"deny\",\"protocol\":\"icmp\",\"source\":\"0.0.0.0/0\",\"destination\":null,\"sourcePort\":null,\"destinationPort\":null,\"tcpOption\":null,\"fragments\":null,\"l3PacketLength\":null,\"rule\":\"rule-def001\",\"creationDate\":\"2026-03-01T00:00:00+00:00\",\"state\":\"creationPending\",\"ip_block\":\"198.51.100.64/27\",\"ip_on_firewall\":\"198.51.100.65\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "network": {
+                "transport": "icmp"
+            },
+            "observer": {
+                "ip": [
+                    "198.51.100.65"
+                ]
+            },
+            "ovh_network_security": {
+                "firewall": {
+                    "action": "deny",
+                    "creation_date": "2026-03-01T00:00:00+00:00",
+                    "ip_block": "198.51.100.64/27",
+                    "ip_on_firewall": "198.51.100.65",
+                    "protocol": "icmp",
+                    "rule": "rule-def001",
+                    "sequence": 0,
+                    "source": "0.0.0.0/0",
+                    "state": "creationPending"
+                }
+            },
+            "related": {
+                "ip": [
+                    "0.0.0.0",
+                    "198.51.100.65"
+                ]
+            },
+            "rule": {
+                "id": "rule-def001"
+            },
+            "source": {
+                "ip": "0.0.0.0"
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

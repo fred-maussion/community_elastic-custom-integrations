@@ -1,0 +1,83 @@
+{
+    "@timestamp": "2026-01-01T00:00:00.000Z",
+    "agent": {
+        "ephemeral_id": "8110422c-9bd0-49bf-8be1-060efc91fcb2",
+        "id": "163b9240-f7fa-42e9-80c4-361e40922b5e",
+        "name": "elastic-agent-49239",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "data_stream": {
+        "dataset": "ovh_network_security.firewall",
+        "namespace": "83857",
+        "type": "logs"
+    },
+    "destination": {
+        "port": 22
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "163b9240-f7fa-42e9-80c4-361e40922b5e",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "action": "deny",
+        "category": [
+            "network",
+            "configuration"
+        ],
+        "dataset": "ovh_network_security.firewall",
+        "ingested": "2026-08-31T02:40:55Z",
+        "kind": "state",
+        "module": "ovh_network_security",
+        "original": "{\"action\":\"deny\",\"creationDate\":\"2026-01-01T00:00:00+00:00\",\"destination\":null,\"destinationPort\":\"22\",\"fragments\":null,\"ip_block\":\"203.0.113.0/28\",\"ip_on_firewall\":\"203.0.113.1\",\"l3PacketLength\":null,\"protocol\":\"tcp\",\"rule\":\"rule-abc001\",\"sequence\":0,\"source\":\"0.0.0.0/0\",\"sourcePort\":null,\"state\":\"ok\",\"tcpOption\":\"syn\"}",
+        "type": [
+            "info"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "network": {
+        "transport": "tcp"
+    },
+    "observer": {
+        "ip": [
+            "203.0.113.1"
+        ]
+    },
+    "ovh_network_security": {
+        "firewall": {
+            "action": "deny",
+            "creation_date": "2026-01-01T00:00:00.000Z",
+            "destination_port": "22",
+            "ip_block": "203.0.113.0/28",
+            "ip_on_firewall": "203.0.113.1",
+            "protocol": "tcp",
+            "rule": "rule-abc001",
+            "sequence": 0,
+            "source": "0.0.0.0/0",
+            "state": "ok",
+            "tcp_option": "syn"
+        }
+    },
+    "related": {
+        "ip": [
+            "0.0.0.0",
+            "203.0.113.1"
+        ]
+    },
+    "rule": {
+        "id": "rule-abc001"
+    },
+    "source": {
+        "ip": "0.0.0.0"
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded"
+    ]
+}

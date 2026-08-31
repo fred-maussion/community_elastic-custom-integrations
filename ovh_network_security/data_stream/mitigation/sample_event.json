@@ -1,0 +1,61 @@
+{
+    "@timestamp": "2026-08-31T02:14:29.674Z",
+    "agent": {
+        "ephemeral_id": "f0b21807-32c0-4155-aba7-8de38b8937ab",
+        "id": "82d410d2-3972-41ef-99a4-9d0c4d26bb37",
+        "name": "elastic-agent-40251",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "data_stream": {
+        "dataset": "ovh_network_security.mitigation",
+        "namespace": "39802",
+        "type": "logs"
+    },
+    "destination": {
+        "ip": "203.0.113.10"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "82d410d2-3972-41ef-99a4-9d0c4d26bb37",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "action": "ok",
+        "category": [
+            "network"
+        ],
+        "dataset": "ovh_network_security.mitigation",
+        "ingested": "2026-08-31T02:14:42Z",
+        "kind": "event",
+        "module": "ovh_network_security",
+        "original": "{\"auto\":true,\"ipOnMitigation\":\"203.0.113.10\",\"ip_block\":\"203.0.113.0/28\",\"permanent\":false,\"state\":\"ok\"}",
+        "type": [
+            "info"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "ovh_network_security": {
+        "mitigation": {
+            "auto": true,
+            "ip_block": "203.0.113.0/28",
+            "ip_on_mitigation": "203.0.113.10",
+            "permanent": false,
+            "state": "ok"
+        }
+    },
+    "related": {
+        "ip": [
+            "203.0.113.10"
+        ]
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded"
+    ]
+}

@@ -1,0 +1,62 @@
+{
+    "@timestamp": "2026-08-10T06:00:00.000Z",
+    "agent": {
+        "ephemeral_id": "1d9ffc2e-addc-4261-9b5b-de6f3f36051c",
+        "id": "099b075a-35c4-4379-942a-9a4c47125f26",
+        "name": "elastic-agent-11839",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "data_stream": {
+        "dataset": "ovh_network_security.spam",
+        "namespace": "73908",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "099b075a-35c4-4379-942a-9a4c47125f26",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "action": "unblocked",
+        "category": [
+            "network",
+            "email"
+        ],
+        "dataset": "ovh_network_security.spam",
+        "ingested": "2026-08-31T02:25:43Z",
+        "kind": "event",
+        "module": "ovh_network_security",
+        "original": "{\"date\":\"2026-08-10T06:00:00+00:00\",\"ipSpamming\":\"198.51.100.80\",\"ip_block\":\"198.51.100.64/27\",\"state\":\"unblocked\",\"time\":21600}",
+        "type": [
+            "denied"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "ovh_network_security": {
+        "spam": {
+            "date": "2026-08-10T06:00:00.000Z",
+            "ip_block": "198.51.100.64/27",
+            "ip_spamming": "198.51.100.80",
+            "state": "unblocked",
+            "time": 21600
+        }
+    },
+    "related": {
+        "ip": [
+            "198.51.100.80"
+        ]
+    },
+    "source": {
+        "ip": "198.51.100.80"
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded"
+    ]
+}

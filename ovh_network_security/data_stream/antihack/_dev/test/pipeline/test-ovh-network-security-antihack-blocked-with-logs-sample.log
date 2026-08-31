@@ -1,0 +1,1 @@
+{"ipBlocked":"198.51.100.70","state":"blocked","blockedSince":"2026-08-03T08:00:00+00:00","time":7200,"logs":"Detected outbound port scanning activity","ip_block":"198.51.100.64/27"}

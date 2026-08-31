@@ -1,0 +1,62 @@
+{
+    "@timestamp": "2026-08-01T10:15:00.000Z",
+    "agent": {
+        "ephemeral_id": "186e9764-23ce-4b65-a35e-892221d535d1",
+        "id": "7f1bbefa-611f-481f-bf78-c55df0ffbbd8",
+        "name": "elastic-agent-10888",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "data_stream": {
+        "dataset": "ovh_network_security.antihack",
+        "namespace": "76305",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "7f1bbefa-611f-481f-bf78-c55df0ffbbd8",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "action": "blocked",
+        "category": [
+            "network",
+            "intrusion_detection"
+        ],
+        "dataset": "ovh_network_security.antihack",
+        "ingested": "2026-08-31T01:58:53Z",
+        "kind": "event",
+        "module": "ovh_network_security",
+        "original": "{\"blockedSince\":\"2026-08-01T10:15:00+00:00\",\"ipBlocked\":\"203.0.113.42\",\"ip_block\":\"203.0.113.0/28\",\"logs\":null,\"state\":\"blocked\",\"time\":3600}",
+        "type": [
+            "denied"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "ovh_network_security": {
+        "antihack": {
+            "blocked_since": "2026-08-01T10:15:00.000Z",
+            "ip_block": "203.0.113.0/28",
+            "ip_blocked": "203.0.113.42",
+            "state": "blocked",
+            "time": 3600
+        }
+    },
+    "related": {
+        "ip": [
+            "203.0.113.42"
+        ]
+    },
+    "source": {
+        "ip": "203.0.113.42"
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded"
+    ]
+}

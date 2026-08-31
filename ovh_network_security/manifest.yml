@@ -1,0 +1,62 @@
+format_version: "3.4.2"
+name: ovh_network_security
+title: "OVHcloud Network Security"
+version: 0.1.0
+source:
+  license: "Apache-2.0"
+description: "Monitor OVHcloud network security events: Anti-hack, Anti-DDoS mitigation, Anti-spam, and IP Firewall rules via the OVHcloud REST API."
+type: integration
+categories:
+  - security
+  - network
+conditions:
+  kibana:
+    version: "^8.19.0 || ^9.1.0"
+  elastic:
+    subscription: "basic"
+icons:
+  - src: /img/ovh-logo.svg
+    title: OVHcloud logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: ovh_network_security
+    title: OVHcloud Network Security
+    description: Collect anti-hack, anti-DDoS mitigation, anti-spam, and IP firewall events from OVHcloud
+    inputs:
+      - type: cel
+        title: Collect OVHcloud Network Security data via API
+        description: Collecting network security events using the OVHcloud REST API (OAuth2)
+        vars:
+          - name: url
+            type: url
+            title: OVHcloud API URL
+            description: >-
+              Regional OVHcloud API base URL. EU: https://eu.api.ovh.com/v1 CA: https://ca.api.ovh.com/v1 US: https://api.us.ovhcloud.com/v1
+            default: https://eu.api.ovh.com/v1
+            show_user: true
+            required: true
+          - name: client_id
+            type: text
+            title: OAuth2 Client ID
+            description: OVHcloud service account client ID (from IAM → Service Accounts).
+            show_user: true
+            required: true
+          - name: client_secret
+            type: password
+            title: OAuth2 Client Secret
+            description: OVHcloud service account client secret.
+            show_user: true
+            required: true
+            secret: true
+          - name: token_url
+            type: url
+            title: OAuth2 Token URL
+            description: >-
+              Regional OAuth2 token endpoint. EU: https://www.ovh.com/auth/oauth2/token CA: https://ca.ovh.com/auth/oauth2/token US: https://us.ovhcloud.com/auth/oauth2/token
+            default: https://www.ovh.com/auth/oauth2/token
+            show_user: true
+            required: true
+owner:
+  github: fred-maussion/community_elastic-custom-integrations
+  type: community

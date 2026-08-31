@@ -1,0 +1,41 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2024-06-01T12:00:00.000Z",
+            "destination": {
+                "ip": "198.51.100.70"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "removalPending",
+                "category": [
+                    "network"
+                ],
+                "kind": "event",
+                "original": "{\"ipOnMitigation\":\"198.51.100.70\",\"state\":\"removalPending\",\"auto\":true,\"permanent\":false,\"ip_block\":\"198.51.100.64/27\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh_network_security": {
+                "mitigation": {
+                    "auto": true,
+                    "ip_block": "198.51.100.64/27",
+                    "ip_on_mitigation": "198.51.100.70",
+                    "permanent": false,
+                    "state": "removalPending"
+                }
+            },
+            "related": {
+                "ip": [
+                    "198.51.100.70"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

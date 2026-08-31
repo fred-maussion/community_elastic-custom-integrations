@@ -1,0 +1,21 @@
+- name: ovh_network_security.antihack
+  type: group
+  fields:
+    - name: ip_block
+      type: keyword
+      description: The CIDR block that owns the blocked IP.
+    - name: ip_blocked
+      type: ip
+      description: The IPv4 address blocked for outbound abuse or compromise.
+    - name: state
+      type: keyword
+      description: Current antihack state (blocked, unblocking).
+    - name: blocked_since
+      type: date
+      description: Timestamp when the block was applied.
+    - name: time
+      type: long
+      description: Seconds until the IP becomes eligible for unblocking.
+    - name: logs
+      type: text
+      description: Optional additional log information from OVH.

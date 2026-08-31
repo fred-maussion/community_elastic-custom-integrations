@@ -1,0 +1,65 @@
+rules:
+  # OAuth2 token endpoint — used by auth.oauth2 framework during system tests
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+  # IP block list — returns two synthetic CIDR blocks
+  - path: /ip
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["203.0.113.0/28","198.51.100.64/27"]'
+  # Mitigation IP list for first block — two IPs under mitigation
+  # Path uses decoded CIDR: the CEL program encodes / as %2F, but Go's net/http decodes to /
+  - path: /ip/203.0.113.0/28/mitigation
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["203.0.113.10","203.0.113.11"]'
+  # Mitigation IP list for second block — one IP under mitigation
+  - path: /ip/198.51.100.64/27/mitigation
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["198.51.100.70"]'
+  # Detail for 203.0.113.10 in 203.0.113.0/28
+  - path: /ip/203.0.113.0/28/mitigation/203.0.113.10
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"ipOnMitigation":"203.0.113.10","state":"ok","auto":true,"permanent":false}'
+  # Detail for 203.0.113.11 in 203.0.113.0/28
+  - path: /ip/203.0.113.0/28/mitigation/203.0.113.11
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"ipOnMitigation":"203.0.113.11","state":"creationPending","auto":false,"permanent":false}'
+  # Detail for 198.51.100.70 in 198.51.100.64/27
+  - path: /ip/198.51.100.64/27/mitigation/198.51.100.70
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"ipOnMitigation":"198.51.100.70","state":"removalPending","auto":true,"permanent":false}'

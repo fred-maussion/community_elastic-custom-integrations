@@ -1,0 +1,18 @@
+- name: ovh_network_security.spam
+  type: group
+  fields:
+    - name: ip_block
+      type: keyword
+      description: The CIDR block that owns the spam-blocked IP.
+    - name: ip_spamming
+      type: ip
+      description: The IPv4 address blocked for sending outbound spam.
+    - name: state
+      type: keyword
+      description: Current spam block state (blockedForSpam, unblocking, unblocked).
+    - name: date
+      type: date
+      description: Timestamp when the spam block was applied.
+    - name: time
+      type: long
+      description: Duration of the spam block in seconds.
