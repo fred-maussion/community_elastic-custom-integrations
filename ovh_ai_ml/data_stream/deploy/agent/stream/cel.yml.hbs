@@ -39,7 +39,7 @@ program: |-
         ) + "&size=" + string(int(state.batch_size)) + "&page=" + string(cur.next_page)
       ).do_request().as(resp,
         (resp.StatusCode == 200) ?
-          resp.Body.decode_json().as(items,
+          resp.Body.decode_json().items.as(items,
             {
               "events": items.map(e, {"message": e.encode_json()}),
               "cursor": (size(items) == int(state.batch_size)) ?
