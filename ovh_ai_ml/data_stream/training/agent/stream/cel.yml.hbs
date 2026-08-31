@@ -33,9 +33,9 @@ program: |-
         "GET",
         state.url.trim_right("/") + "/v1/job?" + "updatedAfter=" + string(
           (cur.last_updated != "") ?
-            (int(timestamp(cur.last_updated)) * 1000)
+            int(timestamp(cur.last_updated))
           :
-            int(now - duration(state.initial_interval)) * 1000
+            int(now - duration(state.initial_interval))
         ) + "&size=" + string(int(state.batch_size)) + "&page=" + string(cur.next_page)
       ).with({"Header": {"Authorization": ["Bearer " + state.ai_token]}}).do_request().as(resp,
         (resp.StatusCode == 200) ?
