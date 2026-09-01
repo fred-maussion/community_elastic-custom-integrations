@@ -1,0 +1,8 @@
+{
+    "events": [
+        {
+            "@timestamp": "2024-01-15T09:30:00.000Z",
+            "message": "{\"id\":\"550e8400-e29b-41d4-a716-446655440001\",\"engine\":\"postgresql\",\"version\":\"14\",\"plan\":\"business\",\"flavor\":\"db1-15\",\"status\":\"READY\",\"createdAt\":\"2024-01-15T09:30:00.000Z\",\"description\":\"Production PostgreSQL cluster\",\"category\":\"operational\",\"maintenanceTime\":\"22:00:00\",\"networkType\":\"public\",\"networkId\":null,\"openstackRegion\":\"GRA\",\"nodeNumber\":3,\"nodes\":[{\"id\":\"550e8400-e29b-41d4-a716-446655440011\",\"name\":\"node-1\",\"status\":\"READY\",\"createdAt\":\"2024-01-15T09:35:00.000Z\",\"region\":\"GRA\",\"flavor\":\"db1-15\",\"port\":20184,\"role\":\"STANDARD\"}],\"endpoints\":[{\"component\":\"postgresql\",\"domain\":\"cluster-id.postgresql.db.cloud.example.com\",\"path\":null,\"port\":20184,\"scheme\":\"postgresql\",\"ssl\":true,\"sslMode\":\"require\",\"uri\":\"postgresql://user@cluster-id.postgresql.db.cloud.example.com:20184/defaultdb?sslmode=require\"}],\"ipRestrictions\":[{\"ip\":\"198.51.100.0/24\",\"description\":\"Office network\",\"status\":\"READY\"}],\"backups\":{\"time\":\"01:00:00\",\"regions\":[\"GRA\"],\"retentionDays\":7,\"pitr\":\"2024-01-22T09:30:00.000Z\"},\"storage\":{\"size\":{\"value\":160,\"unit\":\"GB\"},\"type\":\"ceph\"},\"deletionProtection\":false,\"enablePrometheus\":false}"
+        }
+    ]
+}

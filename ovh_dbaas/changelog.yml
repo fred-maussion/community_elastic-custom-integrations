@@ -1,0 +1,6 @@
+# newer versions go on top
+- version: "0.1.0"
+  changes:
+    - description: Initial release with cluster, backup, and maintenance data streams for OVHcloud Managed Databases.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/pull/94

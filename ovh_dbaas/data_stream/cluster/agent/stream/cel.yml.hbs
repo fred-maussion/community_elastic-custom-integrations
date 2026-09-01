@@ -1,0 +1,68 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+auth.oauth2:
+  client.id: {{client_id}}
+  client.secret: {{client_secret}}
+  token_url: {{token_url}}
+resource.url: {{api_url}}
+state:
+  service_name: {{service_name}}
+  engines: {{engines}}
+redact:
+  fields: ~
+program: |-
+  state.with(
+    {
+      "events": state.engines.split(",").map(engine,
+        request("GET", state.url.trim_right("/") + "/cloud/project/" + state.service_name + "/database/" + engine).do_request().as(lr,
+          (lr.StatusCode == 200) ?
+            lr.Body.decode_json().map(cluster_id,
+              request("GET", state.url.trim_right("/") + "/cloud/project/" + state.service_name + "/database/" + engine + "/" + cluster_id).do_request()
+            )
+          :
+            [lr]
+        )
+      ).flatten().map(r,
+        (r.StatusCode == 200) ?
+          {"message": string(r.Body)}
+        :
+          {
+            "message": {
+              "error": {
+                "code": string(r.StatusCode),
+                "id": string(r.Status),
+                "message": "GET /cloud/project/" + state.service_name + "/database: " + ((size(r.Body) != 0) ? string(r.Body) : string(r.Status)),
+              },
+            }.encode_json(),
+          }
+      ),
+      "cursor": {"last_execution_dt": string(now)},
+      "want_more": false,
+    }
+  )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}

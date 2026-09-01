@@ -1,0 +1,100 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2024-01-15T09:30:00.000Z",
+            "cloud": {
+                "provider": "ovh",
+                "region": "GRA",
+                "service": {
+                    "name": "Database as a Service"
+                }
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "kind": "state",
+                "original": "{\"id\":\"550e8400-e29b-41d4-a716-446655440001\",\"engine\":\"postgresql\",\"version\":\"14\",\"plan\":\"business\",\"flavor\":\"db1-15\",\"status\":\"READY\",\"createdAt\":\"2024-01-15T09:30:00.000Z\",\"description\":\"Production PostgreSQL cluster\",\"category\":\"operational\",\"maintenanceTime\":\"22:00:00\",\"networkType\":\"public\",\"networkId\":null,\"openstackRegion\":\"GRA\",\"nodeNumber\":3,\"nodes\":[{\"id\":\"550e8400-e29b-41d4-a716-446655440011\",\"name\":\"node-1\",\"status\":\"READY\",\"createdAt\":\"2024-01-15T09:35:00.000Z\",\"region\":\"GRA\",\"flavor\":\"db1-15\",\"port\":20184,\"role\":\"STANDARD\"}],\"endpoints\":[{\"component\":\"postgresql\",\"domain\":\"cluster-id.postgresql.db.cloud.example.com\",\"path\":null,\"port\":20184,\"scheme\":\"postgresql\",\"ssl\":true,\"sslMode\":\"require\",\"uri\":\"postgresql://user@cluster-id.postgresql.db.cloud.example.com:20184/defaultdb?sslmode=require\"}],\"ipRestrictions\":[{\"ip\":\"198.51.100.0/24\",\"description\":\"Office network\",\"status\":\"READY\"}],\"backups\":{\"time\":\"01:00:00\",\"regions\":[\"GRA\"],\"retentionDays\":7,\"pitr\":\"2024-01-22T09:30:00.000Z\"},\"storage\":{\"size\":{\"value\":160,\"unit\":\"GB\"},\"type\":\"ceph\"},\"deletionProtection\":false,\"enablePrometheus\":false}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh_dbaas": {
+                "cluster": {
+                    "backups": {
+                        "pitr": "2024-01-22T09:30:00.000Z",
+                        "regions": [
+                            "GRA"
+                        ],
+                        "retention_days": 7,
+                        "time": "01:00:00"
+                    },
+                    "category": "operational",
+                    "deletion_protection": false,
+                    "enable_prometheus": false,
+                    "endpoints": [
+                        {
+                            "component": "postgresql",
+                            "domain": "cluster-id.postgresql.db.cloud.example.com",
+                            "port": 20184,
+                            "scheme": "postgresql",
+                            "ssl": true,
+                            "ssl_mode": "require",
+                            "uri": "postgresql://user@cluster-id.postgresql.db.cloud.example.com:20184/defaultdb?sslmode=require"
+                        }
+                    ],
+                    "flavor": "db1-15",
+                    "ip_restrictions": [
+                        {
+                            "description": "Office network",
+                            "ip": "198.51.100.0/24",
+                            "status": "READY"
+                        }
+                    ],
+                    "maintenance_time": "22:00:00",
+                    "network_type": "public",
+                    "nodes": [
+                        {
+                            "created_at": "2024-01-15T09:35:00.000Z",
+                            "flavor": "db1-15",
+                            "id": "550e8400-e29b-41d4-a716-446655440011",
+                            "name": "node-1",
+                            "port": 20184,
+                            "region": "GRA",
+                            "role": "STANDARD",
+                            "status": "READY"
+                        }
+                    ],
+                    "plan": "business",
+                    "storage": {
+                        "size_unit": "GB",
+                        "size_value": 160,
+                        "type": "ceph"
+                    }
+                }
+            },
+            "related": {
+                "hosts": [
+                    "cluster-id.postgresql.db.cloud.example.com"
+                ]
+            },
+            "server": {
+                "address": "cluster-id.postgresql.db.cloud.example.com",
+                "port": 20184
+            },
+            "service": {
+                "id": "550e8400-e29b-41d4-a716-446655440001",
+                "name": "Production PostgreSQL cluster",
+                "state": "READY",
+                "type": "postgresql",
+                "version": "14"
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}
