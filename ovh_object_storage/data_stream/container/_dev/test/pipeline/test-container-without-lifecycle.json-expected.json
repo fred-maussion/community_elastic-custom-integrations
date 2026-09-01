@@ -1,0 +1,55 @@
+{
+    "expected": [
+        {
+            "cloud": {
+                "region": "gra"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "kind": "state",
+                "original": "{\"name\":\"example-bucket-logs\",\"region\":\"gra\",\"createdAt\":\"2024-06-15T09:00:00Z\",\"virtualHost\":\"example-bucket-logs.s3.gra.io.cloud.ovh.net\",\"objectsCount\":12050,\"objectsSize\":52428800,\"ownerId\":98765432,\"tags\":{\"environment\":\"production\",\"purpose\":\"logging\"},\"versioning\":{\"status\":\"disabled\"},\"encryption\":{\"sseAlgorithm\":\"AES256\"},\"objectLock\":{\"status\":\"disabled\"},\"replication\":{\"rules\":[]}}",
+                "type": [
+                    "info"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ],
+            "message": "{\"name\":\"example-bucket-logs\",\"region\":\"gra\",\"createdAt\":\"2024-06-15T09:00:00Z\",\"virtualHost\":\"example-bucket-logs.s3.gra.io.cloud.ovh.net\",\"objectsCount\":12050,\"objectsSize\":52428800,\"ownerId\":98765432,\"tags\":{\"environment\":\"production\",\"purpose\":\"logging\"},\"versioning\":{\"status\":\"disabled\"},\"encryption\":{\"sseAlgorithm\":\"AES256\"},\"objectLock\":{\"status\":\"disabled\"},\"replication\":{\"rules\":[]}}",
+            "labels": {
+                "environment": "production",
+                "purpose": "logging"
+            },
+            "ovh_object_storage": {
+                "container": {
+                    "created_at": "2024-06-15T09:00:00.000Z",
+                    "encryption_algorithm": "AES256",
+                    "name": "example-bucket-logs",
+                    "object_lock_status": "disabled",
+                    "objects_count": 12050,
+                    "objects_size_bytes": 52428800,
+                    "owner_id": 98765432,
+                    "replication_rules": [],
+                    "versioning_status": "disabled",
+                    "virtual_host": "example-bucket-logs.s3.gra.io.cloud.ovh.net"
+                }
+            },
+            "related": {
+                "hosts": [
+                    "example-bucket-logs.s3.gra.io.cloud.ovh.net"
+                ],
+                "user": [
+                    "98765432"
+                ]
+            },
+            "user": {
+                "id": "98765432"
+            }
+        }
+    ]
+}

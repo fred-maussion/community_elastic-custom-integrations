@@ -1,0 +1,75 @@
+format_version: "3.4.2"
+name: ovh_object_storage
+title: "OVHcloud Object Storage"
+version: 0.1.0
+source:
+  license: "Apache-2.0"
+description: "Monitor OVHcloud Object Storage container inventory, configuration, encryption, versioning, and replication state via the OVHcloud REST API."
+type: integration
+categories:
+  - cloud
+  - security
+conditions:
+  kibana:
+    version: "^8.19.0 || ^9.1.0"
+  elastic:
+    subscription: "basic"
+icons:
+  - src: /img/ovh-logo.svg
+    title: OVHcloud logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: ovh_object_storage
+    title: OVHcloud Object Storage
+    description: Collect container inventory and configuration state from OVHcloud Object Storage
+    inputs:
+      - type: cel
+        title: Collect OVHcloud Object Storage data via API
+        description: Collecting container state data using the OVHcloud REST API (OAuth2)
+        vars:
+          - name: url
+            type: url
+            title: OVHcloud API URL
+            description: >-
+              Regional OVHcloud API base URL. EU: https://eu.api.ovh.com/1.0 CA: https://ca.api.ovh.com/1.0 US: https://api.us.ovhcloud.com/1.0
+            default: https://eu.api.ovh.com/1.0
+            show_user: true
+            required: true
+          - name: service_name
+            type: text
+            title: OVHcloud Project ID
+            description: Public Cloud project ID (serviceName) from the OVHcloud Control Panel.
+            show_user: true
+            required: true
+          - name: client_id
+            type: text
+            title: OAuth2 Client ID
+            description: OVHcloud service account client ID (from IAM → Service Accounts).
+            show_user: true
+            required: true
+          - name: client_secret
+            type: password
+            title: OAuth2 Client Secret
+            description: OVHcloud service account client secret.
+            show_user: true
+            required: true
+            secret: true
+          - name: token_url
+            type: url
+            title: OAuth2 Token URL
+            description: >-
+              Regional OAuth2 token endpoint. EU: https://www.ovh.com/auth/oauth2/token CA: https://ca.ovh.com/auth/oauth2/token US: https://us.ovhcloud.com/auth/oauth2/token
+            default: https://www.ovh.com/auth/oauth2/token
+            show_user: true
+            required: true
+          - name: region_name
+            type: text
+            title: Storage Region
+            description: >-
+              OVHcloud storage region to monitor (e.g. gra, eu-west-par, sbg, bhs). One policy per region.
+            show_user: true
+            required: true
+owner:
+  github: fred-maussion/community_elastic-custom-integrations
+  type: community
