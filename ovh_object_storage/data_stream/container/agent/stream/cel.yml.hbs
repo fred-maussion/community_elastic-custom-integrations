@@ -1,0 +1,95 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+auth.oauth2:
+  client.id: {{client_id}}
+  client.secret: {{client_secret}}
+  token_url: {{token_url}}
+  scopes:
+    - all
+resource.url: {{url}}
+state:
+  service_name: {{service_name}}
+  region_name: {{region_name}}
+redact:
+  fields: ~
+program: |
+  state.with(
+    request("GET", state.url.trim_right("/") + "/cloud/project/" + state.service_name + "/storage?" + {
+      "regionName": [state.region_name],
+    }.format_query()).do_request().as(resp,
+      resp.StatusCode == 200 ?
+        {
+          "events": resp.Body.decode_json().map(c,
+            request("GET", state.url.trim_right("/") + "/cloud/project/" + state.service_name + "/storage/" + c.name + "?" + {
+              "regionName": [state.region_name],
+              "noObjects": ["true"],
+            }.format_query()).do_request().as(detailResp,
+              request("GET", state.url.trim_right("/") + "/cloud/project/" + state.service_name + "/storage/" + c.name + "/lifecycle?" + {
+                "regionName": [state.region_name],
+              }.format_query()).do_request().as(lcResp,
+                detailResp.StatusCode == 200 ?
+                  {
+                    "message": (lcResp.StatusCode == 200 ?
+                      detailResp.Body.decode_json().with({"lifecycle": lcResp.Body.decode_json()})
+                    :
+                      detailResp.Body.decode_json()
+                    ).encode_json(),
+                  }
+                :
+                  {
+                    "message": {
+                      "error": {
+                        "code": string(detailResp.StatusCode),
+                        "id": string(detailResp.Status),
+                        "message": "GET /cloud/project/" + state.service_name + "/storage/" + c.name + ": " + (
+                          size(detailResp.Body) != 0 ? string(detailResp.Body) : string(detailResp.Status)
+                        ),
+                      },
+                    }.encode_json(),
+                  }
+              )
+            )
+          ),
+          "want_more": false,
+        }
+      :
+        {
+          "events": {
+            "error": {
+              "code": string(resp.StatusCode),
+              "id": string(resp.Status),
+              "message": "GET /cloud/project/" + state.service_name + "/storage: " + (
+                size(resp.Body) != 0 ? string(resp.Body) : string(resp.Status)
+              ),
+            },
+          },
+          "want_more": false,
+        }
+    )
+  )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}
