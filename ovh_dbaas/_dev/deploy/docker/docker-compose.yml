@@ -1,0 +1,40 @@
+services:
+  ovh-dbaas-cluster-mock:
+    image: docker.elastic.co/observability/stream:v0.22.0
+    hostname: ovh-dbaas-cluster-mock
+    ports:
+      - 8090
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8090'
+    command:
+      - http-server
+      - --addr=:8090
+      - --config=/files/config-cluster.yml
+  ovh-dbaas-backup-mock:
+    image: docker.elastic.co/observability/stream:v0.22.0
+    hostname: ovh-dbaas-backup-mock
+    ports:
+      - 8091
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8091'
+    command:
+      - http-server
+      - --addr=:8091
+      - --config=/files/config-backup.yml
+  ovh-dbaas-maintenance-mock:
+    image: docker.elastic.co/observability/stream:v0.22.0
+    hostname: ovh-dbaas-maintenance-mock
+    ports:
+      - 8092
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8092'
+    command:
+      - http-server
+      - --addr=:8092
+      - --config=/files/config-maintenance.yml

@@ -1,0 +1,8 @@
+{
+    "events": [
+        {
+            "@timestamp": "2024-01-23T03:00:00.000Z",
+            "message": "{\"id\":\"770e8400-e29b-41d4-a716-446655440002\",\"createdAt\":\"2024-01-23T03:00:00.000Z\",\"description\":\"Manual backup\",\"status\":\"CREATING\",\"type\":\"manual\",\"size\":{\"value\":2048,\"unit\":\"MB\"},\"regions\":[{\"name\":\"GRA\"},{\"name\":\"SBG\"}],\"engine\":\"mysql\",\"clusterId\":\"550e8400-e29b-41d4-a716-446655440003\"}"
+        }
+    ]
+}

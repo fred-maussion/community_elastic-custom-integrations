@@ -1,0 +1,355 @@
+---
+description: Pipeline for processing OVH Database as a Service cluster state events.
+processors:
+  - set:
+      field: ecs.version
+      tag: set_ecs_version
+      value: '9.3.0'
+
+  # --- CEL input only (Agentless metadata and error-only documents) ---
+  - remove:
+      field:
+        - organization
+        - division
+        - team
+      ignore_missing: true
+      if: ctx.organization instanceof String && ctx.division instanceof String && ctx.team instanceof String
+      tag: remove_agentless_tags
+      description: >-
+        Removes the fields added by Agentless as metadata,
+        as they can collide with ECS fields.
+  # --- end CEL-only ---
+
+  - rename:
+      field: message
+      tag: rename_message_to_event_original
+      target_field: event.original
+      ignore_missing: true
+      description: >-
+        Renames the original `message` field to `event.original` to store a copy
+        of the original message. The `event.original` field is not touched if the
+        document already has one; it may happen when Logstash sends the document.
+      if: ctx.event?.original == null
+  - remove:
+      field: message
+      tag: remove_message
+      ignore_missing: true
+      description: The `message` field is no longer required if the document has an `event.original` field.
+      if: ctx.event?.original != null
+
+  - json:
+      field: event.original
+      target_field: json
+      tag: parse_json
+      if: ctx.event?.original != null
+  - set:
+      field: error.message
+      tag: extract_cel_error_message
+      copy_from: json.error.message
+      if: ctx.json?.error?.message != null
+      ignore_empty_value: true
+  - set:
+      field: error.code
+      tag: extract_cel_error_code
+      copy_from: json.error.code
+      if: ctx.json?.error?.code != null
+      ignore_empty_value: true
+  - terminate:
+      tag: data_collection_error
+      if: ctx.error?.message != null && ctx.event?.original != null
+      description: CEL data collection error — terminates without indexing.
+
+  # --- Timestamp normalization ---
+  - date:
+      field: json.createdAt
+      target_field: '@timestamp'
+      formats:
+        - ISO8601
+      tag: parse_created_at_to_timestamp
+      if: ctx.json?.createdAt != null
+
+  # --- ECS field mapping ---
+  - rename:
+      field: json.openstackRegion
+      target_field: cloud.region
+      tag: rename_openstack_region_to_cloud_region
+      ignore_missing: true
+  - rename:
+      field: json.id
+      target_field: service.id
+      tag: rename_id_to_service_id
+      ignore_missing: true
+  - rename:
+      field: json.engine
+      target_field: service.type
+      tag: rename_engine_to_service_type
+      ignore_missing: true
+  - rename:
+      field: json.version
+      target_field: service.version
+      tag: rename_version_to_service_version
+      ignore_missing: true
+  - rename:
+      field: json.status
+      target_field: service.state
+      tag: rename_status_to_service_state
+      ignore_missing: true
+  - rename:
+      field: json.description
+      target_field: service.name
+      tag: rename_description_to_service_name
+      ignore_missing: true
+
+  # --- Static ECS fields ---
+  - set:
+      field: cloud.provider
+      tag: set_cloud_provider
+      value: ovh
+  - set:
+      field: cloud.service.name
+      tag: set_cloud_service_name
+      value: Database as a Service
+
+  # --- ECS categorization ---
+  - set:
+      field: event.kind
+      tag: set_event_kind
+      value: state
+  - append:
+      field: event.category
+      tag: append_event_category_configuration
+      value: configuration
+      allow_duplicates: false
+  - append:
+      field: event.type
+      tag: append_event_type_info
+      value: info
+      allow_duplicates: false
+
+  # --- server.* from first endpoint (read from json.endpoints before renaming) ---
+  - set:
+      field: server.address
+      tag: set_server_address_from_endpoint
+      copy_from: json.endpoints.0.domain
+      ignore_empty_value: true
+      if: ctx.json?.endpoints instanceof List && ctx.json.endpoints.size() > 0
+  - set:
+      field: server.port
+      tag: set_server_port_from_endpoint
+      copy_from: json.endpoints.0.port
+      ignore_empty_value: true
+      if: ctx.json?.endpoints instanceof List && ctx.json.endpoints.size() > 0
+
+  # --- Custom OVH DBaaS fields ---
+  - rename:
+      field: json.plan
+      target_field: ovh_dbaas.cluster.plan
+      tag: rename_plan
+      ignore_missing: true
+  - rename:
+      field: json.flavor
+      target_field: ovh_dbaas.cluster.flavor
+      tag: rename_flavor
+      ignore_missing: true
+  - rename:
+      field: json.category
+      target_field: ovh_dbaas.cluster.category
+      tag: rename_category
+      ignore_missing: true
+  - rename:
+      field: json.maintenanceTime
+      target_field: ovh_dbaas.cluster.maintenance_time
+      tag: rename_maintenance_time
+      ignore_missing: true
+  - rename:
+      field: json.networkType
+      target_field: ovh_dbaas.cluster.network_type
+      tag: rename_network_type
+      ignore_missing: true
+  - rename:
+      field: json.networkId
+      target_field: ovh_dbaas.cluster.network_id
+      tag: rename_network_id
+      ignore_missing: true
+      if: ctx.json?.networkId != null
+  - rename:
+      field: json.deletionProtection
+      target_field: ovh_dbaas.cluster.deletion_protection
+      tag: rename_deletion_protection
+      ignore_missing: true
+  - rename:
+      field: json.enablePrometheus
+      target_field: ovh_dbaas.cluster.enable_prometheus
+      tag: rename_enable_prometheus
+      ignore_missing: true
+
+  # --- Nodes array ---
+  - rename:
+      field: json.nodes
+      target_field: ovh_dbaas.cluster.nodes
+      tag: rename_nodes
+      ignore_missing: true
+  - foreach:
+      field: ovh_dbaas.cluster.nodes
+      processor:
+        rename:
+          field: _ingest._value.createdAt
+          target_field: _ingest._value.created_at
+          ignore_missing: true
+          tag: foreach_normalize_nodes_created_at
+      ignore_missing: true
+      tag: normalize_nodes_created_at
+
+  # --- Endpoints array ---
+  - rename:
+      field: json.endpoints
+      target_field: ovh_dbaas.cluster.endpoints
+      tag: rename_endpoints
+      ignore_missing: true
+  - foreach:
+      field: ovh_dbaas.cluster.endpoints
+      processor:
+        rename:
+          field: _ingest._value.sslMode
+          target_field: _ingest._value.ssl_mode
+          ignore_missing: true
+          tag: foreach_normalize_endpoints_ssl_mode
+      ignore_missing: true
+      tag: normalize_endpoints_ssl_mode
+  - foreach:
+      field: ovh_dbaas.cluster.endpoints
+      processor:
+        remove:
+          field: _ingest._value.path
+          ignore_missing: true
+          tag: foreach_remove_endpoints_path
+      ignore_missing: true
+      tag: remove_endpoints_path
+
+  # --- IP restrictions array ---
+  - rename:
+      field: json.ipRestrictions
+      target_field: ovh_dbaas.cluster.ip_restrictions
+      tag: rename_ip_restrictions
+      ignore_missing: true
+
+  # --- Backups ---
+  - rename:
+      field: json.backups.time
+      target_field: ovh_dbaas.cluster.backups.time
+      tag: rename_backups_time
+      ignore_missing: true
+  - rename:
+      field: json.backups.regions
+      target_field: ovh_dbaas.cluster.backups.regions
+      tag: rename_backups_regions
+      ignore_missing: true
+  - rename:
+      field: json.backups.retentionDays
+      target_field: ovh_dbaas.cluster.backups.retention_days
+      tag: rename_backups_retention_days
+      ignore_missing: true
+  - date:
+      field: json.backups.pitr
+      target_field: ovh_dbaas.cluster.backups.pitr
+      formats:
+        - ISO8601
+      tag: parse_backups_pitr
+      if: ctx.json?.backups?.pitr != null
+      on_failure:
+        - append:
+            field: error.message
+            value: '{{{_ingest.on_failure_message}}}'
+
+  # --- Storage ---
+  - rename:
+      field: json.storage.size.value
+      target_field: ovh_dbaas.cluster.storage.size_value
+      tag: rename_storage_size_value
+      ignore_missing: true
+  - rename:
+      field: json.storage.size.unit
+      target_field: ovh_dbaas.cluster.storage.size_unit
+      tag: rename_storage_size_unit
+      ignore_missing: true
+  - rename:
+      field: json.storage.type
+      target_field: ovh_dbaas.cluster.storage.type
+      tag: rename_storage_type
+      ignore_missing: true
+
+  # --- Optional engine-specific fields ---
+  - rename:
+      field: json.restApi
+      target_field: ovh_dbaas.cluster.rest_api
+      tag: rename_rest_api
+      ignore_missing: true
+  - rename:
+      field: json.schemaRegistry
+      target_field: ovh_dbaas.cluster.schema_registry
+      tag: rename_schema_registry
+      ignore_missing: true
+  - rename:
+      field: json.aclsEnabled
+      target_field: ovh_dbaas.cluster.acls_enabled
+      tag: rename_acls_enabled
+      ignore_missing: true
+
+  # --- Remove deprecated API fields ---
+  - remove:
+      field:
+        - json.nodeNumber
+        - json.backupTime
+        - json.disk
+      ignore_missing: true
+      tag: remove_deprecated_fields
+
+  # --- related.hosts from all endpoint domains ---
+  - script:
+      lang: painless
+      tag: append_endpoint_domains_to_related_hosts
+      description: Append all endpoint domain values to related.hosts for cross-reference.
+      if: ctx.ovh_dbaas?.cluster?.endpoints instanceof List && ctx.ovh_dbaas.cluster.endpoints.size() > 0
+      source: |-
+        if (!ctx.containsKey('related')) ctx.related = new HashMap();
+        if (!ctx.related.containsKey('hosts')) ctx.related.hosts = new ArrayList();
+        def seen = new HashSet(ctx.related.hosts);
+        for (def ep : ctx.ovh_dbaas.cluster.endpoints) {
+          if (ep != null && ep.containsKey('domain') && ep.domain != null) {
+            if (!seen.contains(ep.domain)) {
+              ctx.related.hosts.add(ep.domain);
+              seen.add(ep.domain);
+            }
+          }
+        }
+
+  # --- Cleanup ---
+  - remove:
+      field: json
+      tag: remove_json
+      ignore_missing: true
+
+  - append:
+      field: tags
+      tag: append_preserve_original_event_on_error
+      value: preserve_original_event
+      allow_duplicates: false
+      if: ctx.error?.message != null
+
+on_failure:
+  - append:
+      field: error.message
+      tag: on_failure_append_error_message
+      value: >-
+        Processor '{{{ _ingest.on_failure_processor_type }}}'
+        {{{#_ingest.on_failure_processor_tag}}}with tag '{{{ _ingest.on_failure_processor_tag }}}'
+        {{{/_ingest.on_failure_processor_tag}}}failed with message '{{{ _ingest.on_failure_message }}}'
+  - set:
+      field: event.kind
+      tag: set_pipeline_error_to_event_kind
+      value: pipeline_error
+  - append:
+      field: tags
+      tag: on_failure_append_preserve_original_event
+      value: preserve_original_event
+      allow_duplicates: false

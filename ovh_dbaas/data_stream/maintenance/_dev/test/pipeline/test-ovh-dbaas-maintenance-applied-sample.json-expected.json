@@ -1,0 +1,36 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2024-01-20T22:00:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "kind": "state",
+                "original": "{\"id\":\"770e8400-e29b-41d4-a716-446655440002\",\"description\":\"Security patch\",\"status\":\"APPLIED\",\"scheduledAt\":\"2024-01-20T22:00:00.000Z\",\"appliedAt\":\"2024-01-20T22:15:30.000Z\",\"engine\":\"postgresql\",\"clusterId\":\"550e8400-e29b-41d4-a716-446655440001\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh_dbaas": {
+                "maintenance": {
+                    "applied_at": "2024-01-20T22:15:30.000Z",
+                    "description": "Security patch",
+                    "id": "770e8400-e29b-41d4-a716-446655440002",
+                    "scheduled_at": "2024-01-20T22:00:00.000Z",
+                    "status": "APPLIED"
+                }
+            },
+            "service": {
+                "id": "550e8400-e29b-41d4-a716-446655440001",
+                "type": "postgresql"
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

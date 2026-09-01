@@ -1,0 +1,40 @@
+title: "OVHcloud DBaaS Maintenance"
+type: logs
+streams:
+  - input: cel
+    title: OVHcloud Managed Database maintenance windows
+    description: Collect maintenance window records from the OVHcloud Managed Databases API.
+    template_path: cel.yml.hbs
+    vars:
+      - name: interval
+        type: text
+        title: Collection Interval
+        description: How often to poll the API for maintenance windows (e.g. 1h, 2h).
+        required: true
+        show_user: true
+        default: 1h
+      - name: enable_request_tracer
+        type: bool
+        title: Enable Request Tracer
+        description: >-
+          The request tracer logs HTTP requests and responses for debugging. Enabling this compromises security and should only be used for debugging. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-cel.html#_resource_tracer_filename) for details.
+        required: false
+        show_user: false
+        default: false
+      - name: preserve_original_event
+        type: bool
+        title: Preserve Original Event
+        description: Preserves a raw copy of the original event, added to the field `event.original`.
+        required: true
+        show_user: true
+        default: false
+      - name: processors
+        type: yaml
+        title: Processors
+        description: Processors to apply to events before indexing.
+        required: false
+        show_user: false
+elasticsearch:
+  index_template:
+    mappings:
+      subobjects: false

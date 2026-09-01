@@ -1,0 +1,126 @@
+- name: ovh_dbaas.cluster
+  type: group
+  fields:
+    - name: plan
+      type: keyword
+      description: Cluster billing plan (e.g. essential, business, enterprise).
+    - name: flavor
+      type: keyword
+      description: Compute flavor / node size of the cluster.
+    - name: category
+      type: keyword
+      description: Cluster category (e.g. operational, development).
+    - name: maintenance_time
+      type: keyword
+      description: Scheduled maintenance time window (HH:MM:SS).
+    - name: network_type
+      type: keyword
+      description: Network connectivity type (e.g. public, private).
+    - name: network_id
+      type: keyword
+      description: Private network ID (absent when not using a private network).
+    - name: deletion_protection
+      type: boolean
+      description: Whether the cluster is protected against accidental deletion.
+    - name: enable_prometheus
+      type: boolean
+      description: Whether Prometheus metrics endpoint is enabled.
+    - name: nodes
+      type: group
+      fields:
+        - name: id
+          type: keyword
+          description: Unique identifier of the node.
+        - name: name
+          type: keyword
+          description: Name of the node.
+        - name: status
+          type: keyword
+          description: Node lifecycle status.
+        - name: created_at
+          type: date
+          description: Timestamp when the node was created.
+        - name: region
+          type: keyword
+          description: OVH region where the node is located.
+        - name: flavor
+          type: keyword
+          description: Compute flavor of the node.
+        - name: port
+          type: long
+          description: Port number the node is listening on.
+        - name: role
+          type: keyword
+          description: Node role in the cluster (e.g. STANDARD, REPLICA).
+    - name: endpoints
+      type: group
+      fields:
+        - name: component
+          type: keyword
+          description: Endpoint component name (e.g. postgresql, grafana).
+        - name: domain
+          type: keyword
+          description: Hostname of the endpoint.
+        - name: port
+          type: long
+          description: Port number of the endpoint.
+        - name: scheme
+          type: keyword
+          description: Connection scheme / protocol (e.g. postgresql, https, kafka).
+        - name: ssl
+          type: boolean
+          description: Whether the endpoint requires TLS/SSL.
+        - name: ssl_mode
+          type: keyword
+          description: SSL verification mode (e.g. require, verify-full).
+        - name: uri
+          type: keyword
+          description: Full connection URI for the endpoint.
+    - name: ip_restrictions
+      type: group
+      fields:
+        - name: ip
+          type: keyword
+          description: IP address or CIDR block allowed to connect.
+        - name: description
+          type: keyword
+          description: Human-readable description of the IP restriction rule.
+        - name: status
+          type: keyword
+          description: Status of the IP restriction rule.
+    - name: backups
+      type: group
+      fields:
+        - name: time
+          type: keyword
+          description: Scheduled backup time (HH:MM:SS).
+        - name: regions
+          type: keyword
+          description: OVH regions where backup copies are stored.
+        - name: retention_days
+          type: long
+          description: Number of days backups are retained.
+        - name: pitr
+          type: date
+          description: Point-in-time recovery timestamp (absent when PITR is not available).
+    - name: storage
+      type: group
+      fields:
+        - name: size_value
+          type: long
+          description: Storage size numeric value.
+        - name: size_unit
+          type: keyword
+          description: Storage size unit (e.g. GB).
+        - name: type
+          type: keyword
+          description: Storage backend type (e.g. ceph).
+    - name: rest_api
+      type: boolean
+      description: Whether the REST API endpoint is enabled (Kafka only).
+    - name: schema_registry
+      type: boolean
+      description: Whether the Schema Registry endpoint is enabled (Kafka only).
+    - name: acls_enabled
+      type: boolean
+      description: Whether ACLs are enabled for access control (OpenSearch only).
