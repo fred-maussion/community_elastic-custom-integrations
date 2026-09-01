@@ -3,4 +3,4 @@
   changes:
     - description: Initial release of OVHcloud Object Storage integration with container inventory and configuration monitoring.
       type: enhancement
-      link: https://github.com/fred-maussion/community_elastic-custom-integrations/pull/99999
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/pull/90
