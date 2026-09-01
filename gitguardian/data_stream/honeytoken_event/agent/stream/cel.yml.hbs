@@ -38,16 +38,13 @@ program: |-
       (has(state.?cursor.next_url) && state.cursor.next_url != "") ?
         state.cursor.next_url
       :
-        state.url.trim_right("/") + "/honeytokens_events?" + (
-          {
-            "per_page": [string(int(state.limit))],
-            "ordering": ["triggered_at"],
-          } + (
-            (has(state.honeytoken_status) && state.honeytoken_status != "") ?
-              {"status": [state.honeytoken_status]}
-            : {}
-          )
-        ).format_query()
+        state.url.trim_right("/") + "/honeytokens_events?" + {
+          "per_page": [string(int(state.limit))],
+          "ordering": ["triggered_at"],
+          "status": (has(state.honeytoken_status) && state.honeytoken_status != "") ?
+            [state.honeytoken_status]
+          : [],
+        }.format_query()
     ).with(
       {
         "Header": {

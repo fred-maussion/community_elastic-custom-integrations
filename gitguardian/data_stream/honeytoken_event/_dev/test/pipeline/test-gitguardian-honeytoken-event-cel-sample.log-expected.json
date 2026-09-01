@@ -11,6 +11,7 @@
                     "intrusion_detection"
                 ],
                 "kind": "alert",
+                "original": "{\"id\": \"ht-evt-0001\", \"honeytoken_id\": \"ht-0001\", \"triggered_at\": \"2024-11-18T10:00:00Z\", \"status\": \"triggered\", \"action\": \"GetCallerIdentity\", \"ip_address\": \"198.51.100.42\", \"gitguardian_url\": \"https://dashboard.gitguardian.com/honeytokens/events/ht-evt-0001\", \"data\": {\"account_id\": \"123456789012\", \"arn\": \"arn:aws:iam::123456789012:user/example-user\", \"user_id\": \"AIDAEXAMPLEID\"}, \"tags\": [\"prod\", \"aws\"]}",
                 "provider": "GitGuardian",
                 "type": [
                     "info"
@@ -36,9 +37,17 @@
                     "triggered_at": "2024-11-18T10:00:00Z"
                 }
             },
+            "related": {
+                "ip": [
+                    "198.51.100.42"
+                ]
+            },
             "source": {
                 "ip": "198.51.100.42"
-            }
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
         },
         {
             "@timestamp": "2024-11-18T11:30:00.000Z",
@@ -51,6 +60,7 @@
                     "intrusion_detection"
                 ],
                 "kind": "alert",
+                "original": "{\"id\": \"ht-evt-0002\", \"honeytoken_id\": \"ht-0002\", \"triggered_at\": \"2024-11-18T11:30:00Z\", \"status\": \"triggered\", \"action\": \"list_repositories\", \"ip_address\": null, \"gitguardian_url\": \"https://dashboard.gitguardian.com/honeytokens/events/ht-evt-0002\", \"data\": {\"login\": \"example-attacker\"}, \"tags\": null}",
                 "provider": "GitGuardian",
                 "type": [
                     "info"
@@ -69,7 +79,10 @@
                     "status": "triggered",
                     "triggered_at": "2024-11-18T11:30:00Z"
                 }
-            }
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
         },
         {
             "ecs": {
@@ -81,6 +94,7 @@
                     "intrusion_detection"
                 ],
                 "kind": "alert",
+                "original": "{\"id\": \"ht-evt-0003\", \"honeytoken_id\": \"ht-0003\", \"triggered_at\": null, \"status\": \"triggered\", \"action\": \"GetCallerIdentity\", \"ip_address\": \"198.51.100.99\", \"gitguardian_url\": null, \"data\": null, \"tags\": [\"staging\"]}",
                 "provider": "GitGuardian",
                 "type": [
                     "info"
@@ -97,9 +111,17 @@
                     ]
                 }
             },
+            "related": {
+                "ip": [
+                    "198.51.100.99"
+                ]
+            },
             "source": {
                 "ip": "198.51.100.99"
-            }
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
         }
     ]
 }

@@ -51,6 +51,7 @@ streams:
         title: Honeytoken Status Filter
         description: Filter events by honeytoken status (e.g., `triggered`, `revoked`). Leave empty to collect all statuses.
         required: false
+        secret: false
         show_user: true
         default: ""
       - name: preserve_original_event
