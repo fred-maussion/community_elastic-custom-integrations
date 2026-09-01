@@ -1,0 +1,8 @@
+{
+    "events": [
+        {
+            "@timestamp": "2024-01-13T06:05:00.000Z",
+            "message": "{\"id\":\"eeeeeeee-0001-0001-0001-000000000001\",\"checksum\":\"c1a\",\"createdAt\":\"2024-01-13T06:00:00Z\",\"updatedAt\":\"2024-01-13T06:05:00Z\",\"resourceStatus\":\"READY\",\"currentTasks\":[],\"targetSpec\":{\"powerState\":\"active\"},\"currentState\":{\"name\":\"instance-alpha-1\",\"flavor\":{\"id\":\"d2-2\",\"name\":\"d2-2\",\"vcpus\":2,\"ram\":2000,\"disk\":40,\"swap\":0,\"ephemeral\":0},\"image\":{\"id\":\"aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb\",\"name\":\"Ubuntu 22.04\",\"size\":10,\"status\":\"active\",\"deprecated\":false},\"location\":{\"region\":\"GRA9\",\"availabilityZone\":\"nova\"},\"powerState\":\"active\",\"networks\":[{\"id\":\"net-0001\",\"addresses\":[{\"ip\":\"203.0.113.10\",\"mac\":\"fa:16:3e:00:00:01\",\"type\":\"floating\"},{\"ip\":\"198.51.100.5\",\"mac\":\"fa:16:3e:00:00:02\",\"type\":\"fixed\"}]}],\"volumes\":[{\"id\":\"vvvvvvvv-1111-1111-1111-000000000001\"},{\"id\":\"vvvvvvvv-2222-2222-2222-000000000002\"}],\"securityGroups\":[{\"id\":\"sgsgsgsg-0001-0001-0001-000000000001\"}],\"locked\":false,\"sshKeyName\":\"my-key\",\"hostId\":\"hhhhhhhh-host-host-host-000000000001\",\"projectId\":\"aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb\",\"userId\":\"uuuuuuuu-0001-0001-0001-000000000001\"}}"
+        }
+    ]
+}
