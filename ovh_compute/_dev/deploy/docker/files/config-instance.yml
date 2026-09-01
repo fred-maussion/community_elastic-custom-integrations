@@ -1,0 +1,57 @@
+rules:
+  # OAuth2 token endpoint — returns a test access token
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - "application/json"
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600,"scope":"all"}'
+  # Page 3 — terminal page (no X-Pagination-Cursor-Next header); must be before the catch-all
+  - path: /v2/publicCloud/project/aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb/compute/instance
+    methods: [GET]
+    request_headers:
+      X-Pagination-Size:
+        - "100"
+      X-Pagination-Cursor:
+        - "cursor-page-3"
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - "application/json"
+        body: |-
+          [{"id":"eeeeeeee-0001-0001-0001-000000000003","checksum":"c3","createdAt":"2024-01-15T10:30:00Z","updatedAt":"2024-01-15T10:35:00Z","resourceStatus":"READY","currentTasks":[],"targetSpec":{"powerState":"active"},"currentState":{"name":"instance-gamma","flavor":{"id":"d2-4","name":"d2-4","vcpus":4,"ram":4000,"disk":80,"swap":0,"ephemeral":0},"image":{"id":"img-0001-0001-0001-0001-000000000001","name":"Ubuntu 22.04","size":10,"status":"active","deprecated":false},"location":{"region":"GRA9","availabilityZone":"nova"},"powerState":"shutoff","networks":[],"volumes":[],"securityGroups":[],"locked":false,"projectId":"aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb"}}]
+  # Page 2 — has next page; must be before the catch-all page-1 rule
+  - path: /v2/publicCloud/project/aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb/compute/instance
+    methods: [GET]
+    request_headers:
+      X-Pagination-Size:
+        - "100"
+      X-Pagination-Cursor:
+        - "cursor-page-2"
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - "application/json"
+          X-Pagination-Cursor-Next:
+            - "cursor-page-3"
+        body: |-
+          [{"id":"eeeeeeee-0001-0001-0001-000000000002a","checksum":"c2a","createdAt":"2024-01-14T08:00:00Z","updatedAt":"2024-01-14T08:05:00Z","resourceStatus":"READY","currentTasks":[],"targetSpec":{"powerState":"active"},"currentState":{"name":"instance-beta-1","flavor":{"id":"d2-2","name":"d2-2","vcpus":2,"ram":2000,"disk":40,"swap":0,"ephemeral":0},"image":{"id":"img-0001-0001-0001-0001-000000000001","name":"Ubuntu 22.04","size":10,"status":"active","deprecated":false},"location":{"region":"SBG5","availabilityZone":"nova"},"powerState":"active","networks":[{"id":"net-0002","addresses":[{"ip":"198.51.100.2","mac":"fa:16:3e:00:00:02","type":"floating"}]}],"volumes":[],"securityGroups":[],"locked":false,"projectId":"aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb"}},{"id":"eeeeeeee-0001-0001-0001-000000000002b","checksum":"c2b","createdAt":"2024-01-14T09:00:00Z","updatedAt":"2024-01-14T09:05:00Z","resourceStatus":"CREATING","currentTasks":["resize"],"targetSpec":{"powerState":"active"},"currentState":{"name":"instance-beta-2","flavor":{"id":"d2-8","name":"d2-8","vcpus":8,"ram":8000,"disk":160,"swap":0,"ephemeral":0},"image":{"id":"img-0001-0001-0001-0001-000000000002","name":"Debian 11","size":8,"status":"active","deprecated":false},"location":{"region":"SBG5","availabilityZone":"nova"},"powerState":"active","networks":[],"volumes":[{"id":"vol-0002","name":"data-vol","size":100}],"securityGroups":[{"id":"sg-0001"}],"locked":true,"projectId":"aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb"}}]
+  # Page 1 — initial request (no cursor header); catch-all matches any request with only X-Pagination-Size
+  - path: /v2/publicCloud/project/aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb/compute/instance
+    methods: [GET]
+    request_headers:
+      X-Pagination-Size:
+        - "100"
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - "application/json"
+          X-Pagination-Cursor-Next:
+            - "cursor-page-2"
+        body: |-
+          [{"id":"eeeeeeee-0001-0001-0001-000000000001a","checksum":"c1a","createdAt":"2024-01-13T06:00:00Z","updatedAt":"2024-01-13T06:05:00Z","resourceStatus":"READY","currentTasks":[],"targetSpec":{"powerState":"active"},"currentState":{"name":"instance-alpha-1","flavor":{"id":"d2-2","name":"d2-2","vcpus":2,"ram":2000,"disk":40,"swap":0,"ephemeral":0},"image":{"id":"img-0001-0001-0001-0001-000000000001","name":"Ubuntu 22.04","size":10,"status":"active","deprecated":false},"location":{"region":"GRA9","availabilityZone":"nova"},"powerState":"active","networks":[{"id":"net-0001","addresses":[{"ip":"203.0.113.10","mac":"fa:16:3e:00:00:01","type":"floating"}]}],"volumes":[],"securityGroups":[],"locked":false,"sshKeyName":"my-key","projectId":"aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb"}},{"id":"eeeeeeee-0001-0001-0001-000000000001b","checksum":"c1b","createdAt":"2024-01-13T07:00:00Z","updatedAt":"2024-01-13T07:05:00Z","resourceStatus":"ERROR","currentTasks":[],"targetSpec":{"powerState":"active"},"currentState":{"name":"instance-alpha-2","flavor":{"id":"d2-4","name":"d2-4","vcpus":4,"ram":4000,"disk":80,"swap":0,"ephemeral":0},"image":{"id":"img-0001-0001-0001-0001-000000000001","name":"Ubuntu 22.04","size":10,"status":"active","deprecated":false},"location":{"region":"GRA9","availabilityZone":"nova"},"powerState":"shutoff","networks":[],"volumes":[],"securityGroups":[{"id":"sg-0001"}],"locked":false,"projectId":"aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb"}}]

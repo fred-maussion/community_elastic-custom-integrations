@@ -1,0 +1,6 @@
+# newer versions go on top
+- version: "0.1.0"
+  changes:
+    - description: Initial release — instance state data stream via OVHcloud Public Cloud Compute v2 API.
+      type: enhancement
+      link: https://github.com/elastic/community_elastic-custom-integrations/pull/92

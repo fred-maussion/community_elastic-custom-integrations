@@ -1,0 +1,81 @@
+{
+    "@timestamp": "2024-01-13T06:05:00.000Z",
+    "agent": {
+        "name": "elastic-agent",
+        "type": "filebeat",
+        "version": "8.19.0"
+    },
+    "cloud": {
+        "account": {
+            "id": "aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb"
+        },
+        "availability_zone": "nova",
+        "instance": {
+            "id": "eeeeeeee-0001-0001-0001-000000000001",
+            "name": "instance-alpha-1"
+        },
+        "machine": {
+            "type": "d2-2"
+        },
+        "provider": "ovhcloud",
+        "region": "GRA9"
+    },
+    "data_stream": {
+        "dataset": "ovh_compute.instance",
+        "namespace": "default",
+        "type": "logs"
+    },
+    "event": {
+        "category": [
+            "host"
+        ],
+        "created": "2024-01-13T06:05:00.000Z",
+        "dataset": "ovh_compute.instance",
+        "kind": "state",
+        "module": "ovh_compute",
+        "original": "{\"checksum\":\"c1a\",\"createdAt\":\"2024-01-13T06:00:00Z\",\"currentState\":{\"flavor\":{\"disk\":40,\"ephemeral\":0,\"id\":\"d2-2\",\"name\":\"d2-2\",\"ram\":2000,\"swap\":0,\"vcpus\":2},\"image\":{\"deprecated\":false,\"id\":\"img-0001-0001-0001-0001-000000000001\",\"name\":\"Ubuntu 22.04\",\"size\":10,\"status\":\"active\"},\"location\":{\"availabilityZone\":\"nova\",\"region\":\"GRA9\"},\"locked\":false,\"name\":\"instance-alpha-1\",\"networks\":[{\"addresses\":[{\"ip\":\"203.0.113.10\",\"mac\":\"fa:16:3e:00:00:01\",\"type\":\"floating\"}],\"id\":\"net-0001\"}],\"powerState\":\"active\",\"projectId\":\"aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb\",\"securityGroups\":[],\"sshKeyName\":\"my-key\",\"volumes\":[]},\"currentTasks\":[],\"id\":\"eeeeeeee-0001-0001-0001-000000000001\",\"resourceStatus\":\"READY\",\"targetSpec\":{\"powerState\":\"active\"},\"updatedAt\":\"2024-01-13T06:05:00Z\"}",
+        "type": [
+            "info"
+        ]
+    },
+    "host": {
+        "id": "eeeeeeee-0001-0001-0001-000000000001",
+        "ip": [
+            "203.0.113.10"
+        ],
+        "mac": [
+            "fa-16-3e-00-00-01"
+        ]
+    },
+    "observer": {
+        "product": "Public Cloud Compute",
+        "vendor": "OVHcloud"
+    },
+    "ovh_compute": {
+        "instance": {
+            "checksum": "c1a",
+            "current_tasks": [],
+            "flavor": {
+                "disk_gb": 40,
+                "ephemeral_gb": 0,
+                "id": "d2-2",
+                "ram_mb": 2000,
+                "swap_gb": 0,
+                "vcpus": 2
+            },
+            "image": {
+                "deprecated": false,
+                "id": "img-0001-0001-0001-0001-000000000001",
+                "name": "Ubuntu 22.04",
+                "status": "active"
+            },
+            "locked": false,
+            "power_state": "active",
+            "resource_status": "READY",
+            "security_group_ids": [],
+            "ssh_key_name": "my-key",
+            "target_power_state": "active",
+            "volume_ids": []
+        }
+    }
+}
