@@ -27,6 +27,12 @@ processors:
       formats:
         - ISO8601
       if: ctx.gitguardian?.secret_occurrence?.date != null
+  - fingerprint:
+      tag: fingerprint_document_id
+      fields:
+        - gitguardian.secret_occurrence.id
+      target_field: _id
+      ignore_missing: true
   - set:
       tag: set_event_kind
       field: event.kind

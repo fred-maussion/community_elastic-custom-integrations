@@ -23,7 +23,8 @@ resource.timeout: {{http_client_timeout}}
 resource.url: {{url}}
 
 state:
-  initial_interval: 720h
+  initial_interval: {{initial_interval}}
+  resync_window: {{resync_window}}
   limit: {{batch_size}}
   url: {{url}}
   api_token: {{api_key}}
@@ -34,17 +35,29 @@ redact:
 
 program: |-
   state.with(
-    get_request(
-      (has(state.?cursor.next_url) && state.cursor.next_url != "") ?
-        state.cursor.next_url
-      :
-        state.url.trim_right("/") + "/incidents/secrets?" + {
-          "per_page": [string(int(state.limit))],
-          "date_after": has(state.?cursor.last_timestamp) ?
-            [state.cursor.last_timestamp]
-          :
-            [string((now - duration(state.initial_interval)).format(time_layout.RFC3339))]
-        }.format_query()
+    (state.?phase.orValue("incremental") == "resync") ?
+      get_request(
+        (has(state.?cursor.resync_next_url) && state.cursor.resync_next_url != "") ?
+          state.cursor.resync_next_url
+        :
+          state.url.trim_right("/") + "/incidents/secrets?" + {
+            "per_page": [string(int(state.limit))],
+            "date_after": [string((now - duration(state.resync_window)).format(time_layout.RFC3339))],
+          }.format_query()
+      )
+    :
+      get_request(
+        (has(state.?cursor.incr_next_url) && state.cursor.incr_next_url != "") ?
+          state.cursor.incr_next_url
+        :
+          state.url.trim_right("/") + "/incidents/secrets?" + {
+            "per_page": [string(int(state.limit))],
+            "date_after": has(state.?cursor.last_timestamp) ?
+              [string((timestamp(state.cursor.last_timestamp) - duration("60s")).format(time_layout.RFC3339))]
+            :
+              [string((now - duration(state.initial_interval)).format(time_layout.RFC3339))]
+          }.format_query()
+      )
     ).with(
       {
         "Header": {
@@ -52,54 +65,70 @@ program: |-
           "Authorization": ["Token " + state.api_token],
         },
       }
-    ).do_request().as(resp, (resp.StatusCode != 200) ?
-      {
-        "events": {
-          "error": {
-            "code": string(resp.StatusCode),
-            "id": string(resp.Status),
-            "message": "GET:" + (
-              (size(resp.Body) != 0) ?
-                string(resp.Body)
-              :
-                string(resp.Status) + " (" + string(resp.StatusCode) + ")"
-            ),
-          },
-        },
-        "want_more": false,
-      }
-    :
-      bytes(resp.Body).decode_json().as(body, size(body) == 0 ?
+    ).do_request().as(resp,
+      resp.StatusCode == 429 ?
         {
           "events": [],
-          "cursor": {
-            "next_url": "",
-            "last_timestamp": state.?cursor.last_timestamp.orValue(""),
+          "cursor": state.?cursor.orValue({}),
+          "phase": state.?phase.orValue("incremental"),
+          "want_more": false,
+        }
+      : (resp.StatusCode != 200) ?
+        {
+          "events": {
+            "error": {
+              "code": string(resp.StatusCode),
+              "id": string(resp.Status),
+              "message": "GET:" + (
+                (size(resp.Body) != 0) ?
+                  string(resp.Body)
+                :
+                  string(resp.Status) + " (" + string(resp.StatusCode) + ")"
+              ),
+            },
           },
           "want_more": false,
         }
       :
-        resp.Header[?"Link"].orValue([]).map(h,
-          h.split(",").map(link,
-            link.split(";").as(parts,
-              (size(parts) > 1 && parts[1].matches('rel="?next"?')) ?
-                parts[0].trim(" <>")
-              : ""
+        bytes(resp.Body).decode_json().as(body,
+          resp.Header[?"Link"].orValue([]).map(h,
+            h.split(",").map(link,
+              link.split(";").as(parts,
+                (size(parts) > 1 && parts[1].matches('rel="?next"?')) ?
+                  parts[0].trim(" <>")
+                : ""
+              )
             )
+          ).flatten().filter(u, u != "").as(nexts,
+            (state.?phase.orValue("incremental") == "resync") ?
+              {
+                "events": body.map(issue, {"message": issue.encode_json()}),
+                "cursor": {
+                  "last_timestamp": state.?cursor.last_timestamp.orValue(""),
+                  "incr_next_url": "",
+                  "resync_next_url": (size(nexts) > 0) ? nexts[0] : "",
+                },
+                "phase": (size(nexts) > 0) ? "resync" : "incremental",
+                "want_more": size(nexts) > 0,
+              }
+            :
+              {
+                "events": body.map(issue, {"message": issue.encode_json()}),
+                "cursor": {
+                  "last_timestamp": size(body) == 0 ?
+                    state.?cursor.last_timestamp.orValue("")
+                  :
+                    (body.filter(d, d.?date.orValue(null) != null).map(d,
+                      string(timestamp(string(d.date)).format(time_layout.RFC3339))
+                    ) + [state.?cursor.last_timestamp.orValue("1970-01-01T00:00:00Z")]).max(),
+                  "incr_next_url": (size(nexts) > 0) ? nexts[0] : "",
+                  "resync_next_url": "",
+                },
+                "phase": (size(nexts) > 0) ? "incremental" : "resync",
+                "want_more": true,
+              }
           )
-        ).flatten().filter(u, u != "").as(nexts,
-          {
-            "events": body.map(issue, {"message": issue.encode_json()}),
-            "cursor": {
-              "next_url": (size(nexts) > 0) ? nexts[0] : "",
-              "last_timestamp": (body.map(d,
-                string(timestamp(string(d.date)).format(time_layout.RFC3339))
-              ) + [state.?cursor.last_timestamp.orValue("1970-01-01T00:00:00Z")]).max(),
-            },
-            "want_more": size(nexts) > 0,
-          }
         )
-      )
     )
   )
 tags:

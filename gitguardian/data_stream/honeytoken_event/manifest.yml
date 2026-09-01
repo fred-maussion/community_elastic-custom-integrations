@@ -46,13 +46,13 @@ streams:
         required: true
         show_user: true
         default: 100
-      - name: initial_interval
+      - name: honeytoken_status
         type: text
-        title: Initial Interval
-        description: Look-back window on the first run when no cursor exists.
-        required: true
-        show_user: false
-        default: 24h
+        title: Honeytoken Status Filter
+        description: Filter events by honeytoken status (e.g., `triggered`, `revoked`). Leave empty to collect all statuses.
+        required: false
+        show_user: true
+        default: ""
       - name: preserve_original_event
         type: bool
         title: Preserve original event

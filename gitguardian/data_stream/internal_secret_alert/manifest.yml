@@ -46,6 +46,20 @@ streams:
         required: true
         show_user: true
         default: 50
+      - name: initial_interval
+        type: text
+        title: Initial Interval
+        description: How far back to look for incidents on first run (e.g., 720h = 30 days).
+        required: true
+        show_user: true
+        default: 720h
+      - name: resync_window
+        type: text
+        title: Status Resync Window
+        description: Re-fetch incidents created within this window on every poll to capture status changes (e.g., TRIGGERED → RESOLVED). Default is 7 days.
+        required: true
+        show_user: false
+        default: 168h
       - name: preserve_original_event
         type: bool
         title: Preserve original event

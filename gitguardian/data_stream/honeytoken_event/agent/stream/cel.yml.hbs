@@ -23,10 +23,10 @@ resource.timeout: {{http_client_timeout}}
 resource.url: {{url}}
 
 state:
-  initial_interval: {{initial_interval}}
   limit: {{batch_size}}
   url: {{url}}
   api_token: {{api_key}}
+  honeytoken_status: "{{honeytoken_status}}"
 
 redact:
   fields:
@@ -38,14 +38,16 @@ program: |-
       (has(state.?cursor.next_url) && state.cursor.next_url != "") ?
         state.cursor.next_url
       :
-        state.url.trim_right("/") + "/honeytokens_events?" + {
-          "per_page": [string(int(state.limit))],
-          "ordering": ["-triggered_at"],
-          "date_after": has(state.?cursor.last_timestamp) ?
-            [state.cursor.last_timestamp]
-          :
-            [string((now - duration(state.initial_interval)).format(time_layout.RFC3339))]
-        }.format_query()
+        state.url.trim_right("/") + "/honeytokens_events?" + (
+          {
+            "per_page": [string(int(state.limit))],
+            "ordering": ["triggered_at"],
+          } + (
+            (has(state.honeytoken_status) && state.honeytoken_status != "") ?
+              {"status": [state.honeytoken_status]}
+            : {}
+          )
+        ).format_query()
     ).with(
       {
         "Header": {
@@ -53,54 +55,57 @@ program: |-
           "Authorization": ["Token " + state.api_token],
         },
       }
-    ).do_request().as(resp, (resp.StatusCode != 200) ?
-      {
-        "events": {
-          "error": {
-            "code": string(resp.StatusCode),
-            "id": string(resp.Status),
-            "message": "GET:" + (
-              (size(resp.Body) != 0) ?
-                string(resp.Body)
-              :
-                string(resp.Status) + " (" + string(resp.StatusCode) + ")"
-            ),
-          },
-        },
-        "want_more": false,
-      }
-    :
-      bytes(resp.Body).decode_json().as(body, size(body) == 0 ?
+    ).do_request().as(resp,
+      resp.StatusCode == 429 ?
         {
           "events": [],
-          "cursor": {
-            "next_url": "",
-            "last_timestamp": state.?cursor.last_timestamp.orValue(""),
+          "cursor": state.?cursor.orValue({}),
+          "want_more": false,
+        }
+      : (resp.StatusCode != 200) ?
+        {
+          "events": {
+            "error": {
+              "code": string(resp.StatusCode),
+              "id": string(resp.Status),
+              "message": "GET:" + (
+                (size(resp.Body) != 0) ?
+                  string(resp.Body)
+                :
+                  string(resp.Status) + " (" + string(resp.StatusCode) + ")"
+              ),
+            },
           },
           "want_more": false,
         }
       :
-        resp.Header[?"Link"].orValue([]).map(h,
-          h.split(",").map(link,
-            link.split(";").as(parts,
-              (size(parts) > 1 && parts[1].matches('rel="?next"?')) ?
-                parts[0].trim(" <>")
-              : ""
-            )
-          )
-        ).flatten().filter(u, u != "").as(nexts,
+        bytes(resp.Body).decode_json().as(body, size(body) == 0 ?
           {
-            "events": body.map(entry, {"message": entry.encode_json()}),
+            "events": [],
             "cursor": {
-              "next_url": (size(nexts) > 0) ? nexts[0] : "",
-              "last_timestamp": (body.filter(e, e.?triggered_at.orValue(null) != null).map(e,
-                string(timestamp(string(e.triggered_at)).format(time_layout.RFC3339))
-              ) + [state.?cursor.last_timestamp.orValue("1970-01-01T00:00:00Z")]).max(),
+              "next_url": state.?cursor.next_url.orValue(""),
             },
-            "want_more": size(nexts) > 0,
+            "want_more": false,
           }
+        :
+          resp.Header[?"Link"].orValue([]).map(h,
+            h.split(",").map(link,
+              link.split(";").as(parts,
+                (size(parts) > 1 && parts[1].matches('rel="?next"?')) ?
+                  parts[0].trim(" <>")
+                : ""
+              )
+            )
+          ).flatten().filter(u, u != "").as(nexts,
+            {
+              "events": body.map(entry, {"message": entry.encode_json()}),
+              "cursor": {
+                "next_url": (size(nexts) > 0) ? nexts[0] : "",
+              },
+              "want_more": size(nexts) > 0,
+            }
+          )
         )
-      )
     )
   )
 tags:
