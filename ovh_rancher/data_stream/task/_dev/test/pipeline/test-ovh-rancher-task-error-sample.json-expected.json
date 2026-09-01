@@ -1,0 +1,50 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2025-08-24T08:00:00.000Z",
+            "cloud": {
+                "provider": "ovhcloud",
+                "service": {
+                    "name": "managed-rancher-service"
+                }
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "rancher-cluster-delete",
+                "category": [
+                    "configuration"
+                ],
+                "end": "2025-08-24T08:00:00.000Z",
+                "kind": "event",
+                "original": "{\"id\":\"task-error-0001\",\"createdAt\":\"2025-08-24T07:00:00.000Z\",\"updatedAt\":\"2025-08-24T08:00:00.000Z\",\"finishedAt\":\"2025-08-24T08:00:00.000Z\",\"type\":\"RANCHER_CLUSTER_DELETE\",\"status\":\"ERROR\",\"message\":\"Cluster delete failed: timeout\",\"progress\":42,\"currentStep\":\"DRAIN_NODES\",\"steps\":[],\"errors\":[\"Node drain timed out\"]}",
+                "outcome": "failure",
+                "start": "2025-08-24T07:00:00.000Z",
+                "type": [
+                    "change"
+                ]
+            },
+            "ovh_rancher": {
+                "task": {
+                    "created_at": "2025-08-24T07:00:00.000Z",
+                    "current_step": "DRAIN_NODES",
+                    "errors": [
+                        "Node drain timed out"
+                    ],
+                    "finished_at": "2025-08-24T08:00:00.000Z",
+                    "id": "task-error-0001",
+                    "message": "Cluster delete failed: timeout",
+                    "progress": 42,
+                    "status": "ERROR",
+                    "steps": [],
+                    "type": "RANCHER_CLUSTER_DELETE",
+                    "updated_at": "2025-08-24T08:00:00.000Z"
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

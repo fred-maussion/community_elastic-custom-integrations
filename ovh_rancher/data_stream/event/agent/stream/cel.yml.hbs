@@ -1,0 +1,95 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+auth.oauth2:
+  client.id: {{client_id}}
+  client.secret: {{client_secret}}
+  token_url: {{token_url}}
+resource.url: {{url}}/publicCloud/project/{{service_name}}/rancher/{{rancher_id}}/events
+redact:
+  fields: ~
+program: |-
+  {
+    "time_cursor": state.?cursor.last_created_at.orValue(""),
+    "page_token": state.?cursor.page_token.orValue(""),
+    "running_max": state.?cursor.max_created_at.orValue(""),
+  }.as(c,
+    state.with(
+      request("GET", state.url).with(
+        {
+          "Header": {
+            "X-Pagination-Size": ["100"],
+            ?"X-Pagination-Cursor": (c.page_token != "") ?
+              optional.of([c.page_token])
+            :
+              optional.none(),
+          },
+        }
+      ).do_request().as(resp,
+        (resp.StatusCode == 200) ?
+          resp.Body.decode_json().as(body,
+            {
+              "next_token": ("X-Pagination-Cursor" in resp.Header) ? (resp.Header["X-Pagination-Cursor"][0]) : "",
+              "new_max": (size(body) > 0) ?
+                (body.map(e, e.createdAt) + ((c.running_max != "") ? [c.running_max] : [])).max()
+              :
+                c.running_max,
+              "filtered": body.filter(e, c.time_cursor == "" || e.createdAt > c.time_cursor).map(e, {"message": e.encode_json()}),
+            }.as(result,
+              (result.next_token != "") ?
+                {
+                  "events": result.filtered,
+                  "cursor": {
+                    "last_created_at": c.time_cursor,
+                    "page_token": result.next_token,
+                    "max_created_at": result.new_max,
+                  },
+                  "want_more": true,
+                }
+              :
+                {
+                  "events": result.filtered,
+                  "cursor": {"last_created_at": (result.new_max != "" && (c.time_cursor == "" || result.new_max > c.time_cursor)) ? result.new_max : c.time_cursor},
+                  "want_more": false,
+                }
+            )
+          )
+        :
+          {
+            "events": {
+              "error": {
+                "code": string(resp.StatusCode),
+                "id": string(resp.Status),
+                "message": "GET " + state.url + ": " + ((size(resp.Body) != 0) ? string(resp.Body) : string(resp.Status)),
+              },
+            },
+            "want_more": false,
+          }
+      )
+    )
+  )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}

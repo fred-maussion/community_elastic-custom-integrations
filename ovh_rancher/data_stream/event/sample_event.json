@@ -1,0 +1,59 @@
+{
+    "@timestamp": "2025-08-25T10:00:00.000Z",
+    "agent": {
+        "ephemeral_id": "867ced0b-5779-46ea-8c5e-a5723d2e6dfe",
+        "id": "c28452a7-3454-4a73-95a5-92dba9f63f9e",
+        "name": "elastic-agent-77123",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "cloud": {
+        "provider": "ovhcloud",
+        "service": {
+            "name": "managed-rancher-service"
+        }
+    },
+    "data_stream": {
+        "dataset": "ovh_rancher.event",
+        "namespace": "40756",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "c28452a7-3454-4a73-95a5-92dba9f63f9e",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "action": "rancher-cluster-created",
+        "category": [
+            "configuration"
+        ],
+        "dataset": "ovh_rancher.event",
+        "ingested": "2026-09-01T00:03:17Z",
+        "kind": "event",
+        "module": "ovh_rancher",
+        "original": "{\"createdAt\":\"2025-08-25T10:00:00.000Z\",\"id\":\"evt-00000001\",\"message\":\"Cluster my-rancher-prod was created\",\"rancherId\":\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\"type\":\"RANCHER_CLUSTER_CREATED\"}",
+        "type": [
+            "creation"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "ovh_rancher": {
+        "event": {
+            "created_at": "2025-08-25T10:00:00.000Z",
+            "id": "evt-00000001",
+            "message": "Cluster my-rancher-prod was created",
+            "rancher_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+            "type": "RANCHER_CLUSTER_CREATED"
+        }
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded"
+    ]
+}

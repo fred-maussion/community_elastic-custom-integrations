@@ -1,0 +1,7 @@
+{
+    "events": [
+        {
+            "message": "{\"id\":\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\"createdAt\":\"2025-03-15T10:00:00.000Z\",\"updatedAt\":\"2025-08-25T14:32:01.000Z\",\"resourceStatus\":\"READY\",\"currentState\":{\"name\":\"my-rancher-prod\",\"plan\":\"STANDARD\",\"version\":\"2.8.5\",\"region\":\"EU_WEST_GRA\",\"url\":\"https://a1b2c3d4-e5f6-7890-abcd-ef1234567890.rancher.ovh.net\",\"iamAuthEnabled\":false,\"ipRestrictions\":[{\"cidrBlock\":\"198.51.100.0/24\",\"description\":\"Office network\"}],\"networking\":{\"egressCidrBlocks\":[\"192.0.2.0/28\"]},\"usage\":{\"datetime\":\"2025-08-25T14:00:00.000Z\",\"orchestratedVcpus\":32}},\"targetSpec\":{\"name\":\"my-rancher-prod\",\"plan\":\"STANDARD\",\"version\":\"2.8.5\",\"iamAuthEnabled\":false,\"ipRestrictions\":[{\"cidrBlock\":\"198.51.100.0/24\",\"description\":\"Office network\"}]},\"currentTasks\":[]}"
+        }
+    ]
+}

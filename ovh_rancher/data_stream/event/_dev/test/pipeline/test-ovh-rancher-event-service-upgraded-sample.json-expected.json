@@ -1,0 +1,39 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2025-08-25T15:00:00.000Z",
+            "cloud": {
+                "provider": "ovhcloud",
+                "service": {
+                    "name": "managed-rancher-service"
+                }
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "rancher-service-upgraded",
+                "category": [
+                    "configuration"
+                ],
+                "kind": "event",
+                "original": "{\"id\":\"89a1d5c1-aaaa-bbbb-cccc-0c1d2e3f4a5b\",\"createdAt\":\"2025-08-25T15:00:00.000Z\",\"rancherId\":\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\"type\":\"RANCHER_SERVICE_UPGRADED\",\"message\":\"Service my-rancher-prod upgraded to version 2.9.0\"}",
+                "type": [
+                    "change"
+                ]
+            },
+            "ovh_rancher": {
+                "event": {
+                    "created_at": "2025-08-25T15:00:00.000Z",
+                    "id": "89a1d5c1-aaaa-bbbb-cccc-0c1d2e3f4a5b",
+                    "message": "Service my-rancher-prod upgraded to version 2.9.0",
+                    "rancher_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "type": "RANCHER_SERVICE_UPGRADED"
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}
