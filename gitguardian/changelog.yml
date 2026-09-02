@@ -1,4 +1,14 @@
 # newer versions go on top
+- version: "5.1.1"
+  changes:
+    - description: Fix internal_secret_alert CEL program losing config state (limit, url, api_token) across want_more iterations by wrapping the returned state in state.with(), preventing "no such key limit" eval failures on the second phase of the two-phase resync loop.
+      type: bugfix
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/98
+- version: "5.1.0"
+  changes:
+    - description: Fix CEL timestamp("") crash when first API poll returns empty response. Replace set with append for event.category and event.type in audit_log, honeytoken_event, and secret_occurrence pipelines. Add related.ip population and geoip if-conditions in audit_log and honeytoken_event. Fix on_failure processor order and add preserve_original_event tag append in three pipelines. Add test-common-config.yml for audit_log, honeytoken_event, and secret_occurrence data streams.
+      type: bugfix
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/98
 - version: "5.0.2"
   changes:
     - description: Fix GitGuardian Secret Alerts dashboard referencing a hardcoded backing index instead of the generic logs-gitguardian.internal_secret_alert-* data stream pattern, and realign its saved-object id/title with the file name.

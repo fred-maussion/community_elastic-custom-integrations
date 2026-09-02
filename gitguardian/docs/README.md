@@ -29,32 +29,34 @@ stores the full raw incident payload in `event.original`.
 
 ## What data does this integration collect?
 
-The GitGuardian integration collects two types of data from the GitGuardian API.
+The GitGuardian integration collects five types of data from the GitGuardian API.
 
-**Secrets incidents** (`internal_secret_alert`): Each incident represents a secret (API key,
+**Internal secret incidents** (`internal_secret_alert`): Each incident represents a secret (API key,
 password, certificate, or other credential) detected in a monitored source — such as a git
 commit, a Slack message, or a CI pipeline log — and includes metadata such as the detector
-type, severity, status, and a link to the incident in the GitGuardian dashboard.
+type, severity, status, and a link to the incident in the GitGuardian dashboard. Status changes
+on existing incidents (e.g., TRIGGERED → RESOLVED) are captured as new versioned documents;
+use a collapse on `gitguardian.incident.id` ordered by `@timestamp` desc for current-state views.
 
-**Audit logs** (`audit_log`): Each entry represents an administrative or user action performed
-in the GitGuardian workspace — such as logins, token creation, incident resolution, or member
-management — and includes the actor's identity, IP address, and the type of action performed.
-
-**Honeytoken events** (`honeytoken_event`): Each entry represents a trigger event on a planted
-decoy credential (AWS key, GitHub PAT, etc.) — meaning the honeytoken was found and actively
-used by an attacker. Ingested as `event.kind: alert` with `event.category: [intrusion_detection]`,
-with GeoIP enrichment on the attacker's IP address.
-
-**Secret occurrences** (`secret_occurrence`): Each entry represents an individual raw detection —
+**Internal secret occurrences** (`secret_occurrence`): Each entry represents an individual raw detection —
 the exact commit, file path, branch, and author where a secret was found. While `internal_secret_alert`
 tracks one document per incident (the grouped finding), occurrences give the granular detection layer
 for forensic investigation and code attribution.
 
-**Public secret alerts** (`public_secret_alert`): Each entry represents a secret incident detected on
-the **public internet** — GitHub public repositories, Pastebin, and similar public sources. The risk
+**Public secret incidents** (`public_secret_alert`): Each entry represents a secret incident detected on
+the **public internet** — GitHub public repositories and Docker Hub public images. The risk
 profile is categorically higher than `internal_secret_alert`: the secret is already publicly visible and
 may already be exploited. Ingested as `event.kind: alert` with `event.category: [intrusion_detection,
 vulnerability]`. Requires only the `incidents:read` scope — no additional token needed.
+
+**Honeytoken events** (`honeytoken_event`): Each entry represents a trigger event on a planted
+decoy AWS key — meaning the honeytoken was found and actively used by an attacker. Ingested as
+`event.kind: alert` with `event.category: [intrusion_detection]`, with GeoIP enrichment on the
+attacker's IP address.
+
+**Audit logs** (`audit_log`): Each entry represents an administrative or user action performed
+in the GitGuardian workspace — such as logins, token creation, incident resolution, or member
+management — and includes the actor's identity, IP address, and the type of action performed.
 
 ### Supported use cases
 
@@ -139,11 +141,13 @@ Create a service account API token in the GitGuardian dashboard:
 1. Log in to [https://dashboard.gitguardian.com](https://dashboard.gitguardian.com).
 2. Navigate to **Settings → API**.
 3. Click **Generate token**.
-4. Grant the token the `incidents:read` scope.
-5. Copy and store the token securely — it is shown only once.
+4. Grant the token the required scopes: `incidents:read`, `audit_logs:read`, and `honeytokens:read`.
+5. Copy and store the token securely — it is shown only once at creation but is reusable.
 
-The following API permission scope is necessary:
-- `incidents:read`
+The following API permission scopes are required:
+- `incidents:read` — for `internal_secret_alert`, `secret_occurrence`, and `public_secret_alert`
+- `audit_logs:read` — for `audit_log`
+- `honeytokens:read` — for `honeytoken_event`
 
 ### Agent-based deployment
 
@@ -154,7 +158,7 @@ Elastic Agent must be installed. For more details, check the Elastic Agent [inst
 1. In Kibana, navigate to **Fleet → Integrations** and search for **GitGuardian**.
 2. Click **Add GitGuardian**.
 3. Fill in the required fields:
-   - **Resource URL**: `https://api.gitguardian.com/v1` (default, change only for on-premises deployments).
+   - **Resource URL**: `https://api.gitguardian.com/v1` (default for US SaaS; use `https://api.eu1.gitguardian.com/v1` for the EU SaaS region, or your base URL for Self-Hosted deployments).
    - **GitGuardian API Key**: Paste the API token generated above.
    - **Polling Interval**: How often to poll for new incidents (default: `1m`).
    - **Batch Size**: Number of incidents per API request, max 100 (default: `50`).
@@ -178,8 +182,13 @@ For help with Elastic ingest tools, check [Common problems](https://www.elastic.
 - **No data after configuration**: Verify the API key has `incidents:read` scope and that the
   agent host can reach `https://api.gitguardian.com`. Enable **Request tracing** temporarily
   to inspect raw HTTP exchanges.
-- **Authentication errors**: GitGuardian API keys are single-use tokens. Regenerate and
-  update the integration configuration if you see `401 Unauthorized` in logs.
+- **Authentication errors**: GitGuardian API keys are shown only once at creation but are
+  reusable. Only regenerate if the token is lost or compromised — unnecessary regeneration
+  will break all integrations using the old token.
+- **Rate limiting**: If you see `429 Too Many Requests` errors during a large backfill,
+  the integration will pause and resume automatically on the next poll cycle. For large
+  workspaces, use a service-account token (1,000 req/min) rather than a personal access
+  token (200 req/min). Self-Hosted deployments have no rate limiting by default.
 
 ## Scaling
 
@@ -187,7 +196,7 @@ For more information on architectures that can be used for scaling this integrat
 
 ## Reference
 
-### Internal Secret Alert data stream
+### Internal Secret Incidents data stream
 
 The `internal_secret_alert` data stream collects secrets incidents from the GitGuardian API.
 
@@ -597,7 +606,7 @@ An example event for `honeytoken_event` looks as following:
 }
 ```
 
-### Secret Occurrence data stream
+### Internal Secret Occurrences data stream
 
 The `secret_occurrence` data stream collects raw detection events from the GitGuardian workspace.
 Each occurrence represents the exact commit, file, and author where a secret was found. Unlike
@@ -723,10 +732,10 @@ An example event for `secret_occurrence` looks as following:
 }
 ```
 
-### Public Secret Alert data stream
+### Public Secret Incidents data stream
 
 The `public_secret_alert` data stream collects secrets incidents detected on the **public internet**
-— GitHub public repositories, Pastebin, and similar sources — via the GitGuardian API. Each alert
+— GitHub public repositories and Docker Hub public images — via the GitGuardian API. Each alert
 represents a secret that is already publicly visible, making the risk categorically higher than an
 internal incident. Mapped to ECS with `event.kind: alert`, `event.category: [intrusion_detection,
 vulnerability]`, `rule.name` from the detector, and `vulnerability.severity` from the incident

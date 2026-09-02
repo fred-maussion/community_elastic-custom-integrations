@@ -31,14 +31,16 @@ processors:
       tag: set_event_kind
       field: event.kind
       value: alert
-  - set:
-      tag: set_event_category
+  - append:
+      tag: append_event_category
       field: event.category
-      value: [intrusion_detection]
-  - set:
-      tag: set_event_type
+      value: intrusion_detection
+      allow_duplicates: false
+  - append:
+      tag: append_event_type
       field: event.type
-      value: [info]
+      value: info
+      allow_duplicates: false
   - set:
       tag: set_event_provider
       field: event.provider
@@ -59,17 +61,30 @@ processors:
       type: string
       ignore_missing: true
       ignore_failure: true
+  - fingerprint:
+      tag: fingerprint_document_id
+      fields:
+        - gitguardian.honeytoken_event.id
+      target_field: _id
+      ignore_missing: true
   - set:
       tag: set_source_ip
       field: source.ip
       copy_from: gitguardian.honeytoken_event.ip_address
       ignore_empty_value: true
+  - append:
+      tag: append_related_ip
+      field: related.ip
+      value: "{{{source.ip}}}"
+      allow_duplicates: false
+      if: ctx.source?.ip != null
   - geoip:
       tag: geoip_source
       field: source.ip
       target_field: source.geo
       ignore_missing: true
       ignore_failure: true
+      if: ctx.source?.ip != null
   - geoip:
       tag: geoip_source_asn
       database_file: GeoLite2-ASN.mmdb
@@ -80,6 +95,7 @@ processors:
         - organization_name
       ignore_missing: true
       ignore_failure: true
+      if: ctx.source?.ip != null
   - rename:
       tag: rename_source_as_asn
       field: source.as.asn
@@ -120,9 +136,13 @@ processors:
       if: "ctx.tags == null || !ctx.tags.contains('preserve_original_event')"
       ignore_missing: true
 on_failure:
+  - append:
+      field: error.message
+      value: "Processor {{{_ingest.on_failure_processor_type}}} with tag {{{_ingest.on_failure_processor_tag}}} in pipeline {{{_ingest.pipeline}}} failed with message: {{{_ingest.on_failure_message}}}"
   - set:
       field: event.kind
       value: pipeline_error
   - append:
-      field: error.message
-      value: "Processor {{{_ingest.on_failure_processor_type}}} with tag {{{_ingest.on_failure_processor_tag}}} in pipeline {{{_ingest.pipeline}}} failed with message: {{{_ingest.on_failure_message}}}"
+      field: tags
+      value: preserve_original_event
+      allow_duplicates: false
