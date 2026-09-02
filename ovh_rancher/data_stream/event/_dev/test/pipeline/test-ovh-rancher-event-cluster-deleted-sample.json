@@ -1,0 +1,7 @@
+{
+    "events": [
+        {
+            "message": "{\"id\":\"f4e3d2c1-b0a9-8876-5432-1098765432ef\",\"createdAt\":\"2025-08-26T09:15:30.000Z\",\"rancherId\":\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\"type\":\"RANCHER_CLUSTER_DELETED\",\"message\":\"Cluster 'example-cluster' was deleted\"}"
+        }
+    ]
+}

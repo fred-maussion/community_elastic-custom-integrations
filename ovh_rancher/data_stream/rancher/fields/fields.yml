@@ -1,0 +1,96 @@
+- name: ovh_rancher.rancher
+  type: group
+  fields:
+    - name: id
+      type: keyword
+      description: Unique identifier of the Managed Rancher Service instance.
+    - name: created_at
+      type: date
+      description: Timestamp when the Rancher service was created.
+    - name: updated_at
+      type: date
+      description: Timestamp when the Rancher service was last updated.
+    - name: resource_status
+      type: keyword
+      description: Lifecycle status of the Rancher resource (e.g. READY, CREATING, UPDATING, DELETING, ERROR).
+    - name: current_state
+      type: group
+      fields:
+        - name: name
+          type: keyword
+          description: Display name of the Rancher service instance.
+        - name: plan
+          type: keyword
+          description: Service plan tier (e.g. STANDARD, OVH1).
+        - name: version
+          type: keyword
+          description: Rancher version currently running on the service.
+        - name: region
+          type: keyword
+          description: OVHcloud region where the Rancher service is deployed (e.g. EU_WEST_GRA).
+        - name: url
+          type: keyword
+          description: Public HTTPS endpoint URL of the Rancher service.
+        - name: iam_auth_enabled
+          type: boolean
+          description: Whether OVHcloud IAM authentication is enabled for the Rancher service.
+        - name: ip_restrictions
+          type: group
+          fields:
+            - name: cidr_block
+              type: keyword
+              description: CIDR block allowed to access the Rancher service.
+            - name: description
+              type: keyword
+              description: Human-readable description of the IP restriction rule.
+        - name: networking
+          type: group
+          fields:
+            - name: egress_cidr_blocks
+              type: keyword
+              description: CIDR blocks used for egress traffic from the Rancher service.
+        - name: usage
+          type: group
+          fields:
+            - name: datetime
+              type: date
+              description: Timestamp of the last usage measurement.
+            - name: orchestrated_vcpus
+              type: long
+              description: Number of vCPUs currently orchestrated by the Rancher service.
+    - name: target_spec
+      type: group
+      fields:
+        - name: name
+          type: keyword
+          description: Target display name for the Rancher service instance.
+        - name: plan
+          type: keyword
+          description: Target service plan tier.
+        - name: version
+          type: keyword
+          description: Target Rancher version for the service.
+        - name: iam_auth_enabled
+          type: boolean
+          description: Target IAM authentication enablement state.
+        - name: ip_restrictions
+          type: group
+          fields:
+            - name: cidr_block
+              type: keyword
+              description: CIDR block in the target IP restriction configuration.
+            - name: description
+              type: keyword
+              description: Description of the target IP restriction rule.
+    - name: current_tasks
+      type: group
+      fields:
+        - name: id
+          type: keyword
+          description: Unique identifier of the ongoing task.
+        - name: status
+          type: keyword
+          description: Status of the ongoing task (e.g. RUNNING, DONE, ERROR).
+        - name: type
+          type: keyword
+          description: Type of the ongoing task (e.g. UPGRADE, CREATE).

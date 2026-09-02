@@ -1,0 +1,16 @@
+wait_for_data_timeout: 1m
+input: cel
+service: ovh-rancher-mock
+vars:
+  url: http://{{Hostname}}:{{Port}}
+  service_name: test-project-id
+  rancher_id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+  client_id: test-client-id
+  client_secret: test-client-secret
+  token_url: http://{{Hostname}}:{{Port}}/auth/oauth2/token
+data_stream:
+  vars:
+    interval: 2s
+    preserve_original_event: true
+assert:
+  hit_count: 2

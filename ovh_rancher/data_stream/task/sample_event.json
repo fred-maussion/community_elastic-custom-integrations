@@ -1,0 +1,85 @@
+{
+    "@timestamp": "2025-08-24T08:00:00.000Z",
+    "agent": {
+        "ephemeral_id": "8eb651f5-0a53-491a-b174-b065745bd29d",
+        "id": "b580a736-feb1-4379-9e3a-946ecf17dc2d",
+        "name": "elastic-agent-83733",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "cloud": {
+        "provider": "ovhcloud",
+        "service": {
+            "name": "managed-rancher-service"
+        }
+    },
+    "data_stream": {
+        "dataset": "ovh_rancher.task",
+        "namespace": "11646",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "b580a736-feb1-4379-9e3a-946ecf17dc2d",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "action": "rancher-cluster-delete",
+        "category": [
+            "configuration"
+        ],
+        "dataset": "ovh_rancher.task",
+        "end": "2025-08-24T08:00:00.000Z",
+        "ingested": "2026-09-01T00:06:49Z",
+        "kind": "event",
+        "module": "ovh_rancher",
+        "original": "{\"createdAt\":\"2025-08-24T07:00:00.000Z\",\"currentStep\":\"DRAIN_NODES\",\"errors\":[\"Node drain timed out after 55 minutes\"],\"finishedAt\":\"2025-08-24T08:00:00.000Z\",\"id\":\"task-00000003\",\"message\":\"Cluster delete failed: timeout waiting for node drain\",\"progress\":42,\"status\":\"ERROR\",\"steps\":[{\"finishedAt\":\"2025-08-24T07:05:00.000Z\",\"name\":\"INIT\",\"startedAt\":\"2025-08-24T07:00:00.000Z\",\"status\":\"DONE\"},{\"finishedAt\":\"2025-08-24T08:00:00.000Z\",\"name\":\"DRAIN_NODES\",\"startedAt\":\"2025-08-24T07:05:00.000Z\",\"status\":\"ERROR\"}],\"type\":\"RANCHER_CLUSTER_DELETE\",\"updatedAt\":\"2025-08-24T08:00:00.000Z\"}",
+        "outcome": "failure",
+        "start": "2025-08-24T07:00:00.000Z",
+        "type": [
+            "change"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "ovh_rancher": {
+        "task": {
+            "created_at": "2025-08-24T07:00:00.000Z",
+            "current_step": "DRAIN_NODES",
+            "errors": "Node drain timed out after 55 minutes",
+            "finished_at": "2025-08-24T08:00:00.000Z",
+            "id": "task-00000003",
+            "message": "Cluster delete failed: timeout waiting for node drain",
+            "progress": 42,
+            "status": "ERROR",
+            "steps": {
+                "finished_at": [
+                    "2025-08-24T07:05:00.000Z",
+                    "2025-08-24T08:00:00.000Z"
+                ],
+                "name": [
+                    "DRAIN_NODES",
+                    "INIT"
+                ],
+                "started_at": [
+                    "2025-08-24T07:00:00.000Z",
+                    "2025-08-24T07:05:00.000Z"
+                ],
+                "status": [
+                    "DONE",
+                    "ERROR"
+                ]
+            },
+            "type": "RANCHER_CLUSTER_DELETE",
+            "updated_at": "2025-08-24T08:00:00.000Z"
+        }
+    },
+    "tags": [
+        "preserve_original_event",
+        "forwarded"
+    ]
+}

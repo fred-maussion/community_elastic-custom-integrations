@@ -1,0 +1,57 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2025-08-25T12:10:00.000Z",
+            "cloud": {
+                "provider": "ovhcloud",
+                "service": {
+                    "name": "managed-rancher-service"
+                }
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "rancher-plan-upgrade",
+                "category": [
+                    "configuration"
+                ],
+                "kind": "event",
+                "original": "{\"id\":\"task-b2c3d4e5\",\"createdAt\":\"2025-08-25T12:00:00.000Z\",\"updatedAt\":\"2025-08-25T12:10:00.000Z\",\"type\":\"RANCHER_PLAN_UPGRADE\",\"status\":\"DOING\",\"message\":\"Upgrading Rancher plan\",\"progress\":30,\"currentStep\":\"UPGRADE\",\"steps\":[{\"name\":\"INIT\",\"status\":\"DONE\",\"startedAt\":\"2025-08-25T12:00:00.000Z\",\"finishedAt\":\"2025-08-25T12:05:00.000Z\"},{\"name\":\"UPGRADE\",\"status\":\"DOING\",\"startedAt\":\"2025-08-25T12:05:00.000Z\"}]}",
+                "outcome": "unknown",
+                "start": "2025-08-25T12:00:00.000Z",
+                "type": [
+                    "change"
+                ]
+            },
+            "ovh_rancher": {
+                "task": {
+                    "created_at": "2025-08-25T12:00:00.000Z",
+                    "current_step": "UPGRADE",
+                    "id": "task-b2c3d4e5",
+                    "message": "Upgrading Rancher plan",
+                    "progress": 30,
+                    "status": "DOING",
+                    "steps": [
+                        {
+                            "finished_at": "2025-08-25T12:05:00.000Z",
+                            "name": "INIT",
+                            "started_at": "2025-08-25T12:00:00.000Z",
+                            "status": "DONE"
+                        },
+                        {
+                            "name": "UPGRADE",
+                            "started_at": "2025-08-25T12:05:00.000Z",
+                            "status": "DOING"
+                        }
+                    ],
+                    "type": "RANCHER_PLAN_UPGRADE",
+                    "updated_at": "2025-08-25T12:10:00.000Z"
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

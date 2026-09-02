@@ -1,0 +1,104 @@
+rules:
+  # ── Task stream mock rules ───────────────────────────────────────────────────
+  # Page 2 of tasks (request carries X-Pagination-Cursor: taskpage2cursor header).
+  # Must appear before the page-1 rule so the more-specific rule wins.
+  # Round 1, page 2: 1 task (ERROR status), no cursor response header → terminal page.
+  - path: /publicCloud/project/test-project-id/rancher/a1b2c3d4-e5f6-7890-abcd-ef1234567890/tasks
+    methods: [GET]
+    request_headers:
+      X-Pagination-Cursor:
+        - taskpage2cursor
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          [{"id":"task-00000003","createdAt":"2025-08-24T07:00:00.000Z","updatedAt":"2025-08-24T08:00:00.000Z","finishedAt":"2025-08-24T08:00:00.000Z","type":"RANCHER_CLUSTER_DELETE","status":"ERROR","message":"Cluster delete failed: timeout waiting for node drain","progress":42,"currentStep":"DRAIN_NODES","steps":[{"name":"INIT","status":"DONE","startedAt":"2025-08-24T07:00:00.000Z","finishedAt":"2025-08-24T07:05:00.000Z"},{"name":"DRAIN_NODES","status":"ERROR","startedAt":"2025-08-24T07:05:00.000Z","finishedAt":"2025-08-24T08:00:00.000Z"}],"errors":["Node drain timed out after 55 minutes"]}]
+  # Page 1 of tasks (no X-Pagination-Cursor request header).
+  # Served round-robin:
+  #   Round 1 → 2 tasks + X-Pagination-Cursor: taskpage2cursor response header (more pages).
+  #   Round 2 → 1 new task (updatedAt 2025-08-26 > cursor 2025-08-25T14:32:01Z), no cursor header (terminal).
+  - path: /publicCloud/project/test-project-id/rancher/a1b2c3d4-e5f6-7890-abcd-ef1234567890/tasks
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+          X-Pagination-Cursor:
+            - taskpage2cursor
+        body: >-
+          [{"id":"task-00000001","createdAt":"2025-08-25T12:00:00.000Z","updatedAt":"2025-08-25T14:32:01.000Z","finishedAt":"2025-08-25T14:32:01.000Z","type":"RANCHER_VERSION_UPGRADE","status":"DONE","message":"Upgrade to version 2.8.5 completed successfully","progress":100,"currentStep":"FINISHED","steps":[{"name":"INIT","status":"DONE","startedAt":"2025-08-25T12:00:00.000Z","finishedAt":"2025-08-25T12:05:00.000Z"},{"name":"UPGRADE","status":"DONE","startedAt":"2025-08-25T12:05:00.000Z","finishedAt":"2025-08-25T14:32:01.000Z"}],"errors":[]},{"id":"task-00000002","createdAt":"2025-08-25T09:00:00.000Z","updatedAt":"2025-08-25T10:00:00.000Z","finishedAt":null,"type":"RANCHER_IP_RESTRICTIONS_UPDATE","status":"DOING","message":"Updating IP restriction rules","progress":60,"currentStep":"APPLY_RULES","steps":[{"name":"INIT","status":"DONE","startedAt":"2025-08-25T09:00:00.000Z","finishedAt":"2025-08-25T09:02:00.000Z"},{"name":"APPLY_RULES","status":"DOING","startedAt":"2025-08-25T09:02:00.000Z","finishedAt":null}],"errors":[]}]
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          [{"id":"task-00000004","createdAt":"2025-08-26T08:00:00.000Z","updatedAt":"2025-08-26T09:00:00.000Z","finishedAt":"2025-08-26T09:00:00.000Z","type":"RANCHER_PLAN_UPGRADE","status":"DONE","message":"Plan upgrade to OVHCLOUD_EDITION completed successfully","progress":100,"currentStep":"FINISHED","steps":[{"name":"INIT","status":"DONE","startedAt":"2025-08-26T08:00:00.000Z","finishedAt":"2025-08-26T08:05:00.000Z"},{"name":"UPGRADE","status":"DONE","startedAt":"2025-08-26T08:05:00.000Z","finishedAt":"2025-08-26T09:00:00.000Z"}],"errors":[]}]
+  # ── Event stream mock rules ─────────────────────────────────────────────────
+  # Page 2 of events (request carries X-Pagination-Cursor: page2cursor header)
+  # Must appear before the page-1 catchall so the more-specific rule wins.
+  # Round 1, page 2: 1 event (RANCHER_ADMIN_REQUESTED), no cursor in response → terminal page.
+  - path: /publicCloud/project/test-project-id/rancher/a1b2c3d4-e5f6-7890-abcd-ef1234567890/events
+    methods: [GET]
+    request_headers:
+      X-Pagination-Cursor:
+        - page2cursor
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          [{"id":"evt-00000003","createdAt":"2025-08-25T12:00:00.000Z","rancherId":"a1b2c3d4-e5f6-7890-abcd-ef1234567890","type":"RANCHER_ADMIN_REQUESTED","message":"Admin access requested for cluster my-rancher-prod"}]
+  # Page 1 of events (no X-Pagination-Cursor request header).
+  # Served round-robin:
+  #   Round 1 → 2 events + X-Pagination-Cursor: page2cursor response header (more pages).
+  #   Round 2 → 1 new event, no cursor header (terminal — tests cursor advancement).
+  - path: /publicCloud/project/test-project-id/rancher/a1b2c3d4-e5f6-7890-abcd-ef1234567890/events
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+          X-Pagination-Cursor:
+            - page2cursor
+        body: >-
+          [{"id":"evt-00000001","createdAt":"2025-08-25T10:00:00.000Z","rancherId":"a1b2c3d4-e5f6-7890-abcd-ef1234567890","type":"RANCHER_CLUSTER_CREATED","message":"Cluster my-rancher-prod was created"},{"id":"evt-00000002","createdAt":"2025-08-25T11:00:00.000Z","rancherId":"a1b2c3d4-e5f6-7890-abcd-ef1234567890","type":"RANCHER_SERVICE_UPGRADED","message":"Service my-rancher-prod upgraded to version 2.8.5"}]
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          [{"id":"evt-00000004","createdAt":"2025-08-26T09:00:00.000Z","rancherId":"a1b2c3d4-e5f6-7890-abcd-ef1234567890","type":"RANCHER_CLUSTER_DELETED","message":"Cluster my-rancher-prod was deleted"}]
+  # ── OAuth2 token endpoint (shared) ──────────────────────────────────────────
+  # OAuth2 token endpoint — used by auth.oauth2 framework during system tests
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+  # Rancher service detail — returns two responses in round-robin
+  # Round 1 (no cursor): updatedAt = 2025-08-24T10:00:00.000Z → emits event, sets cursor
+  # Round 2 (cursor set): updatedAt = 2025-08-25T14:32:01.000Z > cursor → emits event, updates cursor
+  # Round 3+ (cursor = 2025-08-25T...): returns round 1 again → updatedAt < cursor → skipped
+  - path: /publicCloud/project/test-project-id/rancher/a1b2c3d4-e5f6-7890-abcd-ef1234567890
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          {"id":"a1b2c3d4-e5f6-7890-abcd-ef1234567890","createdAt":"2025-03-15T10:00:00.000Z","updatedAt":"2025-08-24T10:00:00.000Z","resourceStatus":"READY","currentState":{"name":"my-rancher-prod","plan":"STANDARD","version":"2.8.5","region":"EU_WEST_GRA","url":"https://a1b2c3d4-e5f6-7890-abcd-ef1234567890.rancher.ovh.net","bootstrapPassword":null,"iamAuthEnabled":false,"ipRestrictions":[{"cidrBlock":"198.51.100.0/24","description":"Office network"}],"networking":{"egressCidrBlocks":["192.0.2.0/28"]},"usage":{"datetime":"2025-08-24T10:00:00.000Z","orchestratedVcpus":32}},"targetSpec":{"name":"my-rancher-prod","plan":"STANDARD","version":"2.8.5","iamAuthEnabled":false,"ipRestrictions":[{"cidrBlock":"198.51.100.0/24","description":"Office network"}]},"currentTasks":[]}
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          {"id":"a1b2c3d4-e5f6-7890-abcd-ef1234567890","createdAt":"2025-03-15T10:00:00.000Z","updatedAt":"2025-08-25T14:32:01.000Z","resourceStatus":"READY","currentState":{"name":"my-rancher-prod","plan":"STANDARD","version":"2.8.5","region":"EU_WEST_GRA","url":"https://a1b2c3d4-e5f6-7890-abcd-ef1234567890.rancher.ovh.net","bootstrapPassword":null,"iamAuthEnabled":false,"ipRestrictions":[{"cidrBlock":"198.51.100.0/24","description":"Office network"}],"networking":{"egressCidrBlocks":["192.0.2.0/28"]},"usage":{"datetime":"2025-08-25T14:00:00.000Z","orchestratedVcpus":32}},"targetSpec":{"name":"my-rancher-prod","plan":"STANDARD","version":"2.8.5","iamAuthEnabled":false,"ipRestrictions":[{"cidrBlock":"198.51.100.0/24","description":"Office network"}]},"currentTasks":[]}
