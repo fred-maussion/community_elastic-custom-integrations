@@ -100,7 +100,7 @@ processors:
   - set:
       tag: set_rule_description
       field: rule.description
-      copy_from: gitguardian.public_incident.detector.display_name
+      value: "GitGuardian: {{{gitguardian.public_incident.detector.display_name}}}"
       ignore_empty_value: true
 
   - set:

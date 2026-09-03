@@ -1,0 +1,3280 @@
+{
+    "accessControl": {
+        "accessMode": "default",
+        "owner": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+    },
+    "attributes": {
+        "description": "Security analyst dashboard for GitGuardian audit log activity. Covers user behavior, action types, geographic access patterns, API token usage, and anomaly indicators.",
+        "esqlApproximation": false,
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "autoApplyFilters": true,
+            "hidePanelBorders": false,
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-ea494810d65315cbee0a36ea1c0d88d53356ab4014c0afa90ed97c7b3e7a6b61": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-ea494810d65315cbee0a36ea1c0d88d53356ab4014c0afa90ed97c7b3e7a6b61",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Count",
+                                                    "label": "Total Audit Log Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-ea494810d65315cbee0a36ea1c0d88d53356ab4014c0afa90ed97c7b3e7a6b61",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Total Count` = COUNT(*)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-ea494810d65315cbee0a36ea1c0d88d53356ab4014c0afa90ed97c7b3e7a6b61",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Total Count` = COUNT(*)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "852062cd-1a57-47bf-a055-5c74b903891c",
+                    "sectionId": "e2d7a5ed-9485-4992-8c1d-2206dd87ba43",
+                    "w": 8,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "852062cd-1a57-47bf-a055-5c74b903891c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-e156e7ed5ccdc5fb77c4052ee8304e9ff11f9504eab0fba1bf120d3222b22541": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-e156e7ed5ccdc5fb77c4052ee8304e9ff11f9504eab0fba1bf120d3222b22541",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct user.email",
+                                                    "label": "Distinct User Emails",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-e156e7ed5ccdc5fb77c4052ee8304e9ff11f9504eab0fba1bf120d3222b22541",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct user.email` = COUNT_DISTINCT(user.email)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-e156e7ed5ccdc5fb77c4052ee8304e9ff11f9504eab0fba1bf120d3222b22541",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct user.email` = COUNT_DISTINCT(user.email)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "85699759-4681-47cd-a2bd-8dfbc9a40f13",
+                    "sectionId": "e2d7a5ed-9485-4992-8c1d-2206dd87ba43",
+                    "w": 8,
+                    "x": 8,
+                    "y": 0
+                },
+                "panelIndex": "85699759-4681-47cd-a2bd-8dfbc9a40f13",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-ceb65b3a3bc434c9560ebe22b8fa05c534181e1c82e3c6cd7f6667a375317353": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-ceb65b3a3bc434c9560ebe22b8fa05c534181e1c82e3c6cd7f6667a375317353",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Event Names",
+                                                    "label": "Distinct Event Names",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-ceb65b3a3bc434c9560ebe22b8fa05c534181e1c82e3c6cd7f6667a375317353",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct Event Names` = COUNT_DISTINCT(gitguardian.audit_log.event_name)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-ceb65b3a3bc434c9560ebe22b8fa05c534181e1c82e3c6cd7f6667a375317353",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct Event Names` = COUNT_DISTINCT(gitguardian.audit_log.event_name)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "f0dab2ad-5ee9-4e66-8552-8ae25e455629",
+                    "sectionId": "e2d7a5ed-9485-4992-8c1d-2206dd87ba43",
+                    "w": 8,
+                    "x": 16,
+                    "y": 0
+                },
+                "panelIndex": "f0dab2ad-5ee9-4e66-8552-8ae25e455629",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-b57188f94ddb86e1b2800fcec9cd22439295639173009722c4ba1dd5a55bbd3c": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-b57188f94ddb86e1b2800fcec9cd22439295639173009722c4ba1dd5a55bbd3c",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct API Token Count",
+                                                    "label": "Distinct API Token Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-b57188f94ddb86e1b2800fcec9cd22439295639173009722c4ba1dd5a55bbd3c",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct API Token Count` = COUNT_DISTINCT(gitguardian.audit_log.api_token_id)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-b57188f94ddb86e1b2800fcec9cd22439295639173009722c4ba1dd5a55bbd3c",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct API Token Count` = COUNT_DISTINCT(gitguardian.audit_log.api_token_id)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "aef6488c-3a8c-4bbe-9dfb-96f3f02c2b38",
+                    "sectionId": "e2d7a5ed-9485-4992-8c1d-2206dd87ba43",
+                    "w": 8,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "aef6488c-3a8c-4bbe-9dfb-96f3f02c2b38",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-6307c390895fd19d86c9b91f18613d23db29026172bf1f59cdd115f06256a372": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-6307c390895fd19d86c9b91f18613d23db29026172bf1f59cdd115f06256a372",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Source IPs",
+                                                    "label": "Distinct Source IPs",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-6307c390895fd19d86c9b91f18613d23db29026172bf1f59cdd115f06256a372",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct Source IPs` = COUNT_DISTINCT(source.ip)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-6307c390895fd19d86c9b91f18613d23db29026172bf1f59cdd115f06256a372",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct Source IPs` = COUNT_DISTINCT(source.ip)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "8018d41b-77f0-405e-9af0-997e9d2c89d8",
+                    "sectionId": "e2d7a5ed-9485-4992-8c1d-2206dd87ba43",
+                    "w": 8,
+                    "x": 32,
+                    "y": 0
+                },
+                "panelIndex": "8018d41b-77f0-405e-9af0-997e9d2c89d8",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-2cd27fa95ea4492b368700bfa9966ac4b978d4e71a26b438ad3857ccbed51cca": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-2cd27fa95ea4492b368700bfa9966ac4b978d4e71a26b438ad3857ccbed51cca",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "metric_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Country ISO Codes",
+                                                    "label": "Distinct Country ISO Codes",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-2cd27fa95ea4492b368700bfa9966ac4b978d4e71a26b438ad3857ccbed51cca",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct Country ISO Codes` = COUNT_DISTINCT(source.geo.country_iso_code)"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-2cd27fa95ea4492b368700bfa9966ac4b978d4e71a26b438ad3857ccbed51cca",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct Country ISO Codes` = COUNT_DISTINCT(source.geo.country_iso_code)"
+                            },
+                            "visualization": {
+                                "density": "default",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "metricAccessor": "metric_accessor_metric",
+                                "showBar": false
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 6,
+                    "i": "14d2d569-4735-4f3a-9399-3c0829b979b1",
+                    "sectionId": "e2d7a5ed-9485-4992-8c1d-2206dd87ba43",
+                    "w": 8,
+                    "x": 40,
+                    "y": 0
+                },
+                "panelIndex": "14d2d569-4735-4f3a-9399-3c0829b979b1",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "area_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "area_0_x",
+                                                    "fieldName": "Time",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "area_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Audit Events",
+                                                    "label": "Audit Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Audit Events` = COUNT(*) BY `Time` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-area_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Audit Events` = COUNT(*) BY `Time` = BUCKET(@timestamp, 75, ?_tstart, ?_tend)"
+                            },
+                            "visualization": {
+                                "areaFill": "solid",
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "fillOpacity": 0.3,
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "area_0_y_0"
+                                        ],
+                                        "layerId": "area_0",
+                                        "layerType": "data",
+                                        "seriesType": "area",
+                                        "xAccessor": "area_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "area_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "area",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Audit Log Events Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Audit Log Events Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "ff2da6d7-7b17-46d9-a516-c8ad8ac532f2",
+                    "sectionId": "2829a3b0-90f1-4857-9833-32f31fc7da99",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "ff2da6d7-7b17-46d9-a516-c8ad8ac532f2",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "fieldName": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "fieldName": "Action Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT() BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Action Type` = gitguardian.audit_log.action_type\n| SORT `Time Bucket`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT() BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Action Type` = gitguardian.audit_log.action_type\n| SORT `Time Bucket`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right",
+                                    "showSingleSeries": true
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Audit Log Event Count Over Time by Action Type",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Audit Log Event Count Over Time by Action Type"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "b7805d1e-6b11-4840-9065-2221136840c3",
+                    "sectionId": "2829a3b0-90f1-4857-9833-32f31fc7da99",
+                    "w": 24,
+                    "x": 0,
+                    "y": 10
+                },
+                "panelIndex": "b7805d1e-6b11-4840-9065-2221136840c3",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "area_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "area_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "area_stacked_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "area_stacked_0_breakdown",
+                                                    "fieldName": "User Email",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `User Email` = user.email\n| STATS `Event Count` = SUM(`Event Count`), email_count = SUM(`Event Count`) BY `User Email`\n| SORT email_count DESC\n| LIMIT 5\n| KEEP `User Email`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-area_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `User Email` = user.email\n| STATS `Event Count` = SUM(`Event Count`), email_count = SUM(`Event Count`) BY `User Email`\n| SORT email_count DESC\n| LIMIT 5\n| KEEP `User Email`"
+                            },
+                            "visualization": {
+                                "areaFill": "solid",
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "fillOpacity": 0.3,
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "area_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "area_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "area_stacked",
+                                        "splitAccessors": [
+                                            "area_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "area_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "area_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "area_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Top 5 Users by Audit Log Event Count Over Time",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 5 Users by Audit Log Event Count Over Time"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "d1ce2972-339f-4eb5-9f3b-4409d51cbea9",
+                    "sectionId": "2829a3b0-90f1-4857-9833-32f31fc7da99",
+                    "w": 24,
+                    "x": 24,
+                    "y": 10
+                },
+                "panelIndex": "d1ce2972-339f-4eb5-9f3b-4409d51cbea9",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-fd961da4d70839b025ac1815fbed7a6d4af1be43fc3f74e95fa0e8ed28ccc9de": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-fd961da4d70839b025ac1815fbed7a6d4af1be43fc3f74e95fa0e8ed28ccc9de",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "user.email",
+                                                    "label": "User Email",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Event Names",
+                                                    "inMetricDimension": true,
+                                                    "label": "Distinct Event Names",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Source IPs",
+                                                    "inMetricDimension": true,
+                                                    "label": "Distinct Source IPs",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-fd961da4d70839b025ac1815fbed7a6d4af1be43fc3f74e95fa0e8ed28ccc9de",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*), `Distinct Event Names` = COUNT_DISTINCT(gitguardian.audit_log.event_name), `Distinct Source IPs` = COUNT_DISTINCT(source.ip) BY user.email\n| SORT `Event Count` DESC\n| LIMIT 20"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-fd961da4d70839b025ac1815fbed7a6d4af1be43fc3f74e95fa0e8ed28ccc9de",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*), `Distinct Event Names` = COUNT_DISTINCT(gitguardian.audit_log.event_name), `Distinct Source IPs` = COUNT_DISTINCT(source.ip) BY user.email\n| SORT `Event Count` DESC\n| LIMIT 20"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false,
+                                        "summaryLabel": "Total",
+                                        "summaryRow": "sum"
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_2",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "normal",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Top 20 Users by Event Count — Distinct Event Names \u0026 Source IPs",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 20 Users by Event Count — Distinct Event Names \u0026 Source IPs"
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "8ca70d4f-f298-49bd-935c-4292e9eb72e6",
+                    "sectionId": "656ec813-71bb-4c2e-9052-bea2d0f5de5d",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "8ca70d4f-f298-49bd-935c-4292e9eb72e6",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-edb6f4bc2be9909f7b75c91e8c25eb3ad9a3a79f9d39ac1c6592b6e125b695d1": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-edb6f4bc2be9909f7b75c91e8c25eb3ad9a3a79f9d39ac1c6592b6e125b695d1",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Count of events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "fieldName": "user.email",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_1",
+                                                    "fieldName": "gitguardian.audit_log.action_type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-edb6f4bc2be9909f7b75c91e8c25eb3ad9a3a79f9d39ac1c6592b6e125b695d1",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Count of events` = COUNT(*) BY user.email, gitguardian.audit_log.action_type\n| SORT `Count of events` DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-edb6f4bc2be9909f7b75c91e8c25eb3ad9a3a79f9d39ac1c6592b6e125b695d1",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Count of events` = COUNT(*) BY user.email, gitguardian.audit_log.action_type\n| SORT `Count of events` DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": true,
+                                        "numberDisplay": "value",
+                                        "percentDecimals": 2,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0",
+                                            "partition_value_accessor_group_by_1"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "treemap"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "1b5586ae-2e75-4659-abc8-2f1390e94006",
+                    "sectionId": "656ec813-71bb-4c2e-9052-bea2d0f5de5d",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "1b5586ae-2e75-4659-abc8-2f1390e94006",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-114f22af42985ba353fc34f53c6ba47fb506ded0fa8f961634007e9a02426f21": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-114f22af42985ba353fc34f53c6ba47fb506ded0fa8f961634007e9a02426f21",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "heatmap_value_accessor_value",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "heatmap_value_accessor_x",
+                                                    "customLabel": true,
+                                                    "fieldName": "Action Type",
+                                                    "label": "Action Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "heatmap_value_accessor_y",
+                                                    "customLabel": true,
+                                                    "fieldName": "user.email",
+                                                    "label": "User Email",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-114f22af42985ba353fc34f53c6ba47fb506ded0fa8f961634007e9a02426f21",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*) BY user.email, `Action Type` = gitguardian.audit_log.action_type\n| SORT `Event Count` DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-114f22af42985ba353fc34f53c6ba47fb506ded0fa8f961634007e9a02426f21",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*) BY user.email, `Action Type` = gitguardian.audit_log.action_type\n| SORT `Event Count` DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "gridConfig": {
+                                    "isCellLabelVisible": false,
+                                    "isXAxisLabelVisible": true,
+                                    "isXAxisTitleVisible": false,
+                                    "isYAxisLabelVisible": true,
+                                    "isYAxisTitleVisible": false,
+                                    "type": "heatmap_grid",
+                                    "xAxisLabelRotation": -45
+                                },
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "legend": {
+                                    "isVisible": true,
+                                    "maxLines": 1,
+                                    "position": "right",
+                                    "shouldTruncate": true,
+                                    "type": "heatmap_legend"
+                                },
+                                "shape": "heatmap",
+                                "valueAccessor": "heatmap_value_accessor_value",
+                                "xAccessor": "heatmap_value_accessor_x",
+                                "yAccessor": "heatmap_value_accessor_y"
+                            }
+                        },
+                        "title": "Event Count by User and Action Type",
+                        "version": 2,
+                        "visualizationType": "lnsHeatmap"
+                    },
+                    "drilldowns": [],
+                    "title": "Event Count by User and Action Type"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "3be0668a-7bbc-4baa-a7ec-a5eaba39d3a4",
+                    "sectionId": "656ec813-71bb-4c2e-9052-bea2d0f5de5d",
+                    "w": 48,
+                    "x": 0,
+                    "y": 14
+                },
+                "panelIndex": "3be0668a-7bbc-4baa-a7ec-a5eaba39d3a4",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Action Type",
+                                                    "label": "Action Type",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Action Type` = gitguardian.audit_log.action_type\n| SORT `Event Count` DESC\n| LIMIT 10"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Action Type` = gitguardian.audit_log.action_type\n| SORT `Event Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "97d0e18c-9bd9-42a0-8aa7-2909b105c96d",
+                    "sectionId": "cd36bc59-1f62-42b9-a7b6-8b7a8ca9b94d",
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "97d0e18c-9bd9-42a0-8aa7-2909b105c96d",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-d35a598f03da5d1b37c6dbb8e878a34748675e9baa6388d36cc504d6193f67d7": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-d35a598f03da5d1b37c6dbb8e878a34748675e9baa6388d36cc504d6193f67d7",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Name",
+                                                    "label": "Event Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-d35a598f03da5d1b37c6dbb8e878a34748675e9baa6388d36cc504d6193f67d7",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*) BY `Event Name` = gitguardian.audit_log.event_name\n| SORT `Event Count` DESC\n| LIMIT 20"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-d35a598f03da5d1b37c6dbb8e878a34748675e9baa6388d36cc504d6193f67d7",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*) BY `Event Name` = gitguardian.audit_log.event_name\n| SORT `Event Count` DESC\n| LIMIT 20"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": true
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false,
+                                        "summaryLabel": "Total",
+                                        "summaryRow": "sum"
+                                    }
+                                ],
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Top 20 GitGuardian Audit Log Events by Count",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 20 GitGuardian Audit Log Events by Count"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "c8276c1a-dfb4-4dd8-aa67-0eb3c509eb96",
+                    "sectionId": "cd36bc59-1f62-42b9-a7b6-8b7a8ca9b94d",
+                    "w": 24,
+                    "x": 12,
+                    "y": 0
+                },
+                "panelIndex": "c8276c1a-dfb4-4dd8-aa67-0eb3c509eb96",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-357245ca9e5753d4fe762e4b1270321ec6b3d8c0c74daa8c18ed4a0d3ca5099c": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-357245ca9e5753d4fe762e4b1270321ec6b3d8c0c74daa8c18ed4a0d3ca5099c",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "tagcloud_accessor_metric",
+                                                    "fieldName": "Frequency",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "tagcloud_accessor_tag",
+                                                    "fieldName": "event_name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-357245ca9e5753d4fe762e4b1270321ec6b3d8c0c74daa8c18ed4a0d3ca5099c",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Frequency` = COUNT(*) BY `event_name` = gitguardian.audit_log.event_name\n| SORT `Frequency` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-357245ca9e5753d4fe762e4b1270321ec6b3d8c0c74daa8c18ed4a0d3ca5099c",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Frequency` = COUNT(*) BY `event_name` = gitguardian.audit_log.event_name\n| SORT `Frequency` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "colorMapping": {
+                                    "assignments": [],
+                                    "colorMode": {
+                                        "type": "categorical"
+                                    },
+                                    "paletteId": "default",
+                                    "specialAssignments": [
+                                        {
+                                            "color": {
+                                                "type": "loop"
+                                            },
+                                            "rules": [
+                                                {
+                                                    "type": "other"
+                                                }
+                                            ],
+                                            "touched": false
+                                        }
+                                    ]
+                                },
+                                "layerId": "layer_0",
+                                "maxFontSize": 72,
+                                "minFontSize": 18,
+                                "orientation": "single",
+                                "showLabel": true,
+                                "tagAccessor": "tagcloud_accessor_tag",
+                                "valueAccessor": "tagcloud_accessor_metric"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsTagcloud"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "703f4346-c190-4082-8fbe-b0b4c0ba1c1a",
+                    "sectionId": "cd36bc59-1f62-42b9-a7b6-8b7a8ca9b94d",
+                    "w": 12,
+                    "x": 36,
+                    "y": 0
+                },
+                "panelIndex": "703f4346-c190-4082-8fbe-b0b4c0ba1c1a",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "region_map_accessor_metric",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "region_map_accessor_region",
+                                                    "customLabel": true,
+                                                    "fieldName": "Country Code",
+                                                    "label": "Country",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Country Code` = source.geo.country_iso_code\n| SORT `Event Count` DESC\n| LIMIT 100"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Country Code` = source.geo.country_iso_code\n| SORT `Event Count` DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "emsField": "iso2",
+                                "emsLayerId": "world_countries",
+                                "layerId": "layer_0",
+                                "regionAccessor": "region_map_accessor_region",
+                                "valueAccessor": "region_map_accessor_metric"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsChoropleth"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "0bf9a011-4003-4b06-9879-7b257a05522f",
+                    "sectionId": "42861b38-c134-480e-a0fa-bfc6db61d011",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "0bf9a011-4003-4b06-9879-7b257a05522f",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-72ed43444eadeda8ba05317ffc9e0426ea8b41639fcc1d2e14377bb120e4964d": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-72ed43444eadeda8ba05317ffc9e0426ea8b41639fcc1d2e14377bb120e4964d",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "source.ip",
+                                                    "label": "Source IP",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "source.geo.country_name",
+                                                    "label": "Country",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "source.geo.city_name",
+                                                    "label": "City",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_row_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "user.email",
+                                                    "label": "User Email",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-72ed43444eadeda8ba05317ffc9e0426ea8b41639fcc1d2e14377bb120e4964d",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*) BY source.ip, source.geo.country_name, source.geo.city_name, user.email\n| SORT `Event Count` DESC\n| LIMIT 20\n| KEEP source.ip, source.geo.country_name, source.geo.city_name, user.email, `Event Count`"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-72ed43444eadeda8ba05317ffc9e0426ea8b41639fcc1d2e14377bb120e4964d",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*) BY source.ip, source.geo.country_name, source.geo.city_name, user.email\n| SORT `Event Count` DESC\n| LIMIT 20\n| KEEP source.ip, source.geo.country_name, source.geo.city_name, user.email, `Event Count`"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_1",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_2",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_3",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Top 20 Source IPs by Event Count with Geo and User Info",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 20 Source IPs by Event Count with Geo and User Info"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "840064c1-c087-46bb-bfc3-fffbf3f25d9b",
+                    "sectionId": "42861b38-c134-480e-a0fa-bfc6db61d011",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "840064c1-c087-46bb-bfc3-fffbf3f25d9b",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-f87d125d47cfa4986035b5ca8968392fcb9e22ec4c649db6386f4955066c88f9": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-f87d125d47cfa4986035b5ca8968392fcb9e22ec4c649db6386f4955066c88f9",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "partition_value_accessor_metric_0",
+                                                    "fieldName": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "partition_value_accessor_group_by_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Country",
+                                                    "label": "Country",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-f87d125d47cfa4986035b5ca8968392fcb9e22ec4c649db6386f4955066c88f9",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*) BY `Country`= source.geo.country_name\n| SORT `Event Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-f87d125d47cfa4986035b5ca8968392fcb9e22ec4c649db6386f4955066c88f9",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*) BY `Country`= source.geo.country_name\n| SORT `Event Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "allowMultipleMetrics": false,
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "layer_0",
+                                        "layerType": "data",
+                                        "legendDisplay": "show",
+                                        "legendMaxLines": 1,
+                                        "legendPosition": "right",
+                                        "metrics": [
+                                            "partition_value_accessor_metric_0"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "percentDecimals": 1,
+                                        "primaryGroups": [
+                                            "partition_value_accessor_group_by_0"
+                                        ],
+                                        "truncateLegend": true
+                                    }
+                                ],
+                                "shape": "pie"
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsPie"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "11a97a5f-0976-4668-ba75-1c66ff7fe8a9",
+                    "sectionId": "42861b38-c134-480e-a0fa-bfc6db61d011",
+                    "w": 12,
+                    "x": 0,
+                    "y": 12
+                },
+                "panelIndex": "11a97a5f-0976-4668-ba75-1c66ff7fe8a9",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_horizontal_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_horizontal_0_x",
+                                                    "fieldName": "source.geo.city_name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_horizontal_0_y_0",
+                                                    "fieldName": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `source.geo.city_name` = source.geo.city_name\n| SORT `Event Count` DESC\n| LIMIT 10"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_horizontal_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `source.geo.city_name` = source.geo.city_name\n| SORT `Event Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_horizontal_0_y_0"
+                                        ],
+                                        "layerId": "bar_horizontal_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_horizontal",
+                                        "xAccessor": "bar_horizontal_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_horizontal_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar_horizontal",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Top 10 Source Cities by Event Count",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 10 Source Cities by Event Count"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "c9f6094e-c00b-4204-a59d-25c1eeee4c82",
+                    "sectionId": "42861b38-c134-480e-a0fa-bfc6db61d011",
+                    "w": 12,
+                    "x": 12,
+                    "y": 12
+                },
+                "panelIndex": "c9f6094e-c00b-4204-a59d-25c1eeee4c82",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-707b3c555e6e155a6255224a16ce905fed8ceeb6841fb94463f845c6fa418541": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-707b3c555e6e155a6255224a16ce905fed8ceeb6841fb94463f845c6fa418541",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Organization Name",
+                                                    "label": "Organization Name",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Source IPs",
+                                                    "inMetricDimension": true,
+                                                    "label": "Distinct Source IPs",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-707b3c555e6e155a6255224a16ce905fed8ceeb6841fb94463f845c6fa418541",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*), `Distinct Source IPs` = COUNT_DISTINCT(source.ip) BY `Organization Name` = source.`as`.organization.name\n| SORT `Event Count` DESC\n| LIMIT 10"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-707b3c555e6e155a6255224a16ce905fed8ceeb6841fb94463f845c6fa418541",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*), `Distinct Source IPs` = COUNT_DISTINCT(source.ip) BY `Organization Name` = source.`as`.organization.name\n| SORT `Event Count` DESC\n| LIMIT 10"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false,
+                                        "summaryLabel": "Total",
+                                        "summaryRow": "sum"
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Top 10 Source Organizations by Event Count",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 10 Source Organizations by Event Count"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "36285f35-622e-4af0-97f5-9838a9f659e2",
+                    "sectionId": "42861b38-c134-480e-a0fa-bfc6db61d011",
+                    "w": 24,
+                    "x": 24,
+                    "y": 12
+                },
+                "panelIndex": "36285f35-622e-4af0-97f5-9838a9f659e2",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-d1875bb2a50c42363d2692595c18d471b274e5cff9b459077ecd183fcb5f5396": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-d1875bb2a50c42363d2692595c18d471b274e5cff9b459077ecd183fcb5f5396",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "API Token ID",
+                                                    "label": "API Token ID",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Users",
+                                                    "inMetricDimension": true,
+                                                    "label": "Distinct Users",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Source IPs",
+                                                    "inMetricDimension": true,
+                                                    "label": "Distinct Source IPs",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-d1875bb2a50c42363d2692595c18d471b274e5cff9b459077ecd183fcb5f5396",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*), `Distinct Users` = COUNT_DISTINCT(user.email), `Distinct Source IPs` = COUNT_DISTINCT(source.ip) BY `API Token ID` = gitguardian.audit_log.api_token_id\n| SORT `Event Count` DESC\n| LIMIT 20"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-d1875bb2a50c42363d2692595c18d471b274e5cff9b459077ecd183fcb5f5396",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Event Count` = COUNT(*), `Distinct Users` = COUNT_DISTINCT(user.email), `Distinct Source IPs` = COUNT_DISTINCT(source.ip) BY `API Token ID` = gitguardian.audit_log.api_token_id\n| SORT `Event Count` DESC\n| LIMIT 20"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false,
+                                        "summaryRow": "sum"
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_2",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "normal",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "paging": {
+                                    "enabled": true,
+                                    "size": 20
+                                },
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Top 20 API Token IDs by Event Count",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 20 API Token IDs by Event Count"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "6f4129da-f5ce-49e5-a02c-f677be514f26",
+                    "sectionId": "e374c00e-d9f1-46c6-9090-fac810c1c030",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "6f4129da-f5ce-49e5-a02c-f677be514f26",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "customLabel": true,
+                                                    "fieldName": "API Token ID",
+                                                    "label": "API Token ID",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `API Token ID` = gitguardian.audit_log.api_token_id\n| SORT `Time Bucket` ASC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `API Token ID` = gitguardian.audit_log.api_token_id\n| SORT `Time Bucket` ASC"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Event Count Over Time by API Token ID",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Event Count Over Time by API Token ID"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "c5df448e-3efe-4110-a3ea-4c6294c3d7a0",
+                    "sectionId": "e374c00e-d9f1-46c6-9090-fac810c1c030",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "c5df448e-3efe-4110-a3ea-4c6294c3d7a0",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-cbc66d579636928d740bb698ff68be6047b5f1273f181327d0c6bc840dc8aa53": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-cbc66d579636928d740bb698ff68be6047b5f1273f181327d0c6bc840dc8aa53",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "user.email",
+                                                    "label": "User Email",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct Countries",
+                                                    "inMetricDimension": true,
+                                                    "label": "Distinct Countries",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "inMetricDimension": true,
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-cbc66d579636928d740bb698ff68be6047b5f1273f181327d0c6bc840dc8aa53",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct Countries` = COUNT_DISTINCT(source.geo.country_iso_code), `Event Count` = COUNT(*) BY user.email\n| WHERE `Distinct Countries` \u003e 1\n| SORT `Distinct Countries` DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-cbc66d579636928d740bb698ff68be6047b5f1273f181327d0c6bc840dc8aa53",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct Countries` = COUNT_DISTINCT(source.geo.country_iso_code), `Event Count` = COUNT(*) BY user.email\n| WHERE `Distinct Countries` \u003e 1\n| SORT `Distinct Countries` DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false,
+                                        "summaryLabel": "Max",
+                                        "summaryRow": "max"
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false,
+                                        "summaryLabel": "Total",
+                                        "summaryRow": "sum"
+                                    }
+                                ],
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "paging": {
+                                    "enabled": true,
+                                    "size": 20
+                                },
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": []
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "2fe26e73-ae58-4db5-8576-46540cbdd1fd",
+                    "sectionId": "dc5124f3-c424-4951-8ddf-6640a84f4307",
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "2fe26e73-ae58-4db5-8576-46540cbdd1fd",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-cd5515692a4357dae01a4c725f9dbf792105728a94e222190ef8b8ea01386a8a": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-cd5515692a4357dae01a4c725f9dbf792105728a94e222190ef8b8ea01386a8a",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_row_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "user.email",
+                                                    "label": "User Email",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Distinct IPs",
+                                                    "inMetricDimension": true,
+                                                    "label": "Distinct Source IPs",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "Total Events",
+                                                    "inMetricDimension": true,
+                                                    "label": "Total Events",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-cd5515692a4357dae01a4c725f9dbf792105728a94e222190ef8b8ea01386a8a",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct IPs` = COUNT_DISTINCT(source.ip), `Total Events` = COUNT(*) BY user.email\n| SORT `Distinct IPs` DESC\n| LIMIT 20\n| KEEP user.email, `Distinct IPs`, `Total Events`"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-cd5515692a4357dae01a4c725f9dbf792105728a94e222190ef8b8ea01386a8a",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| STATS `Distinct IPs` = COUNT_DISTINCT(source.ip), `Total Events` = COUNT(*) BY user.email\n| SORT `Distinct IPs` DESC\n| LIMIT 20\n| KEEP user.email, `Distinct IPs`, `Total Events`"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_row_0",
+                                        "hidden": false,
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "oneClickFilter": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "colorMode": "badge",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "right",
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": true,
+                                "sorting": {
+                                    "columnId": "datatable_accessor_metric_0",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "Top 20 Users by Distinct Source IP Count (Potential IP Hopping)",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "Top 20 Users by Distinct Source IP Count (Potential IP Hopping)"
+                },
+                "gridData": {
+                    "h": 12,
+                    "i": "f9136eaa-848a-46f5-a6ad-8a7f23dfc52e",
+                    "sectionId": "dc5124f3-c424-4951-8ddf-6640a84f4307",
+                    "w": 24,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "f9136eaa-848a-46f5-a6ad-8a7f23dfc52e",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_0_x",
+                                                    "fieldName": "Hour of Day",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_0_y_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "Event Count",
+                                                    "label": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Hour of Day` = DATE_EXTRACT(\"hour_of_day\", @timestamp)\n| SORT `Hour of Day`"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT(*) BY `Hour of Day` = DATE_EXTRACT(\"hour_of_day\", @timestamp)\n| SORT `Hour of Day`"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_0_y_0"
+                                        ],
+                                        "layerId": "bar_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar",
+                                        "xAccessor": "bar_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": false,
+                                    "position": "bottom"
+                                },
+                                "preferredSeriesType": "bar",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Audit Events by Hour of Day",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Audit Events by Hour of Day"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "02fe12ba-2152-462a-a391-0b878ade1e56",
+                    "sectionId": "dc5124f3-c424-4951-8ddf-6640a84f4307",
+                    "w": 24,
+                    "x": 0,
+                    "y": 12
+                },
+                "panelIndex": "02fe12ba-2152-462a-a391-0b878ade1e56",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-@timestamp": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "timeFieldName": "@timestamp",
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "bar_stacked_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "bar_stacked_0_x",
+                                                    "fieldName": "Time Bucket",
+                                                    "meta": {
+                                                        "type": "date"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_y_0",
+                                                    "fieldName": "Event Count",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "bar_stacked_0_breakdown",
+                                                    "fieldName": "Organization",
+                                                    "meta": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-@timestamp",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT() BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Organization` = source.`as`.organization.name\n| SORT `Time Bucket` ASC, `Event Count` DESC"
+                                            },
+                                            "timeField": "@timestamp"
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-@timestamp",
+                                    "name": "indexpattern-datasource-layer-bar_stacked_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| WHERE @timestamp \u003e= ?_tstart AND @timestamp \u003c ?_tend\n| STATS `Event Count` = COUNT() BY `Time Bucket` = BUCKET(@timestamp, 75, ?_tstart, ?_tend), `Organization` = source.`as`.organization.name\n| SORT `Time Bucket` ASC, `Event Count` DESC"
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": false,
+                                    "yLeft": false,
+                                    "yRight": true
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "bar_stacked_0_y_0"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "bar_stacked_0",
+                                        "layerType": "data",
+                                        "seriesType": "bar_stacked",
+                                        "splitAccessors": [
+                                            "bar_stacked_0_breakdown"
+                                        ],
+                                        "xAccessor": "bar_stacked_0_x",
+                                        "yConfig": [
+                                            {
+                                                "axisMode": "left",
+                                                "forAccessor": "bar_stacked_0_y_0"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "yLeftExtent": {
+                                    "mode": "full",
+                                    "niceValues": true
+                                }
+                            }
+                        },
+                        "title": "Event Count by Organization Over Time (Top 5)",
+                        "version": 2,
+                        "visualizationType": "lnsXY"
+                    },
+                    "drilldowns": [],
+                    "title": "Event Count by Organization Over Time (Top 5)"
+                },
+                "gridData": {
+                    "h": 10,
+                    "i": "511113b7-9fa9-4f76-9328-2436b9626a7c",
+                    "sectionId": "dc5124f3-c424-4951-8ddf-6640a84f4307",
+                    "w": 24,
+                    "x": 24,
+                    "y": 12
+                },
+                "panelIndex": "511113b7-9fa9-4f76-9328-2436b9626a7c",
+                "type": "vis"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [],
+                        "state": {
+                            "adHocDataViews": {
+                                "logs-gitguardian.audit_log-default-f68d8f02d9c15e252fab7ff5718a4dafdc2b954d8db886b046161fcbab744f43": {
+                                    "allowNoIndex": false,
+                                    "id": "logs-gitguardian.audit_log-default-f68d8f02d9c15e252fab7ff5718a4dafdc2b954d8db886b046161fcbab744f43",
+                                    "name": "logs-gitguardian.audit_log-default",
+                                    "sourceFilters": [],
+                                    "title": "logs-gitguardian.audit_log-default",
+                                    "type": "esql"
+                                }
+                            },
+                            "datasourceStates": {
+                                "textBased": {
+                                    "layers": {
+                                        "layer_0": {
+                                            "columns": [
+                                                {
+                                                    "columnId": "datatable_accessor_metric_0",
+                                                    "customLabel": true,
+                                                    "fieldName": "@timestamp",
+                                                    "inMetricDimension": true,
+                                                    "label": "Timestamp",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    },
+                                                    "params": {
+                                                        "format": {
+                                                            "id": "custom",
+                                                            "params": {
+                                                                "decimals": 0,
+                                                                "pattern": "YYYY-MM-DD HH:mm:ss"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_1",
+                                                    "customLabel": true,
+                                                    "fieldName": "user.email",
+                                                    "inMetricDimension": true,
+                                                    "label": "User Email",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_2",
+                                                    "customLabel": true,
+                                                    "fieldName": "gitguardian.audit_log.event_name",
+                                                    "inMetricDimension": true,
+                                                    "label": "Event Name",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_3",
+                                                    "customLabel": true,
+                                                    "fieldName": "gitguardian.audit_log.action_type",
+                                                    "inMetricDimension": true,
+                                                    "label": "Action Type",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_4",
+                                                    "customLabel": true,
+                                                    "fieldName": "source.ip",
+                                                    "inMetricDimension": true,
+                                                    "label": "Source IP",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_5",
+                                                    "customLabel": true,
+                                                    "fieldName": "source.geo.country_name",
+                                                    "inMetricDimension": true,
+                                                    "label": "Country",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_6",
+                                                    "customLabel": true,
+                                                    "fieldName": "source.geo.city_name",
+                                                    "inMetricDimension": true,
+                                                    "label": "City",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_7",
+                                                    "customLabel": true,
+                                                    "fieldName": "gitguardian.audit_log.api_token_id",
+                                                    "inMetricDimension": true,
+                                                    "label": "API Token ID",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": "datatable_accessor_metric_8",
+                                                    "customLabel": true,
+                                                    "fieldName": "gitguardian.audit_log.member_email",
+                                                    "inMetricDimension": true,
+                                                    "label": "Member Email",
+                                                    "meta": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            ],
+                                            "ignoreGlobalFilters": false,
+                                            "index": "logs-gitguardian.audit_log-default-f68d8f02d9c15e252fab7ff5718a4dafdc2b954d8db886b046161fcbab744f43",
+                                            "query": {
+                                                "esql": "FROM logs-gitguardian.audit_log-default\n| KEEP @timestamp, user.email, gitguardian.audit_log.event_name, gitguardian.audit_log.action_type, source.ip, source.geo.country_name, source.geo.city_name, gitguardian.audit_log.api_token_id, gitguardian.audit_log.member_email\n| SORT @timestamp DESC\n| LIMIT 100"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [
+                                {
+                                    "id": "logs-gitguardian.audit_log-default-f68d8f02d9c15e252fab7ff5718a4dafdc2b954d8db886b046161fcbab744f43",
+                                    "name": "indexpattern-datasource-layer-layer_0",
+                                    "type": "index-pattern"
+                                }
+                            ],
+                            "query": {
+                                "esql": "FROM logs-gitguardian.audit_log-default\n| KEEP @timestamp, user.email, gitguardian.audit_log.event_name, gitguardian.audit_log.action_type, source.ip, source.geo.country_name, source.geo.city_name, gitguardian.audit_log.api_token_id, gitguardian.audit_log.member_email\n| SORT @timestamp DESC\n| LIMIT 100"
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_metric_0",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_metric_1",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_metric_2",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_metric_3",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_metric_4",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_metric_5",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_metric_6",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_metric_7",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "left",
+                                        "columnId": "datatable_accessor_metric_8",
+                                        "hidden": false,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    }
+                                ],
+                                "density": "compact",
+                                "layerId": "layer_0",
+                                "layerType": "data",
+                                "showRowNumbers": false
+                            }
+                        },
+                        "title": "GitGuardian Audit Log Events",
+                        "version": 2,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "drilldowns": [],
+                    "title": "GitGuardian Audit Log Events"
+                },
+                "gridData": {
+                    "h": 16,
+                    "i": "9954076d-048a-41cd-9fbc-97a79447f527",
+                    "sectionId": "8ebfac54-f2ae-46ed-9c3d-f58db31cfbe3",
+                    "w": 48,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "9954076d-048a-41cd-9fbc-97a79447f527",
+                "type": "vis"
+            }
+        ],
+        "sections": [
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "e2d7a5ed-9485-4992-8c1d-2206dd87ba43",
+                    "y": 0
+                },
+                "title": "📊 Activity Summary"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "2829a3b0-90f1-4857-9833-32f31fc7da99",
+                    "y": 1
+                },
+                "title": "📈 Audit Event Trends"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "656ec813-71bb-4c2e-9052-bea2d0f5de5d",
+                    "y": 2
+                },
+                "title": "👤 User Activity \u0026 Behavior"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "cd36bc59-1f62-42b9-a7b6-8b7a8ca9b94d",
+                    "y": 3
+                },
+                "title": "⚙️ Event \u0026 Action Breakdown"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "42861b38-c134-480e-a0fa-bfc6db61d011",
+                    "y": 4
+                },
+                "title": "🌍 Geographic Access \u0026 IP Intelligence"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "e374c00e-d9f1-46c6-9090-fac810c1c030",
+                    "y": 5
+                },
+                "title": "🔑 API Token Activity"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "dc5124f3-c424-4951-8ddf-6640a84f4307",
+                    "y": 6
+                },
+                "title": "🚨 Anomaly \u0026 Risk Indicators"
+            },
+            {
+                "collapsed": false,
+                "gridData": {
+                    "i": "8ebfac54-f2ae-46ed-9c3d-f58db31cfbe3",
+                    "y": 7
+                },
+                "title": "📋 Raw Event Log"
+            }
+        ],
+        "timeRestore": false,
+        "title": "[GitGuardian] Audit Log - Security Analyst Overview"
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2026-09-03T10:24:03.280Z",
+    "created_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0",
+    "id": "gitguardian-13d4dd3a-8782-493e-9ede-eb34c5b157cc",
+    "references": [],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_ns-iZ98BUGs0TCCAcTtsKYrKVLCPcMXGOcSxvEeLfxM_0"
+}

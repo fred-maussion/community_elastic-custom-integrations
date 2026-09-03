@@ -65,7 +65,7 @@
         }
     },
     "rule": {
-        "description": "Slack Bot Token",
+        "description": "GitGuardian: Slack Bot Token",
         "name": "slack_bot_token"
     },
     "tags": [

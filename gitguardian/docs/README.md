@@ -71,16 +71,31 @@ management — and includes the actor's identity, IP address, and the type of ac
 
 ### Elastic Security alerting
 
-GitGuardian incidents are ingested with `event.kind: alert`. To surface them in the
-**Elastic Security → Alerts** UI, enable the built-in **External Alerts** detection rule:
+This integration ships a **GitGuardian External Alerts** detection rule that promotes
+GitGuardian incidents directly into Elastic Security alerts. The rule covers all three
+alert-generating data streams:
+
+- `internal_secret_alert` — internal secrets incidents (TRIGGERED or ASSIGNED status)
+- `public_secret_alert` — secrets detected on the public internet
+- `honeytoken_event` — actively triggered decoy credentials
+
+The rule uses `rule_name_override` to set the alert title dynamically from `rule.description`,
+which the ingest pipelines populate as `GitGuardian: <detector name>` (e.g.
+`GitGuardian: Generic Password`, `GitGuardian: Slack Bot Token`,
+`GitGuardian: Honeytoken Triggered`). Severity and risk score are mapped directly from the
+GitGuardian incident fields (`vulnerability.severity` and `gitguardian.incident.risk_score`).
+
+#### How to enable the detection rule
+
+The rule ships **disabled** by default, as is standard for packaged detection rules.
 
 1. In Kibana, navigate to **Security → Rules → Detection rules (SIEM)**.
-2. Search for **External Alerts** in the prebuilt rules list.
-3. Click **Install rule**, then **Enable**.
+2. Search for **GitGuardian External Alerts**.
+3. Click the rule name to open it, then toggle **Enable** in the top-right corner.
 
 Once enabled, every GitGuardian incident that arrives will automatically appear as an alert
-in the Security Alerts view, enriched with the ECS fields mapped by this integration
-(`rule.name`, `vulnerability.severity`, `event.url`, etc.).
+in the Security Alerts view, with severity, risk score, and a direct link (`event.url`) back
+to the incident in the GitGuardian dashboard.
 
 ### Elastic Entity Analytics
 
@@ -335,7 +350,7 @@ An example event for `internal_secret_alert` looks as following:
         }
     },
     "rule": {
-        "description": "Generic Password",
+        "description": "GitGuardian: Generic Password",
         "name": "generic_password"
     },
     "tags": [
@@ -878,7 +893,7 @@ An example event for `public_secret_alert` looks as following:
         }
     },
     "rule": {
-        "description": "Slack Bot Token",
+        "description": "GitGuardian: Slack Bot Token",
         "name": "slack_bot_token"
     },
     "tags": [

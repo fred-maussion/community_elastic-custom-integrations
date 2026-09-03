@@ -46,6 +46,10 @@ processors:
       field: event.provider
       value: GitGuardian
   - set:
+      tag: set_rule_description
+      field: rule.description
+      value: "GitGuardian: Honeytoken Triggered"
+  - set:
       tag: set_event_action
       field: event.action
       copy_from: gitguardian.honeytoken_event.action
