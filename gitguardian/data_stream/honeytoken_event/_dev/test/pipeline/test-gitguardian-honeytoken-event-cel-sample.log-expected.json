@@ -42,6 +42,9 @@
                     "198.51.100.42"
                 ]
             },
+            "rule": {
+                "description": "GitGuardian: Honeytoken Triggered"
+            },
             "source": {
                 "ip": "198.51.100.42"
             },
@@ -80,6 +83,9 @@
                     "triggered_at": "2024-11-18T11:30:00Z"
                 }
             },
+            "rule": {
+                "description": "GitGuardian: Honeytoken Triggered"
+            },
             "tags": [
                 "preserve_original_event"
             ]
@@ -115,6 +121,9 @@
                 "ip": [
                     "198.51.100.99"
                 ]
+            },
+            "rule": {
+                "description": "GitGuardian: Honeytoken Triggered"
             },
             "source": {
                 "ip": "198.51.100.99"

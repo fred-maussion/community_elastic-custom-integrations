@@ -69,7 +69,7 @@
         }
     },
     "rule": {
-        "description": "Generic Password",
+        "description": "GitGuardian: Generic Password",
         "name": "generic_password"
     },
     "tags": [

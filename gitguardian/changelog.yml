@@ -1,4 +1,24 @@
 # newer versions go on top
+- version: "5.1.4"
+  changes:
+    - description: >-
+        Document the bundled GitGuardian External Alerts detection rule in the README, including
+        a description of what it covers and step-by-step enablement instructions. Update
+        sample events to reflect the GitGuardian: prefix on rule.description.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/101
+- version: "5.1.3"
+  changes:
+    - description: >-
+        Prefix rule.description with GitGuardian: in internal_secret_alert, public_secret_alert, and honeytoken_event
+        ingest pipelines so Elastic Security alerts display the source-prefixed detector name instead of the bare detector name.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/100
+- version: "5.1.2"
+  changes:
+    - description: Add GitGuardian External Alerts security detection rule promoting internal_secret_alert, public_secret_alert, and honeytoken_event records as Elastic Security alerts with severity and risk score mapping. Add security capability to package manifest.
+      type: enhancement
+      link: https://github.com/fred-maussion/community_elastic-custom-integrations/issues/98
 - version: "5.1.1"
   changes:
     - description: Fix internal_secret_alert CEL program losing config state (limit, url, api_token) across want_more iterations by wrapping the returned state in state.with(), preventing "no such key limit" eval failures on the second phase of the two-phase resync loop.
