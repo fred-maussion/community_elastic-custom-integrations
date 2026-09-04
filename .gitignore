@@ -14,3 +14,5 @@ pages/public/*
 .vscode
 .env
 *.lock
+research_results*
+*/tmp/*
