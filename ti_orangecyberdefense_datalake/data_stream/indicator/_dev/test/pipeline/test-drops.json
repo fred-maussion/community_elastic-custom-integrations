@@ -1,0 +1,62 @@
+{
+  "events": [
+    {
+      "event": {"kind": "state"},
+      "message": "New cycle started"
+    },
+    {
+      "event": {
+        "kind": "enrichment",
+        "category": ["threat"],
+        "type": ["indicator"],
+        "original": "{\"type\":\"identity\",\"id\":\"identity--54737adf-74a3-3fe4-a1e7-138694561b49\",\"name\":\"Orange Cyberdefense\"}"
+      },
+      "ti_orangecyberdefense_datalake": {
+        "query_hash": "test_query_hash_1",
+        "indicator": {
+          "type": "identity",
+          "spec_version": "2.1",
+          "id": "identity--54737adf-74a3-3fe4-a1e7-138694561b49",
+          "created": "2026-05-22T10:17:56.967047Z",
+          "modified": "2026-05-22T10:17:56.967047Z",
+          "name": "Orange Cyberdefense",
+          "description": "Orange Cyberdefense is the expert cybersecurity business unit of the Orange Group, providing consulting, solutions and services to organizations around the globe.",
+          "identity_class": "organization"
+        }
+      }
+    },
+    {
+      "event": {
+        "kind": "enrichment",
+        "category": ["threat"],
+        "type": ["indicator"],
+        "original": "{\"type\":\"indicator\",\"id\":\"indicator--2cac227d-e95b-42a4-9e1c-d0456ecde7ff\",\"name\":\"+12024422253\",\"pattern\":\"[x-phone-number:international_phone_number = '+12024422253']\"}"
+      },
+      "ti_orangecyberdefense_datalake": {
+        "query_hash": "test_query_hash_1",
+        "indicator": {
+          "type": "indicator",
+          "spec_version": "2.1",
+          "id": "indicator--2cac227d-e95b-42a4-9e1c-d0456ecde7ff",
+          "created_by_ref": "identity--54737adf-74a3-3fe4-a1e7-138694561b49",
+          "created": "2026-01-01T03:33:44.000Z",
+          "modified": "2026-01-01T03:33:44.000Z",
+          "name": "+12025550142",
+          "indicator_types": ["malicious-activity"],
+          "pattern": "[x-phone-number:international_phone_number = '+12024422253']",
+          "pattern_type": "stix",
+          "pattern_version": "2.1",
+          "valid_from": "2026-01-01T03:33:44Z",
+          "external_references": [
+            {"source_name": "Orange Cyberdefense", "url": "https://datalake.cert.orangecyberdefense.com/gui/threat/d88705e5166ad2afe50c37c55b07f641", "external_id": "d88705e5166ad2afe50c37c55b07f641"}
+          ],
+          "x_datalake_atom_type": "phone_number",
+          "x_datalake_score": {},
+          "x_datalake_sources": [
+            {"source_id": "whois_lookup", "first_seen": "2026-01-01T03:33:44Z", "last_updated": "2026-01-01T03:33:44Z", "count": 1}
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+format_version: 3.5.0
+name: ti_orangecyberdefense_datalake
+title: "Orange Cyberdefense Datalake"
+version: 0.0.4 # Please also bump the version of the UA in cel.yml.hbs
+source:
+  license: "Apache-2.0"
+description: "Powered by Orange Cyberdefense Datalake platform, this threat intelligence integration provides insights on IP addresses, domains and various other indicators for threat investigations."
+type: integration
+categories:
+  - security
+  - threat_intel
+conditions:
+  kibana:
+    version: "^9.1.3"
+  elastic:
+    subscription: "basic"
+screenshots:
+  - src: /img/screenshot-dashboard1.png
+    title: Orange Cyberdefense Datalake CTI kibana dashboard - part 1
+    size: 1916x776
+    type: image/png
+  - src: /img/screenshot-dashboard2.png
+    title: Orange Cyberdefense Datalake CTI kibana dashboard - part 2
+    size: 1920x655
+    type: image/png
+icons:
+  - src: /img/orange-logo.svg
+    title: Orange logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: datalake
+    title: Orange Cyberdefense Datalake
+    description: Collect indicators from Orange Cyberdefense Datalake.
+    inputs:
+      - type: cel
+        title: Collect indicators from Datalake
+        description: Collect indicators from Orange Cyberdefense Datalake CTI.
+        vars:
+          - name: datalake_url
+            type: text
+            title: Datalake URL
+            description: >-
+              Base URL of the Datalake API. Defaults to the production environment. Override only if you have access to a different Datalake instance (e.g. pre-production). Do not include a trailing slash.
+            required: true
+            show_user: true
+            multi: false
+            default: https://datalake.cert.orangecyberdefense.com
+          - name: datalake_token
+            type: password
+            title: Datalake Long Term Token
+            description: >-
+              Datalake API token, also called long term token. Go to ["My Account"](https://datalake.cert.orangecyberdefense.com/gui/my-account) to generate one. The account must have the Datalake bulk_search permission.
+            required: true
+            show_user: true
+            secret: true
+            multi: false
+          - name: datalake_query_hashes
+            type: text
+            title: Datalake Query Hashes
+            description: >-
+              Datalake query hashes for indicators you want to import. First, you have to make a query that matches what you want to import on Datalake. Then, from the results page URL, you can get the query hash and paste it here. You can add multiple query hashes to fetch indicators from several saved queries in a single policy.
+            required: true
+            show_user: true
+            multi: true
+            default:
+              - 442ef63d19e86aecbd3eca23acd239e8
+owner:
+  github: cert-orangecyberdefense
+  type: partner

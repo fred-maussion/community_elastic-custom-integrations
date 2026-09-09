@@ -1,0 +1,143 @@
+---
+description: Pipeline for converting Orange Cyberdefense Datalake STIX output to Elastic expected format for indicators
+processors:
+  - drop:
+      description: Drop state (debug) messages unless debug is enabled
+      if: ctx.event?.kind == 'state' && (ctx.tags == null || !ctx.tags.contains('datalake_debug'))
+  - terminate:
+      description: Pass through state (debug) messages when enabled
+      if: ctx.event?.kind != 'enrichment'
+  - drop:
+      description: Drop non-indicator STIX objects
+      if: ctx.ti_orangecyberdefense_datalake.indicator.type != 'indicator'
+  - grok:
+      description: Extract STIX indicator type from pattern
+      field: ti_orangecyberdefense_datalake.indicator.pattern
+      patterns:
+        - '\[%{DATA:threat.indicator.type}:'
+  - drop:
+      description: Drops unsupported indicator types
+      if: '![''domain-name'', ''email-addr'', ''file'', ''ipv4-addr'', ''ipv6-addr'', ''url''].contains(ctx.threat.indicator.type)'
+  - set:
+      field: threat.feed
+      value:
+        name: Orange Cyberdefense Datalake CTI
+        reference: https://datalake.cert.orangecyberdefense.com/
+  - append:
+      field: threat.indicator.id
+      value: '{{{ti_orangecyberdefense_datalake.indicator.id}}}'
+  - set:
+      copy_from: ti_orangecyberdefense_datalake.indicator.name
+      field: threat.indicator.name
+  - set:
+      copy_from: ti_orangecyberdefense_datalake.indicator.created
+      field: threat.indicator.first_seen
+  - set:
+      copy_from: ti_orangecyberdefense_datalake.indicator.modified
+      field: threat.indicator.last_seen
+  - set:
+      copy_from: ti_orangecyberdefense_datalake.indicator.modified
+      field: threat.indicator.modified_at
+  - set:
+      copy_from: ti_orangecyberdefense_datalake.indicator.name
+      field: threat.indicator.ip
+      if: ctx.threat.indicator.type == 'ipv4-addr' || ctx.threat.indicator.type == 'ipv6-addr'
+  - set:
+      copy_from: ti_orangecyberdefense_datalake.indicator.name
+      field: threat.indicator.email.address
+      if: ctx.threat.indicator.type == 'email-addr'
+  - set:
+      copy_from: ti_orangecyberdefense_datalake.indicator.name
+      field: threat.indicator.url.domain
+      if: ctx.threat.indicator.type == 'domain-name'
+  - grok:
+      description: Extract MD5 hash from STIX file pattern
+      field: ti_orangecyberdefense_datalake.indicator.pattern
+      patterns:
+        - "file:hashes\\.'?MD5'?%{SPACE}=%{SPACE}'%{DATA:threat.indicator.file.hash.md5}'"
+      if: ctx.threat.indicator.type == 'file'
+      ignore_failure: true
+  - grok:
+      description: Extract SHA-1 hash from STIX file pattern
+      field: ti_orangecyberdefense_datalake.indicator.pattern
+      patterns:
+        - "file:hashes\\.'?SHA-?1'?%{SPACE}=%{SPACE}'%{DATA:threat.indicator.file.hash.sha1}'"
+      if: ctx.threat.indicator.type == 'file'
+      ignore_failure: true
+  - grok:
+      description: Extract SHA-256 hash from STIX file pattern
+      field: ti_orangecyberdefense_datalake.indicator.pattern
+      patterns:
+        - "file:hashes\\.'?SHA-?256'?%{SPACE}=%{SPACE}'%{DATA:threat.indicator.file.hash.sha256}'"
+      if: ctx.threat.indicator.type == 'file'
+      ignore_failure: true
+  - grok:
+      description: Extract SHA-512 hash from STIX file pattern
+      field: ti_orangecyberdefense_datalake.indicator.pattern
+      patterns:
+        - "file:hashes\\.'?SHA-?512'?%{SPACE}=%{SPACE}'%{DATA:threat.indicator.file.hash.sha512}'"
+      if: ctx.threat.indicator.type == 'file'
+      ignore_failure: true
+  - uri_parts:
+      field: ti_orangecyberdefense_datalake.indicator.name
+      if: ctx.threat.indicator.type == 'url'
+      target_field: threat.indicator.url
+  - set:
+      copy_from: threat.indicator.url.original
+      field: threat.indicator.url.full
+      if: ctx.threat.indicator.type == 'url'
+  - script:
+      description: Set direct link to Datalake
+      source: "def refs = ctx?.ti_orangecyberdefense_datalake?.indicator?.external_references;\nif (refs != null && refs.size() > 0 && refs[0]?.url != null && refs[0].url.contains('/gui/threat/')) {\n  ctx.threat.indicator.reference = refs[0].url;\n}"
+  - script:
+      description: Set _computed.score_max
+      source: |
+        if (ctx.ti_orangecyberdefense_datalake?.indicator?.x_datalake_score != null && ctx.ti_orangecyberdefense_datalake.indicator.x_datalake_score.size() > 0) {
+          int score_max = 0;
+          for (v in ctx.ti_orangecyberdefense_datalake?.indicator?.x_datalake_score?.values()) {
+            if (v > score_max) {
+              score_max = v;
+            }
+          }
+          ctx.ti_orangecyberdefense_datalake.indicator._computed = ['score_max': score_max];
+        }
+  - script:
+      description: Set _computed.sources
+      source: |
+        def indicator = ctx.ti_orangecyberdefense_datalake?.indicator;
+        def sources = new HashSet();
+        for (s in ['x_datalake_sources', 'x_datalake_sighting_sources', 'x_datalake_whitelist_sources']) {
+          for (i in indicator?.get(s) ?: []) {
+            if (i?.source_id != null) sources.add(i.source_id);
+          }
+        }
+        if (!sources.isEmpty()) {
+          indicator._computed = indicator._computed ?: [:];
+          indicator._computed.sources = new ArrayList(sources);
+        }
+  - script:
+      description: Set threat.indicator.confidence from datalake_confidence:<value> tag, then strip the tag
+      source: |
+        if (ctx.tags == null) { return; }
+        def prefix = 'datalake_confidence:';
+        for (t in ctx.tags) {
+          if (t != null && t.startsWith(prefix)) {
+            ctx.threat.indicator.confidence = t.substring(prefix.length());
+            break;
+          }
+        }
+        ctx.tags.removeIf(t -> t != null && t.startsWith(prefix));
+on_failure:
+  - set:
+      field: event.kind
+      value: pipeline_error
+  - append:
+      field: tags
+      value: preserve_original_event
+      allow_duplicates: false
+  - append:
+      field: error.message
+      value: >-
+        Processor '{{{ _ingest.on_failure_processor_type }}}'
+        {{{#_ingest.on_failure_processor_tag}}}with tag '{{{ _ingest.on_failure_processor_tag }}}'
+        {{{/_ingest.on_failure_processor_tag}}}failed with message '{{{ _ingest.on_failure_message }}}'

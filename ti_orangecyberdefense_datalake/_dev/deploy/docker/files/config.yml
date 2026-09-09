@@ -1,0 +1,58 @@
+rules:
+  # POST /api/v3/mrti/bulk-search/ — Create a bulk search task
+  - path: /api/v3/mrti/bulk-search/
+    methods: ["POST"]
+    request_headers:
+      Authorization: "Token test_datalake_token"
+      Content-Type: application/json
+    request_body: '{"for_stix_export":true,"indicators_only":true,"query_hash":"test_query_hash_1"}'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type: application/json
+        body: |-
+          {"task_uuid": "9e4d249f-d432-4265-b412-f9bf0058814a"}
+  - path: /api/v3/mrti/bulk-search/
+    methods: ["POST"]
+    request_headers:
+      Authorization: "Token test_datalake_token"
+      Content-Type: application/json
+    request_body: '{"for_stix_export":true,"indicators_only":true,"query_hash":"test_query_hash_2"}'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type: application/json
+        body: |-
+          {"task_uuid": "3912b47e-002f-4dae-98df-2196e967ed17"}
+
+  # GET /api/v3/mrti/bulk-search/task/{uuid} — Poll for results (STIX ZIP)
+  - path: /api/v3/mrti/bulk-search/task/9e4d249f-d432-4265-b412-f9bf0058814a
+    methods: ["GET"]
+    request_headers:
+      Authorization: "Token test_datalake_token"
+    responses:
+      - status_code: 202
+        headers:
+          Content-Type: application/json
+        body: |-
+          {"message":"Not ready yet"}
+      - status_code: 202
+        headers:
+          Content-Type: application/json
+        body: |-
+          {"message":"Not ready yet"}
+      - status_code: 200
+        headers:
+          Content-Type: application/zip
+        body: |
+          {{file "/files/sample_indicators_1.zip"}}
+  - path: /api/v3/mrti/bulk-search/task/3912b47e-002f-4dae-98df-2196e967ed17
+    methods: ["GET"]
+    request_headers:
+      Authorization: "Token test_datalake_token"
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type: application/zip
+        body: |
+          {{file "/files/sample_indicators_2.zip"}}

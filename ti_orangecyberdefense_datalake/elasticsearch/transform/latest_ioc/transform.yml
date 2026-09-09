@@ -1,0 +1,39 @@
+source:
+  index:
+    - "logs-ti_orangecyberdefense_datalake.indicator-*"
+  query:
+    bool:
+      filter:
+        term:
+          event.type: indicator
+# The version suffix on the dest.index should be incremented if a breaking
+# change is made to the index mapping. You must also bump the
+# fleet_transform_version for any change to this transform configuration to
+# take effect. The old destination index is not automatically removed. We are
+# dependent on https://github.com/elastic/package-spec/issues/523 to give us
+# that ability in order to prevent having duplicate IoC data and prevent query
+# time field type conflicts.
+dest:
+  index: "logs-ti_orangecyberdefense_datalake_latest.dest_indicator-1"
+  aliases:
+    - alias: "logs-ti_orangecyberdefense_datalake_latest.indicator"
+      move_on_creation: true
+latest:
+  unique_key:
+    - threat.indicator.id
+  sort: "threat.indicator.modified_at"
+description: Latest Orange Cyberdefense Datalake indicator data
+frequency: 30s
+sync:
+  time:
+    field: "event.ingested"
+    delay: 120s
+retention_policy:
+  time:
+    field: threat.indicator.modified_at
+    max_age: 30d
+_meta:
+  managed: true
+  fleet_transform_version: 0.6.0
+settings:
+  unattended: true

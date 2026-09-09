@@ -1,0 +1,17 @@
+service: datalake_stub
+input: cel
+vars:
+  datalake_url: http://{{Hostname}}:{{Port}}
+  datalake_token: test_datalake_token
+  datalake_query_hashes:
+    - test_query_hash_1
+  rate_limit: "1"
+  rate_limit_burst: 1
+data_stream:
+  vars:
+    interval: 5s
+assert:
+  hit_count: 8
+  fields_present:
+    - threat.indicator.name
+    - ti_orangecyberdefense_datalake.query_hash

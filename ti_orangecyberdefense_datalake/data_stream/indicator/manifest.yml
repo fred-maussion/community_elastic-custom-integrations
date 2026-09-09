@@ -1,0 +1,112 @@
+title: "Indicator"
+type: logs
+streams:
+  - input: cel
+    title: Indicator
+    description: Collect indicators from Orange Cyberdefense Datalake CTI.
+    template_path: cel.yml.hbs
+    vars:
+      - name: tags
+        type: text
+        title: Tags
+        default:
+          - forwarded
+          - datalake-indicator
+        multi: true
+        required: true
+        show_user: true
+      - name: interval
+        type: text
+        title: Interval
+        description: Duration between requests to the Orange Cyberdefense Datalake. NOTE:- Supported units for this parameter are h/m/s. Make sure to adjust the time filter of your Datalake query accordingly.
+        default: 15m
+        multi: false
+        required: true
+        show_user: true
+      - name: max_executions
+        type: integer
+        title: Maximum executions
+        description: The maximum number of pages to fetch before waiting for an interval to pass.
+        default: 1000
+        multi: false
+        required: true
+        show_user: false
+      - name: http_client_timeout
+        type: text
+        title: HTTP Client Timeout
+        description: Duration before declaring that the HTTP client connection has timed out. NOTE:- Valid time units are ns, us, ms, s, m, h.
+        default: 30s
+        multi: false
+        required: true
+        show_user: false
+      - name: preserve_original_event
+        type: bool
+        title: Preserve original event
+        description: Preserves a raw copy of the original indicator data, added to the field `event.original`.
+        default: false
+        multi: false
+        required: true
+        show_user: false
+      - name: debug
+        type: bool
+        title: Enable debug messages
+        description: Emit internal state messages for troubleshooting. When disabled, these are silently dropped at the ingest pipeline. Turn off for production.
+        default: false
+        multi: false
+        required: true
+        show_user: true
+      - name: confidence
+        type: select
+        title: Indicator confidence
+        description: >-
+          Confidence assigned to every ingested indicator, see also ([STIX 2.1 §10.4](https://docs.oasis-open.org/cti/stix/v2.1/cs01/stix-v2.1-cs01.html#_1v6elyto0uqg)).
+        default: "Not Specified"
+        multi: false
+        required: true
+        show_user: true
+        options:
+          - value: "Not Specified"
+            text: "Not Specified"
+          - value: "None"
+            text: "None"
+          - value: "Low"
+            text: "Low"
+          - value: "Medium"
+            text: "Medium"
+          - value: "High"
+            text: "High"
+      - name: enable_request_tracer
+        type: bool
+        title: Enable request tracing
+        description: >-
+          The request tracer logs requests and responses to the agent's local file-system for debugging configurations. Enabling this request tracing compromises security and should only be used for debugging. See [documentation](https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-input-httpjson.html#_request_tracer_filename) for details.
+        multi: false
+        required: false
+        show_user: false
+      - name: processors
+        type: yaml
+        title: Processors
+        description: >-
+          Processors are used to reduce the number of fields in the exported event or to enhance the event with metadata. This executes in the agent before the logs are parsed. See [Processors](https://www.elastic.co/guide/en/beats/filebeat/current/filtering-and-enhancing-data.html) for details.
+        multi: false
+        required: false
+        show_user: false
+      - name: rate_limit
+        type: text
+        title: Rate Limit
+        description: >-
+          The maximum Datalake API request rate, in requests per second (e.g. 0.5 reqs/sec for 30 reqs/min). Look out for HTTP 429 errors when raising this value.
+        multi: false
+        required: false
+        show_user: false
+        default: "0.1"
+      - name: rate_limit_burst
+        type: integer
+        title: Rate Limit Burst
+        description: >-
+          The maximum burst of requests that can be made before rate limiting kicks in. This allows short bursts of requests while still
+          respecting the overall rate limit. Default is 1 to be conservative and avoid throttling.
+        multi: false
+        required: false
+        show_user: false
+        default: "1"
