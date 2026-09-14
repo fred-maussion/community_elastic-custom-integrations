@@ -177,7 +177,5 @@ The `task` data stream collects async operation records from the OVHcloud Manage
 
 
 
-### Data streams using ILM policies
-
 
 
