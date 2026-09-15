@@ -1,0 +1,14 @@
+services:
+  ovh_compute_instance:
+    image: docker.elastic.co/observability/stream:v0.22.0
+    hostname: ovh_compute_instance
+    ports:
+      - 8090
+    volumes:
+      - ./files:/files:ro
+    environment:
+      PORT: '8090'
+    command:
+      - http-server
+      - --addr=:8090
+      - --config=/files/config-instance.yml

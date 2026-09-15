@@ -1,0 +1,69 @@
+format_version: "3.4.2"
+name: ovh_compute
+title: "OVHcloud Public Cloud Compute"
+version: 0.1.0
+source:
+  license: "Apache-2.0"
+description: "Monitor OVHcloud Public Cloud virtual machine instances via the OVHcloud REST API."
+type: integration
+categories:
+  - security
+  - infrastructure
+conditions:
+  kibana:
+    version: "^8.19.0 || ^9.1.0"
+  elastic:
+    subscription: "basic"
+screenshots: []
+icons:
+  - src: /img/ovh-logo.svg
+    title: OVHcloud logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: ovh_compute
+    title: OVHcloud Public Cloud Compute
+    description: Collect virtual machine instance state data from OVHcloud Public Cloud Compute
+    inputs:
+      - type: cel
+        title: Collect OVHcloud Public Cloud Compute data via API
+        description: Collecting instance state data using the OVHcloud REST API v2 (OAuth2)
+        vars:
+          - name: url
+            type: url
+            title: OVHcloud API Base URL
+            description: >-
+              Regional OVHcloud API base URL (without version path). EU: https://eu.api.ovh.com CA: https://ca.api.ovh.com US: https://api.us.ovhcloud.com
+            default: https://eu.api.ovh.com
+            show_user: true
+            required: true
+          - name: service_name
+            type: text
+            title: OVHcloud Project ID
+            description: Public Cloud project ID (serviceName) from the OVHcloud Control Panel.
+            show_user: true
+            required: true
+          - name: client_id
+            type: text
+            title: OAuth2 Client ID
+            description: OVHcloud service account client ID (from IAM → Service Accounts).
+            show_user: true
+            required: true
+          - name: client_secret
+            type: password
+            title: OAuth2 Client Secret
+            description: OVHcloud service account client secret.
+            show_user: true
+            required: true
+            secret: true
+          - name: token_url
+            type: url
+            title: OAuth2 Token URL
+            description: >-
+              Regional OAuth2 token endpoint. EU: https://www.ovh.com/auth/oauth2/token CA: https://ca.ovh.com/auth/oauth2/token US: https://us.ovhcloud.com/auth/oauth2/token
+            default: https://www.ovh.com/auth/oauth2/token
+            show_user: true
+            required: true
+owner:
+  github: fred-maussion/community_elastic-custom-integrations
+  type: community

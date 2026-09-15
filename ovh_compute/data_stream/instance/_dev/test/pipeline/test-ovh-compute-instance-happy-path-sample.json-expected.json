@@ -1,0 +1,93 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2024-01-13T06:05:00.000Z",
+            "cloud": {
+                "account": {
+                    "id": "aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb"
+                },
+                "availability_zone": "nova",
+                "instance": {
+                    "id": "eeeeeeee-0001-0001-0001-000000000001",
+                    "name": "instance-alpha-1"
+                },
+                "machine": {
+                    "type": "d2-2"
+                },
+                "region": "GRA9"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "host"
+                ],
+                "created": "2024-01-13T06:00:00.000Z",
+                "kind": "state",
+                "original": "{\"id\":\"eeeeeeee-0001-0001-0001-000000000001\",\"checksum\":\"c1a\",\"createdAt\":\"2024-01-13T06:00:00Z\",\"updatedAt\":\"2024-01-13T06:05:00Z\",\"resourceStatus\":\"READY\",\"currentTasks\":[],\"targetSpec\":{\"powerState\":\"active\"},\"currentState\":{\"name\":\"instance-alpha-1\",\"flavor\":{\"id\":\"d2-2\",\"name\":\"d2-2\",\"vcpus\":2,\"ram\":2000,\"disk\":40,\"swap\":0,\"ephemeral\":0},\"image\":{\"id\":\"aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb\",\"name\":\"Ubuntu 22.04\",\"size\":10,\"status\":\"active\",\"deprecated\":false},\"location\":{\"region\":\"GRA9\",\"availabilityZone\":\"nova\"},\"powerState\":\"active\",\"networks\":[{\"id\":\"net-0001\",\"addresses\":[{\"ip\":\"203.0.113.10\",\"mac\":\"fa:16:3e:00:00:01\",\"type\":\"floating\"},{\"ip\":\"198.51.100.5\",\"mac\":\"fa:16:3e:00:00:02\",\"type\":\"fixed\"}]}],\"volumes\":[{\"id\":\"vvvvvvvv-1111-1111-1111-000000000001\"},{\"id\":\"vvvvvvvv-2222-2222-2222-000000000002\"}],\"securityGroups\":[{\"id\":\"sgsgsgsg-0001-0001-0001-000000000001\"}],\"locked\":false,\"sshKeyName\":\"my-key\",\"hostId\":\"hhhhhhhh-host-host-host-000000000001\",\"projectId\":\"aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb\",\"userId\":\"uuuuuuuu-0001-0001-0001-000000000001\"}}",
+                "type": [
+                    "info"
+                ]
+            },
+            "host": {
+                "id": "hhhhhhhh-host-host-host-000000000001",
+                "ip": [
+                    "203.0.113.10",
+                    "198.51.100.5"
+                ],
+                "mac": [
+                    "FA-16-3E-00-00-01",
+                    "FA-16-3E-00-00-02"
+                ]
+            },
+            "ovh_compute": {
+                "instance": {
+                    "checksum": "c1a",
+                    "current_tasks": [],
+                    "flavor": {
+                        "disk_gb": 40,
+                        "ephemeral_gb": 0,
+                        "id": "d2-2",
+                        "ram_mb": 2000,
+                        "swap_gb": 0,
+                        "vcpus": 2
+                    },
+                    "image": {
+                        "deprecated": false,
+                        "id": "aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb",
+                        "name": "Ubuntu 22.04",
+                        "status": "active"
+                    },
+                    "locked": false,
+                    "power_state": "active",
+                    "resource_status": "READY",
+                    "security_group_ids": [
+                        "sgsgsgsg-0001-0001-0001-000000000001"
+                    ],
+                    "ssh_key_name": "my-key",
+                    "target_power_state": "active",
+                    "volume_ids": [
+                        "vvvvvvvv-1111-1111-1111-000000000001",
+                        "vvvvvvvv-2222-2222-2222-000000000002"
+                    ]
+                }
+            },
+            "related": {
+                "ip": [
+                    "203.0.113.10",
+                    "198.51.100.5"
+                ],
+                "user": [
+                    "uuuuuuuu-0001-0001-0001-000000000001"
+                ]
+            },
+            "tags": [
+                "preserve_original_event"
+            ],
+            "user": {
+                "id": "uuuuuuuu-0001-0001-0001-000000000001"
+            }
+        }
+    ]
+}

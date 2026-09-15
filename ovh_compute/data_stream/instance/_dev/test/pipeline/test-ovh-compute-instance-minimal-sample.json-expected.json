@@ -1,0 +1,64 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2024-03-01T12:00:00.000Z",
+            "cloud": {
+                "account": {
+                    "id": "ccccdddd-eeee-ffff-0000-111122223333"
+                },
+                "availability_zone": "nova",
+                "instance": {
+                    "id": "ffffffff-0002-0002-0002-000000000002",
+                    "name": "instance-beta-1"
+                },
+                "machine": {
+                    "type": "b2-7"
+                },
+                "region": "SBG5"
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "host"
+                ],
+                "created": "2024-03-01T11:00:00.000Z",
+                "kind": "state",
+                "original": "{\"id\":\"ffffffff-0002-0002-0002-000000000002\",\"checksum\":\"c2b\",\"createdAt\":\"2024-03-01T11:00:00Z\",\"updatedAt\":\"2024-03-01T12:00:00Z\",\"resourceStatus\":\"CREATING\",\"currentTasks\":[\"task_create\"],\"targetSpec\":{\"powerState\":\"active\"},\"currentState\":{\"name\":\"instance-beta-1\",\"flavor\":{\"id\":\"b2-7\",\"name\":\"b2-7\",\"vcpus\":2,\"ram\":7000,\"disk\":50,\"swap\":0,\"ephemeral\":0},\"image\":{\"id\":\"bbbbbbbb-1111-1111-1111-000000000001\",\"name\":\"Debian 12\",\"size\":5,\"status\":\"active\",\"deprecated\":false},\"location\":{\"region\":\"SBG5\",\"availabilityZone\":\"nova\"},\"powerState\":\"shutoff\",\"networks\":[],\"volumes\":[],\"securityGroups\":[],\"locked\":true,\"projectId\":\"ccccdddd-eeee-ffff-0000-111122223333\"}}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh_compute": {
+                "instance": {
+                    "checksum": "c2b",
+                    "current_tasks": [
+                        "task_create"
+                    ],
+                    "flavor": {
+                        "disk_gb": 50,
+                        "ephemeral_gb": 0,
+                        "id": "b2-7",
+                        "ram_mb": 7000,
+                        "swap_gb": 0,
+                        "vcpus": 2
+                    },
+                    "image": {
+                        "deprecated": false,
+                        "id": "bbbbbbbb-1111-1111-1111-000000000001",
+                        "name": "Debian 12",
+                        "status": "active"
+                    },
+                    "locked": true,
+                    "power_state": "shutoff",
+                    "resource_status": "CREATING",
+                    "target_power_state": "active"
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,97 @@
+interval: {{interval}}
+resource.tracer:
+  enabled: {{enable_request_tracer}}
+  filename: "../../logs/cel/http-request-trace-*.ndjson"
+  maxbackups: 5
+{{#if proxy_url}}
+resource.proxy_url: {{proxy_url}}
+{{/if}}
+{{#if ssl}}
+resource.ssl: {{ssl}}
+{{/if}}
+{{#if http_client_timeout}}
+resource.timeout: {{http_client_timeout}}
+{{/if}}
+auth.oauth2:
+  client.id: {{client_id}}
+  client.secret: {{client_secret}}
+  token_url: {{token_url}}
+  scopes:
+    - all
+resource.url: {{url}}
+state:
+  service_name: {{service_name}}
+redact:
+  fields: ~
+program: |-
+  state.?cursor.next_page.orValue("").as(next_page,
+    state.with(
+      request("GET", string(state.url).trim_right("/") + "/v2/publicCloud/project/" + state.service_name + "/compute/instance").with(
+        {
+          "Header": {
+            "X-Pagination-Size": ["100"],
+            ?"X-Pagination-Cursor": (next_page != "") ?
+              optional.of([next_page])
+            :
+              optional.none(),
+          },
+        }
+      ).do_request().as(resp,
+        (resp.StatusCode == 200) ?
+          (
+            ("X-Pagination-Cursor-Next" in resp.Header) ?
+              resp.Header["X-Pagination-Cursor-Next"].join(",")
+            :
+              ""
+          ).as(
+            next_cursor,
+            {
+              "events": resp.Body.decode_json().map(e, {"message": e.encode_json()}),
+              "cursor": {"next_page": next_cursor},
+              "want_more": next_cursor != "",
+            }
+          )
+        :
+          (
+            (resp.StatusCode == 429 || resp.StatusCode >= 500) ?
+              {
+                "events": {
+                  "error": {
+                    "code": string(resp.StatusCode),
+                    "id": string(resp.Status),
+                    "message": "GET /v2/publicCloud/project/" + state.service_name + "/compute/instance: " + ((string(resp.Body) != "") ? string(resp.Body) : string(resp.Status)),
+                  },
+                },
+                "want_more": false,
+              }
+            :
+              {
+                "events": [
+                  {
+                    "error": {
+                      "code": string(resp.StatusCode),
+                      "id": string(resp.Status),
+                      "message": "GET /v2/publicCloud/project/" + state.service_name + "/compute/instance: " + ((string(resp.Body) != "") ? string(resp.Body) : string(resp.Status)),
+                    },
+                  }
+                ],
+                "want_more": false,
+              }
+          )
+      )
+    )
+  )
+tags:
+{{#if preserve_original_event}}
+  - preserve_original_event
+{{/if}}
+{{#each tags as |tag|}}
+  - {{tag}}
+{{/each}}
+{{#contains "forwarded" tags}}
+publisher_pipeline.disable_host: true
+{{/contains}}
+{{#if processors}}
+processors:
+{{processors}}
+{{/if}}

@@ -1,0 +1,364 @@
+---
+description: Parse OVHcloud Public Cloud Compute instance state events.
+processors:
+  - set:
+      field: ecs.version
+      tag: set_ecs_version
+      value: '9.3.0'
+
+  # CEL input only — remove Agentless metadata fields
+  - remove:
+      field:
+        - organization
+        - division
+        - team
+      ignore_missing: true
+      if: ctx.organization instanceof String && ctx.division instanceof String && ctx.team instanceof String
+      tag: remove_agentless_tags
+      description: >-
+        Removes the fields added by Agentless as metadata,
+        as they can collide with ECS fields.
+  - terminate:
+      tag: data_collection_error
+      if: ctx.error?.message != null && ctx.message == null && ctx.event?.original == null
+      description: error message set and no data to process.
+
+  # message → event.original (JSE00001)
+  - rename:
+      field: message
+      tag: rename_message_to_event_original
+      target_field: event.original
+      ignore_missing: true
+      description: >-
+        Renames the original `message` field to `event.original` to store a copy of the
+        original message. The `event.original` field is not touched if the document already
+        has one; it may happen when Logstash sends the document.
+      if: ctx.event?.original == null
+  - remove:
+      field: message
+      tag: remove_message
+      ignore_missing: true
+      description: The `message` field is no longer required if the document has an `event.original` field.
+      if: ctx.event?.original != null
+
+  # Parse JSON payload
+  - json:
+      field: event.original
+      target_field: json
+      tag: parse_json
+      if: ctx.event?.original != null
+      on_failure:
+        - append:
+            field: error.message
+            value: 'parse_json: {{{ _ingest.on_failure_message }}}'
+
+  # Timestamps
+  - date:
+      field: json.updatedAt
+      target_field: '@timestamp'
+      formats:
+        - ISO8601
+      tag: parse_timestamp
+      if: ctx.json?.updatedAt != null
+      on_failure:
+        - append:
+            field: error.message
+            value: 'parse_timestamp: {{{ _ingest.on_failure_message }}}'
+
+  - date:
+      field: json.createdAt
+      target_field: event.created
+      formats:
+        - ISO8601
+      tag: parse_event_created
+      if: ctx.json?.createdAt != null
+      on_failure:
+        - append:
+            field: error.message
+            value: 'parse_event_created: {{{ _ingest.on_failure_message }}}'
+
+  # ECS cloud fields
+  - rename:
+      field: json.id
+      target_field: cloud.instance.id
+      tag: rename_cloud_instance_id
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.name
+      target_field: cloud.instance.name
+      tag: rename_cloud_instance_name
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.location.region
+      target_field: cloud.region
+      tag: rename_cloud_region
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.location.availabilityZone
+      target_field: cloud.availability_zone
+      tag: rename_cloud_az
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.flavor.name
+      target_field: cloud.machine.type
+      tag: rename_cloud_machine_type
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.projectId
+      target_field: cloud.account.id
+      tag: rename_cloud_account_id
+      ignore_missing: true
+
+  # ECS host fields
+  - rename:
+      field: json.currentState.hostId
+      target_field: host.id
+      tag: rename_host_id
+      ignore_missing: true
+
+  # Extract host.ip and host.mac from nested networks[].addresses[] structure.
+  # A script is required here because foreach does not support two levels of nesting.
+  - script:
+      lang: painless
+      tag: extract_network_addresses
+      description: >-
+        Extract host.ip and host.mac arrays from the nested
+        currentState.networks[].addresses[] structure. MAC addresses are
+        converted from colon notation (aa:bb:cc) to hyphen notation (aa-bb-cc)
+        to comply with ECS formatting rules.
+      if: ctx.json?.currentState?.networks instanceof List
+      source: |-
+        def ips = new ArrayList();
+        def macs = new ArrayList();
+        for (def net : ctx.json.currentState.networks) {
+          if (net.addresses instanceof List) {
+            for (def addr : net.addresses) {
+              if (addr.ip != null) {
+                ips.add(addr.ip);
+              }
+              if (addr.mac != null) {
+                macs.add(addr.mac.replace(':', '-').toUpperCase());
+              }
+            }
+          }
+        }
+        if (!ips.isEmpty()) {
+          if (ctx.host == null) { ctx.host = new HashMap(); }
+          ctx.host.ip = ips;
+        }
+        if (!macs.isEmpty()) {
+          if (ctx.host == null) { ctx.host = new HashMap(); }
+          ctx.host.mac = macs;
+        }
+
+  # ECS user field
+  - rename:
+      field: json.currentState.userId
+      target_field: user.id
+      tag: rename_user_id
+      ignore_missing: true
+
+  # ECS categorization (constant — state snapshot of a host)
+  - set:
+      field: event.kind
+      tag: set_event_kind
+      value: state
+  - append:
+      field: event.category
+      tag: append_event_category_host
+      value: host
+      allow_duplicates: false
+  - append:
+      field: event.type
+      tag: append_event_type_info
+      value: info
+      allow_duplicates: false
+
+  # Custom namespace — top-level instance fields
+  - rename:
+      field: json.resourceStatus
+      target_field: ovh_compute.instance.resource_status
+      tag: rename_resource_status
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.powerState
+      target_field: ovh_compute.instance.power_state
+      tag: rename_power_state
+      ignore_missing: true
+
+  - rename:
+      field: json.targetSpec.powerState
+      target_field: ovh_compute.instance.target_power_state
+      tag: rename_target_power_state
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.locked
+      target_field: ovh_compute.instance.locked
+      tag: rename_locked
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.sshKeyName
+      target_field: ovh_compute.instance.ssh_key_name
+      tag: rename_ssh_key_name
+      ignore_missing: true
+
+  - rename:
+      field: json.checksum
+      target_field: ovh_compute.instance.checksum
+      tag: rename_checksum
+      ignore_missing: true
+
+  - rename:
+      field: json.currentTasks
+      target_field: ovh_compute.instance.current_tasks
+      tag: rename_current_tasks
+      ignore_missing: true
+
+  # Security group IDs — extract from array of objects
+  - foreach:
+      field: json.currentState.securityGroups
+      tag: foreach_security_group_ids
+      if: ctx.json?.currentState?.securityGroups instanceof List
+      ignore_missing: true
+      processor:
+        append:
+          tag: append_security_group_id
+          field: ovh_compute.instance.security_group_ids
+          value: '{{{_ingest._value.id}}}'
+          allow_duplicates: false
+
+  # Volume IDs — extract from array of objects
+  - foreach:
+      field: json.currentState.volumes
+      tag: foreach_volume_ids
+      if: ctx.json?.currentState?.volumes instanceof List
+      ignore_missing: true
+      processor:
+        append:
+          tag: append_volume_id
+          field: ovh_compute.instance.volume_ids
+          value: '{{{_ingest._value.id}}}'
+          allow_duplicates: false
+
+  # Custom namespace — flavor fields
+  - rename:
+      field: json.currentState.flavor.id
+      target_field: ovh_compute.instance.flavor.id
+      tag: rename_flavor_id
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.flavor.vcpus
+      target_field: ovh_compute.instance.flavor.vcpus
+      tag: rename_flavor_vcpus
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.flavor.ram
+      target_field: ovh_compute.instance.flavor.ram_mb
+      tag: rename_flavor_ram
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.flavor.disk
+      target_field: ovh_compute.instance.flavor.disk_gb
+      tag: rename_flavor_disk
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.flavor.swap
+      target_field: ovh_compute.instance.flavor.swap_gb
+      tag: rename_flavor_swap
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.flavor.ephemeral
+      target_field: ovh_compute.instance.flavor.ephemeral_gb
+      tag: rename_flavor_ephemeral
+      ignore_missing: true
+
+  # Custom namespace — image fields
+  - rename:
+      field: json.currentState.image.id
+      target_field: ovh_compute.instance.image.id
+      tag: rename_image_id
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.image.name
+      target_field: ovh_compute.instance.image.name
+      tag: rename_image_name
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.image.status
+      target_field: ovh_compute.instance.image.status
+      tag: rename_image_status
+      ignore_missing: true
+
+  - rename:
+      field: json.currentState.image.deprecated
+      target_field: ovh_compute.instance.image.deprecated
+      tag: rename_image_deprecated
+      ignore_missing: true
+
+  # related.ip — one append per element in host.ip
+  - foreach:
+      field: host.ip
+      tag: foreach_append_related_ip
+      if: ctx.host?.ip instanceof List
+      ignore_missing: true
+      processor:
+        append:
+          tag: append_related_ip
+          field: related.ip
+          value: '{{{_ingest._value}}}'
+          allow_duplicates: false
+
+  # related.user
+  - append:
+      field: related.user
+      tag: append_related_user
+      value: '{{{user.id}}}'
+      allow_duplicates: false
+      if: ctx.user?.id != null
+
+  # Cleanup — remove temporary json namespace
+  - remove:
+      field: json
+      tag: cleanup_json
+      ignore_missing: true
+
+  # Tag document for triage when collector-level errors occurred
+  - append:
+      field: tags
+      tag: append_preserve_original_event_on_error
+      value: preserve_original_event
+      allow_duplicates: false
+      if: ctx.error?.message != null
+
+on_failure:
+  - append:
+      field: error.message
+      tag: on_failure_append_error_message
+      value: >-
+        Processor '{{{ _ingest.on_failure_processor_type }}}'
+        {{{#_ingest.on_failure_processor_tag}}}with tag '{{{ _ingest.on_failure_processor_tag }}}'
+        {{{/_ingest.on_failure_processor_tag}}}failed with message '{{{ _ingest.on_failure_message }}}'
+  - set:
+      field: event.kind
+      tag: set_pipeline_error_to_event_kind
+      value: pipeline_error
+  - append:
+      field: tags
+      tag: on_failure_append_preserve_original_event
+      value: preserve_original_event
+      allow_duplicates: false

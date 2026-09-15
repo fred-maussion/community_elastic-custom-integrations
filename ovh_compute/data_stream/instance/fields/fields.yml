@@ -1,0 +1,72 @@
+- name: ovh_compute.instance
+  type: group
+  fields:
+    - name: resource_status
+      type: keyword
+      description: >-
+        Overall resource lifecycle status. Values: CREATING, UPDATING, DELETING, READY, ERROR, OUT_OF_SYNC.
+    - name: power_state
+      type: keyword
+      description: Current power state of the instance (e.g. active, shutoff, shelved).
+    - name: target_power_state
+      type: keyword
+      description: Requested target power state.
+    - name: locked
+      type: boolean
+      description: Whether the instance is locked (prevents modifications).
+    - name: ssh_key_name
+      type: keyword
+      description: Name of the SSH key pair associated with the instance.
+    - name: checksum
+      type: keyword
+      description: Optimistic concurrency token for the instance resource.
+    - name: current_tasks
+      type: keyword
+      description: Names of in-progress tasks on the instance.
+    - name: security_group_ids
+      type: keyword
+      description: UUIDs of security groups attached to the instance.
+    - name: volume_ids
+      type: keyword
+      description: UUIDs of volumes attached to the instance.
+    - name: flavor
+      type: group
+      fields:
+        - name: id
+          type: keyword
+          description: Flavor UUID or name identifier.
+        - name: vcpus
+          type: long
+          description: Number of virtual CPUs.
+          metric_type: gauge
+        - name: ram_mb
+          type: long
+          description: RAM in megabytes.
+          metric_type: gauge
+        - name: disk_gb
+          type: long
+          description: Root disk size in gigabytes.
+          metric_type: gauge
+        - name: swap_gb
+          type: long
+          description: Swap disk size in gigabytes.
+          metric_type: gauge
+        - name: ephemeral_gb
+          type: long
+          description: Ephemeral disk size in gigabytes.
+          metric_type: gauge
+    - name: image
+      type: group
+      fields:
+        - name: id
+          type: keyword
+          description: Boot image UUID.
+        - name: name
+          type: keyword
+          description: Boot image display name (e.g. Ubuntu 22.04).
+        - name: status
+          type: keyword
+          description: Image status (e.g. active, deactivated).
+        - name: deprecated
+          type: boolean
+          description: Whether the boot image is end-of-life.

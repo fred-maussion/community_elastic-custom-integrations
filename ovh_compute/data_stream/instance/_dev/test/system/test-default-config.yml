@@ -1,0 +1,16 @@
+wait_for_data_timeout: 1m
+input: cel
+service: ovh_compute_instance
+vars:
+  url: http://{{Hostname}}:{{Port}}
+  service_name: aaaabbbb-cccc-dddd-eeee-ffffaaaabbbb
+  client_id: xxxx
+  client_secret: xxxx
+  token_url: http://{{Hostname}}:{{Port}}/auth/oauth2/token
+data_stream:
+  vars:
+    interval: 2s
+    http_client_timeout: 30s
+    preserve_original_event: true
+assert:
+  hit_count: 5
