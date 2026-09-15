@@ -243,7 +243,7 @@ An example event for `instance` looks as following:
             "203.0.113.10"
         ],
         "mac": [
-            "fa-16-3e-00-00-01"
+            "FA-16-3E-00-00-01"
         ]
     },
     "observer": {
@@ -280,8 +280,6 @@ An example event for `instance` looks as following:
 }
 ```
 
-
-### Data streams using ILM policies
 
 
 
