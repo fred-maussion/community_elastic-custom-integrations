@@ -1,0 +1,8 @@
+{
+    "events": [
+        {
+            "@timestamp": "2025-08-25T12:10:00.000Z",
+            "message": "{\"id\":\"task-b2c3d4e5\",\"createdAt\":\"2025-08-25T12:00:00.000Z\",\"updatedAt\":\"2025-08-25T12:10:00.000Z\",\"type\":\"RANCHER_PLAN_UPGRADE\",\"status\":\"DOING\",\"message\":\"Upgrading Rancher plan\",\"progress\":30,\"currentStep\":\"UPGRADE\",\"steps\":[{\"name\":\"INIT\",\"status\":\"DONE\",\"startedAt\":\"2025-08-25T12:00:00.000Z\",\"finishedAt\":\"2025-08-25T12:05:00.000Z\"},{\"name\":\"UPGRADE\",\"status\":\"DOING\",\"startedAt\":\"2025-08-25T12:05:00.000Z\"}]}"
+        }
+    ]
+}

@@ -1,0 +1,155 @@
+{{- generatedHeader }}
+# OVHcloud Managed Rancher Service Integration
+
+## Overview
+
+The OVHcloud Managed Rancher Service integration for Elastic enables monitoring of [OVHcloud Managed Rancher Service (MRS)](https://www.ovhcloud.com/en/public-cloud/managed-rancher-service/) — a fully managed Kubernetes multi-cluster management platform built on SUSE Rancher. The integration collects service state, operational events, and asynchronous task records via the OVHcloud v2 REST API.
+
+### Compatibility
+
+This integration is compatible with the OVHcloud v2 API. OVHcloud Managed Rancher Service went GA on September 12, 2024 and is available in EU and Canada regions (not US OVHcloud regions as of the time of writing).
+
+### How it works
+
+The integration polls the OVHcloud v2 API using OAuth2 client credentials authentication. Three data streams are collected:
+
+- **rancher** — polls the Rancher service state endpoint every 5 minutes for infrastructure visibility
+- **event** — polls the event list endpoint every minute for near-real-time operational event capture
+- **task** — polls the task list endpoint every minute for async operation audit records
+
+## What data does this integration collect?
+
+- **Service state** (`rancher`): resource status, deployed version and plan, region, networking configuration, IAM auth state, IP restriction list, and vCPU usage metric
+- **Operational events** (`event`): lifecycle transitions including task starts, completions, errors, and configuration changes
+- **Async tasks** (`task`): provisioning and configuration operations with step-level progress tracking and error details
+
+### Supported use cases
+
+- Infrastructure visibility: track Rancher service health, version, and configuration drift
+- Alerting: detect TASK_ERROR events indicating failed upgrades or configuration changes
+- Audit trail: record all async operations for compliance and troubleshooting
+
+## What do I need to use this integration?
+
+- An OVHcloud account with an active Public Cloud project
+- An OVHcloud Managed Rancher Service instance (EU regions only)
+- An OVHcloud IAM service account with read-only access to Rancher resources
+
+## How do I deploy this integration?
+
+### Agent-based deployment
+
+Elastic Agent must be installed. For more details, check the Elastic Agent [installation instructions](https://www.elastic.co/guide/en/fleet/current/elastic-agent-installation.html). You can install only one Elastic Agent per host.
+
+### Set up steps in OVHcloud
+
+1. Log in to the [OVHcloud Control Panel](https://www.ovh.com/manager/)
+2. Navigate to **My account** → **IAM** → **Service Accounts** → **Create**
+3. Give the service account a descriptive name (e.g. `elastic-rancher-monitoring`)
+4. Save the **Client ID** and **Client Secret** (the secret is shown only once)
+5. Grant the service account an IAM policy with read-only access to Rancher resources:
+   - Resource type: `cloudProject`
+   - Actions: `publicCloudProject:apiovh:rancher/get`, `publicCloudProject:apiovh:rancher/event/get`, `publicCloudProject:apiovh:rancher/task/get`
+6. Note your **OVHcloud Project ID** from the Control Panel URL and your **Rancher Service ID** from the Managed Rancher Service listing
+
+#### Vendor resources
+
+- [OVHcloud Managed Rancher Service documentation](https://docs.ovhcloud.com/en/guides/public-cloud/containers-orchestration/managed-rancher-service/getting-started)
+- [OVHcloud IAM documentation](https://help.ovhcloud.com/csm/en-iam)
+- [OVHcloud API console](https://api.eu.ovhcloud.com/console/)
+
+### Set up steps in Kibana
+
+1. In Kibana, go to **Management** → **Integrations** and search for **OVHcloud Managed Rancher Service**
+2. Add the integration and configure the required fields:
+   - **OVHcloud API URL**: select the regional endpoint matching your OVH account (default: EU)
+   - **OVHcloud Project ID**: paste the project UUID
+   - **Rancher Service ID**: paste the Rancher service UUID
+   - **OAuth2 Client ID**: paste the service account client ID
+   - **OAuth2 Client Secret**: paste the service account client secret
+   - **OAuth2 Token URL**: select the regional token endpoint matching your OVH account
+
+### Validation
+
+After deploying the integration, verify data is flowing:
+
+1. In Kibana **Discover**, filter by index pattern `logs-ovh_rancher.*`
+2. You should see documents from the `rancher`, `event`, and `task` data streams
+3. Check `ovh_rancher.rancher.resource_status` for service health and `event.outcome` for task results
+
+## Troubleshooting
+
+- 401 errors: verify OAuth2 Client ID and Client Secret are correct and the token URL matches your region
+- 403 errors: verify the service account IAM policy includes the required read-only Rancher actions
+- No data from event/task streams: the Rancher service may have no recent activity; check that the service ID is correct
+- Wrong region: ensure the API URL and token URL both match your OVHcloud account region
+
+## Performance and scaling
+
+The integration polls at a configurable interval (default 5 minutes for service state, 1 minute for events and tasks). Event and task lists contain the full lifetime history of the Rancher service — the initial poll may fetch a large number of historical records depending on service age.
+
+For more information on architectures that can be used for scaling this integration, check the [Ingest Architectures](https://www.elastic.co/docs/manage-data/ingest/ingest-reference-architectures) documentation.
+
+## Reference
+
+### Inputs used
+
+{{ inputDocs }}
+
+### API usage
+
+These APIs are used with this integration:
+
+- `GET /v2/publicCloud/project/{projectId}/rancher/{rancherId}` — Rancher service state
+- `GET /v2/publicCloud/project/{projectId}/rancher/{rancherId}/events` — Operational events
+- `GET /v2/publicCloud/project/{projectId}/rancher/{rancherId}/tasks` — Async tasks
+
+OVHcloud API documentation: [https://api.eu.ovhcloud.com/console/](https://api.eu.ovhcloud.com/console/)
+
+### Vendor documentation links
+
+- [OVHcloud Managed Rancher Service](https://www.ovhcloud.com/en/public-cloud/managed-rancher-service/)
+- [OVHcloud API first steps](https://docs.ovhcloud.com/en/guides/manage-and-operate/api/first-steps)
+- [Rancher documentation](https://ranchermanager.docs.rancher.com/)
+
+### Data streams
+
+#### rancher
+
+The `rancher` data stream collects the current state and configuration of the OVHcloud Managed Rancher Service instance, including resource status, deployed version and plan, region, networking, IAM auth configuration, IP restrictions, and vCPU usage metrics.
+
+##### rancher fields
+
+{{/* {{ fields "rancher" }} */}}
+
+##### rancher sample event
+
+{{/* {{ event "rancher" }} */}}
+
+#### event
+
+The `event` data stream collects operational lifecycle events from the OVHcloud Managed Rancher Service, including task start, task success, task error, and target specification change events.
+
+##### event fields
+
+{{/* {{ fields "event" }} */}}
+
+##### event sample event
+
+{{/* {{ event "event" }} */}}
+
+#### task
+
+The `task` data stream collects async operation records from the OVHcloud Managed Rancher Service, including provisioning, upgrade, and configuration change tasks with step-level progress tracking and error details.
+
+##### task fields
+
+{{/* {{ fields "task" }} */}}
+
+##### task sample event
+
+{{/* {{ event "task" }} */}}
+
+{{ ilm }}
+
+{{ transform }}

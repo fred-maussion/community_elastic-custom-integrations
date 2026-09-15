@@ -1,0 +1,8 @@
+{
+    "events": [
+        {
+            "@timestamp": "2025-08-25T14:32:01.000Z",
+            "message": "{\"id\":\"task-a1b2c3d4\",\"createdAt\":\"2025-08-25T12:00:00.000Z\",\"updatedAt\":\"2025-08-25T14:32:01.000Z\",\"finishedAt\":\"2025-08-25T14:32:01.000Z\",\"type\":\"RANCHER_VERSION_UPGRADE\",\"status\":\"DONE\",\"message\":\"Upgrade to version 2.8.5 completed successfully\",\"progress\":100,\"currentStep\":\"FINISHED\",\"steps\":[{\"name\":\"INIT\",\"status\":\"DONE\",\"startedAt\":\"2025-08-25T12:00:00.000Z\",\"finishedAt\":\"2025-08-25T12:05:00.000Z\"},{\"name\":\"UPGRADE\",\"status\":\"DONE\",\"startedAt\":\"2025-08-25T12:05:00.000Z\",\"finishedAt\":\"2025-08-25T14:32:01.000Z\"}],\"errors\":[]}"
+        }
+    ]
+}

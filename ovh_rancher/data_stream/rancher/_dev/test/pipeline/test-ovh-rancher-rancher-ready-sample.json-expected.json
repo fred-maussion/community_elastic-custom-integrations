@@ -1,0 +1,75 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2025-08-25T14:32:01.000Z",
+            "cloud": {
+                "provider": "ovhcloud",
+                "region": "EU_WEST_GRA",
+                "service": {
+                    "name": "managed-rancher-service"
+                }
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "host"
+                ],
+                "kind": "state",
+                "original": "{\"id\":\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\"createdAt\":\"2025-03-15T10:00:00.000Z\",\"updatedAt\":\"2025-08-25T14:32:01.000Z\",\"resourceStatus\":\"READY\",\"currentState\":{\"name\":\"my-rancher-prod\",\"plan\":\"STANDARD\",\"version\":\"2.8.5\",\"region\":\"EU_WEST_GRA\",\"url\":\"https://a1b2c3d4-e5f6-7890-abcd-ef1234567890.rancher.ovh.net\",\"iamAuthEnabled\":false,\"ipRestrictions\":[{\"cidrBlock\":\"198.51.100.0/24\",\"description\":\"Office network\"}],\"networking\":{\"egressCidrBlocks\":[\"192.0.2.0/28\"]},\"usage\":{\"datetime\":\"2025-08-25T14:00:00.000Z\",\"orchestratedVcpus\":32}},\"targetSpec\":{\"name\":\"my-rancher-prod\",\"plan\":\"STANDARD\",\"version\":\"2.8.5\",\"iamAuthEnabled\":false,\"ipRestrictions\":[{\"cidrBlock\":\"198.51.100.0/24\",\"description\":\"Office network\"}]},\"currentTasks\":[]}",
+                "start": "2025-03-15T10:00:00.000Z",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh_rancher": {
+                "rancher": {
+                    "created_at": "2025-03-15T10:00:00.000Z",
+                    "current_state": {
+                        "iam_auth_enabled": false,
+                        "ip_restrictions": [
+                            {
+                                "cidr_block": "198.51.100.0/24",
+                                "description": "Office network"
+                            }
+                        ],
+                        "name": "my-rancher-prod",
+                        "networking": {
+                            "egress_cidr_blocks": [
+                                "192.0.2.0/28"
+                            ]
+                        },
+                        "plan": "STANDARD",
+                        "region": "EU_WEST_GRA",
+                        "url": "https://a1b2c3d4-e5f6-7890-abcd-ef1234567890.rancher.ovh.net",
+                        "usage": {
+                            "datetime": "2025-08-25T14:00:00.000Z",
+                            "orchestrated_vcpus": 32
+                        },
+                        "version": "2.8.5"
+                    },
+                    "current_tasks": [],
+                    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "resource_status": "READY",
+                    "target_spec": {
+                        "iam_auth_enabled": false,
+                        "ip_restrictions": [
+                            {
+                                "cidr_block": "198.51.100.0/24",
+                                "description": "Office network"
+                            }
+                        ],
+                        "name": "my-rancher-prod",
+                        "plan": "STANDARD",
+                        "version": "2.8.5"
+                    },
+                    "updated_at": "2025-08-25T14:32:01.000Z"
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

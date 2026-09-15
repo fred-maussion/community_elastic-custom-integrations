@@ -1,0 +1,61 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2025-08-25T14:32:01.000Z",
+            "cloud": {
+                "provider": "ovhcloud",
+                "service": {
+                    "name": "managed-rancher-service"
+                }
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "action": "rancher-version-upgrade",
+                "category": [
+                    "configuration"
+                ],
+                "end": "2025-08-25T14:32:01.000Z",
+                "kind": "event",
+                "original": "{\"id\":\"task-a1b2c3d4\",\"createdAt\":\"2025-08-25T12:00:00.000Z\",\"updatedAt\":\"2025-08-25T14:32:01.000Z\",\"finishedAt\":\"2025-08-25T14:32:01.000Z\",\"type\":\"RANCHER_VERSION_UPGRADE\",\"status\":\"DONE\",\"message\":\"Upgrade to version 2.8.5 completed successfully\",\"progress\":100,\"currentStep\":\"FINISHED\",\"steps\":[{\"name\":\"INIT\",\"status\":\"DONE\",\"startedAt\":\"2025-08-25T12:00:00.000Z\",\"finishedAt\":\"2025-08-25T12:05:00.000Z\"},{\"name\":\"UPGRADE\",\"status\":\"DONE\",\"startedAt\":\"2025-08-25T12:05:00.000Z\",\"finishedAt\":\"2025-08-25T14:32:01.000Z\"}],\"errors\":[]}",
+                "outcome": "success",
+                "start": "2025-08-25T12:00:00.000Z",
+                "type": [
+                    "change"
+                ]
+            },
+            "ovh_rancher": {
+                "task": {
+                    "created_at": "2025-08-25T12:00:00.000Z",
+                    "current_step": "FINISHED",
+                    "errors": [],
+                    "finished_at": "2025-08-25T14:32:01.000Z",
+                    "id": "task-a1b2c3d4",
+                    "message": "Upgrade to version 2.8.5 completed successfully",
+                    "progress": 100,
+                    "status": "DONE",
+                    "steps": [
+                        {
+                            "finished_at": "2025-08-25T12:05:00.000Z",
+                            "name": "INIT",
+                            "started_at": "2025-08-25T12:00:00.000Z",
+                            "status": "DONE"
+                        },
+                        {
+                            "finished_at": "2025-08-25T14:32:01.000Z",
+                            "name": "UPGRADE",
+                            "started_at": "2025-08-25T12:05:00.000Z",
+                            "status": "DONE"
+                        }
+                    ],
+                    "type": "RANCHER_VERSION_UPGRADE",
+                    "updated_at": "2025-08-25T14:32:01.000Z"
+                }
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+- name: ovh_rancher.event
+  type: group
+  fields:
+    - name: id
+      type: keyword
+      description: Unique identifier of the event.
+    - name: created_at
+      type: date
+      description: ISO 8601 UTC timestamp when the event was created.
+    - name: rancher_id
+      type: keyword
+      description: UUID of the Managed Rancher Service instance that produced the event.
+    - name: type
+      type: keyword
+      description: >-
+        Event type. One of RANCHER_CLUSTER_CREATED, RANCHER_CLUSTER_DELETED, RANCHER_SERVICE_UPGRADED, RANCHER_ADMIN_REQUESTED.
+    - name: message
+      type: text
+      description: Human-readable description of the event.

@@ -1,0 +1,50 @@
+- name: ovh_rancher.task
+  type: group
+  fields:
+    - name: id
+      type: keyword
+      description: Unique identifier of the task.
+    - name: created_at
+      type: date
+      description: ISO 8601 UTC timestamp when the task was created.
+    - name: updated_at
+      type: date
+      description: ISO 8601 UTC timestamp when the task was last updated.
+    - name: finished_at
+      type: date
+      description: ISO 8601 UTC timestamp when the task finished, or null if still running.
+    - name: type
+      type: keyword
+      description: >-
+        Task type. One of RANCHER_VERSION_UPGRADE, RANCHER_PLAN_UPGRADE, RANCHER_CLUSTER_DELETE, RANCHER_SERVICE_DELETE, RANCHER_IP_RESTRICTIONS_UPDATE.
+    - name: status
+      type: keyword
+      description: Task status. One of TODO, DOING, DONE, ERROR.
+    - name: message
+      type: text
+      description: Human-readable description of the task outcome or current state.
+    - name: progress
+      type: integer
+      description: Task completion percentage (0–100).
+    - name: current_step
+      type: keyword
+      description: Name of the step currently being executed.
+    - name: steps
+      type: group
+      description: Ordered list of steps composing the task.
+      fields:
+        - name: name
+          type: keyword
+          description: Step name.
+        - name: status
+          type: keyword
+          description: Step status. One of TODO, DOING, DONE, ERROR.
+        - name: started_at
+          type: date
+          description: ISO 8601 UTC timestamp when the step started.
+        - name: finished_at
+          type: date
+          description: ISO 8601 UTC timestamp when the step finished, or null if still running.
+    - name: errors
+      type: keyword
+      description: List of error messages associated with the task.

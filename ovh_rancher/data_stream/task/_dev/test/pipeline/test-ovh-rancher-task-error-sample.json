@@ -1,0 +1,7 @@
+{
+    "events": [
+        {
+            "message": "{\"id\":\"task-error-0001\",\"createdAt\":\"2025-08-24T07:00:00.000Z\",\"updatedAt\":\"2025-08-24T08:00:00.000Z\",\"finishedAt\":\"2025-08-24T08:00:00.000Z\",\"type\":\"RANCHER_CLUSTER_DELETE\",\"status\":\"ERROR\",\"message\":\"Cluster delete failed: timeout\",\"progress\":42,\"currentStep\":\"DRAIN_NODES\",\"steps\":[],\"errors\":[\"Node drain timed out\"]}"
+        }
+    ]
+}

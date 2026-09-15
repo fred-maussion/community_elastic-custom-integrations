@@ -1,0 +1,79 @@
+format_version: "3.4.2"
+name: ovh_rancher
+title: "OVHcloud Managed Rancher Service"
+version: 0.1.0
+source:
+  license: "Elastic-2.0"
+description: "Monitor OVHcloud Managed Rancher Service instances, events, and tasks via the OVHcloud REST API."
+type: integration
+categories:
+  - infrastructure
+  - containers
+conditions:
+  kibana:
+    version: "^8.19.0 || ^9.1.0"
+  elastic:
+    subscription: "basic"
+screenshots: []
+icons:
+  - src: /img/sample-logo.svg
+    title: OVHcloud logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: ovh_rancher
+    title: OVHcloud Managed Rancher Service
+    description: Collect service state, events, and tasks from OVHcloud Managed Rancher Service
+    inputs:
+      - type: cel
+        title: Collect OVHcloud Managed Rancher Service data via API
+        description: Collecting service state, event, and task data using the OVHcloud REST API (OAuth2)
+        vars:
+          - name: url
+            type: url
+            title: OVHcloud API URL
+            description: >-
+              Regional OVHcloud v2 API base URL. EU: https://eu.api.ovh.com/v2 CA: https://ca.api.ovh.com/v2 US: https://api.us.ovhcloud.com/v2
+            default: https://eu.api.ovh.com/v2
+            show_user: true
+            required: true
+          - name: service_name
+            type: text
+            title: OVHcloud Project ID
+            description: >-
+              Public Cloud project ID (serviceName/projectId) from the OVHcloud Control Panel. Find it in the URL when viewing your project, or via GET /v2/publicCloud/project.
+            show_user: true
+            required: true
+          - name: rancher_id
+            type: text
+            title: Rancher Service ID
+            description: >-
+              UUID of the Managed Rancher Service instance. Find it in the OVHcloud Control Panel under Containers & Orchestration → Managed Rancher Service, or via GET /v2/publicCloud/project/{projectId}/rancher.
+            show_user: true
+            required: true
+          - name: client_id
+            type: text
+            title: OAuth2 Client ID
+            description: >-
+              OVHcloud IAM service account Client ID. Create via OVHcloud Control Panel → My account → IAM → Service Accounts.
+            show_user: true
+            required: true
+          - name: client_secret
+            type: password
+            title: OAuth2 Client Secret
+            description: >-
+              OVHcloud IAM service account Client Secret (shown only once at creation).
+            show_user: true
+            required: true
+            secret: true
+          - name: token_url
+            type: url
+            title: OAuth2 Token URL
+            description: >-
+              Regional OAuth2 token endpoint. EU: https://www.ovh.com/auth/oauth2/token CA: https://ca.ovh.com/auth/oauth2/token US: https://us.ovhcloud.com/auth/oauth2/token
+            default: https://www.ovh.com/auth/oauth2/token
+            show_user: true
+            required: true
+owner:
+  github: elastic/integrations
+  type: elastic

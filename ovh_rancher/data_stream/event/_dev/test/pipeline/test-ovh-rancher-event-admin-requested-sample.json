@@ -1,0 +1,7 @@
+{
+    "events": [
+        {
+            "message": "{\"id\":\"99b2e6d2-dddd-eeee-ffff-1a2b3c4d5e6f\",\"createdAt\":\"2025-08-25T16:00:00.000Z\",\"rancherId\":\"a1b2c3d4-e5f6-7890-abcd-ef1234567890\",\"type\":\"RANCHER_ADMIN_REQUESTED\",\"message\":\"Admin access requested for cluster my-rancher-prod\"}"
+        }
+    ]
+}
