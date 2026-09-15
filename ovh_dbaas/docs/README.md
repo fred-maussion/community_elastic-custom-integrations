@@ -595,7 +595,5 @@ An example event for `maintenance` looks as following:
 ```
 
 
-### Data streams using ILM policies
-
 
 
