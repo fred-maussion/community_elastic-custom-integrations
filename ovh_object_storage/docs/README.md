@@ -167,7 +167,5 @@ The `container` data stream provides a periodic snapshot of each OVHcloud Object
 
 
 
-### Data streams using ILM policies
-
 
 
