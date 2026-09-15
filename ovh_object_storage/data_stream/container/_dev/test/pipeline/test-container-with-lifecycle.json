@@ -1,0 +1,7 @@
+{
+    "events": [
+        {
+            "message": "{\"name\":\"example-bucket-prod\",\"region\":\"gra\",\"createdAt\":\"2024-03-10T14:22:00Z\",\"virtualHost\":\"example-bucket-prod.s3.gra.io.cloud.ovh.net\",\"objectsCount\":4821,\"objectsSize\":107374182400,\"ownerId\":98765432,\"tags\":{\"environment\":\"production\",\"team\":\"data-eng\"},\"versioning\":{\"status\":\"enabled\"},\"encryption\":{\"sseAlgorithm\":\"AES256\"},\"objectLock\":{\"status\":\"disabled\"},\"replication\":{\"rules\":[{\"id\":\"cross-region-backup\",\"status\":\"enabled\",\"priority\":1,\"deleteMarkerReplication\":\"disabled\",\"filter\":{\"prefix\":\"\"},\"destination\":{\"name\":\"example-bucket-backup\",\"region\":\"eu-south-mil\",\"storageClass\":\"STANDARD\"}}]},\"lifecycle\":{\"rules\":[{\"id\":\"archive-old-data\",\"status\":\"enabled\",\"filter\":{\"prefix\":\"data/\"},\"transitions\":[{\"days\":90,\"storageClass\":\"STANDARD_IA\"},{\"days\":365,\"storageClass\":\"GLACIER_IR\"}],\"expiration\":{\"days\":2555},\"noncurrentVersionExpiration\":{\"noncurrentDays\":30,\"newerNoncurrentVersions\":3},\"abortIncompleteMultipartUpload\":{\"daysAfterInitiation\":14}}]}}"
+        }
+    ]
+}

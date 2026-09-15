@@ -1,0 +1,126 @@
+{
+    "@timestamp": "2026-08-31T17:28:59.092Z",
+    "agent": {
+        "ephemeral_id": "93e9a10b-5ff9-4e93-b4dc-79ca159622de",
+        "id": "81b6a238-0902-479e-a0fe-3408f3a40b90",
+        "name": "elastic-agent-42884",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "cloud": {
+        "region": "gra"
+    },
+    "data_stream": {
+        "dataset": "ovh_object_storage.container",
+        "namespace": "39305",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "81b6a238-0902-479e-a0fe-3408f3a40b90",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "category": [
+            "configuration"
+        ],
+        "dataset": "ovh_object_storage.container",
+        "ingested": "2026-08-31T17:29:07Z",
+        "kind": "state",
+        "module": "ovh_object_storage",
+        "type": [
+            "info"
+        ]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "labels": {
+        "environment": "production",
+        "team": "data-eng"
+    },
+    "ovh_object_storage": {
+        "container": {
+            "created_at": "2024-03-10T14:22:00.000Z",
+            "encryption_algorithm": "AES256",
+            "lifecycle_rules": [
+                {
+                    "abortIncompleteMultipartUpload": {
+                        "daysAfterInitiation": 14
+                    },
+                    "expiration": {
+                        "days": 2555
+                    },
+                    "filter": {
+                        "prefix": "data/"
+                    },
+                    "id": "archive-old-data",
+                    "noncurrentVersionExpiration": {
+                        "newerNoncurrentVersions": 3,
+                        "noncurrentDays": 30
+                    },
+                    "status": "enabled",
+                    "transitions": [
+                        {
+                            "days": 90,
+                            "storageClass": "STANDARD_IA"
+                        },
+                        {
+                            "days": 365,
+                            "storageClass": "GLACIER_IR"
+                        }
+                    ]
+                },
+                {
+                    "expiration": {
+                        "days": 7
+                    },
+                    "filter": {
+                        "objectSizeLessThan": 1048576,
+                        "prefix": "tmp/"
+                    },
+                    "id": "expire-temp-uploads",
+                    "status": "enabled"
+                }
+            ],
+            "name": "example-bucket-prod",
+            "object_lock_status": "disabled",
+            "objects_count": 4821,
+            "objects_size_bytes": 107374182400,
+            "owner_id": 98765432,
+            "replication_rules": {
+                "deleteMarkerReplication": "disabled",
+                "destination": {
+                    "name": "example-bucket-backup",
+                    "region": "eu-south-mil",
+                    "storageClass": "STANDARD"
+                },
+                "filter": {
+                    "prefix": ""
+                },
+                "id": "cross-region-backup",
+                "priority": 1,
+                "status": "enabled"
+            },
+            "versioning_status": "enabled",
+            "virtual_host": "example-bucket-prod.s3.gra.io.cloud.ovh.net"
+        }
+    },
+    "related": {
+        "hosts": [
+            "example-bucket-prod.s3.gra.io.cloud.ovh.net"
+        ],
+        "user": [
+            "98765432"
+        ]
+    },
+    "tags": [
+        "forwarded"
+    ],
+    "user": {
+        "id": "98765432"
+    }
+}

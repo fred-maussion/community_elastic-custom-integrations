@@ -1,0 +1,7 @@
+{
+    "events": [
+        {
+            "message": "{\"name\":\"example-bucket-logs\",\"region\":\"gra\",\"createdAt\":\"2024-06-15T09:00:00Z\",\"virtualHost\":\"example-bucket-logs.s3.gra.io.cloud.ovh.net\",\"objectsCount\":12050,\"objectsSize\":52428800,\"ownerId\":98765432,\"tags\":{\"environment\":\"production\",\"purpose\":\"logging\"},\"versioning\":{\"status\":\"disabled\"},\"encryption\":{\"sseAlgorithm\":\"AES256\"},\"objectLock\":{\"status\":\"disabled\"},\"replication\":{\"rules\":[]}}"
+        }
+    ]
+}

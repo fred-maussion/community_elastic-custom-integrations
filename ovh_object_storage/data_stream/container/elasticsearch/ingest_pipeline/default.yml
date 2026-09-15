@@ -1,0 +1,239 @@
+---
+description: Pipeline for processing OVHcloud Object Storage container events
+processors:
+  # Agentless: remove collector metadata fields not relevant to this integration
+  - remove:
+      tag: remove_agentless_metadata
+      field:
+        - organization
+        - division
+        - team
+      if: >-
+        ctx.organization instanceof String &&
+        ctx.division instanceof String &&
+        ctx.team instanceof String
+      ignore_missing: true
+  # Terminate on CEL collector error (no message, only error)
+  - terminate:
+      tag: terminate_on_cel_collector_error
+      if: ctx.error?.message != null && ctx.message == null
+
+  # Preserve original event FIRST, before any parse or error processing
+  - set:
+      tag: set_event_original
+      if: ctx.tags != null && ctx.tags.contains("preserve_original_event")
+      field: event.original
+      copy_from: message
+
+  - json:
+      tag: json_parse_message
+      field: message
+      target_field: _tmp
+      on_failure:
+        - set:
+            tag: json_parse_failure_set_error_message
+            field: error.message
+            value: "Failed to parse message as JSON: {{{ _ingest.on_failure_message }}}"
+        - set:
+            tag: json_parse_failure_set_event_kind
+            field: event.kind
+            value: pipeline_error
+        - append:
+            tag: json_parse_failure_append_tag
+            field: tags
+            value: _jsonparsefailure
+            allow_duplicates: false
+
+  # Pass-through error events emitted by the CEL program
+  - set:
+      tag: set_pipeline_error_for_cel_errors
+      if: ctx._tmp?.error?.code != null
+      field: event.kind
+      value: pipeline_error
+  - rename:
+      tag: move_cel_error
+      if: ctx._tmp?.error != null
+      field: _tmp.error
+      target_field: error
+      ignore_missing: true
+  - remove:
+      tag: remove_tmp_on_error
+      if: ctx.event?.kind == "pipeline_error"
+      field: _tmp
+      ignore_missing: true
+
+  # Set ECS fields
+  - set:
+      tag: set_ecs_version
+      field: ecs.version
+      value: "9.3.0"
+  - set:
+      tag: set_event_kind
+      if: ctx.event?.kind != "pipeline_error"
+      field: event.kind
+      value: state
+  - append:
+      tag: set_event_category
+      if: ctx.event?.kind != "pipeline_error"
+      field: event.category
+      value: configuration
+      allow_duplicates: false
+  - append:
+      tag: set_event_type
+      if: ctx.event?.kind != "pipeline_error"
+      field: event.type
+      value: info
+      allow_duplicates: false
+
+  # ECS: cloud.region
+  - rename:
+      tag: rename_region
+      if: ctx._tmp?.region != null
+      field: _tmp.region
+      target_field: cloud.region
+      ignore_missing: true
+
+  # ECS: labels from tags map
+  - rename:
+      tag: rename_tags_to_labels
+      if: ctx._tmp?.tags != null
+      field: _tmp.tags
+      target_field: labels
+      ignore_missing: true
+
+  # Custom fields: ovh_object_storage.container.*
+  - rename:
+      tag: rename_name
+      if: ctx._tmp?.name != null
+      field: _tmp.name
+      target_field: ovh_object_storage.container.name
+      ignore_missing: true
+  - date:
+      tag: parse_created_at
+      if: ctx._tmp?.createdAt != null
+      field: _tmp.createdAt
+      target_field: ovh_object_storage.container.created_at
+      formats: ["ISO8601"]
+      ignore_failure: true
+  - rename:
+      tag: rename_virtual_host
+      if: ctx._tmp?.virtualHost != null
+      field: _tmp.virtualHost
+      target_field: ovh_object_storage.container.virtual_host
+      ignore_missing: true
+  - rename:
+      tag: rename_objects_count
+      if: ctx._tmp?.objectsCount != null
+      field: _tmp.objectsCount
+      target_field: ovh_object_storage.container.objects_count
+      ignore_missing: true
+  - rename:
+      tag: rename_objects_size
+      if: ctx._tmp?.objectsSize != null
+      field: _tmp.objectsSize
+      target_field: ovh_object_storage.container.objects_size_bytes
+      ignore_missing: true
+  - rename:
+      tag: rename_owner_id
+      if: ctx._tmp?.ownerId != null
+      field: _tmp.ownerId
+      target_field: ovh_object_storage.container.owner_id
+      ignore_missing: true
+  - rename:
+      tag: rename_versioning_status
+      if: ctx._tmp?.versioning?.status != null
+      field: _tmp.versioning.status
+      target_field: ovh_object_storage.container.versioning_status
+      ignore_missing: true
+  - rename:
+      tag: rename_encryption_algorithm
+      if: ctx._tmp?.encryption?.sseAlgorithm != null
+      field: _tmp.encryption.sseAlgorithm
+      target_field: ovh_object_storage.container.encryption_algorithm
+      ignore_missing: true
+  - rename:
+      tag: rename_object_lock_status
+      if: ctx._tmp?.objectLock?.status != null
+      field: _tmp.objectLock.status
+      target_field: ovh_object_storage.container.object_lock_status
+      ignore_missing: true
+  # objectLock.rule.* — only present when objectLock.status == "enabled"
+  - rename:
+      tag: rename_object_lock_mode
+      if: ctx._tmp?.objectLock?.rule?.mode != null
+      field: _tmp.objectLock.rule.mode
+      target_field: ovh_object_storage.container.object_lock_mode
+      ignore_missing: true
+  - rename:
+      tag: rename_object_lock_period
+      if: ctx._tmp?.objectLock?.rule?.period != null
+      field: _tmp.objectLock.rule.period
+      target_field: ovh_object_storage.container.object_lock_period
+      ignore_missing: true
+  - rename:
+      tag: rename_replication_rules
+      if: ctx._tmp?.replication?.rules != null
+      field: _tmp.replication.rules
+      target_field: ovh_object_storage.container.replication_rules
+      ignore_missing: true
+  - rename:
+      tag: rename_lifecycle_rules
+      if: ctx._tmp?.lifecycle?.rules != null
+      field: _tmp.lifecycle.rules
+      target_field: ovh_object_storage.container.lifecycle_rules
+      ignore_missing: true
+
+  # ECS: user.id (convert owner_id integer to string)
+  - convert:
+      tag: convert_owner_id_to_string
+      if: ctx.ovh_object_storage?.container?.owner_id != null
+      field: ovh_object_storage.container.owner_id
+      target_field: user.id
+      type: string
+      ignore_missing: true
+
+  # ECS: related.hosts (virtualHost)
+  - append:
+      tag: append_virtual_host_to_related_hosts
+      if: ctx.ovh_object_storage?.container?.virtual_host != null
+      field: related.hosts
+      value: "{{{ ovh_object_storage.container.virtual_host }}}"
+      allow_duplicates: false
+
+  # ECS: related.user (owner_id as string)
+  - append:
+      tag: append_owner_id_to_related_user
+      if: ctx.user?.id != null
+      field: related.user
+      value: "{{{ user.id }}}"
+      allow_duplicates: false
+
+  # Cleanup: remove _tmp staging object and original message
+  - remove:
+      tag: remove_tmp
+      field: _tmp
+      ignore_missing: true
+  - remove:
+      tag: remove_message
+      if: ctx.tags == null || !ctx.tags.contains("preserve_original_event")
+      field: message
+      ignore_missing: true
+
+on_failure:
+  - set:
+      tag: pipeline_failure_set_error_message
+      field: error.message
+      value: >-
+        Processor '{{{ _ingest.on_failure_processor_type }}}'
+        with tag '{{{ _ingest.on_failure_processor_tag }}}'
+        in pipeline '{{{ _ingest.pipeline }}}'
+        failed with message '{{{ _ingest.on_failure_message }}}'
+  - set:
+      field: event.kind
+      tag: set_pipeline_error_to_event_kind
+      value: pipeline_error
+  - append:
+      tag: append_preserve_original_event_on_failure
+      field: tags
+      value: preserve_original_event
+      allow_duplicates: false

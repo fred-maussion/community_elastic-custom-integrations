@@ -1,0 +1,139 @@
+rules:
+  # OAuth2 token endpoint — auth.oauth2 fetches a token before making API calls
+  - path: /auth/oauth2/token
+    methods: ['POST']
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '{"access_token":"test-access-token","token_type":"Bearer","expires_in":3600}'
+  # List containers in region
+  - path: /cloud/project/example-project-123/storage
+    methods: ['GET']
+    query_params:
+      regionName: 'gra'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |
+          [
+            {"name": "example-bucket-prod", "region": "gra"},
+            {"name": "example-bucket-logs", "region": "gra"}
+          ]
+  # Container details — example-bucket-prod
+  - path: /cloud/project/example-project-123/storage/example-bucket-prod
+    methods: ['GET']
+    query_params:
+      regionName: 'gra'
+      noObjects: 'true'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |
+          {
+            "name": "example-bucket-prod",
+            "region": "gra",
+            "createdAt": "2024-03-10T14:22:00Z",
+            "virtualHost": "example-bucket-prod.s3.gra.io.cloud.ovh.net",
+            "objectsCount": 4821,
+            "objectsSize": 107374182400,
+            "ownerId": 98765432,
+            "tags": {"environment": "production", "team": "data-eng"},
+            "versioning": {"status": "enabled"},
+            "encryption": {"sseAlgorithm": "AES256"},
+            "objectLock": {"status": "disabled"},
+            "replication": {
+              "rules": [
+                {
+                  "id": "cross-region-backup",
+                  "status": "enabled",
+                  "priority": 1,
+                  "deleteMarkerReplication": "disabled",
+                  "filter": {"prefix": ""},
+                  "destination": {
+                    "name": "example-bucket-backup",
+                    "region": "eu-south-mil",
+                    "storageClass": "STANDARD"
+                  }
+                }
+              ]
+            }
+          }
+  # Container details — example-bucket-logs
+  - path: /cloud/project/example-project-123/storage/example-bucket-logs
+    methods: ['GET']
+    query_params:
+      regionName: 'gra'
+      noObjects: 'true'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |
+          {
+            "name": "example-bucket-logs",
+            "region": "gra",
+            "createdAt": "2024-06-15T09:00:00Z",
+            "virtualHost": "example-bucket-logs.s3.gra.io.cloud.ovh.net",
+            "objectsCount": 12050,
+            "objectsSize": 52428800,
+            "ownerId": 98765432,
+            "tags": {"environment": "production", "purpose": "logging"},
+            "versioning": {"status": "disabled"},
+            "encryption": {"sseAlgorithm": "AES256"},
+            "objectLock": {"status": "disabled"},
+            "replication": {"rules": []}
+          }
+  # Lifecycle — example-bucket-prod (has lifecycle rules)
+  - path: /cloud/project/example-project-123/storage/example-bucket-prod/lifecycle
+    methods: ['GET']
+    query_params:
+      regionName: 'gra'
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: |
+          {
+            "rules": [
+              {
+                "id": "archive-old-data",
+                "status": "enabled",
+                "filter": {"prefix": "data/"},
+                "transitions": [
+                  {"days": 90, "storageClass": "STANDARD_IA"},
+                  {"days": 365, "storageClass": "GLACIER_IR"}
+                ],
+                "expiration": {"days": 2555},
+                "noncurrentVersionExpiration": {
+                  "noncurrentDays": 30,
+                  "newerNoncurrentVersions": 3
+                },
+                "abortIncompleteMultipartUpload": {"daysAfterInitiation": 14}
+              },
+              {
+                "id": "expire-temp-uploads",
+                "status": "enabled",
+                "filter": {"prefix": "tmp/", "objectSizeLessThan": 1048576},
+                "expiration": {"days": 7}
+              }
+            ]
+          }
+  # Lifecycle — example-bucket-logs (no lifecycle configured — returns 404)
+  - path: /cloud/project/example-project-123/storage/example-bucket-logs/lifecycle
+    methods: ['GET']
+    query_params:
+      regionName: 'gra'
+    responses:
+      - status_code: 404
+        headers:
+          Content-Type:
+            - 'application/json'
+        body: '{"message":"Not Found","details":[]}'

@@ -1,0 +1,58 @@
+- name: cloud.region
+  external: ecs
+- name: labels
+  external: ecs
+- name: user.id
+  external: ecs
+- name: related.user
+  external: ecs
+- name: related.hosts
+  external: ecs
+- name: event.kind
+  external: ecs
+- name: event.category
+  external: ecs
+- name: event.type
+  external: ecs
+- name: ovh_object_storage.container
+  type: group
+  fields:
+    - name: name
+      type: keyword
+      description: Container (bucket) name.
+    - name: created_at
+      type: date
+      description: Container creation timestamp (ISO 8601).
+    - name: virtual_host
+      type: keyword
+      description: S3 virtual-host endpoint URL for the container.
+    - name: objects_count
+      type: long
+      description: Total number of objects in the container.
+    - name: objects_size_bytes
+      type: long
+      description: Total storage used by the container in bytes.
+    - name: owner_id
+      type: long
+      description: OVHcloud owner user ID (numeric).
+    - name: versioning_status
+      type: keyword
+      description: "Versioning state: disabled, enabled, or suspended."
+    - name: encryption_algorithm
+      type: keyword
+      description: "Server-side encryption algorithm: AES256 or plaintext."
+    - name: object_lock_status
+      type: keyword
+      description: "Object lock (WORM) state: disabled or enabled."
+    - name: object_lock_mode
+      type: keyword
+      description: "Object lock retention mode: compliance or governance. Only present when object_lock_status is enabled."
+    - name: object_lock_period
+      type: keyword
+      description: "Default retention period in ISO 8601 duration format (e.g. P90D). Only present when object_lock_status is enabled."
+    - name: replication_rules
+      type: flattened
+      description: Array of replication rule objects defining cross-region replication configuration.
+    - name: lifecycle_rules
+      type: flattened
+      description: Array of lifecycle rule objects defining expiration, transition, and cleanup policies.
