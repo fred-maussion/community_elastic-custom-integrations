@@ -1,0 +1,16 @@
+wait_for_data_timeout: 1m
+input: cel
+service: ovh-dbaas-backup-mock
+vars:
+  api_url: http://{{Hostname}}:{{Port}}/v1
+  service_name: test-project-id
+  client_id: test-client-id
+  client_secret: test-client-secret
+  token_url: http://{{Hostname}}:{{Port}}/auth/oauth2/token
+  engines: postgresql
+data_stream:
+  vars:
+    interval: 2s
+    preserve_original_event: true
+assert:
+  hit_count: 4

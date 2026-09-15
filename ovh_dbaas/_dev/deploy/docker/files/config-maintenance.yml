@@ -1,0 +1,40 @@
+rules:
+  # OAuth2 token endpoint — used by auth.oauth2 framework during system tests
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+  # Engine list — postgresql: returns one cluster UUID
+  - path: /v1/cloud/project/test-project-id/database/postgresql
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["880e8400-e29b-41d4-a716-446655440001"]'
+  # Cluster detail — needed by test-api.py validation only (not called by maintenance CEL program)
+  - path: /v1/cloud/project/test-project-id/database/postgresql/880e8400-e29b-41d4-a716-446655440001
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          {"id":"880e8400-e29b-41d4-a716-446655440001","engine":"postgresql","version":"14","plan":"business","flavor":"db1-15","status":"READY","createdAt":"2024-01-15T09:30:00.000Z","description":"Test PostgreSQL cluster","category":"operational","networkType":"public","networkId":null,"openstackRegion":"GRA","nodeNumber":1,"nodes":[],"endpoints":[],"ipRestrictions":[],"backups":{"time":"01:00:00","regions":["GRA"],"retentionDays":7},"storage":{"size":{"value":80,"unit":"GB"},"type":"ceph"},"deletionProtection":false,"enablePrometheus":false}
+  # Maintenance list — returns 2 maintenance window objects directly (not IDs)
+  # One SCHEDULED (appliedAt null), one APPLIED (appliedAt set)
+  - path: /v1/cloud/project/test-project-id/database/postgresql/880e8400-e29b-41d4-a716-446655440001/maintenance
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          [{"id":"990e8400-e29b-41d4-a716-446655440001","description":"Minor version upgrade from 14.9 to 14.11","status":"SCHEDULED","scheduledAt":"2026-10-15T22:00:00.000Z","appliedAt":null},{"id":"990e8400-e29b-41d4-a716-446655440002","description":"Security patch update","status":"APPLIED","scheduledAt":"2024-01-20T22:00:00.000Z","appliedAt":"2024-01-20T22:15:30.000Z"}]

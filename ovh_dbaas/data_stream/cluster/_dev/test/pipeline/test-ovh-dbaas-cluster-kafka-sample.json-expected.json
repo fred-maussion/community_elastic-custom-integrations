@@ -1,0 +1,105 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2024-02-10T14:00:00.000Z",
+            "cloud": {
+                "provider": "ovh",
+                "region": "BHS",
+                "service": {
+                    "name": "Database as a Service"
+                }
+            },
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "kind": "state",
+                "original": "{\"id\":\"550e8400-e29b-41d4-a716-446655440002\",\"engine\":\"kafka\",\"version\":\"3.4\",\"plan\":\"business\",\"flavor\":\"db1-15\",\"status\":\"READY\",\"createdAt\":\"2024-02-10T14:00:00.000Z\",\"description\":\"Production Kafka cluster\",\"category\":\"operational\",\"maintenanceTime\":\"03:00:00\",\"networkType\":\"public\",\"networkId\":null,\"openstackRegion\":\"BHS\",\"nodeNumber\":3,\"nodes\":[{\"id\":\"550e8400-e29b-41d4-a716-446655440021\",\"name\":\"node-1\",\"status\":\"READY\",\"createdAt\":\"2024-02-10T14:05:00.000Z\",\"region\":\"BHS\",\"flavor\":\"db1-15\",\"port\":9092,\"role\":\"STANDARD\"}],\"endpoints\":[{\"component\":\"kafka\",\"domain\":\"cluster-kafka.db.cloud.example.com\",\"path\":null,\"port\":9093,\"scheme\":\"kafka+ssl\",\"ssl\":true,\"sslMode\":\"verify-full\",\"uri\":\"kafka+ssl://cluster-kafka.db.cloud.example.com:9093\"},{\"component\":\"kafkaConnect\",\"domain\":\"cluster-kafka-connect.db.cloud.example.com\",\"path\":null,\"port\":443,\"scheme\":\"https\",\"ssl\":true,\"sslMode\":\"verify-full\",\"uri\":\"https://cluster-kafka-connect.db.cloud.example.com:443\"}],\"ipRestrictions\":[],\"backups\":{\"time\":\"02:00:00\",\"regions\":[\"BHS\"],\"retentionDays\":7,\"pitr\":null},\"storage\":{\"size\":{\"value\":200,\"unit\":\"GB\"},\"type\":\"ceph\"},\"deletionProtection\":true,\"enablePrometheus\":true,\"restApi\":true,\"schemaRegistry\":false}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh_dbaas": {
+                "cluster": {
+                    "backups": {
+                        "regions": [
+                            "BHS"
+                        ],
+                        "retention_days": 7,
+                        "time": "02:00:00"
+                    },
+                    "category": "operational",
+                    "deletion_protection": true,
+                    "enable_prometheus": true,
+                    "endpoints": [
+                        {
+                            "component": "kafka",
+                            "domain": "cluster-kafka.db.cloud.example.com",
+                            "port": 9093,
+                            "scheme": "kafka+ssl",
+                            "ssl": true,
+                            "ssl_mode": "verify-full",
+                            "uri": "kafka+ssl://cluster-kafka.db.cloud.example.com:9093"
+                        },
+                        {
+                            "component": "kafkaConnect",
+                            "domain": "cluster-kafka-connect.db.cloud.example.com",
+                            "port": 443,
+                            "scheme": "https",
+                            "ssl": true,
+                            "ssl_mode": "verify-full",
+                            "uri": "https://cluster-kafka-connect.db.cloud.example.com:443"
+                        }
+                    ],
+                    "flavor": "db1-15",
+                    "ip_restrictions": [],
+                    "maintenance_time": "03:00:00",
+                    "network_type": "public",
+                    "nodes": [
+                        {
+                            "created_at": "2024-02-10T14:05:00.000Z",
+                            "flavor": "db1-15",
+                            "id": "550e8400-e29b-41d4-a716-446655440021",
+                            "name": "node-1",
+                            "port": 9092,
+                            "region": "BHS",
+                            "role": "STANDARD",
+                            "status": "READY"
+                        }
+                    ],
+                    "plan": "business",
+                    "rest_api": true,
+                    "schema_registry": false,
+                    "storage": {
+                        "size_unit": "GB",
+                        "size_value": 200,
+                        "type": "ceph"
+                    }
+                }
+            },
+            "related": {
+                "hosts": [
+                    "cluster-kafka.db.cloud.example.com",
+                    "cluster-kafka-connect.db.cloud.example.com"
+                ]
+            },
+            "server": {
+                "address": "cluster-kafka.db.cloud.example.com",
+                "port": 9093
+            },
+            "service": {
+                "id": "550e8400-e29b-41d4-a716-446655440002",
+                "name": "Production Kafka cluster",
+                "state": "READY",
+                "type": "kafka",
+                "version": "3.4"
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

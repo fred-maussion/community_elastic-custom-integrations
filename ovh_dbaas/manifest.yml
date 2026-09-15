@@ -1,0 +1,108 @@
+format_version: "3.4.2"
+name: ovh_dbaas
+title: "OVHcloud Managed Databases"
+version: 0.1.0
+source:
+  license: "Elastic-2.0"
+description: "Collect cluster state, backup records, and maintenance windows from OVHcloud Managed Databases (DBaaS) via the OVH Public Cloud REST API."
+type: integration
+categories:
+  - cloud
+  - database_security
+conditions:
+  kibana:
+    version: "^8.19.0 || ^9.1.0"
+  elastic:
+    subscription: "basic"
+screenshots:
+  - src: /img/sample-screenshot.png
+    title: Sample screenshot
+    size: 600x600
+    type: image/png
+icons:
+  - src: /img/sample-logo.svg
+    title: Sample logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: ovh_dbaas
+    title: OVHcloud Managed Databases
+    description: Collect cluster state, backup records, and maintenance windows from OVHcloud DBaaS
+    inputs:
+      - type: cel
+        title: Collect OVHcloud Managed Database events via REST API
+        description: Collecting OVHcloud Managed Database events via REST API
+        vars:
+          - name: client_id
+            type: text
+            title: Client ID
+            description: >-
+              OVH IAM service account client ID. Create in OVHcloud Control Panel → IAM → Service Accounts.
+            required: true
+            show_user: true
+          - name: client_secret
+            type: password
+            title: Client Secret
+            description: OVH IAM service account client secret.
+            required: true
+            show_user: true
+            secret: true
+          - name: token_url
+            type: url
+            title: Token URL
+            description: >-
+              OAuth2 token endpoint. Change only for non-EU deployments. CA: https://ca.ovh.com/auth/oauth2/token US: https://us.ovhcloud.com/auth/oauth2/token
+            required: true
+            show_user: true
+            default: "https://www.ovh.com/auth/oauth2/token"
+          - name: api_url
+            type: url
+            title: API Base URL
+            description: >-
+              OVH API base URL. EU: https://eu.api.ovh.com/v1 CA: https://ca.api.ovh.com/v1 US: https://api.us.ovhcloud.com/v1
+            required: true
+            show_user: true
+            default: "https://eu.api.ovh.com/v1"
+          - name: service_name
+            type: text
+            title: Cloud Project ID
+            description: >-
+              OVH Public Cloud project UUID (serviceName). Found in OVHcloud Control Panel → Public Cloud → Project Settings.
+            required: true
+            show_user: true
+          - name: engines
+            type: text
+            title: Database Engines
+            description: >-
+              Comma-separated list of database engine types to monitor. Valid values: postgresql, mysql, mongodb, valkey, opensearch, clickhouse, kafka, kafkaConnect, kafkaMirrorMaker, grafana
+            required: true
+            show_user: true
+            default: "postgresql,mysql,mongodb,valkey,opensearch,clickhouse,kafka"
+          - name: http_client_timeout
+            type: text
+            title: HTTP Client Timeout
+            description: Duration before declaring a request timed out. Valid time units are ns, us, ms, s, m, h.
+            required: false
+            show_user: false
+            default: "30s"
+          - name: proxy_url
+            type: url
+            title: Proxy URL
+            description: URL to proxy connections in the form of http[s]://<user>:<password>@<server name/ip>:<port>.
+            required: false
+            show_user: false
+          - name: ssl
+            type: yaml
+            title: TLS Configuration
+            description: SSL/TLS configuration options.
+            required: false
+            show_user: false
+          - name: tags
+            type: text
+            title: Tags
+            multi: true
+            show_user: false
+            required: false
+owner:
+  github: elastic/integrations
+  type: elastic

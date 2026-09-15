@@ -1,0 +1,30 @@
+- name: ovh_dbaas.backup
+  type: group
+  fields:
+    - name: id
+      type: keyword
+      description: Backup UUID.
+    - name: created_at
+      type: date
+      description: Backup creation timestamp (ISO 8601).
+    - name: description
+      type: keyword
+      description: Human-readable backup description.
+    - name: status
+      type: keyword
+      description: Backup status (e.g. READY, CREATING, ERROR).
+    - name: type
+      type: keyword
+      description: Backup type (e.g. automatic, manual, pitr, snapshot).
+    - name: size
+      type: group
+      fields:
+        - name: value
+          type: long
+          description: Numeric backup size.
+        - name: unit
+          type: keyword
+          description: Size unit (e.g. MB, GB).
+    - name: regions
+      type: keyword
+      description: Storage regions where this backup is stored (e.g. GRA, SBG).

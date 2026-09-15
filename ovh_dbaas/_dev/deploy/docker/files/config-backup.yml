@@ -1,0 +1,76 @@
+rules:
+  # OAuth2 token endpoint — used by auth.oauth2 framework during system tests
+  - path: /auth/oauth2/token
+    methods: [POST]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '{"access_token":"test-token","token_type":"Bearer","expires_in":3600}'
+  # Engine list — postgresql: returns one cluster UUID
+  - path: /v1/cloud/project/test-project-id/database/postgresql
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["660e8400-e29b-41d4-a716-446655440001"]'
+  # Cluster detail — needed by test-api.py validation only (not called by backup CEL program)
+  - path: /v1/cloud/project/test-project-id/database/postgresql/660e8400-e29b-41d4-a716-446655440001
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          {"id":"660e8400-e29b-41d4-a716-446655440001","engine":"postgresql","version":"14","plan":"business","flavor":"db1-15","status":"READY","createdAt":"2024-01-15T09:30:00.000Z","description":"Test PostgreSQL cluster","category":"operational","networkType":"public","networkId":null,"openstackRegion":"GRA","nodeNumber":1,"nodes":[],"endpoints":[],"ipRestrictions":[],"backups":{"time":"01:00:00","regions":["GRA"],"retentionDays":7},"storage":{"size":{"value":80,"unit":"GB"},"type":"ceph"},"deletionProtection":false,"enablePrometheus":false}
+  # Node list — returns empty array (needed by test-api.py, not by backup CEL program)
+  - path: /v1/cloud/project/test-project-id/database/postgresql/660e8400-e29b-41d4-a716-446655440001/node
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '[]'
+  # Backup list for cluster — returns two backup UUIDs
+  - path: /v1/cloud/project/test-project-id/database/postgresql/660e8400-e29b-41d4-a716-446655440001/backup
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '["770e8400-e29b-41d4-a716-446655440001","770e8400-e29b-41d4-a716-446655440002"]'
+  # Backup detail 1
+  - path: /v1/cloud/project/test-project-id/database/postgresql/660e8400-e29b-41d4-a716-446655440001/backup/770e8400-e29b-41d4-a716-446655440001
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          {"id":"770e8400-e29b-41d4-a716-446655440001","createdAt":"2024-01-22T01:05:00.000Z","description":"Automatic backup","status":"READY","type":"automatic","size":{"value":1024,"unit":"MB"},"regions":[{"name":"GRA"}]}
+  # Backup detail 2
+  - path: /v1/cloud/project/test-project-id/database/postgresql/660e8400-e29b-41d4-a716-446655440001/backup/770e8400-e29b-41d4-a716-446655440002
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: >-
+          {"id":"770e8400-e29b-41d4-a716-446655440002","createdAt":"2024-01-21T01:05:00.000Z","description":"Automatic backup","status":"READY","type":"automatic","size":{"value":980,"unit":"MB"},"regions":[{"name":"GRA"}]}
+  # Maintenance list — returns empty array (needed by test-api.py, not by backup CEL program)
+  - path: /v1/cloud/project/test-project-id/database/postgresql/660e8400-e29b-41d4-a716-446655440001/maintenance
+    methods: [GET]
+    responses:
+      - status_code: 200
+        headers:
+          Content-Type:
+            - application/json
+        body: '[]'

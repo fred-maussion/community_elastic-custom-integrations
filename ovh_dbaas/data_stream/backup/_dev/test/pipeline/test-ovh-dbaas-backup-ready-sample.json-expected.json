@@ -1,0 +1,43 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2024-01-22T01:05:00.000Z",
+            "ecs": {
+                "version": "9.3.0"
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "kind": "state",
+                "original": "{\"id\":\"660e8400-e29b-41d4-a716-446655440001\",\"createdAt\":\"2024-01-22T01:05:00.000Z\",\"description\":\"Automatic backup\",\"status\":\"READY\",\"type\":\"automatic\",\"size\":{\"value\":1024,\"unit\":\"MB\"},\"regions\":[{\"name\":\"GRA\"}],\"engine\":\"postgresql\",\"clusterId\":\"550e8400-e29b-41d4-a716-446655440001\"}",
+                "type": [
+                    "info"
+                ]
+            },
+            "ovh_dbaas": {
+                "backup": {
+                    "created_at": "2024-01-22T01:05:00.000Z",
+                    "description": "Automatic backup",
+                    "id": "660e8400-e29b-41d4-a716-446655440001",
+                    "regions": [
+                        "GRA"
+                    ],
+                    "size": {
+                        "unit": "MB",
+                        "value": 1024
+                    },
+                    "status": "READY",
+                    "type": "automatic"
+                }
+            },
+            "service": {
+                "id": "550e8400-e29b-41d4-a716-446655440001",
+                "type": "postgresql"
+            },
+            "tags": [
+                "preserve_original_event"
+            ]
+        }
+    ]
+}

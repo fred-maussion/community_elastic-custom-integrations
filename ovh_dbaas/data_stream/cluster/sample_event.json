@@ -1,0 +1,133 @@
+{
+    "@timestamp": "2024-01-15T09:30:00.000Z",
+    "agent": {
+        "ephemeral_id": "50afcfc0-cef2-4014-9fb2-e7f242de06b9",
+        "id": "1e2e1d06-f987-478e-b2e0-18e9106074e3",
+        "name": "elastic-agent-69461",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "cloud": {
+        "provider": "ovh",
+        "region": "GRA",
+        "service": {
+            "name": "Database as a Service"
+        }
+    },
+    "data_stream": {
+        "dataset": "ovh_dbaas.cluster",
+        "namespace": "83027",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "1e2e1d06-f987-478e-b2e0-18e9106074e3",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "category": [
+            "configuration"
+        ],
+        "dataset": "ovh_dbaas.cluster",
+        "ingested": "2026-08-31T17:42:14Z",
+        "kind": "state",
+        "module": "ovh_dbaas",
+        "original": "{\"id\":\"550e8400-e29b-41d4-a716-446655440001\",\"engine\":\"postgresql\",\"version\":\"14\",\"plan\":\"business\",\"flavor\":\"db1-15\",\"status\":\"READY\",\"createdAt\":\"2024-01-15T09:30:00.000Z\",\"description\":\"Production PostgreSQL cluster\",\"category\":\"operational\",\"maintenanceTime\":\"22:00:00\",\"networkType\":\"public\",\"networkId\":null,\"openstackRegion\":\"GRA\",\"nodeNumber\":3,\"nodes\":[{\"id\":\"550e8400-e29b-41d4-a716-446655440011\",\"name\":\"node-1\",\"status\":\"READY\",\"createdAt\":\"2024-01-15T09:35:00.000Z\",\"region\":\"GRA\",\"flavor\":\"db1-15\",\"port\":20184,\"role\":\"STANDARD\"}],\"endpoints\":[{\"component\":\"postgresql\",\"domain\":\"cluster-1.postgresql.db.cloud.example.com\",\"port\":20184,\"scheme\":\"postgresql\",\"ssl\":true,\"sslMode\":\"require\",\"uri\":\"postgresql://user@cluster-1.postgresql.db.cloud.example.com:20184/defaultdb?sslmode=require\"}],\"ipRestrictions\":[{\"ip\":\"198.51.100.0/24\",\"description\":\"Office network\",\"status\":\"READY\"}],\"backups\":{\"time\":\"01:00:00\",\"regions\":[\"GRA\"],\"retentionDays\":7,\"pitr\":\"2024-01-22T09:30:00.000Z\"},\"storage\":{\"size\":{\"value\":160,\"unit\":\"GB\"},\"type\":\"ceph\"},\"deletionProtection\":false,\"enablePrometheus\":false}",
+        "type": [
+            "info"
+        ]
+    },
+    "host": {
+        "architecture": "aarch64",
+        "containerized": false,
+        "hostname": "elastic-agent-69461",
+        "ip": [
+            "172.24.0.2",
+            "172.18.0.3"
+        ],
+        "mac": [
+            "6E-8B-F3-65-14-CB",
+            "DE-42-C0-06-B6-4E"
+        ],
+        "name": "elastic-agent-69461",
+        "os": {
+            "family": "",
+            "kernel": "7.0.12-linuxkit",
+            "name": "Wolfi",
+            "platform": "wolfi",
+            "type": "linux",
+            "version": "20230201"
+        }
+    },
+    "input": {
+        "type": "cel"
+    },
+    "ovh_dbaas": {
+        "cluster": {
+            "backups": {
+                "pitr": "2024-01-22T09:30:00.000Z",
+                "regions": "GRA",
+                "retention_days": 7,
+                "time": "01:00:00"
+            },
+            "category": "operational",
+            "deletion_protection": false,
+            "enable_prometheus": false,
+            "endpoints": {
+                "component": "postgresql",
+                "domain": "cluster-1.postgresql.db.cloud.example.com",
+                "port": 20184,
+                "scheme": "postgresql",
+                "ssl": true,
+                "ssl_mode": "require",
+                "uri": "postgresql://user@cluster-1.postgresql.db.cloud.example.com:20184/defaultdb?sslmode=require"
+            },
+            "flavor": "db1-15",
+            "ip_restrictions": {
+                "description": "Office network",
+                "ip": "198.51.100.0/24",
+                "status": "READY"
+            },
+            "maintenance_time": "22:00:00",
+            "network_type": "public",
+            "nodes": {
+                "created_at": "2024-01-15T09:35:00.000Z",
+                "flavor": "db1-15",
+                "id": "550e8400-e29b-41d4-a716-446655440011",
+                "name": "node-1",
+                "port": 20184,
+                "region": "GRA",
+                "role": "STANDARD",
+                "status": "READY"
+            },
+            "plan": "business",
+            "storage": {
+                "size_unit": "GB",
+                "size_value": 160,
+                "type": "ceph"
+            }
+        }
+    },
+    "related": {
+        "hosts": [
+            "cluster-1.postgresql.db.cloud.example.com"
+        ]
+    },
+    "server": {
+        "address": "cluster-1.postgresql.db.cloud.example.com",
+        "port": 20184
+    },
+    "service": {
+        "id": "550e8400-e29b-41d4-a716-446655440001",
+        "name": "Production PostgreSQL cluster",
+        "state": "READY",
+        "type": "postgresql",
+        "version": "14"
+    },
+    "tags": [
+        "preserve_original_event"
+    ]
+}

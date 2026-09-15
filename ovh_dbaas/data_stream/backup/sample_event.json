@@ -1,0 +1,82 @@
+{
+    "@timestamp": "2024-01-21T01:05:00.000Z",
+    "agent": {
+        "ephemeral_id": "8e932c0f-b6dc-4347-86be-aac40eec8a54",
+        "id": "e8128aa8-5450-41f6-91ab-7280ce72f619",
+        "name": "elastic-agent-97404",
+        "type": "filebeat",
+        "version": "9.4.4"
+    },
+    "data_stream": {
+        "dataset": "ovh_dbaas.backup",
+        "namespace": "53800",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "9.3.0"
+    },
+    "elastic_agent": {
+        "id": "e8128aa8-5450-41f6-91ab-7280ce72f619",
+        "snapshot": false,
+        "version": "9.4.4"
+    },
+    "event": {
+        "category": [
+            "configuration"
+        ],
+        "dataset": "ovh_dbaas.backup",
+        "ingested": "2026-08-31T18:00:34Z",
+        "kind": "state",
+        "module": "ovh_dbaas",
+        "original": "{\"clusterId\":\"660e8400-e29b-41d4-a716-446655440001\",\"createdAt\":\"2024-01-21T01:05:00.000Z\",\"description\":\"Automatic backup\",\"engine\":\"postgresql\",\"id\":\"770e8400-e29b-41d4-a716-446655440002\",\"regions\":[{\"name\":\"GRA\"}],\"size\":{\"unit\":\"MB\",\"value\":980},\"status\":\"READY\",\"type\":\"automatic\"}",
+        "type": [
+            "info"
+        ]
+    },
+    "host": {
+        "architecture": "aarch64",
+        "containerized": false,
+        "hostname": "elastic-agent-97404",
+        "ip": [
+            "172.24.0.2",
+            "172.18.0.3"
+        ],
+        "mac": [
+            "92-FE-49-48-D2-EC",
+            "96-FE-70-7C-4E-9A"
+        ],
+        "name": "elastic-agent-97404",
+        "os": {
+            "family": "",
+            "kernel": "7.0.12-linuxkit",
+            "name": "Wolfi",
+            "platform": "wolfi",
+            "type": "linux",
+            "version": "20230201"
+        }
+    },
+    "input": {
+        "type": "cel"
+    },
+    "ovh_dbaas": {
+        "backup": {
+            "created_at": "2024-01-21T01:05:00.000Z",
+            "description": "Automatic backup",
+            "id": "770e8400-e29b-41d4-a716-446655440002",
+            "regions": "GRA",
+            "size": {
+                "unit": "MB",
+                "value": 980
+            },
+            "status": "READY",
+            "type": "automatic"
+        }
+    },
+    "service": {
+        "id": "660e8400-e29b-41d4-a716-446655440001",
+        "type": "postgresql"
+    },
+    "tags": [
+        "preserve_original_event"
+    ]
+}
