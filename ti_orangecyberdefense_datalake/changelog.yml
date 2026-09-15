@@ -1,0 +1,21 @@
+# newer versions go on top
+- version: "0.0.4"
+  changes:
+    - description: Fix declared ECS fields and changelog
+      type: bugfix
+      link: https://github.com/cert-orangecyberdefense/datalake2elastic/pull/1
+- version: "0.0.3"
+  changes:
+    - description: File indicator support, unit tests and compliance, fixes
+      type: enhancement
+      link: https://github.com/cert-orangecyberdefense/datalake2elastic/pull/1
+- version: "0.0.2"
+  changes:
+    - description: 2nd beta release
+      type: enhancement
+      link: https://github.com/cert-orangecyberdefense/datalake2elastic/pull/1
+- version: "0.0.1"
+  changes:
+    - description: Initial draft of the package
+      type: enhancement
+      link: https://github.com/cert-orangecyberdefense/datalake2elastic/pull/1

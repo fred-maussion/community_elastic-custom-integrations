@@ -1,0 +1,502 @@
+{
+    "expected": [
+        {
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "kind": "enrichment",
+                "original": "{\"type\":\"indicator\",\"id\":\"indicator--01b513f1-ecd8-4038-b7f7-c724d7fab16b\",\"name\":\"203.0.113.42\",\"pattern\":\"[ipv4-addr:value = '203.0.113.42']\"}",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "tags": [],
+            "threat": {
+                "feed": {
+                    "name": "Orange Cyberdefense Datalake CTI",
+                    "reference": "https://datalake.cert.orangecyberdefense.com/"
+                },
+                "indicator": {
+                    "confidence": "Not Specified",
+                    "first_seen": "2025-07-08T01:51:30.000Z",
+                    "id": [
+                        "indicator--01b513f1-ecd8-4038-b7f7-c724d7fab16b"
+                    ],
+                    "ip": "203.0.113.42",
+                    "last_seen": "2026-04-05T14:32:11.000Z",
+                    "modified_at": "2026-04-05T14:32:11.000Z",
+                    "name": "203.0.113.42",
+                    "reference": "https://datalake.cert.orangecyberdefense.com/gui/threat/84cc8ac4f853e439b7b5390bee469438",
+                    "type": "ipv4-addr"
+                }
+            },
+            "ti_orangecyberdefense_datalake": {
+                "indicator": {
+                    "_computed": {
+                        "score_max": 100,
+                        "sources": [
+                            "whois_lookup"
+                        ]
+                    },
+                    "created": "2025-07-08T01:51:30.000Z",
+                    "created_by_ref": "identity--54737adf-74a3-3fe4-a1e7-138694561b49",
+                    "external_references": [
+                        {
+                            "external_id": "84cc8ac4f853e439b7b5390bee469438",
+                            "source_name": "Orange Cyberdefense",
+                            "url": "https://datalake.cert.orangecyberdefense.com/gui/threat/84cc8ac4f853e439b7b5390bee469438"
+                        }
+                    ],
+                    "id": "indicator--01b513f1-ecd8-4038-b7f7-c724d7fab16b",
+                    "indicator_types": [
+                        "malicious-activity"
+                    ],
+                    "labels": [
+                        "peerpressure",
+                        "port:443"
+                    ],
+                    "modified": "2026-04-05T14:32:11.000Z",
+                    "name": "203.0.113.42",
+                    "pattern": "[ipv4-addr:value = '203.0.113.42']",
+                    "pattern_type": "stix",
+                    "pattern_version": "2.1",
+                    "spec_version": "2.1",
+                    "type": "indicator",
+                    "valid_from": "2026-04-05T14:32:11Z",
+                    "x_datalake_atom_type": "ip",
+                    "x_datalake_score": {
+                        "hack": 6,
+                        "malware": 100,
+                        "phishing": 2,
+                        "scan": 0
+                    },
+                    "x_datalake_sources": [
+                        {
+                            "count": 15,
+                            "first_seen": "2026-03-04T02:26:22Z",
+                            "last_updated": "2026-04-05T14:32:00Z",
+                            "source_id": "whois_lookup"
+                        }
+                    ]
+                },
+                "query_hash": "test_query_hash_1"
+            }
+        },
+        {
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "kind": "enrichment",
+                "original": "{\"type\":\"indicator\",\"id\":\"indicator--9409fb70-1cfc-4166-a4f4-3b3118416363\",\"name\":\"2001:db8:2117:c00:3:d36f:e680:93a1\",\"pattern\":\"[ipv6-addr:value = '2001:db8:2117:c00:3:d36f:e680:93a1']\"}",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "tags": [],
+            "threat": {
+                "feed": {
+                    "name": "Orange Cyberdefense Datalake CTI",
+                    "reference": "https://datalake.cert.orangecyberdefense.com/"
+                },
+                "indicator": {
+                    "confidence": "Not Specified",
+                    "first_seen": "2019-11-21T20:32:35.000Z",
+                    "id": [
+                        "indicator--9409fb70-1cfc-4166-a4f4-3b3118416363"
+                    ],
+                    "ip": "2001:db8:2117:c00:3:d36f:e680:93a1",
+                    "last_seen": "2019-11-21T20:32:35.000Z",
+                    "modified_at": "2019-11-21T20:32:35.000Z",
+                    "name": "2001:db8:2117:c00:3:d36f:e680:93a1",
+                    "reference": "https://datalake.cert.orangecyberdefense.com/gui/threat/8352b36cd0c72c8a82e125d4ce017715",
+                    "type": "ipv6-addr"
+                }
+            },
+            "ti_orangecyberdefense_datalake": {
+                "indicator": {
+                    "_computed": {
+                        "sources": [
+                            "dns_lookup"
+                        ]
+                    },
+                    "created": "2019-11-21T20:32:35.000Z",
+                    "created_by_ref": "identity--54737adf-74a3-3fe4-a1e7-138694561b49",
+                    "external_references": [
+                        {
+                            "external_id": "8352b36cd0c72c8a82e125d4ce017715",
+                            "source_name": "Orange Cyberdefense",
+                            "url": "https://datalake.cert.orangecyberdefense.com/gui/threat/8352b36cd0c72c8a82e125d4ce017715"
+                        }
+                    ],
+                    "id": "indicator--9409fb70-1cfc-4166-a4f4-3b3118416363",
+                    "indicator_types": [
+                        "malicious-activity"
+                    ],
+                    "modified": "2019-11-21T20:32:35.000Z",
+                    "name": "2001:db8:2117:c00:3:d36f:e680:93a1",
+                    "pattern": "[ipv6-addr:value = '2001:db8:2117:c00:3:d36f:e680:93a1']",
+                    "pattern_type": "stix",
+                    "pattern_version": "2.1",
+                    "spec_version": "2.1",
+                    "type": "indicator",
+                    "valid_from": "2019-11-21T20:32:35Z",
+                    "x_datalake_atom_type": "ip",
+                    "x_datalake_score": {},
+                    "x_datalake_sources": [
+                        {
+                            "count": 1,
+                            "first_seen": "2019-11-21T20:32:35Z",
+                            "last_updated": "2019-11-21T20:32:35Z",
+                            "source_id": "dns_lookup"
+                        }
+                    ]
+                },
+                "query_hash": "test_query_hash_1"
+            }
+        },
+        {
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "kind": "enrichment",
+                "original": "{\"type\":\"indicator\",\"id\":\"indicator--4f0ee2c5-751a-48b8-97d9-02ba5133beb0\",\"name\":\"test-pipeline.example.com\",\"pattern\":\"[domain-name:value = 'test-pipeline.example.com']\"}",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "tags": [],
+            "threat": {
+                "feed": {
+                    "name": "Orange Cyberdefense Datalake CTI",
+                    "reference": "https://datalake.cert.orangecyberdefense.com/"
+                },
+                "indicator": {
+                    "confidence": "Not Specified",
+                    "first_seen": "2026-04-23T04:15:55.000Z",
+                    "id": [
+                        "indicator--4f0ee2c5-751a-48b8-97d9-02ba5133beb0"
+                    ],
+                    "last_seen": "2026-05-14T08:24:52.000Z",
+                    "modified_at": "2026-05-14T08:24:52.000Z",
+                    "name": "test-pipeline.example.com",
+                    "reference": "https://datalake.cert.orangecyberdefense.com/gui/threat/367ce96c2771ce882608b7a9c5f55eb1",
+                    "type": "domain-name",
+                    "url": {
+                        "domain": "test-pipeline.example.com"
+                    }
+                }
+            },
+            "ti_orangecyberdefense_datalake": {
+                "indicator": {
+                    "_computed": {
+                        "score_max": 100,
+                        "sources": [
+                            "url_parser_lookup",
+                            "org:91"
+                        ]
+                    },
+                    "created": "2026-04-23T04:15:55.000Z",
+                    "created_by_ref": "identity--54737adf-74a3-3fe4-a1e7-138694561b49",
+                    "external_references": [
+                        {
+                            "external_id": "367ce96c2771ce882608b7a9c5f55eb1",
+                            "source_name": "Orange Cyberdefense",
+                            "url": "https://datalake.cert.orangecyberdefense.com/gui/threat/367ce96c2771ce882608b7a9c5f55eb1"
+                        }
+                    ],
+                    "id": "indicator--4f0ee2c5-751a-48b8-97d9-02ba5133beb0",
+                    "indicator_types": [
+                        "malicious-activity"
+                    ],
+                    "labels": [
+                        "invest",
+                        "world_watch"
+                    ],
+                    "modified": "2026-05-14T08:24:52.000Z",
+                    "name": "test-pipeline.example.com",
+                    "pattern": "[domain-name:value = 'test-pipeline.example.com']",
+                    "pattern_type": "stix",
+                    "pattern_version": "2.1",
+                    "spec_version": "2.1",
+                    "type": "indicator",
+                    "valid_from": "2026-05-14T08:24:52Z",
+                    "x_datalake_atom_type": "domain",
+                    "x_datalake_score": {
+                        "malware": 15,
+                        "phishing": 100
+                    },
+                    "x_datalake_sources": [
+                        {
+                            "count": 2,
+                            "first_seen": "2026-04-24T05:37:45Z",
+                            "last_updated": "2026-05-14T08:24:52Z",
+                            "source_id": "url_parser_lookup"
+                        },
+                        {
+                            "count": 5,
+                            "first_seen": "2026-04-29T11:42:49Z",
+                            "last_updated": "2026-05-14T08:24:52Z",
+                            "source_id": "org:91"
+                        }
+                    ]
+                },
+                "query_hash": "test_query_hash_1"
+            }
+        },
+        {
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "kind": "enrichment",
+                "original": "{\"type\":\"indicator\",\"id\":\"indicator--f2f583e8-7487-4d64-bace-324bb92ec38f\",\"name\":\"test-pipeline@example.com\",\"pattern\":\"[email-addr:value = 'test-pipeline@example.com']\"}",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "tags": [],
+            "threat": {
+                "feed": {
+                    "name": "Orange Cyberdefense Datalake CTI",
+                    "reference": "https://datalake.cert.orangecyberdefense.com/"
+                },
+                "indicator": {
+                    "confidence": "Not Specified",
+                    "email": {
+                        "address": "test-pipeline@example.com"
+                    },
+                    "first_seen": "2026-02-06T05:55:00.000Z",
+                    "id": [
+                        "indicator--f2f583e8-7487-4d64-bace-324bb92ec38f"
+                    ],
+                    "last_seen": "2026-02-09T05:55:00.000Z",
+                    "modified_at": "2026-02-09T05:55:00.000Z",
+                    "name": "test-pipeline@example.com",
+                    "reference": "https://datalake.cert.orangecyberdefense.com/gui/threat/d448b9f6d0bb765c39024eae25cadc1e",
+                    "type": "email-addr"
+                }
+            },
+            "ti_orangecyberdefense_datalake": {
+                "indicator": {
+                    "_computed": {
+                        "score_max": 54,
+                        "sources": [
+                            "forum_bots"
+                        ]
+                    },
+                    "created": "2026-02-06T05:55:00.000Z",
+                    "created_by_ref": "identity--54737adf-74a3-3fe4-a1e7-138694561b49",
+                    "external_references": [
+                        {
+                            "external_id": "d448b9f6d0bb765c39024eae25cadc1e",
+                            "source_name": "Orange Cyberdefense",
+                            "url": "https://datalake.cert.orangecyberdefense.com/gui/threat/d448b9f6d0bb765c39024eae25cadc1e"
+                        }
+                    ],
+                    "id": "indicator--f2f583e8-7487-4d64-bace-324bb92ec38f",
+                    "indicator_types": [
+                        "malicious-activity"
+                    ],
+                    "modified": "2026-02-09T05:55:00.000Z",
+                    "name": "test-pipeline@example.com",
+                    "pattern": "[email-addr:value = 'test-pipeline@example.com']",
+                    "pattern_type": "stix",
+                    "pattern_version": "2.1",
+                    "spec_version": "2.1",
+                    "type": "indicator",
+                    "valid_from": "2026-02-06T05:55:00Z",
+                    "x_datalake_atom_type": "email",
+                    "x_datalake_score": {
+                        "malware": 18,
+                        "spam": 54
+                    },
+                    "x_datalake_sources": [
+                        {
+                            "count": 1,
+                            "first_seen": "2026-02-06T05:55:00Z",
+                            "last_updated": "2026-02-06T05:55:00Z",
+                            "source_id": "forum_bots"
+                        }
+                    ]
+                },
+                "query_hash": "test_query_hash_1"
+            }
+        },
+        {
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "kind": "enrichment",
+                "original": "{\"type\":\"indicator\",\"id\":\"indicator--70f01d30-c6df-4dbe-a114-81f670bded9a\",\"name\":\"https://test-pipeline.example.com/get?i=1&j=23\",\"pattern\":\"[url:value = 'https://test-pipeline.example.com/get?i=1&j=23']\"}",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "tags": [],
+            "threat": {
+                "feed": {
+                    "name": "Orange Cyberdefense Datalake CTI",
+                    "reference": "https://datalake.cert.orangecyberdefense.com/"
+                },
+                "indicator": {
+                    "confidence": "Not Specified",
+                    "first_seen": "2026-06-29T12:53:31.000Z",
+                    "id": [
+                        "indicator--70f01d30-c6df-4dbe-a114-81f670bded9a"
+                    ],
+                    "last_seen": "2026-06-29T12:53:31.000Z",
+                    "modified_at": "2026-06-29T12:53:31.000Z",
+                    "name": "https://test-pipeline.example.com/get?i=1&j=23",
+                    "reference": "https://datalake.cert.orangecyberdefense.com/gui/threat/63935a656aea2da407e1e87723b67165",
+                    "type": "url",
+                    "url": {
+                        "domain": "test-pipeline.example.com",
+                        "full": "https://test-pipeline.example.com/get?i=1&j=23",
+                        "original": "https://test-pipeline.example.com/get?i=1&j=23",
+                        "path": "/get",
+                        "query": "i=1&j=23",
+                        "scheme": "https"
+                    }
+                }
+            },
+            "ti_orangecyberdefense_datalake": {
+                "indicator": {
+                    "_computed": {
+                        "score_max": 100,
+                        "sources": [
+                            "org:91"
+                        ]
+                    },
+                    "created": "2026-06-29T12:53:31.000Z",
+                    "created_by_ref": "identity--54737adf-74a3-3fe4-a1e7-138694561b49",
+                    "external_references": [
+                        {
+                            "external_id": "63935a656aea2da407e1e87723b67165",
+                            "source_name": "Orange Cyberdefense",
+                            "url": "https://datalake.cert.orangecyberdefense.com/gui/threat/63935a656aea2da407e1e87723b67165"
+                        }
+                    ],
+                    "id": "indicator--70f01d30-c6df-4dbe-a114-81f670bded9a",
+                    "indicator_types": [
+                        "malicious-activity"
+                    ],
+                    "labels": [
+                        "invest",
+                        "world_watch"
+                    ],
+                    "modified": "2026-06-29T12:53:31.000Z",
+                    "name": "https://test-pipeline.example.com/get?i=1&j=23",
+                    "pattern": "[url:value = 'https://test-pipeline.example.com/get?i=1&j=23']",
+                    "pattern_type": "stix",
+                    "pattern_version": "2.1",
+                    "spec_version": "2.1",
+                    "type": "indicator",
+                    "valid_from": "2026-06-29T12:53:31Z",
+                    "x_datalake_atom_type": "url",
+                    "x_datalake_score": {
+                        "malware": 100
+                    },
+                    "x_datalake_sources": [
+                        {
+                            "count": 1,
+                            "first_seen": "2026-06-29T12:53:31Z",
+                            "last_updated": "2026-06-29T12:53:31Z",
+                            "source_id": "org:91"
+                        }
+                    ]
+                },
+                "query_hash": "test_query_hash_1"
+            }
+        },
+        {
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "kind": "enrichment",
+                "original": "{\"type\":\"indicator\",\"id\":\"indicator--44099b1e-ea3e-334f-b9b2-301de76b7abb\",\"name\":\"56e4ebc8d7d8f46d2c05cd4ffc1725f1fa92b068\",\"pattern\":\"[file:hashes.MD5 = 'bdf1078c8a11a1d2cc3e8e53e1420450' OR file:hashes.'SHA-256' = 'fbbd2ca2ec1443f7788d78f482f892956f45c60c7573173fa8f748b5200d7322' OR file:hashes.'SHA-1' = '56e4ebc8d7d8f46d2c05cd4ffc1725f1fa92b068' OR file:hashes.'SHA-512' = '7b739fd51d0cb59ef13200b5498fcbc0acdfcf99ac617c8a71f898c0aab04f587e5d80d2784f0847151b26ad315e8b032472467c30cd8150bbe73f4471f136b7']\"}",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "tags": [],
+            "threat": {
+                "feed": {
+                    "name": "Orange Cyberdefense Datalake CTI",
+                    "reference": "https://datalake.cert.orangecyberdefense.com/"
+                },
+                "indicator": {
+                    "confidence": "Not Specified",
+                    "file": {
+                        "hash": {
+                            "md5": "bdf1078c8a11a1d2cc3e8e53e1420450",
+                            "sha1": "56e4ebc8d7d8f46d2c05cd4ffc1725f1fa92b068",
+                            "sha256": "fbbd2ca2ec1443f7788d78f482f892956f45c60c7573173fa8f748b5200d7322",
+                            "sha512": "7b739fd51d0cb59ef13200b5498fcbc0acdfcf99ac617c8a71f898c0aab04f587e5d80d2784f0847151b26ad315e8b032472467c30cd8150bbe73f4471f136b7"
+                        }
+                    },
+                    "first_seen": "2026-08-31T09:05:28.000Z",
+                    "id": [
+                        "indicator--44099b1e-ea3e-334f-b9b2-301de76b7abb"
+                    ],
+                    "last_seen": "2026-08-31T09:05:28.000Z",
+                    "modified_at": "2026-08-31T09:05:28.000Z",
+                    "name": "56e4ebc8d7d8f46d2c05cd4ffc1725f1fa92b068",
+                    "reference": "https://datalake.cert.orangecyberdefense.com/gui/threat/d36021c8baaf60cd7612c3ab9735442b",
+                    "type": "file"
+                }
+            },
+            "ti_orangecyberdefense_datalake": {
+                "indicator": {
+                    "_computed": {
+                        "score_max": 50,
+                        "sources": [
+                            "org:91"
+                        ]
+                    },
+                    "created": "2026-08-31T09:05:28.000Z",
+                    "created_by_ref": "identity--54737adf-74a3-3fe4-a1e7-138694561b49",
+                    "external_references": [
+                        {
+                            "external_id": "d36021c8baaf60cd7612c3ab9735442b",
+                            "source_name": "Orange Cyberdefense",
+                            "url": "https://datalake.cert.orangecyberdefense.com/gui/threat/d36021c8baaf60cd7612c3ab9735442b"
+                        }
+                    ],
+                    "id": "indicator--44099b1e-ea3e-334f-b9b2-301de76b7abb",
+                    "indicator_types": [
+                        "malicious-activity"
+                    ],
+                    "labels": [
+                        "world_watch"
+                    ],
+                    "modified": "2026-08-31T09:05:28.000Z",
+                    "name": "56e4ebc8d7d8f46d2c05cd4ffc1725f1fa92b068",
+                    "pattern": "[file:hashes.MD5 = 'bdf1078c8a11a1d2cc3e8e53e1420450' OR file:hashes.'SHA-256' = 'fbbd2ca2ec1443f7788d78f482f892956f45c60c7573173fa8f748b5200d7322' OR file:hashes.'SHA-1' = '56e4ebc8d7d8f46d2c05cd4ffc1725f1fa92b068' OR file:hashes.'SHA-512' = '7b739fd51d0cb59ef13200b5498fcbc0acdfcf99ac617c8a71f898c0aab04f587e5d80d2784f0847151b26ad315e8b032472467c30cd8150bbe73f4471f136b7']",
+                    "pattern_type": "stix",
+                    "pattern_version": "2.1",
+                    "spec_version": "2.1",
+                    "type": "indicator",
+                    "valid_from": "2026-08-31T09:05:28Z",
+                    "x_datalake_atom_type": "file",
+                    "x_datalake_score": {
+                        "malware": 50
+                    },
+                    "x_datalake_sources": [
+                        {
+                            "count": 1,
+                            "first_seen": "2026-08-31T09:05:28Z",
+                            "last_updated": "2026-08-31T09:05:28Z",
+                            "source_id": "org:91"
+                        }
+                    ]
+                },
+                "query_hash": "test_query_hash_1"
+            }
+        }
+    ]
+}

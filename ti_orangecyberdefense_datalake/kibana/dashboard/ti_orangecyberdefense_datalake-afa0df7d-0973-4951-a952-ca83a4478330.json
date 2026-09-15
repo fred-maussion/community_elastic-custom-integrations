@@ -1,0 +1,2528 @@
+{
+    "attributes": {
+        "controlGroupInput": {
+            "chainingSystem": "HIERARCHICAL",
+            "controlStyle": "oneLine",
+            "ignoreParentSettingsJSON": {
+                "ignoreFilters": false,
+                "ignoreQuery": false,
+                "ignoreTimerange": false,
+                "ignoreValidations": false
+            },
+            "panelsJSON": {},
+            "showApplySelections": false
+        },
+        "description": "Monitor and review here indicators from the Orange Cyberdefense Datalake CTI platform.",
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "filter": [],
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [
+                            {
+                                "id": "logs-*",
+                                "name": "indexpattern-datasource-layer-04044f6c-369a-48a0-a61f-90a65d9344ac",
+                                "type": "index-pattern"
+                            }
+                        ],
+                        "state": {
+                            "adHocDataViews": {},
+                            "datasourceStates": {
+                                "formBased": {
+                                    "currentIndexPatternId": "logs-*",
+                                    "layers": {
+                                        "04044f6c-369a-48a0-a61f-90a65d9344ac": {
+                                            "columnOrder": [
+                                                "0dbc9864-56d2-4f01-afe9-2e2947989586"
+                                            ],
+                                            "columns": {
+                                                "0dbc9864-56d2-4f01-afe9-2e2947989586": {
+                                                    "customLabel": true,
+                                                    "dataType": "number",
+                                                    "isBucketed": false,
+                                                    "label": "Active Indicators (selected time range)",
+                                                    "operationType": "count",
+                                                    "params": {
+                                                        "emptyAsNull": true
+                                                    },
+                                                    "sourceField": "___records___"
+                                                }
+                                            },
+                                            "ignoreGlobalFilters": false,
+                                            "incompleteColumns": {},
+                                            "indexPatternId": "logs-*",
+                                            "sampling": 1
+                                        }
+                                    }
+                                },
+                                "indexpattern": {
+                                    "currentIndexPatternId": "logs-*",
+                                    "layers": {}
+                                },
+                                "textBased": {
+                                    "indexPatternRefs": [
+                                        {
+                                            "id": "logs-*",
+                                            "timeField": "@timestamp",
+                                            "title": "logs-*"
+                                        }
+                                    ],
+                                    "layers": {}
+                                }
+                            },
+                            "filters": [
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.dataset",
+                                        "index": "397744d5-07bd-4a89-a1fd-ed06a4d383e5",
+                                        "key": "event.dataset",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "ti_orangecyberdefense_datalake.indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.type",
+                                        "index": "0c8ff206-f5fa-4651-ab90-06e9b6d05f0c",
+                                        "key": "event.type",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.type": "indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "labels.is_ioc_transform_source",
+                                        "index": "cb6cdd2d-2979-4c45-a848-c7f616995404",
+                                        "key": "labels.is_ioc_transform_source",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "false"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "labels.is_ioc_transform_source": "false"
+                                        }
+                                    }
+                                }
+                            ],
+                            "internalReferences": [],
+                            "query": {
+                                "language": "kuery",
+                                "query": ""
+                            },
+                            "visualization": {
+                                "layerId": "04044f6c-369a-48a0-a61f-90a65d9344ac",
+                                "layerType": "data",
+                                "metricAccessor": "0dbc9864-56d2-4f01-afe9-2e2947989586",
+                                "secondaryTrend": {
+                                    "type": "none"
+                                },
+                                "valueFontMode": "fit"
+                            }
+                        },
+                        "title": "",
+                        "type": "lens",
+                        "visualizationType": "lnsMetric"
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.dataset",
+                                "index": "397744d5-07bd-4a89-a1fd-ed06a4d383e5",
+                                "key": "event.dataset",
+                                "negate": false,
+                                "params": {
+                                    "query": "ti_orangecyberdefense_datalake.indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.type",
+                                "index": "0c8ff206-f5fa-4651-ab90-06e9b6d05f0c",
+                                "key": "event.type",
+                                "negate": false,
+                                "params": {
+                                    "query": "indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.type": "indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "labels.is_ioc_transform_source",
+                                "index": "cb6cdd2d-2979-4c45-a848-c7f616995404",
+                                "key": "labels.is_ioc_transform_source",
+                                "negate": false,
+                                "params": {
+                                    "query": "false"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "labels.is_ioc_transform_source": "false"
+                                }
+                            }
+                        }
+                    ],
+                    "hidePanelTitles": true,
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false
+                },
+                "gridData": {
+                    "h": 4,
+                    "i": "00cc9072-d3ea-40fa-8c43-296e11817511",
+                    "w": 7,
+                    "x": 17,
+                    "y": 0
+                },
+                "panelIndex": "00cc9072-d3ea-40fa-8c43-296e11817511",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [
+                            {
+                                "id": "logs-*",
+                                "name": "indexpattern-datasource-layer-07487a25-d0cc-47ee-9ac8-1a534af3e26e",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "e783a006-add4-4c44-b1fe-80e015cb0ae1",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "10c133d7-9f05-40a2-af1b-bf361d4157b3",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "0e1665d8-2ae6-42b6-acc3-b0b6ee159df7",
+                                "type": "index-pattern"
+                            }
+                        ],
+                        "state": {
+                            "adHocDataViews": {},
+                            "datasourceStates": {
+                                "formBased": {
+                                    "layers": {
+                                        "07487a25-d0cc-47ee-9ac8-1a534af3e26e": {
+                                            "columnOrder": [
+                                                "b2b92e6e-71ad-4927-8bb6-439b1b919818",
+                                                "d86e6e66-8195-4e8d-8fd9-3e96c1e9bfde"
+                                            ],
+                                            "columns": {
+                                                "b2b92e6e-71ad-4927-8bb6-439b1b919818": {
+                                                    "dataType": "string",
+                                                    "isBucketed": true,
+                                                    "label": "Top 10 values of threat.indicator.type",
+                                                    "operationType": "terms",
+                                                    "params": {
+                                                        "exclude": [],
+                                                        "excludeIsRegex": false,
+                                                        "include": [],
+                                                        "includeIsRegex": false,
+                                                        "missingBucket": false,
+                                                        "orderBy": {
+                                                            "columnId": "d86e6e66-8195-4e8d-8fd9-3e96c1e9bfde",
+                                                            "type": "column"
+                                                        },
+                                                        "orderDirection": "desc",
+                                                        "otherBucket": true,
+                                                        "parentFormat": {
+                                                            "id": "terms"
+                                                        },
+                                                        "size": 10
+                                                    },
+                                                    "sourceField": "threat.indicator.type"
+                                                },
+                                                "d86e6e66-8195-4e8d-8fd9-3e96c1e9bfde": {
+                                                    "dataType": "number",
+                                                    "isBucketed": false,
+                                                    "label": "Count of records",
+                                                    "operationType": "count",
+                                                    "params": {
+                                                        "emptyAsNull": true
+                                                    },
+                                                    "sourceField": "___records___"
+                                                }
+                                            },
+                                            "incompleteColumns": {},
+                                            "sampling": 1
+                                        }
+                                    }
+                                },
+                                "indexpattern": {
+                                    "layers": {}
+                                },
+                                "textBased": {
+                                    "layers": {}
+                                }
+                            },
+                            "filters": [
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.dataset",
+                                        "index": "e783a006-add4-4c44-b1fe-80e015cb0ae1",
+                                        "key": "event.dataset",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "ti_orangecyberdefense_datalake.indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.type",
+                                        "index": "10c133d7-9f05-40a2-af1b-bf361d4157b3",
+                                        "key": "event.type",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.type": "indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "labels.is_ioc_transform_source",
+                                        "index": "0e1665d8-2ae6-42b6-acc3-b0b6ee159df7",
+                                        "key": "labels.is_ioc_transform_source",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "false"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "labels.is_ioc_transform_source": "false"
+                                        }
+                                    }
+                                }
+                            ],
+                            "internalReferences": [],
+                            "query": {
+                                "language": "kuery",
+                                "query": ""
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "sort": "desc",
+                                                "steps": [
+                                                    {
+                                                        "colorCode": "#A885D8",
+                                                        "touched": true,
+                                                        "type": "colorCode"
+                                                    }
+                                                ],
+                                                "type": "gradient"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "emptySizeRatio": 0.7,
+                                        "layerId": "07487a25-d0cc-47ee-9ac8-1a534af3e26e",
+                                        "layerType": "data",
+                                        "legendDisplay": "hide",
+                                        "legendSize": "large",
+                                        "metrics": [
+                                            "d86e6e66-8195-4e8d-8fd9-3e96c1e9bfde"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "primaryGroups": [
+                                            "b2b92e6e-71ad-4927-8bb6-439b1b919818"
+                                        ],
+                                        "secondaryGroups": [],
+                                        "truncateLegend": false
+                                    }
+                                ],
+                                "shape": "donut"
+                            }
+                        },
+                        "title": "",
+                        "type": "lens",
+                        "visualizationType": "lnsPie"
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.dataset",
+                                "index": "e783a006-add4-4c44-b1fe-80e015cb0ae1",
+                                "key": "event.dataset",
+                                "negate": false,
+                                "params": {
+                                    "query": "ti_orangecyberdefense_datalake.indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.type",
+                                "index": "10c133d7-9f05-40a2-af1b-bf361d4157b3",
+                                "key": "event.type",
+                                "negate": false,
+                                "params": {
+                                    "query": "indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.type": "indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "labels.is_ioc_transform_source",
+                                "index": "0e1665d8-2ae6-42b6-acc3-b0b6ee159df7",
+                                "key": "labels.is_ioc_transform_source",
+                                "negate": false,
+                                "params": {
+                                    "query": "false"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "labels.is_ioc_transform_source": "false"
+                                }
+                            }
+                        }
+                    ],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false,
+                    "title": "Indicators by type"
+                },
+                "gridData": {
+                    "h": 11,
+                    "i": "f6d7b957-8470-4ff7-a1de-f17ba73351e1",
+                    "w": 8,
+                    "x": 24,
+                    "y": 0
+                },
+                "panelIndex": "f6d7b957-8470-4ff7-a1de-f17ba73351e1",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [
+                            {
+                                "id": "logs-*",
+                                "name": "indexpattern-datasource-layer-07487a25-d0cc-47ee-9ac8-1a534af3e26e",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "4cfa44d8-7190-4019-89d8-8b1034a01b22",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "2a178b24-7135-49a1-a93f-dab80959ee41",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "650d6262-6b1a-460d-ae07-bc627ecdb3d7",
+                                "type": "index-pattern"
+                            }
+                        ],
+                        "state": {
+                            "adHocDataViews": {},
+                            "datasourceStates": {
+                                "formBased": {
+                                    "layers": {
+                                        "07487a25-d0cc-47ee-9ac8-1a534af3e26e": {
+                                            "columnOrder": [
+                                                "b2b92e6e-71ad-4927-8bb6-439b1b919818",
+                                                "d86e6e66-8195-4e8d-8fd9-3e96c1e9bfde"
+                                            ],
+                                            "columns": {
+                                                "b2b92e6e-71ad-4927-8bb6-439b1b919818": {
+                                                    "dataType": "string",
+                                                    "isBucketed": true,
+                                                    "label": "Top 10 values of ti_orangecyberdefense_datalake.indicator._computed.sources",
+                                                    "operationType": "terms",
+                                                    "params": {
+                                                        "exclude": [],
+                                                        "excludeIsRegex": false,
+                                                        "include": [],
+                                                        "includeIsRegex": false,
+                                                        "missingBucket": false,
+                                                        "orderBy": {
+                                                            "columnId": "d86e6e66-8195-4e8d-8fd9-3e96c1e9bfde",
+                                                            "type": "column"
+                                                        },
+                                                        "orderDirection": "desc",
+                                                        "otherBucket": true,
+                                                        "parentFormat": {
+                                                            "id": "terms"
+                                                        },
+                                                        "secondaryFields": [],
+                                                        "size": 10
+                                                    },
+                                                    "sourceField": "ti_orangecyberdefense_datalake.indicator._computed.sources"
+                                                },
+                                                "d86e6e66-8195-4e8d-8fd9-3e96c1e9bfde": {
+                                                    "dataType": "number",
+                                                    "isBucketed": false,
+                                                    "label": "Count of records",
+                                                    "operationType": "count",
+                                                    "params": {
+                                                        "emptyAsNull": true
+                                                    },
+                                                    "sourceField": "___records___"
+                                                }
+                                            },
+                                            "incompleteColumns": {},
+                                            "sampling": 1
+                                        }
+                                    }
+                                },
+                                "indexpattern": {
+                                    "layers": {}
+                                },
+                                "textBased": {
+                                    "layers": {}
+                                }
+                            },
+                            "filters": [
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.dataset",
+                                        "index": "4cfa44d8-7190-4019-89d8-8b1034a01b22",
+                                        "key": "event.dataset",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "ti_orangecyberdefense_datalake.indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.type",
+                                        "index": "2a178b24-7135-49a1-a93f-dab80959ee41",
+                                        "key": "event.type",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.type": "indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "labels.is_ioc_transform_source",
+                                        "index": "650d6262-6b1a-460d-ae07-bc627ecdb3d7",
+                                        "key": "labels.is_ioc_transform_source",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "false"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "labels.is_ioc_transform_source": "false"
+                                        }
+                                    }
+                                }
+                            ],
+                            "internalReferences": [],
+                            "query": {
+                                "language": "kuery",
+                                "query": ""
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "sort": "desc",
+                                                "steps": [
+                                                    {
+                                                        "colorCode": "#50BE87",
+                                                        "touched": true,
+                                                        "type": "colorCode"
+                                                    }
+                                                ],
+                                                "type": "gradient"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "emptySizeRatio": 0.7,
+                                        "layerId": "07487a25-d0cc-47ee-9ac8-1a534af3e26e",
+                                        "layerType": "data",
+                                        "legendDisplay": "hide",
+                                        "legendSize": "large",
+                                        "metrics": [
+                                            "d86e6e66-8195-4e8d-8fd9-3e96c1e9bfde"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "primaryGroups": [
+                                            "b2b92e6e-71ad-4927-8bb6-439b1b919818"
+                                        ],
+                                        "secondaryGroups": [],
+                                        "truncateLegend": false
+                                    }
+                                ],
+                                "shape": "donut"
+                            }
+                        },
+                        "title": "",
+                        "type": "lens",
+                        "visualizationType": "lnsPie"
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.dataset",
+                                "index": "4cfa44d8-7190-4019-89d8-8b1034a01b22",
+                                "key": "event.dataset",
+                                "negate": false,
+                                "params": {
+                                    "query": "ti_orangecyberdefense_datalake.indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.type",
+                                "index": "2a178b24-7135-49a1-a93f-dab80959ee41",
+                                "key": "event.type",
+                                "negate": false,
+                                "params": {
+                                    "query": "indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.type": "indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "labels.is_ioc_transform_source",
+                                "index": "650d6262-6b1a-460d-ae07-bc627ecdb3d7",
+                                "key": "labels.is_ioc_transform_source",
+                                "negate": false,
+                                "params": {
+                                    "query": "false"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "labels.is_ioc_transform_source": "false"
+                                }
+                            }
+                        }
+                    ],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false,
+                    "title": "Indicators by source"
+                },
+                "gridData": {
+                    "h": 11,
+                    "i": "117fdf6a-b7fc-4ed1-a8f0-91e638701bbe",
+                    "w": 8,
+                    "x": 32,
+                    "y": 0
+                },
+                "panelIndex": "117fdf6a-b7fc-4ed1-a8f0-91e638701bbe",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [
+                            {
+                                "id": "logs-*",
+                                "name": "indexpattern-datasource-layer-07487a25-d0cc-47ee-9ac8-1a534af3e26e",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "5830e1e7-1a54-4576-9644-d1c0f8806f55",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "2b8259f5-340a-4d09-a7d1-66e3a35eed47",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "bd88a2c4-2842-498c-ae4f-79f44632b79e",
+                                "type": "index-pattern"
+                            }
+                        ],
+                        "state": {
+                            "adHocDataViews": {},
+                            "datasourceStates": {
+                                "formBased": {
+                                    "layers": {
+                                        "07487a25-d0cc-47ee-9ac8-1a534af3e26e": {
+                                            "columnOrder": [
+                                                "f2bdaf89-63c8-45b3-be1a-5d5d1eaa2089",
+                                                "d86e6e66-8195-4e8d-8fd9-3e96c1e9bfde"
+                                            ],
+                                            "columns": {
+                                                "d86e6e66-8195-4e8d-8fd9-3e96c1e9bfde": {
+                                                    "dataType": "number",
+                                                    "isBucketed": false,
+                                                    "label": "Count of records",
+                                                    "operationType": "count",
+                                                    "params": {
+                                                        "emptyAsNull": true
+                                                    },
+                                                    "sourceField": "___records___"
+                                                },
+                                                "f2bdaf89-63c8-45b3-be1a-5d5d1eaa2089": {
+                                                    "dataType": "string",
+                                                    "isBucketed": true,
+                                                    "label": "ti_orangecyberdefense_datalake.indicator._computed.score_max",
+                                                    "operationType": "range",
+                                                    "params": {
+                                                        "maxBars": 499.5,
+                                                        "parentFormat": {
+                                                            "id": "range",
+                                                            "params": {
+                                                                "replaceInfinity": true,
+                                                                "template": "arrow_right"
+                                                            }
+                                                        },
+                                                        "ranges": [
+                                                            {
+                                                                "from": 0,
+                                                                "label": "Low (0-49)",
+                                                                "to": 50
+                                                            },
+                                                            {
+                                                                "from": 50,
+                                                                "label": "Medium (50-79)",
+                                                                "to": 80
+                                                            },
+                                                            {
+                                                                "from": 80,
+                                                                "label": "High (80-100)",
+                                                                "to": null
+                                                            }
+                                                        ],
+                                                        "type": "range"
+                                                    },
+                                                    "scale": "ordinal",
+                                                    "sourceField": "ti_orangecyberdefense_datalake.indicator._computed.score_max"
+                                                }
+                                            },
+                                            "incompleteColumns": {},
+                                            "sampling": 1
+                                        }
+                                    }
+                                },
+                                "indexpattern": {
+                                    "layers": {}
+                                },
+                                "textBased": {
+                                    "layers": {}
+                                }
+                            },
+                            "filters": [
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.dataset",
+                                        "index": "5830e1e7-1a54-4576-9644-d1c0f8806f55",
+                                        "key": "event.dataset",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "ti_orangecyberdefense_datalake.indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.type",
+                                        "index": "2b8259f5-340a-4d09-a7d1-66e3a35eed47",
+                                        "key": "event.type",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.type": "indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "labels.is_ioc_transform_source",
+                                        "index": "bd88a2c4-2842-498c-ae4f-79f44632b79e",
+                                        "key": "labels.is_ioc_transform_source",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "false"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "labels.is_ioc_transform_source": "false"
+                                        }
+                                    }
+                                }
+                            ],
+                            "internalReferences": [],
+                            "query": {
+                                "language": "kuery",
+                                "query": ""
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [
+                                                {
+                                                    "color": {
+                                                        "colorCode": "#e4fc83",
+                                                        "type": "colorCode"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "raw",
+                                                            "value": {
+                                                                "from": 0,
+                                                                "ranges": [
+                                                                    {
+                                                                        "from": 0,
+                                                                        "label": "Low (0-49)",
+                                                                        "to": 50
+                                                                    }
+                                                                ],
+                                                                "to": 50,
+                                                                "type": "rangeKey"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "touched": true
+                                                },
+                                                {
+                                                    "color": {
+                                                        "colorCode": "#fcd883",
+                                                        "type": "colorCode"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "raw",
+                                                            "value": {
+                                                                "from": 50,
+                                                                "ranges": [
+                                                                    {
+                                                                        "from": 50,
+                                                                        "label": "Medium (50-79)",
+                                                                        "to": 80
+                                                                    }
+                                                                ],
+                                                                "to": 80,
+                                                                "type": "rangeKey"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "touched": true
+                                                },
+                                                {
+                                                    "color": {
+                                                        "colorCode": "#fc9c83",
+                                                        "type": "colorCode"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "raw",
+                                                            "value": {
+                                                                "from": 80,
+                                                                "ranges": [
+                                                                    {
+                                                                        "from": 80,
+                                                                        "label": "High (80-100)",
+                                                                        "to": null
+                                                                    }
+                                                                ],
+                                                                "to": null,
+                                                                "type": "rangeKey"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "touched": true
+                                                }
+                                            ],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "emptySizeRatio": 0.7,
+                                        "layerId": "07487a25-d0cc-47ee-9ac8-1a534af3e26e",
+                                        "layerType": "data",
+                                        "legendDisplay": "hide",
+                                        "legendSize": "large",
+                                        "metrics": [
+                                            "d86e6e66-8195-4e8d-8fd9-3e96c1e9bfde"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "primaryGroups": [
+                                            "f2bdaf89-63c8-45b3-be1a-5d5d1eaa2089"
+                                        ],
+                                        "secondaryGroups": [],
+                                        "truncateLegend": false
+                                    }
+                                ],
+                                "shape": "donut"
+                            }
+                        },
+                        "title": "",
+                        "type": "lens",
+                        "visualizationType": "lnsPie"
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.dataset",
+                                "index": "5830e1e7-1a54-4576-9644-d1c0f8806f55",
+                                "key": "event.dataset",
+                                "negate": false,
+                                "params": {
+                                    "query": "ti_orangecyberdefense_datalake.indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.type",
+                                "index": "2b8259f5-340a-4d09-a7d1-66e3a35eed47",
+                                "key": "event.type",
+                                "negate": false,
+                                "params": {
+                                    "query": "indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.type": "indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "labels.is_ioc_transform_source",
+                                "index": "bd88a2c4-2842-498c-ae4f-79f44632b79e",
+                                "key": "labels.is_ioc_transform_source",
+                                "negate": false,
+                                "params": {
+                                    "query": "false"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "labels.is_ioc_transform_source": "false"
+                                }
+                            }
+                        }
+                    ],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false,
+                    "title": "Indicators by max score"
+                },
+                "gridData": {
+                    "h": 11,
+                    "i": "3f87eb71-e45b-4e44-9c22-a85767f92c20",
+                    "w": 8,
+                    "x": 40,
+                    "y": 0
+                },
+                "panelIndex": "3f87eb71-e45b-4e44-9c22-a85767f92c20",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "savedVis": {
+                        "data": {
+                            "aggs": [],
+                            "searchSource": {
+                                "filter": [],
+                                "query": {
+                                    "language": "kuery",
+                                    "query": ""
+                                }
+                            }
+                        },
+                        "description": "",
+                        "params": {
+                            "fontSize": 10,
+                            "markdown": "This dashboard provides an overview of current indicator data ingested by the Orange Cyberdefense Datalake integration on the selected time range. Those indicators can then be used in your SOC or CSIRT scenarios, for instance with Elastic Security Indicator Match detection rules.\n\n#### Useful links\n\n- [Datalake website](https://datalake.cert.orangecyberdefense.com/)\n- [Datalake2Elastic on GitHub](https://github.com/cert-orangecyberdefense/datalake2elastic)",
+                            "openLinksInNewTab": true
+                        },
+                        "title": "",
+                        "type": "markdown",
+                        "uiState": {}
+                    },
+                    "title": "Overview"
+                },
+                "gridData": {
+                    "h": 7,
+                    "i": "f16993cc-51f4-49a2-aa04-b62e50367ab6",
+                    "w": 24,
+                    "x": 0,
+                    "y": 4
+                },
+                "panelIndex": "f16993cc-51f4-49a2-aa04-b62e50367ab6",
+                "type": "visualization"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [
+                            {
+                                "id": "logs-*",
+                                "name": "indexpattern-datasource-layer-4b1e7de6-703e-48bc-bb08-19866e915ead",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "be509f73-9d4d-4fbe-a3ae-d4d8ed339ceb",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "1b012744-aee2-4cf2-a626-4ec89b673c5f",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "50fcaf58-02f2-4a3b-ba83-58b1e92cc416",
+                                "type": "index-pattern"
+                            }
+                        ],
+                        "state": {
+                            "adHocDataViews": {},
+                            "datasourceStates": {
+                                "formBased": {
+                                    "layers": {
+                                        "4b1e7de6-703e-48bc-bb08-19866e915ead": {
+                                            "columnOrder": [
+                                                "331e7c6f-36e5-47d3-9284-bef28252c0e3",
+                                                "ee5f0ab5-d29d-4301-be0b-97a8e9c13309"
+                                            ],
+                                            "columns": {
+                                                "331e7c6f-36e5-47d3-9284-bef28252c0e3": {
+                                                    "dataType": "date",
+                                                    "isBucketed": true,
+                                                    "label": "@timestamp",
+                                                    "operationType": "date_histogram",
+                                                    "params": {
+                                                        "dropPartials": false,
+                                                        "includeEmptyRows": true,
+                                                        "interval": "auto"
+                                                    },
+                                                    "sourceField": "@timestamp"
+                                                },
+                                                "ee5f0ab5-d29d-4301-be0b-97a8e9c13309": {
+                                                    "dataType": "number",
+                                                    "isBucketed": false,
+                                                    "label": "Count of records",
+                                                    "operationType": "count",
+                                                    "params": {
+                                                        "emptyAsNull": true
+                                                    },
+                                                    "sourceField": "___records___"
+                                                }
+                                            },
+                                            "incompleteColumns": {},
+                                            "sampling": 1
+                                        }
+                                    }
+                                },
+                                "indexpattern": {
+                                    "layers": {}
+                                },
+                                "textBased": {
+                                    "layers": {}
+                                }
+                            },
+                            "filters": [
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.dataset",
+                                        "index": "be509f73-9d4d-4fbe-a3ae-d4d8ed339ceb",
+                                        "key": "event.dataset",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "ti_orangecyberdefense_datalake.indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.type",
+                                        "index": "1b012744-aee2-4cf2-a626-4ec89b673c5f",
+                                        "key": "event.type",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.type": "indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "labels.is_ioc_transform_source",
+                                        "index": "50fcaf58-02f2-4a3b-ba83-58b1e92cc416",
+                                        "key": "labels.is_ioc_transform_source",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "true"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "labels.is_ioc_transform_source": "true"
+                                        }
+                                    }
+                                }
+                            ],
+                            "internalReferences": [],
+                            "query": {
+                                "language": "kuery",
+                                "query": ""
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "fittingFunction": "Linear",
+                                "gridlinesVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "labelsOrientation": {
+                                    "x": 0,
+                                    "yLeft": 0,
+                                    "yRight": 0
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "ee5f0ab5-d29d-4301-be0b-97a8e9c13309"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "4b1e7de6-703e-48bc-bb08-19866e915ead",
+                                        "layerType": "data",
+                                        "position": "top",
+                                        "seriesType": "bar_stacked",
+                                        "showGridlines": false,
+                                        "xAccessor": "331e7c6f-36e5-47d3-9284-bef28252c0e3",
+                                        "yConfig": [
+                                            {
+                                                "color": "#4bb4e6",
+                                                "forAccessor": "ee5f0ab5-d29d-4301-be0b-97a8e9c13309"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "tickLabelsVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "valueLabels": "hide"
+                            }
+                        },
+                        "title": "",
+                        "type": "lens",
+                        "visualizationType": "lnsXY"
+                    },
+                    "description": "Live indicator ingestion, this can contain the same indicator multiple times.",
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.dataset",
+                                "index": "be509f73-9d4d-4fbe-a3ae-d4d8ed339ceb",
+                                "key": "event.dataset",
+                                "negate": false,
+                                "params": {
+                                    "query": "ti_orangecyberdefense_datalake.indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.type",
+                                "index": "1b012744-aee2-4cf2-a626-4ec89b673c5f",
+                                "key": "event.type",
+                                "negate": false,
+                                "params": {
+                                    "query": "indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.type": "indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "labels.is_ioc_transform_source",
+                                "index": "50fcaf58-02f2-4a3b-ba83-58b1e92cc416",
+                                "key": "labels.is_ioc_transform_source",
+                                "negate": false,
+                                "params": {
+                                    "query": "true"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "labels.is_ioc_transform_source": "true"
+                                }
+                            }
+                        }
+                    ],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false,
+                    "title": "Indicators ingestion over time"
+                },
+                "gridData": {
+                    "h": 11,
+                    "i": "23db3be3-4565-4c55-81ac-ba64e8c2baa0",
+                    "w": 24,
+                    "x": 0,
+                    "y": 11
+                },
+                "panelIndex": "23db3be3-4565-4c55-81ac-ba64e8c2baa0",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [
+                            {
+                                "id": "logs-*",
+                                "name": "indexpattern-datasource-layer-4b1e7de6-703e-48bc-bb08-19866e915ead",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "a0208f88-84c2-4c19-b7dd-4435f6f96e2b",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "c08f5e22-50c4-45d4-a988-882bd6aa87ab",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "fa661e2d-19ca-43a1-9d10-79ab78a48aa6",
+                                "type": "index-pattern"
+                            }
+                        ],
+                        "state": {
+                            "adHocDataViews": {},
+                            "datasourceStates": {
+                                "formBased": {
+                                    "layers": {
+                                        "4b1e7de6-703e-48bc-bb08-19866e915ead": {
+                                            "columnOrder": [
+                                                "331e7c6f-36e5-47d3-9284-bef28252c0e3",
+                                                "ee5f0ab5-d29d-4301-be0b-97a8e9c13309"
+                                            ],
+                                            "columns": {
+                                                "331e7c6f-36e5-47d3-9284-bef28252c0e3": {
+                                                    "dataType": "date",
+                                                    "isBucketed": true,
+                                                    "label": "@timestamp",
+                                                    "operationType": "date_histogram",
+                                                    "params": {
+                                                        "dropPartials": false,
+                                                        "includeEmptyRows": true,
+                                                        "interval": "auto"
+                                                    },
+                                                    "sourceField": "@timestamp"
+                                                },
+                                                "ee5f0ab5-d29d-4301-be0b-97a8e9c13309": {
+                                                    "dataType": "number",
+                                                    "isBucketed": false,
+                                                    "label": "Count of records",
+                                                    "operationType": "count",
+                                                    "params": {
+                                                        "emptyAsNull": true
+                                                    },
+                                                    "sourceField": "___records___"
+                                                }
+                                            },
+                                            "incompleteColumns": {},
+                                            "sampling": 1
+                                        }
+                                    }
+                                },
+                                "indexpattern": {
+                                    "layers": {}
+                                },
+                                "textBased": {
+                                    "layers": {}
+                                }
+                            },
+                            "filters": [
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.dataset",
+                                        "index": "a0208f88-84c2-4c19-b7dd-4435f6f96e2b",
+                                        "key": "event.dataset",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "ti_orangecyberdefense_datalake.indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.type",
+                                        "index": "c08f5e22-50c4-45d4-a988-882bd6aa87ab",
+                                        "key": "event.type",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.type": "indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "labels.is_ioc_transform_source",
+                                        "index": "fa661e2d-19ca-43a1-9d10-79ab78a48aa6",
+                                        "key": "labels.is_ioc_transform_source",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "false"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "labels.is_ioc_transform_source": "false"
+                                        }
+                                    }
+                                }
+                            ],
+                            "internalReferences": [],
+                            "query": {
+                                "language": "kuery",
+                                "query": ""
+                            },
+                            "visualization": {
+                                "axisTitlesVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "fittingFunction": "Linear",
+                                "gridlinesVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "labelsOrientation": {
+                                    "x": 0,
+                                    "yLeft": 0,
+                                    "yRight": 0
+                                },
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "ee5f0ab5-d29d-4301-be0b-97a8e9c13309"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "4b1e7de6-703e-48bc-bb08-19866e915ead",
+                                        "layerType": "data",
+                                        "position": "top",
+                                        "seriesType": "bar_stacked",
+                                        "showGridlines": false,
+                                        "xAccessor": "331e7c6f-36e5-47d3-9284-bef28252c0e3",
+                                        "yConfig": [
+                                            {
+                                                "color": "#ffb4e6",
+                                                "forAccessor": "ee5f0ab5-d29d-4301-be0b-97a8e9c13309"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "tickLabelsVisibilitySettings": {
+                                    "x": true,
+                                    "yLeft": true,
+                                    "yRight": true
+                                },
+                                "valueLabels": "hide"
+                            }
+                        },
+                        "title": "",
+                        "type": "lens",
+                        "visualizationType": "lnsXY"
+                    },
+                    "description": "Active indicators, unlike the \"Indicators ingestion over time\" graph, this one only contains each indicator once (the most recent version of it).",
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.dataset",
+                                "index": "a0208f88-84c2-4c19-b7dd-4435f6f96e2b",
+                                "key": "event.dataset",
+                                "negate": false,
+                                "params": {
+                                    "query": "ti_orangecyberdefense_datalake.indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.type",
+                                "index": "c08f5e22-50c4-45d4-a988-882bd6aa87ab",
+                                "key": "event.type",
+                                "negate": false,
+                                "params": {
+                                    "query": "indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.type": "indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "labels.is_ioc_transform_source",
+                                "index": "fa661e2d-19ca-43a1-9d10-79ab78a48aa6",
+                                "key": "labels.is_ioc_transform_source",
+                                "negate": false,
+                                "params": {
+                                    "query": "false"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "labels.is_ioc_transform_source": "false"
+                                }
+                            }
+                        }
+                    ],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false,
+                    "title": "Active indicators over time"
+                },
+                "gridData": {
+                    "h": 11,
+                    "i": "d76696e2-57f3-43d0-84e6-ba76a989a960",
+                    "w": 24,
+                    "x": 24,
+                    "y": 11
+                },
+                "panelIndex": "d76696e2-57f3-43d0-84e6-ba76a989a960",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "hidePanelTitles": true,
+                    "savedVis": {
+                        "data": {
+                            "aggs": [],
+                            "searchSource": {
+                                "filter": [],
+                                "query": {
+                                    "language": "kuery",
+                                    "query": ""
+                                }
+                            }
+                        },
+                        "description": "",
+                        "params": {
+                            "fontSize": 12,
+                            "markdown": "![Orange Cyberdefense brand logo](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAj4AAABkBAMAAAB0licnAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAB5QTFRFAAAAAAAA/3kAAAAAAAAAAAAA//z5/3kA/6RR/3kA0gx5TwAAAAp0Uk5TAP7/O8WB/3z/AQvVuyoAAAUzSURBVHic7ZrPcrs2EMfxAIfeojF+gZx6xIN9hwm+m7F5hU6Pnd8j9NRjr33bsn8RxAbstCjJb78zyYCEZPTR7molO4pMJpPJZDKZTCaTyWQymUwmk8lkMplMJhPql3/u6O/Qb/Y59OP1jv4I/WafQ8ZnWsZnWsZnWsZnWsZnWsZnWsZnWsZnWov4xG3d5sFeMaiW8Dk60NuoZeLcdsknVM6N2V6dKz/01utpAZ/UuVuAnufTuO/EJ3ai86Dl03yQd/kfvPsamuezVz67Qcun+Wy+FR8yn7qC/4NxPs2nc6+sPd95+rNplk+HwWV5FFfjSf8In69CZwGfhgMP2NGAh/FBVRJ39qMARHzifuyxj6HI5b/ykfpGgQ1a6E1cFH158bHhfVhzfGJ1q45HFtd1DddpXZ+QzxWdD4sqvuzqyq4c2HVFJ+Ej9YcawlmdD1ucY7mhbItzieuNvGtdzfFJNSwDqYjvgA38gfORl1GSBCPsyl/ItjCml8RH6/eSK3AJ9VZqTwnVl9BpczMxXVVzfBIagqii2NENsuxqdjQWIEZDgRECnwquaKQZ8dF65TNocdKeKqfcJDENubWZ47MZRp09zSyE2ETzopd+KA5Hu8NxV/pA7tULHynJ1GTQaqC45rWy6fsPpjk+++EqtaHbbgA0qsuR4nf3WFYc0S54tFvwx93lSnz6+rjoWlyKcYusvSIJ+gD8VOjgrWjGeem6epBPim8bw7QnNMkJGg05UaJudSpy9swG+Xj1vH6NWpyxfMsGGsPHJDoXAR1sjk8z5INkiBKBiSI0CppkGRY22ZNjYID364nPqAWQRFdmB27bC1xyrAuYLj3Ih2YTQjDGGX6iTDlIiN9xxJa8Mvfric+oBfSUMJ+sz5MiKg4YgB70Lxr1hqPGlp/A9bzoBPRkxRO/4DKtJz6bYQvoCa0SN68naQhPHBbm6f+PHuWD9t+oEUXoFi8bXYFwXUO78vn49cpHVzefDy9rpwgdlxUwQC/gI2/Xtm1OVlPxOn6PDxLl8IQ4JvmcfT6yqO++CJ9Nnx86jhu7CN/4Y3z29/jgnsKBlX4JPhJtdacBuzDNk6Gc+exaknjL2L+0Xu1n3IL54L4MZqX7x09c1uciemh/CgbRvfxBEh+NzxtvjbnDp1+DhM+4RaqGAkmnUwMMqtnzDTXvhi46HA2u3P767p8FyXXDeYsXgSPpKB+s2u/4UFIQNjFkPXw+RqEkUnvCLasM7VDXvl3xqDH/0XrNf8YtsKjSTnMGHMN5STAtPl8VTikFh0j2FxSWOEpVtO/YckPOiv16yZ/9Ep9PI8XolHzgETh//musP1/fnc8LFbqXg5osx3Mtcr48OvBuSk+E3ghnzs558PZfjexrXwZ89njeg9uYFGckDr7/+vW3sX5/vfn9DoUQiJ0QOhK/XG/6vHpwvuHVM5/3LXRXd2rpUEA6CLx/n+ETe8MEiaOB/+iY5aHMO7dnsBVvR6We+UjJbhSf5cPKfmbK1an0muejZ1u8Am2cnrGW/fQmikr54FdCbjswFwDbaPthi1Q8TkCyAYU0nyV8Rr9PkP1nQvt22W4f4JlL5H/vQwfwjEPr9fuLcQte0hqnnSLhXdBFfgmf4e9bEn9G4+PFuxyPxKu9VX+jBajwEuaiDfwFzyI+A+3DHgivrAf5xHjgXK77jiH14O/rUm8h+yn0DJ/sZtX31DN8ynVfMaie4PMzmc+jfOJjyMOqALLfP0/L+JhMJpPJZDKZTCaTyWQymUwmk8lkMplMpm+kfwEmmPRxF785GQAAAABJRU5ErkJggg==)",
+                            "openLinksInNewTab": false
+                        },
+                        "title": "",
+                        "type": "markdown",
+                        "uiState": {}
+                    }
+                },
+                "gridData": {
+                    "h": 4,
+                    "i": "df5c68e5-d840-4c8b-b87c-3193a7fce12f",
+                    "w": 10,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "df5c68e5-d840-4c8b-b87c-3193a7fce12f",
+                "type": "visualization"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [
+                            {
+                                "id": "logs-*",
+                                "name": "indexpattern-datasource-layer-04044f6c-369a-48a0-a61f-90a65d9344ac",
+                                "type": "index-pattern"
+                            }
+                        ],
+                        "state": {
+                            "adHocDataViews": {},
+                            "datasourceStates": {
+                                "formBased": {
+                                    "currentIndexPatternId": "logs-*",
+                                    "layers": {
+                                        "04044f6c-369a-48a0-a61f-90a65d9344ac": {
+                                            "columnOrder": [
+                                                "1498a569-9aad-4f86-b3c7-ae5892f16dc4"
+                                            ],
+                                            "columns": {
+                                                "1498a569-9aad-4f86-b3c7-ae5892f16dc4": {
+                                                    "customLabel": true,
+                                                    "dataType": "date",
+                                                    "filter": {
+                                                        "language": "kuery",
+                                                        "query": "\"@timestamp\": *"
+                                                    },
+                                                    "isBucketed": false,
+                                                    "label": "Last import",
+                                                    "operationType": "last_value",
+                                                    "params": {
+                                                        "sortField": "@timestamp"
+                                                    },
+                                                    "sourceField": "@timestamp"
+                                                }
+                                            },
+                                            "ignoreGlobalFilters": false,
+                                            "incompleteColumns": {},
+                                            "indexPatternId": "logs-*",
+                                            "sampling": 1
+                                        }
+                                    }
+                                },
+                                "indexpattern": {
+                                    "currentIndexPatternId": "logs-*",
+                                    "layers": {}
+                                },
+                                "textBased": {
+                                    "indexPatternRefs": [
+                                        {
+                                            "id": "logs-*",
+                                            "timeField": "@timestamp",
+                                            "title": "logs-*"
+                                        }
+                                    ],
+                                    "layers": {}
+                                }
+                            },
+                            "filters": [
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.dataset",
+                                        "index": "5090774e-b750-4cec-b9a4-e14a2a11873a",
+                                        "key": "event.dataset",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "ti_orangecyberdefense_datalake.indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "event.type",
+                                        "index": "196cae96-b713-4a53-be48-f74d47eda595",
+                                        "key": "event.type",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "indicator"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "event.type": "indicator"
+                                        }
+                                    }
+                                },
+                                {
+                                    "$state": {
+                                        "store": "appState"
+                                    },
+                                    "meta": {
+                                        "alias": null,
+                                        "disabled": false,
+                                        "field": "labels.is_ioc_transform_source",
+                                        "index": "82ac05da-51cc-40e1-b721-400a84d92181",
+                                        "key": "labels.is_ioc_transform_source",
+                                        "negate": false,
+                                        "params": {
+                                            "query": "false"
+                                        },
+                                        "type": "phrase"
+                                    },
+                                    "query": {
+                                        "match_phrase": {
+                                            "labels.is_ioc_transform_source": "false"
+                                        }
+                                    }
+                                }
+                            ],
+                            "internalReferences": [],
+                            "query": {
+                                "language": "kuery",
+                                "query": ""
+                            },
+                            "visualization": {
+                                "icon": "empty",
+                                "layerId": "04044f6c-369a-48a0-a61f-90a65d9344ac",
+                                "layerType": "data",
+                                "metricAccessor": "1498a569-9aad-4f86-b3c7-ae5892f16dc4",
+                                "secondaryTrend": {
+                                    "type": "none"
+                                },
+                                "valueFontMode": "fit",
+                                "valuesTextAlign": "right"
+                            }
+                        },
+                        "title": "",
+                        "type": "lens",
+                        "visualizationType": "lnsMetric"
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.dataset",
+                                "index": "5090774e-b750-4cec-b9a4-e14a2a11873a",
+                                "key": "event.dataset",
+                                "negate": false,
+                                "params": {
+                                    "query": "ti_orangecyberdefense_datalake.indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "event.type",
+                                "index": "196cae96-b713-4a53-be48-f74d47eda595",
+                                "key": "event.type",
+                                "negate": false,
+                                "params": {
+                                    "query": "indicator"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "event.type": "indicator"
+                                }
+                            }
+                        },
+                        {
+                            "$state": {
+                                "store": "appState"
+                            },
+                            "meta": {
+                                "alias": null,
+                                "disabled": false,
+                                "field": "labels.is_ioc_transform_source",
+                                "index": "82ac05da-51cc-40e1-b721-400a84d92181",
+                                "key": "labels.is_ioc_transform_source",
+                                "negate": false,
+                                "params": {
+                                    "query": "false"
+                                },
+                                "type": "phrase"
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "labels.is_ioc_transform_source": "false"
+                                }
+                            }
+                        }
+                    ],
+                    "hidePanelTitles": true,
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false
+                },
+                "gridData": {
+                    "h": 4,
+                    "i": "b57a75e2-53a8-43aa-a955-059d1c239479",
+                    "w": 7,
+                    "x": 10,
+                    "y": 0
+                },
+                "panelIndex": "b57a75e2-53a8-43aa-a955-059d1c239479",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "columns": [
+                            "threat.indicator.type",
+                            "threat.indicator.name",
+                            "ti_orangecyberdefense_datalake.indicator._computed.sources",
+                            "threat.indicator.reference"
+                        ],
+                        "description": "",
+                        "grid": {},
+                        "hideChart": false,
+                        "isTextBasedQuery": false,
+                        "kibanaSavedObjectMeta": {
+                            "searchSourceJSON": {
+                                "fields": [
+                                    {
+                                        "field": "*",
+                                        "include_unmapped": true
+                                    }
+                                ],
+                                "filter": [
+                                    {
+                                        "$state": {
+                                            "store": "appState"
+                                        },
+                                        "meta": {
+                                            "alias": null,
+                                            "disabled": false,
+                                            "field": "event.dataset",
+                                            "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                                            "key": "event.dataset",
+                                            "negate": false,
+                                            "params": {
+                                                "query": "ti_orangecyberdefense_datalake.indicator"
+                                            },
+                                            "type": "phrase"
+                                        },
+                                        "query": {
+                                            "match_phrase": {
+                                                "event.dataset": "ti_orangecyberdefense_datalake.indicator"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$state": {
+                                            "store": "appState"
+                                        },
+                                        "meta": {
+                                            "alias": null,
+                                            "disabled": false,
+                                            "field": "event.kind",
+                                            "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[1].meta.index",
+                                            "key": "event.kind",
+                                            "negate": false,
+                                            "params": {
+                                                "query": "enrichment"
+                                            },
+                                            "type": "phrase"
+                                        },
+                                        "query": {
+                                            "match_phrase": {
+                                                "event.kind": "enrichment"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$state": {
+                                            "store": "appState"
+                                        },
+                                        "meta": {
+                                            "alias": null,
+                                            "disabled": false,
+                                            "field": "event.type",
+                                            "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[2].meta.index",
+                                            "key": "event.type",
+                                            "negate": false,
+                                            "params": {
+                                                "query": "indicator"
+                                            },
+                                            "type": "phrase"
+                                        },
+                                        "query": {
+                                            "match_phrase": {
+                                                "event.type": "indicator"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "$state": {
+                                            "store": "appState"
+                                        },
+                                        "meta": {
+                                            "alias": null,
+                                            "disabled": false,
+                                            "field": "labels.is_ioc_transform_source",
+                                            "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[3].meta.index",
+                                            "key": "labels.is_ioc_transform_source",
+                                            "negate": false,
+                                            "params": {
+                                                "query": "false"
+                                            },
+                                            "type": "phrase"
+                                        },
+                                        "query": {
+                                            "match_phrase": {
+                                                "labels.is_ioc_transform_source": "false"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "highlightAll": true,
+                                "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                                "query": {
+                                    "language": "kuery",
+                                    "query": ""
+                                },
+                                "sort": [
+                                    {
+                                        "@timestamp": {
+                                            "format": "strict_date_optional_time",
+                                            "order": "desc"
+                                        }
+                                    },
+                                    {
+                                        "_doc": "desc"
+                                    }
+                                ]
+                            }
+                        },
+                        "references": [
+                            {
+                                "id": "logs-*",
+                                "name": "kibanaSavedObjectMeta.searchSourceJSON.index",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[1].meta.index",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[2].meta.index",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[3].meta.index",
+                                "type": "index-pattern"
+                            }
+                        ],
+                        "sort": [
+                            [
+                                "@timestamp",
+                                "desc"
+                            ]
+                        ],
+                        "timeRestore": false,
+                        "title": ""
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "title": "Orange Cyberdefense Datalake CTI indicators",
+                    "type": "search"
+                },
+                "gridData": {
+                    "h": 15,
+                    "i": "57a39a1f-b482-49d8-8d25-1c4850e47dbd",
+                    "w": 48,
+                    "x": 0,
+                    "y": 22
+                },
+                "panelIndex": "57a39a1f-b482-49d8-8d25-1c4850e47dbd",
+                "type": "search"
+            }
+        ],
+        "timeRestore": false,
+        "title": "[Logs Orange Cyberdefense Datalake] Indicators",
+        "version": 3
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2026-08-28T15:12:30.772Z",
+    "id": "ti_orangecyberdefense_datalake-afa0df7d-0973-4951-a952-ca83a4478330",
+    "references": [
+        {
+            "id": "logs-*",
+            "name": "00cc9072-d3ea-40fa-8c43-296e11817511:indexpattern-datasource-layer-04044f6c-369a-48a0-a61f-90a65d9344ac",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "f6d7b957-8470-4ff7-a1de-f17ba73351e1:indexpattern-datasource-layer-07487a25-d0cc-47ee-9ac8-1a534af3e26e",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "f6d7b957-8470-4ff7-a1de-f17ba73351e1:e783a006-add4-4c44-b1fe-80e015cb0ae1",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "f6d7b957-8470-4ff7-a1de-f17ba73351e1:10c133d7-9f05-40a2-af1b-bf361d4157b3",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "f6d7b957-8470-4ff7-a1de-f17ba73351e1:0e1665d8-2ae6-42b6-acc3-b0b6ee159df7",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "117fdf6a-b7fc-4ed1-a8f0-91e638701bbe:indexpattern-datasource-layer-07487a25-d0cc-47ee-9ac8-1a534af3e26e",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "117fdf6a-b7fc-4ed1-a8f0-91e638701bbe:4cfa44d8-7190-4019-89d8-8b1034a01b22",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "117fdf6a-b7fc-4ed1-a8f0-91e638701bbe:2a178b24-7135-49a1-a93f-dab80959ee41",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "117fdf6a-b7fc-4ed1-a8f0-91e638701bbe:650d6262-6b1a-460d-ae07-bc627ecdb3d7",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "3f87eb71-e45b-4e44-9c22-a85767f92c20:indexpattern-datasource-layer-07487a25-d0cc-47ee-9ac8-1a534af3e26e",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "3f87eb71-e45b-4e44-9c22-a85767f92c20:5830e1e7-1a54-4576-9644-d1c0f8806f55",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "3f87eb71-e45b-4e44-9c22-a85767f92c20:2b8259f5-340a-4d09-a7d1-66e3a35eed47",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "3f87eb71-e45b-4e44-9c22-a85767f92c20:bd88a2c4-2842-498c-ae4f-79f44632b79e",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "23db3be3-4565-4c55-81ac-ba64e8c2baa0:indexpattern-datasource-layer-4b1e7de6-703e-48bc-bb08-19866e915ead",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "23db3be3-4565-4c55-81ac-ba64e8c2baa0:be509f73-9d4d-4fbe-a3ae-d4d8ed339ceb",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "23db3be3-4565-4c55-81ac-ba64e8c2baa0:1b012744-aee2-4cf2-a626-4ec89b673c5f",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "23db3be3-4565-4c55-81ac-ba64e8c2baa0:50fcaf58-02f2-4a3b-ba83-58b1e92cc416",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "d76696e2-57f3-43d0-84e6-ba76a989a960:indexpattern-datasource-layer-4b1e7de6-703e-48bc-bb08-19866e915ead",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "d76696e2-57f3-43d0-84e6-ba76a989a960:a0208f88-84c2-4c19-b7dd-4435f6f96e2b",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "d76696e2-57f3-43d0-84e6-ba76a989a960:c08f5e22-50c4-45d4-a988-882bd6aa87ab",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "d76696e2-57f3-43d0-84e6-ba76a989a960:fa661e2d-19ca-43a1-9d10-79ab78a48aa6",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "b57a75e2-53a8-43aa-a955-059d1c239479:indexpattern-datasource-layer-04044f6c-369a-48a0-a61f-90a65d9344ac",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "57a39a1f-b482-49d8-8d25-1c4850e47dbd:kibanaSavedObjectMeta.searchSourceJSON.index",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "57a39a1f-b482-49d8-8d25-1c4850e47dbd:kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "57a39a1f-b482-49d8-8d25-1c4850e47dbd:kibanaSavedObjectMeta.searchSourceJSON.filter[1].meta.index",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "57a39a1f-b482-49d8-8d25-1c4850e47dbd:kibanaSavedObjectMeta.searchSourceJSON.filter[2].meta.index",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "57a39a1f-b482-49d8-8d25-1c4850e47dbd:kibanaSavedObjectMeta.searchSourceJSON.filter[3].meta.index",
+            "type": "index-pattern"
+        }
+    ],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0"
+}

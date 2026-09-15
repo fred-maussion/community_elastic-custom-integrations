@@ -1,0 +1,113 @@
+{
+    "@timestamp": "2026-05-22T15:03:11.320Z",
+    "agent": {
+        "ephemeral_id": "e6b5933f-f4d9-49ff-b1fa-19cbefb1b84c",
+        "id": "a6581b84-1c6e-4279-ac51-51444a1bf088",
+        "name": "docker-fleet-agent",
+        "type": "filebeat",
+        "version": "9.1.10"
+    },
+    "data_stream": {
+        "dataset": "ti_orangecyberdefense_datalake.indicator",
+        "namespace": "default",
+        "type": "logs"
+    },
+    "ecs": {
+        "version": "8.0.0"
+    },
+    "elastic_agent": {
+        "id": "a6581b84-1c6e-4279-ac51-51444a1bf088",
+        "snapshot": false,
+        "version": "9.1.10"
+    },
+    "event": {
+        "agent_id_status": "verified",
+        "category": ["threat"],
+        "dataset": "ti_orangecyberdefense_datalake.indicator",
+        "ingested": "2026-05-22T15:03:12Z",
+        "kind": "enrichment",
+        "type": ["indicator"]
+    },
+    "input": {
+        "type": "cel"
+    },
+    "tags": [
+        "forwarded",
+        "datalake-indicator"
+    ],
+    "threat": {
+        "feed": {
+            "name": "Orange Cyberdefense Datalake CTI",
+            "reference": "https://datalake.cert.orangecyberdefense.com/"
+        },
+        "indicator": {
+            "confidence": "Not Specified",
+            "id": ["indicator--0f292634-a740-3b56-854e-d97f698d2db6"],
+            "modified_at": "2026-05-20T23:34:55.000Z",
+            "name": "https://www.caf-fr-remboursement.info",
+            "reference": "https://datalake.cert.orangecyberdefense.com/gui/threat/30cf681c7874588c9107e36e97c08be0",
+            "type": "url",
+            "url": {
+                "domain": "www.caf-fr-remboursement.info",
+                "full": "https://www.caf-fr-remboursement.info",
+                "original": "https://www.caf-fr-remboursement.info",
+                "path": "",
+                "scheme": "https"
+            }
+        }
+    },
+    "ti_orangecyberdefense_datalake": {
+        "indicator": {
+            "_computed": {
+                "score_max": 79,
+                "sources": [
+                    "ocd_phishinginitiative",
+                    "org:166"
+                ]
+            },
+            "created": "2025-07-04T08:50:27.000Z",
+            "created_by_ref": "identity--54737adf-74a3-3fe4-a1e7-138694561b49",
+            "external_references": [
+                {
+                    "external_id": "30cf681c7874588c9107e36e97c08be0",
+                    "url": "https://datalake.cert.orangecyberdefense.com/gui/threat/30cf681c7874588c9107e36e97c08be0",
+                    "source_name": "Orange Cyberdefense"
+                }
+            ],
+            "id": "indicator--0f292634-a740-3b56-854e-d97f698d2db6",
+            "indicator_types": [
+                "malicious-activity"
+            ],
+            "modified": "2026-05-20T23:34:55.000Z",
+            "name": "https://www.caf-fr-remboursement.info",
+            "pattern": "[url:value = 'https://www.caf-fr-remboursement.info']",
+            "pattern_type": "stix",
+            "pattern_version": "2.1",
+            "spec_version": "2.1",
+            "type": "indicator",
+            "valid_from": "2025-07-04T08:50:27.000Z",
+            "x_datalake_atom_type": "url",
+            "x_datalake_score": {
+                "phishing": 73,
+                "scam": 79
+            },
+            "x_datalake_sighting_sources": [
+                {
+                    "first_seen": "2026-05-17T19:29:04Z",
+                    "last_seen": "2026-05-17T23:34:55Z",
+                    "count": 3,
+                    "source_id": "org:166"
+                }
+            ],
+            "x_datalake_sources": [
+                {
+                    "last_updated": "2025-07-04T08:50:27Z",
+                    "first_seen": "2025-07-04T08:50:27Z",
+                    "count": 1,
+                    "source_id": "ocd_phishinginitiative"
+                }
+            ]
+        },
+        "query_hash": "4983605c498c324b874c0700c695c282"
+    }
+}

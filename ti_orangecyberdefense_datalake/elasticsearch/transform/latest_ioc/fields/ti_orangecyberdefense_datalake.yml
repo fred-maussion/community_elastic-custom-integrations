@@ -1,0 +1,42 @@
+- name: ti_orangecyberdefense_datalake
+  type: group
+  description: All fields related to Datalake indicators
+  fields:
+    - name: query_hash
+      type: keyword
+      description: The Datalake query hash that produced the indicator
+    - name: indicator
+      type: object
+      object_type: keyword
+      description: The STIX indicator object from Datalake
+- name: "ti_orangecyberdefense_datalake.indicator.created"
+  type: date
+  description: Time of the indicator's creation in Datalake
+- name: "ti_orangecyberdefense_datalake.indicator.modified"
+  type: date
+  description: Time of the indicator's last modification in Datalake
+- name: "ti_orangecyberdefense_datalake.indicator.valid_from"
+  type: date
+  description: Time from which the indicator is valid
+- name: "ti_orangecyberdefense_datalake.indicator.x_datalake_score"
+  type: object
+  object_type: byte
+  description: Per-threat-category scores (0-100), e.g. malware, phishing, scam
+- name: "ti_orangecyberdefense_datalake.indicator.external_references"
+  type: flattened
+  description: External references to the indicator
+- name: "ti_orangecyberdefense_datalake.indicator.x_datalake_sources"
+  type: flattened
+  description: Sources for this indicator
+- name: "ti_orangecyberdefense_datalake.indicator.x_datalake_sighting_sources"
+  type: flattened
+  description: Sighting sources for this indicator
+- name: "ti_orangecyberdefense_datalake.indicator.x_datalake_whitelist_sources"
+  type: flattened
+  description: Whitelist sources for this indicator
+- name: "ti_orangecyberdefense_datalake.indicator._computed.score_max"
+  type: byte
+  description: Computed at ingest time. Highest score across all threat categories.
+- name: "ti_orangecyberdefense_datalake.indicator._computed.sources"
+  type: keyword
+  description: Computed at ingest time. Union of source_id values from x_datalake_sources, x_datalake_sighting_sources, and x_datalake_whitelist_sources.
